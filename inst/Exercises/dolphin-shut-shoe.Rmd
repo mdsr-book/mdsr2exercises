@@ -1,0 +1,24 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-08-16 
+version: 0.1
+tags: [first, second, third]
+id: dolphin-shut-shoe
+---
+
+```{r dolphin-shut-shoe-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:	Create your own `r pkg_macro(ggplot2)` theme.  Describe the choices you made and justify why you made them using the principles introduced earlier.
+
+<!--begin-answer-->
+ 
+XX ANSWER NEEDED
+
+<!--end-answer-->

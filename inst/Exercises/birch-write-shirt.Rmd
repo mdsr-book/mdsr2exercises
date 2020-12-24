@@ -1,0 +1,43 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Easy"
+date: 2020-06-14 
+version: 0.1
+tags: [first, second, third]
+id: birch-write-shirt
+---
+
+```{r birch-write-shirt-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+library(mdsr)
+```
+
+TITLE GOES HERE: Use the `Macbeth_raw` data from the `r pkg_macro(mdsr)` package to answer the following questions: 
+
+
+a. Speaking lines in Shakespeare's plays are identified by a line that starts with two spaces, then a string of capital letters and spaces (the character's name) followed by a period. Use `grep` to find all of the speaking lines in *Macbeth*. How many are there? 
+ 
+<!--begin-answer-->
+```{r}
+data(Macbeth_raw)
+macbeth <- strsplit(Macbeth_raw, "\r\n")[[1]]
+speaker_lines <- macbeth[grep("^  [A-Z ]+\\.", macbeth)]
+length(speaker_lines)
+head(speaker_lines, 3)
+```
+Be careful: sometimes meta data can be interspersed with the results.
+<!--end-answer-->
+
+b.  Find all the hyphenated words in *Macbeth*.
+
+<!--begin-answer-->
+```{r}
+data(Macbeth_raw)
+lines <- strsplit(Macbeth_raw, "\r\n")[[1]]
+words <- strsplit(paste(lines, collapse = " "), " ")[[1]]
+grep("[a-z,A-Z]-[a-z,A-Z]", words, value = TRUE)
+```
+<!--end-answer-->
+ 

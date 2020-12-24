@@ -1,0 +1,42 @@
+---
+chapter: foundations
+author: ''
+difficulty: Medium
+date: '2020-07-16'
+version: 0.1
+tags:
+- first
+- second
+- third
+id: bird-talk-socks
+---
+
+```{r bird-talk-socks-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `NHANES` data set in the `r pkg_macro(NHANES)` package includes survey data collected by the U.S. National Center for Health Statistics (NCHS), which has conducted a series of health and nutrition surveys since the early 1960s.  
+
+a. An investigator is interested in fitting a model to predict the probability that a female subject will have a diagnosis of diabetes.  Predictors for this model include age and BMI. Imagine that only 1/10 of the data are available but that these data are sampled randomly from the full set of observations (this mechanism is called "Missing Completely at Random," or MCAR).  What implications will this sampling have on the results?
+
+ <!--begin-answer-->
+The only implication is efficiency: we will be less certain about our conclusion because we have a smaller sample size.
+  <!--end-answer-->
+
+
+b. Imagine that only 1/10 of the data are available but that these data are sampled from the full set of observations such that missingness depends on age, with older subjects less likely to be observed than younger subjects (this mechanism is called "Covariate Dependent Missingness," or CDM). What implications will this sampling have on the results?
+
+ <!--begin-answer-->
+We need to ensure that we we see the full range of ages to be able to correctly model the 
+functional form of the relationship between age and diabetes.  Efficiency is an issue in any case.
+  <!--end-answer-->
+
+
+c. Imagine that only 1/10 of the data are available but that these data are sampled from the full set of observations such that missingness depends on diabetes status (this mechanism is called "Non-Ignorable Non-Response," or NINR).  What implications will this sampling have on the results?
+
+ <!--begin-answer-->
+Here we're also concerned with bias, since the subjects with complete data are not a sample of the full sample and the missingness
+is related to the unobserved values.
+  <!--end-answer-->
+
+

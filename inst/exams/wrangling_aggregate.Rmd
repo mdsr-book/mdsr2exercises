@@ -1,0 +1,31 @@
+Question
+========
+
+What combination of `dplyr` operations is depicted below? 
+
+![](https://rstudio-education.github.io/tidyverse-cookbook/images/dplyr-group_by.png)
+
+Answerlist
+----------
+* `group_by()` + `summarize()`
+* `filter()` + `select()`
+* `mutate()` + `rename()`
+* `group_by()` + `mutate()`
+* `mutate()` + `summarize()`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: wrangling-aggregate
+extype: schoice
+exsolution: 10000

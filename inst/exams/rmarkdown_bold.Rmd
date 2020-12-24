@@ -1,0 +1,33 @@
+Question
+========
+
+Consider the following sentence:
+
+"The quick brown fox jumps over the lazy dog."
+
+Adding which text decoration would make the word "jumps" appear in **bold** in the output? 
+
+Answerlist
+----------
+* ```**jumps**```
+* ```*jumps*```
+* ```[jumps]```
+* ```_jumps_```
+* ``` `jumps` ```
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. This makes it italicized.
+* False. This does nothing special.
+* False. This makes it italized.
+* False. This makes it appear as code.
+
+Meta-information
+================
+exname: rmarkdown-bold
+extype: schoice
+exsolution: 10000

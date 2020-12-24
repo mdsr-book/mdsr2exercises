@@ -1,0 +1,58 @@
+Question
+========
+
+The following chunk isolates the path of [Hurricane Andrew](https://en.wikipedia.org/wiki/Hurricane_Andrew), which decimated the Bahamas, Florida, and the Gulf Coast in 1992. 
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+andrew <- storms %>%
+  mutate(timestamp = lubridate::parse_date_time(paste(year, month, day, hour), "%Y %m %d %H")) %>%
+  filter(year == 1992, name == "Andrew") %>%
+  st_as_sf(coords = c("long", "lat")) %>%
+  st_set_crs(4326)
+```
+
+The following chunk attempts to map the path of Hurricane Andrew over time to color, but throws an error. 
+
+```{r, error=TRUE}
+library(leaflet)
+
+pal <- colorNumeric(palette = "Greens", domain = andrew$timestamp)
+
+leaflet() %>%
+  addTiles() %>%
+  addCircles(data = andrew, color = pal(timestamp))
+```
+
+How can you fix the problem? 
+
+
+Answerlist
+----------
+* It should be `color = ~pal(timestamp)`.
+* It should be `color = ~timestamp`.
+* It should be `fill = ~pal(timestamp)`.
+* It should be `aes(color = timestamp)`.
+* It should be `colorFactor` instead of `colorNumeric`.
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. You need the call to `pal()`. 
+* False. The would create a plot, but the points wouldn't be colored. 
+* False. That's `ggplot` syntax. 
+* False. The variable we are mapping to color is continuous, not discrete. 
+
+
+Meta-information
+================
+extitle: continuous color mapping
+exsection: leaflet
+exname: leaflet-color-continuous
+extype: schoice
+exsolution: 10000

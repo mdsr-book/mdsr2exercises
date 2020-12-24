@@ -1,0 +1,28 @@
+---
+chapter: "dataviz-II"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-08-04 
+version: 0.1
+tags: [onlineonly, visualization, visual cues, taxonomy]
+id: zebra-bring-lamp
+---
+
+```{r zebra-bring-lamp-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following data graphic, taken from the article "[Who does not Pay Income Tax?](http://thefuturebuzz.com/2012/09/19/simplicity-with-data-visualization-is-still-best)". 
+
+a. Identify the visual cues, coordinate system, and scale(s). 
+b. How many variables are depicted in the graphic? Explicitly link each variable to a visual cue that you listed above. 
+c. Critique this data graphic using the taxonomy described in this chapter. 
+
+<!--answer-start-->
+a. Visual cues: Color saturation, angle. Coordinate system: radial. Scale: linear
+b. There are (at least) two variables: the reason for paying or not paying income tax, and the percentage of people in each category. One might argument that there is a lurking third binary variable, which is whether you paid income tax or not, however, that could also be encoded in the first variable. 
+c. There is no reason to use a pie chart instead of a stacked bar chart, or simply a table, since angle is lower on the perceptual hierarchy than length. The use of color hue is pointless because there is no scale. Secondly, the color is redundant, because the size of the wedge (angle) is already telling you the percentage. The wedges falling out of the pie are what Tufte might call "chartjunk"---it serves no practical purpose. 
+<!--answer-end-->
+
+
+

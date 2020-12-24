@@ -1,0 +1,40 @@
+Question
+========
+
+Consider the following data graphic created by this chunk of code:
+
+```{r mtcars-geom-point, message=FALSE}
+library(tidyverse)
+ggplot(mtcars, aes(x = disp, y = mpg), color = am) + 
+  geom_point()
+```
+
+Why aren't the points colored? 
+
+Answerlist
+----------
+* Because the mapping of `color` to the `am` variable occurs outside of the `aes()` function.
+* Because there is no variable in `mtcars` called `am`.
+* Because you need to put the `color = am` specification inside `geom_point()`.
+* Because you need `fill = am` instead of `color = am`.
+* Because you need quotation marks around `am`. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False, there is a variable called `am`.
+* False. It still won't work unless you put it in `aes()`
+* False. 
+* False. That would references a different object, but still not produce color.
+
+Meta-information
+================
+extitle: aesthetic mapping
+exsection: aesthetics
+exname: aesthetics-aes
+extype: schoice
+exsolution: 10000

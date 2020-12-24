@@ -1,0 +1,31 @@
+---
+chapter: "algorithmic"
+author: ""
+difficulty: "Medium"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: crow-read-pants
+---
+
+```{r crow-read-pants-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a function called `map_negative` that takes as arguments a data frame and the
+name of a variable and returns that data frame with the negative values of the variable
+replaced by zeroes.  Apply this function the `cyl` variable in the `mtcars` data set.
+
+ <!--begin-answer-->
+```{r }
+map_negative <- function(data, varname) {
+  data[eval(varname)] <- -data[eval(varname)]
+  return(data)
+}
+map_negative(mtcars, "cyl")
+```
+  <!--end-answer-->
+
+

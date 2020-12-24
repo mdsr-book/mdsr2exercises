@@ -1,0 +1,59 @@
+Question
+========
+
+The following SQL queries retrieve the birthdates of people in the [IMDb](https://en.wikipedia.org/wiki/IMDb) named "Michael Jordan". 
+Note that this includes both [NBA legend Michael Jordan](https://en.wikipedia.org/wiki/Michael_Jordan) and [Black Panther](https://en.wikipedia.org/wiki/Black_Panther_(film)) superstar [Michael B. Jordan](https://en.wikipedia.org/wiki/Michael_B._Jordan). 
+
+```{sql connection=mdsr::dbConnect_scidb("imdb"), error=TRUE, eval=TRUE}
+EXPLAIN
+SELECT n.id, name, info AS birthdate
+FROM name AS n
+LEFT JOIN person_info 
+  ON n.id = person_info.id
+WHERE n.name LIKE 'Jordan, Michael%'
+AND person_info.info_type_id = 21;
+```
+
+```{sql connection=DBI::dbConnect(RMySQL::MySQL(), host="scidb.smith.edu", user="sds192", password="DSismfc@S", db="imdb"), error=TRUE, eval=TRUE}
+EXPLAIN
+SELECT id, info AS birthdate
+FROM person_info 
+WHERE id IN (
+	SELECT id FROM name WHERE name LIKE 'Jordan, Michael%'
+)
+AND info_type_id = 21;
+```
+
+You may find [the MySQL documentation for EXPLAIN](https://dev.mysql.com/doc/refman/8.0/en/explain-output.html#explain-join-types) helpful. 
+
+You may need to widen your screen or scroll right to see all of the relevant information!
+
+Which of the following statements are true?  
+
+Answerlist
+----------
+* The first query uses a `JOIN`, whereas the second query uses subquery.
+* The second query is likely to be faster because it consults more rows. 
+* The second query is likely to be slower because it has to consult more rows. 
+* There is never a performance difference between queries that use joins and those that use subqueries. 
+* The second query does not retrieve the names of the actors. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* True.
+* False. 
+* True. 
+
+Meta-information
+================
+extitle: explain
+exsection: sql
+exname: sql-explain
+extype: mchoice
+exsolution: 10101

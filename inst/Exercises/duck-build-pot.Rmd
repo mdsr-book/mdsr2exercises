@@ -1,0 +1,34 @@
+---
+chapter: "sqlII"
+author: ""
+difficulty: "Hard"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: duck-build-pot
+---
+
+```{r duck-build-pot-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r pkg_macro(macleish)` package to download the weather data at the MacLeish Field Station. Write your own table schema from scratch and import these data into the database server of your choice. 
+
+ <!--begin-answer-->
+Here is a sample schema for MySQL:
+
+```{r cat-mysql-table-schema-macleish, echo=FALSE, message=FALSE, warning=FALSE}
+library(macleish)
+cat(readChar(system.file(package = "macleish", "sql", "init.mysql"), 1e5))
+```
+
+This schema can be obtained by running:
+
+```{r eval=FALSE}
+cat(readChar(system.file(package = "macleish", "sql", "init.mysql"), 1e5))
+```
+
+ <!--end-answer-->
+
+

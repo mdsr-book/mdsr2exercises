@@ -1,0 +1,50 @@
+Question
+========
+
+The following code chunk creates a `tibble` that records the name, height, and mass of the first five characters in the `starwars` data frame. 
+
+```{r, message=FALSE}
+library(tidyverse)
+five_characters <- starwars %>%
+  select(name, height, mass) %>%
+  head(5)
+
+five_characters
+```
+
+The following application of `pivot_longer()` will result in a `tibble` with how many rows and columns? 
+
+```{r, eval=FALSE}
+five_characters %>%
+  pivot_longer(-name, names_to = "type", values_to = "measurement")
+```
+
+
+Answerlist
+----------
+* 10 rows and 3 columns
+* 10 rows and 2 columns
+* 5 rows and 2 columns
+* 5 rows and 3 columns
+* 15 rows and 1 column
+* 15 rows and 2 columns
+* 15 rows and 3 columns
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: reshape-longer-rows
+extype: schoice
+exsolution: 1000000

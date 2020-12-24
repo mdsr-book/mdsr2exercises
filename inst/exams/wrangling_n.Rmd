@@ -1,0 +1,39 @@
+Question
+========
+
+Consider the following pipeline:
+
+```{r error=TRUE, message=FALSE}
+library(tidyverse)
+mtcars %>%
+  group_by(cyl) %>%
+  summarize(
+    N = n(), 
+    avg_mpg = mean(mpg)
+  ) 
+```
+
+What is the real-world meaning of the variable `N` in the result set? 
+
+Answerlist
+----------
+* `N` is the number of cars associated with each distinct number of cylinders. 
+* `N` is the number of rows in `mtcars`
+* `N` is the number of different cars in `mtcars`
+* `N` is the number of cars in `mtcars`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: wrangling-n
+extype: schoice
+exsolution: 1000

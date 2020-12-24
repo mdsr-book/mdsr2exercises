@@ -1,0 +1,45 @@
+---
+chapter: "data-I"
+author: "Daniel Kaplan"
+date: 2019-10-23 
+difficulty: "Medium"
+version: 0.1
+tags: [nycflights13, second, third]
+id: panda-take-bulb 
+---
+
+(ref:panda-take-bulb) Exercise in file panda-take-bulb
+
+```{r panda-take-bulb-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r pkg_macro(nycflights13)` package and the `r df_macro(flights)` data frame to answer the following question: What plane (specified by the `tailnum` variable) traveled the most times from New York City airports in 2013?  Plot the number of trips per week over the year.
+
+<!--begin-answer-->
+```{r panda-take-bulb-1, message=FALSE, warning=FALSE}
+library(nycflights13)
+library(lubridate)
+flights %>%
+  group_by(tailnum) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count)) %>%
+  head()
+```
+
+Since NA is not a plane, we see that plane N725MQ had the greatest number of flights, with 575 from NYC airports.
+
+```{r panda-take-bulb-2, message=FALSE, warning=FALSE}
+flights2 <- flights %>%
+  filter(tailnum == "N725MQ") %>%
+  mutate(week = week(time_hour)) %>%
+  group_by(week) %>%
+  summarize(count = n())
+ggplot(data = flights2, aes(x = week, y = count)) +
+  geom_point() +
+  labs(title = "Number of Trips from NYC for Plane N725MQ Each Week")
+```
+
+<!--end-answer-->
+

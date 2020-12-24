@@ -1,0 +1,37 @@
+---
+chapter: "data-II"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags:
+- baseball
+- second
+- third
+id: monkey-grow-bulb
+output: pdf_document
+---
+
+(ref:monkey-grow-bulb) Exercise in file monkey-grow-bulb
+
+```{r monkey-grow-bulb-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the number of home runs hit (`r mdsr2exercises::var_macro(HR)`) and home runs allowed (`r mdsr2exercises::var_macro(HRA)`) for the Chicago Cubs ($CHN$) baseball team. Reshape the `r mdsr2exercises::df_macro(Teams)` data from the `r mdsr2exercises::pkg_macro(Lahman)` package into "long" format and plot a time series conditioned on whether the HRs that involved the Cubs were hit by them or allowed by them. 
+
+<!--begin-answer-->
+```{r monkey-grow-bulb-1}
+library(Lahman)
+Teams %>%
+  filter(teamID == "CHN") %>%
+  select(yearID, HR, HRA) %>%
+  pivot_longer(-yearID, names_to = "type", values_to = "home_runs") %>%
+  ggplot(aes(x = yearID, y = home_runs, color = type)) +
+  geom_point() +
+  geom_line()
+```
+
+<!--end-answer-->
+

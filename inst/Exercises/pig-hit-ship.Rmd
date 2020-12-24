@@ -1,0 +1,51 @@
+---
+chapter: "algorithmic"
+author: ""
+difficulty: "Medium"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: pig-hit-ship
+---
+
+```{r pig-hit-ship-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a function called `prop_cancel` that takes as arguments a month number
+and destination airport and returns the proportion of flights missing arrival delay for each day to that destination.
+Apply this function to the `nycflights13` package for February and Atlanta airport `ATL` and again with an invalid month number.
+
+ <!--begin-answer-->
+```{r, message=FALSE, warning=FALSE }
+library(nycflights13)
+prop_cancel <- function(monthnum, airport) {
+  if (!is.numeric(monthnum)) {
+    stop("monthnum must be numeric.\n")
+  }
+  if (monthnum < 1 | monthnum > 12) {
+    stop("monthnum must be between 1 and 12.\n")
+  }
+  res <- flights %>%
+    filter(month == monthnum, dest == airport) %>%
+    mutate(missdelay = is.na(arr_delay)) %>%
+    group_by(day) %>%
+    summarize(count = n(), propmiss = mean(missdelay))
+  return(res)
+}
+prop_cancel(2, "ATL")
+```
+The second week of 
+January, 2013 was a bad time for flights from NYC airports to Atlanta.
+```{r, eval = FALSE}
+
+# error message
+prop_cancel("ATL", 2)
+prop_cancel(22, "ATL")
+```
+
+  <!--end-answer-->
+
+
+

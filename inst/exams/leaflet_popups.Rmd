@@ -1,0 +1,54 @@
+Question
+========
+
+The following chunk isolates the path of [Hurricane Andrew](https://en.wikipedia.org/wiki/Hurricane_Andrew), which decimated the Bahamas, Florida, and the Gulf Coast in 1992. 
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+andrew <- storms %>%
+  mutate(timestamp = lubridate::parse_date_time(paste(year, month, day, hour), "%Y %m %d %H")) %>%
+  filter(year == 1992, name == "Andrew") %>%
+  st_as_sf(coords = c("long", "lat")) %>%
+  st_set_crs(4326)
+```
+
+The following chunk attempts to plot the path of Hurricane Andrew by giving the user the ability to click on each dot and see the corresponding time stamp. 
+
+```{r, error=TRUE, eval=FALSE}
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addCircles(data = andrew, ________ = ~timestamp)
+```
+
+What is the name of the missing argument?
+
+Answerlist
+----------
+* `popup`
+* `label`
+* `text`
+* `options`
+* `marker`
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* False. 
+* False. 
+* False. 
+
+
+Meta-information
+================
+extitle: popups
+exsection: leaflet
+exname: leaflet-popups
+extype: mchoice
+exsolution: 11000

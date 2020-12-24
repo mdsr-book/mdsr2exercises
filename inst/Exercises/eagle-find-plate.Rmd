@@ -1,0 +1,20 @@
+---
+chapter: "dataviz-I"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-09-26 
+version: 0.1
+tags: [first, second, third]
+id: eagle-find-plate
+---
+
+```{r eagle-find-plate-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Find two scientific papers from the last two years in a peer-reviewed journal (*Nature* and *Science* are good choices).
+
+a. Identify a graphical display that you find compelling. What aspects of the display work well, and how do these relate to the principles established in this chapter? Include a screen shot of the display along with your solution.
+
+b. Identify a graphical display that you find less than compelling. What aspects of the display don't work well?  Are there ways that the display might be improved? Include a screen shot of the display along with your solution.
+

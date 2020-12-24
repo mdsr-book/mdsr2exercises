@@ -1,0 +1,53 @@
+Question
+========
+
+The following code chunk creates a `tibble` called `drug_use_common` that records usage rates by age group for three commonly-used drugs (alcohol, marijuana, and cocaine). 
+
+```{r, message=FALSE}
+library(tidyverse)
+library(fivethirtyeight)
+drug_use_common <- drug_use %>%
+  select(age, alcohol_use, marijuana_use, cocaine_use)
+glimpse(drug_use_common)
+```
+
+We can use `ggplot()` to depict how alcohol usage changes with age. 
+
+```{r}
+ggplot(drug_use, aes(x = age, y = alcohol_use)) + 
+  geom_col()
+```
+
+Suppose, however, that ultimately we want to produce the following plot? 
+
+```{r, echo=FALSE} 
+drug_use_alt <- drug_use_common %>%
+  pivot_longer(-age, names_to = "drug", values_to = "usage_rate")
+ggplot(drug_use_alt, aes(x = age, y = usage_rate, fill = drug)) + 
+  geom_col()
+```
+
+What is the most efficient approach to producing our desired plot? 
+
+Answerlist
+----------
+* Use `pivot_longer()` to stack the usage rates, set the `fill` aesthetic, and then draw the plot with a single call to `geom_col()`.
+* Use `pivot_wider()` to stack the usage rates, set the `fill` aesthetic, and then draw the plot with a single call to `geom_col()`.
+* Use `pivot_wider()` to spread out the usage rates, set the `color` aesthetic, and then draw the plot with a single call to `geom_col()`.
+* Call `geom_col()` three times (once for each drug), and set the colors manually. 
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: reshape-ggplot
+extype: schoice
+exsolution: 1000

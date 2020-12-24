@@ -1,0 +1,19 @@
+---
+chapter: "ethics"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: walnut-sit-rug
+---
+
+```{r walnut-sit-rug-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A company uses a machine-learning algorithm to determine which job advertisement to display for users searching for technology jobs.  Based on past results, the algorithm tends to display lower-paying jobs for women than for men (after controlling for other characteristics than gender).  What ethical considerations might be considered when reviewing this algorithm?
+
+  <!--begin-answer-->
+While answers may vary, some discussion of algorithmic bias would be warranted in terms of the review of this algorithm.
+  <!--end-answer-->

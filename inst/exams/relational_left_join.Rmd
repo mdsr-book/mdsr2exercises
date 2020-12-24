@@ -1,0 +1,30 @@
+Question
+========
+
+What type of join operation is depicted below? 
+
+![](https://rstudio-education.github.io/tidyverse-cookbook/images/dplyr-left-join.png)
+
+
+Answerlist
+----------
+* `left_join()`
+* `inner_join()`
+* `full_join()`
+* `right_join()`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: relational-left-join
+extype: schoice
+exsolution: 1000

@@ -1,0 +1,55 @@
+Question
+========
+
+The following code chunk creates a `tibble` called `drug_use_common` that records usage rates by age group for three commonly-used drugs (alcohol, marijuana, and cocaine). 
+
+```{r, message=FALSE}
+library(tidyverse)
+library(fivethirtyeight)
+drug_use_common <- drug_use %>%
+  select(age, alcohol_use, marijuana_use, cocaine_use)
+glimpse(drug_use_common)
+```
+
+A chunk of code here has been omitted. It contains call to a single function that converts `drug_use_common` to `drug_use_alt`. 
+
+```{r, echo=FALSE} 
+drug_use_alt <- drug_use_common %>%
+  pivot_longer(-age, names_to = "drug", values_to = "usage_rate")
+```
+
+You can see what `drug_use_alt` looks like below. 
+
+```{r}
+glimpse(drug_use_alt)
+```
+
+Which function was called in the omitted chunk? 
+
+
+Answerlist
+----------
+* `pivot_longer()`
+* `pivot_wider()`
+* `inner_join()`
+* `filter()`
+* `group_by()`
+* `summarize()`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: reshape-omitted
+extype: schoice
+exsolution: 100000

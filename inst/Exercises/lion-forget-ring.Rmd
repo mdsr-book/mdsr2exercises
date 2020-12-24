@@ -1,0 +1,58 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Hard"
+date: 2020-06-25 
+version: 0.1
+tags: [first, second, onlineonly]
+id: lion-forget-ring
+---
+
+```{r lion-forget-ring-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+library(DickinsonPoems)
+```
+
+TITLE GOES HERE: Given the dataframe of Emily Dickinson poems in the `r pkg_macro(DickinsonPoems)` package, perform sentiment analysis and identify any interesting insights about her work overall.  
+
+```{r}
+# remotes::install_github("Amherst-Statistics/DickinsonPoems")
+library(DickinsonPoems)
+library(tidytext)
+poems_df <- DickinsonPoems::list_poems() %>%
+  map(get_poem) %>%
+  unlist() %>%
+  enframe(value = "words") %>%
+  unnest_tokens(word, words)
+```
+
+  <!--begin-answer-->
+```{r, message=FALSE}
+poems_df %>%
+  filter(!word %in% stop_words$word) %>%
+  count(word, sort = TRUE) %>%
+  head(15)
+
+poems_df %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  head(10)
+
+poems_df %>%
+  inner_join(get_sentiments("afinn")) %>%
+  summarize(afinn = sum(value))
+
+poems_df %>%
+  inner_join(get_sentiments("nrc")) %>%
+  group_by(sentiment) %>%
+  count(sentiment) %>%
+  arrange(desc(n)) %>%
+  ungroup() %>%
+  top_n(1)
+```
+
+  <!--end-answer-->
+
+

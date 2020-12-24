@@ -1,0 +1,63 @@
+---
+chapter: "learning-I"
+author: ""
+difficulty: "Medium"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: ant-put-pencil
+---
+
+```{r ant-put-pencil-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Fit a series of supervised learning models to predict arrival delays for flights from 
+New York to `SFO` using the `r pkg_macro(nycflights13)` package.  How do the conclusions change from
+the multiple regression model presented in the Statistical Foundations chapter?
+
+<!--begin-answer-->
+
+In this sample solution we define a delay as 15 minutes. 
+```{r, message=FALSE, warning=FALSE}
+library(nycflights13)
+library(rpart)
+library(mdsr)
+library(lubridate)
+
+NYSFO <- flights %>%
+  filter(origin == "JFK", dest == "SFO") %>%
+  mutate(
+    delay = if_else(arr_delay > 15, TRUE, FALSE),
+    day = as.Date(time_hour),
+    dow = as.character(wday(day, label = TRUE)),
+    season = ifelse(month %in% 6:7, "summer", "other month")
+  )
+```
+
+Decision Tree: 
+```{r, warning = FALSE}
+rpart(delay ~ year + month + day + dep_time + arr_time + carrier +
+  air_time + distance + dow + season, data = NYSFO)
+```
+Random Forest: 
+```{r, warning = FALSE, message=FALSE}
+library(randomForest)
+
+tree_reg <- randomForest(delay ~ year + month + day + dep_time + arr_time + carrier +
+  air_time + distance + dow + season,
+data = NYSFO, na.action = na.exclude,
+ntree = 201, mtry = 3
+)
+
+tree_reg
+
+importance(tree_reg) %>%
+  as_tibble(rownames = "variable") %>%
+  arrange(desc(IncNodePurity))
+```
+
+<!--end-answer-->
+
+

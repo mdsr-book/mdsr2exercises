@@ -1,0 +1,29 @@
+Question
+========
+
+At the top of an R Markdown document, properties are specified in [YAML](https://en.wikipedia.org/wiki/YAML). The YAML option in R Markdown that allows code chunks throughout the rendered HTML document to be shown and hidden **by the viewer** is called:
+
+Answerlist
+----------
+* `code_folding`
+* `echo = TRUE`
+* `echo = FALSE`
+* `echo = "show"`
+* `code_hiding`
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. This shows all code. 
+* False. This hides all code from the viewer.
+* False. This doesn't work.
+* False. This is made up.
+
+Meta-information
+================
+exname: rmarkdown-folding
+extype: schoice
+exsolution: 10000

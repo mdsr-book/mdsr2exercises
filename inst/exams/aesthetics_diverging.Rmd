@@ -1,0 +1,36 @@
+Question
+========
+
+Consider the following choropleth [about spending per student by school district](https://knightlab.northwestern.edu/2016/07/18/three-tools-to-help-you-make-colorblind-friendly-graphics/):
+
+![](https://knightlab.northwestern.edu/wp-content/uploads/2016/06/npr_school_spending_map-850x585.png)
+
+The color scale used in this graphic is best described as:
+
+Answerlist
+----------
+* sequential, single-hue
+* sequential, multi-hue
+* diverging, single-hue
+* diverging, multi-hue
+* categorical
+
+Solution
+========
+
+Answerlist
+----------
+* False, this scale is diverging
+* False, this scale is diverging
+* False, this scale is multi-hue
+* True,
+* False, this scale is diverging
+
+
+Meta-information
+================
+extitle: sequential vs. diverging in US
+exsection: aesthetics
+exname: aesthetics-diverging
+extype: schoice
+exsolution: 00010

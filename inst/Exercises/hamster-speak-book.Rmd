@@ -1,0 +1,38 @@
+---
+chapter: "data-I"
+author: ""
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [restaurants, second, third]
+id: hamster-speak-book 
+---
+
+(ref:hamster-speak-book) Exercise in file hamster-speak-book
+
+```{r hamster-speak-book-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+```
+
+TITLE GOES HERE: The `r mdsr2exercises::df_macro(Violations)` data set in the `r mdsr2exercises::pkg_macro(mdsr)` package contains information regarding the outcome of health inspections of restaurants in New York City.  Use these data to calculate the median violation score by zip code for zip codes in Manhattan with 50 or more inspections.  What pattern do you see between the number of inspections and the median score?
+
+<!--begin-answer-->
+
+```{r, message = FALSE, warning = FALSE}
+library(mdsr)
+zips <- Violations %>%
+  select(boro, score, zipcode) %>%
+  na.omit() %>%
+  filter(boro == "MANHATTAN") %>%
+  group_by(zipcode) %>%
+  summarise(count = n(), medianscore = median(score)) %>%
+  filter(count >= 50)
+ggplot(data = zips, aes(count, medianscore)) +
+  geom_point(alpha = 0.2) +
+  geom_smooth()
+```
+
+The health inspection scores tend to increase as the number of inspections increases, plateauing at about 2,500 inspections.
+
+<!--end-answer-->

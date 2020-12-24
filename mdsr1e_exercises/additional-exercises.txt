@@ -1,0 +1,9 @@
+Text 
+%\begin{Exercise}
+%XX BB
+%Simpson's TV scripts?
+%\end{Exercise}
+
+%\begin{Answer}
+% XX BB
+%\end{Answer}

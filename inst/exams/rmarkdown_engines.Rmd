@@ -1,0 +1,53 @@
+Question
+========
+
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  error = TRUE
+)
+```
+
+The following chunk throws an error, even though the code is a perfectly valid SQL expression.
+
+```{r}
+DESCRIBE title;
+```
+
+The chunk appears like this in the R Markdown source document:
+
+````
+```{r}`r ''`
+DESCRIBE title;
+```
+````
+
+How can the problem be fixed? 
+
+Answerlist
+----------
+* Change the chunk type (i.e., engine) from `r` to `sql`.
+* Change the expression to `EXPLAIN title;`
+* Change the expression to `explain TITLE;`
+* Add the `eval = TRUE` argument. 
+* Add the `error = TRUE` argument. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. That won't solve the problem. 
+* False. That won't solve the problem. 
+* False. It is already being evaluated -- that's why you see the error.
+* False. The `error` argument is already set to `TRUE`.
+
+Meta-information
+================
+extitle: markdown engines
+exsection: rmarkdown
+exname: rmarkdown-engines
+extype: mchoice
+exsolution: 10000

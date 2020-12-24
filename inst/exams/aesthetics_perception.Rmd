@@ -1,0 +1,34 @@
+Question
+========
+
+Consider the following data graphic [presented by the National Center for Education Statistics](https://nces.ed.gov/nceskids/help/user_guide/graph/pie.asp):
+
+![](https://nces.ed.gov/nceskids/help/user_guide/graph/images/pie.jpg)
+
+Which of the following critiques are valid, as supported by the data visualization literature? 
+
+Answerlist
+----------
+* A pie chart is inferior to a bar chart because angle is lower on the perceptual hierarchy than length.
+* Distortion is introduced by the 3D effect, because the area of the image consumed by each slice of pie is no longer proportional to the data values. 
+* The categorical color palette is a poor choice, because the colors have vastly different saturation levels (i.e., intensities). 
+* The categorical color palette is a good choice, because the colors are perceptually very similar. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True. This critique is supported by Cleveland and McGill's research.
+* True. This critique is valid. 
+* False. The reasoning is supported by the literature, but these colors have similar saturation levels.
+* False. Categorical color palettes should have perceptually distinct colors. 
+
+Meta-information
+================
+extitle: perception
+exsection: aesthetics
+exname: aesthetics-perception
+extype: mchoice
+exsolution: 1100

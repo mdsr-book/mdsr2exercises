@@ -1,0 +1,76 @@
+---
+chapter: "reproducible"
+author: ""
+difficulty: "Medium"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: elephant-write-fork
+---
+
+```{r elephant-write-fork-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Explain what the following code chunks will display and why this might be useful for technical reports from a data science project.
+
+````markdown
+`r ''````{r chunk1, eval = TRUE, include = FALSE}
+x <- 15
+cat("assigning value to x.\n")
+```
+````
+
+````markdown
+`r ''````{r chunk2, eval = TRUE, include = FALSE}
+x <- x + 3
+cat("updating value of x.\n")
+```
+````
+
+````markdown
+`r ''````{r chunk3, eval = FALSE, include = TRUE}
+cat("x =", x, "\n")
+```
+````
+
+````markdown
+`r ''````{r chunk1, eval = FALSE, include = TRUE}
+```
+````
+
+````markdown
+`r ''````{r chunk2, eval = FALSE, include = TRUE}
+```
+````
+
+ <!--begin-answer-->
+
+The first and second code chunk are run but not displayed until after the third chunk.
+This might be useful to undertake some data wrangling in a report but defer the code display until the appendix.
+
+```{r chunk1, eval = TRUE, include = FALSE}
+x <- 15
+cat("assigning value to x.\n")
+```
+
+```{r chunk2, eval = TRUE, include = FALSE}
+x <- x + 3
+cat("updating value of x.\n")
+```
+
+```{r chunk3}
+cat("x =", x, "\n")
+```
+
+
+```{r chunk1, eval = FALSE, include = TRUE}
+```
+
+```{r chunk2, eval = FALSE, include = TRUE}
+```
+
+ <!--end-answer-->
+
+
+

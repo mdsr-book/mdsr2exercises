@@ -1,0 +1,39 @@
+Question
+========
+
+Rank the following visual cues along the perceptual hierarchy, from most easily perceptible (on the left) to least perceptible (on the right). 
+
+- length
+- position
+- volume
+- color saturation
+- angle 
+
+Answerlist
+----------
+* position, length, angle, volume, color saturation
+* length, position, volume, color saturation, angle
+* color saturation, volume, angle, position, length
+* position, angle, length, color saturation, volume
+* position, length, volume, angle, color saturation
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. 
+* False. 
+* False. 
+* False. 
+
+
+
+Meta-information
+================
+extitle: perceptual hierarchy
+exsection: aesthetics
+exname: aesthetics-color
+extype: schoice
+exsolution: 10000

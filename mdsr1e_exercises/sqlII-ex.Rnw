@@ -1,0 +1,241 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/sql2-ex-'
+library(Lahman)
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ", warning=FALSE)
+@
+
+\section{Exercises}
+
+
+The exercises about flights assume that you have access to a SQL database that has been populated with the appropriate flight delay data. Please see the \func{src\_scidb} function in the \pkg{mdsr} package for access to these data on a pre-populated server. To create your own database, use see the \pkg{airlines} package.
+
+\begin{Exercise}
+Consider the following queries:
+
+<<eval=FALSE, engine="mysql">>=
+SELECT * FROM flights WHERE cancelled = 1;
+SELECT * FROM flights WHERE carrier = "DL";
+@
+
+Which query will execute faster? Justify your answer.
+\end{Exercise}
+
+\begin{Answer}
+The latter is faster because there is an index built on \var{carrier}.
+\end{Answer}
+
+\begin{Exercise}
+Alice is searching for cancelled flights in the \data{flights} table and her query is running very slowly. She decides to build an index on \var{cancelled} in the hopes of speeding things up. Discuss the relative merits of her plan. What are the trade-offs? Will her query be any faster?
+\end{Exercise}
+
+\begin{Answer}
+Because \var{cancelled} is a binary variable, and there are relatively few cancelled flights, this will likely speed up searches for cancelled flights considerably. However, if the query is searching for both cancelled and uncancelled flights, then it probably won't help at all. It will also take up a lot of space on the disk.
+\end{Answer}
+
+\begin{Exercise}
+The \data{Master} table of the \pkg{Lahman} database contains biographical information about baseball players. The primary key is the \var{playerID} variable. There are also variables for \var{retroID} and \var{bbrefID}, which correspond to the player's identifier in other baseball databases. Discuss the ramifications of placing a primary, unique, or foreign key on \var{retroID}.
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+library(Lahman)
+glimpse(Master)
+@
+You can't place a primary key on \var{retroID}, since a table may only have one primary key. You can (and should) place a unique key on \var{retroID}, since the values should be unique. You could place a foreign key on \var{retroID}, but only if there was another table (e.g., the player bio table at \url{http://www.retrosheet.org}) in which \var{retroID} corresponded to a primary key.
+\end{Answer}
+
+\begin{Exercise}
+Bob wants to analyze the on-time performance of United Airlines flights across the decade of the 1990s. Discuss how the partitioning scheme of the \data{flights} table based on \var{year} will affect the performance of Bob's queries, relative to an unpartitioned table. 
+\end{Exercise}
+
+\begin{Answer}
+Bob's queries will be much faster, since the partitioning scheme will allow him to search only those ten years worth of data that are relevant. Thus, Bob will only be searching a logical table with dozens of millions of rows, instead of more than \nflights rows. However, the partitioning scheme will not actually optimize the queries themselves---it just results in a smaller logical table. 
+\end{Answer}
+
+\begin{Exercise}
+Write a full table schema for the \data{mtcars} data set and import it into the database server of your choice.  
+\end{Exercise}
+
+
+\begin{Answer}
+<<echo=FALSE>>=
+library(etl)
+cat(readChar(system.file(package = "etl", "sql", "init.mysql"), 1e5))
+@
+\end{Answer}
+
+\begin{Exercise}
+Write a full table schema for the two tables in the \pkg{fueleconomy} package and import them into the database server of your choice.  
+\end{Exercise}
+
+
+\begin{Answer}
+You may find this idiom useful to find the maximum length of each variable.
+
+<<>>=
+library(fueleconomy)
+lapply(lapply(common, nchar), max)
+lapply(lapply(vehicles, nchar), max)
+@
+
+Then write your schema accordingly. 
+
+<<mysql, eval=FALSE>>=
+DROP TABLE IF EXISTS `common`;
+
+CREATE TABLE `common` (
+  `make` varchar(17) NOT NULL DEFAULT '',
+  `model` varchar(17) NOT NULL DEFAULT '',
+  `n` smallint(3) DEFAULT NULL,
+  `years` smallint(2) DEFAULT NULL,
+  PRIMARY KEY (`make`, `model`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `vehicles`;
+
+CREATE TABLE `vehicles` (
+  `id` mediumint(5) DEFAULT NULL,
+  `make` varchar(34) NOT NULL DEFAULT '',
+  `model` varchar(39) NOT NULL DEFAULT '',
+  `year` smallint(4) DEFAULT NULL,
+  `class` varchar(34) NOT NULL DEFAULT '',
+  `trans` varchar(32) NOT NULL DEFAULT '',
+  `drive` varchar(26) NOT NULL DEFAULT '',
+  `cyl` smallint(2) DEFAULT NULL,
+  `disp` decimal(3,2) DEFAULT NULL,
+  `fuel` varchar(27) NOT NULL DEFAULT '',
+  `hwy` smallint(2) DEFAULT NULL,
+  `cty` smallint(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+@
+\end{Answer}
+
+\begin{Exercise}
+Write a full table schema for the five tables in the \pkg{nasaweather} package and import them into the database server of your choice.  
+\end{Exercise}
+
+
+\begin{Answer}
+<<sql, eval=FALSE>>=
+CREATE TABLE `atmos` (
+  `lat` double DEFAULT NULL,
+  `long` double DEFAULT NULL,
+  `year` smallint(4) DEFAULT NULL,
+  `month` smallint(2) DEFAULT NULL,
+  `surftemp` double DEFAULT NULL,
+  `temp` double DEFAULT NULL,
+  `pressure` double DEFAULT NULL,
+  `ozone` bigint(20) DEFAULT NULL,
+  `cloudlow` double DEFAULT NULL,
+  `cloudmid` double DEFAULT NULL,
+  `cloudhigh` double DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `borders` (
+  `country` varchar(2) NOT NULL DEFAULT '',
+  `long` double DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `group` smallint(3) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `elev` (
+  `long` double DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `elev` double DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `glaciers` (
+  `id` char(12) NOT NULL DEFAULT '',
+  `name` varchar(16) NOT NULL DEFAULT '',
+  `lat` double DEFAULT NULL,
+  `long` double DEFAULT NULL,
+  `area` varchar(5) NOT NULL DEFAULT '',
+  `country` varchar(2) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `storms` (
+  `name` varchar(9) DEFAULT NULL,
+  `year` smallint(4) DEFAULT NULL,
+  `month` smallint(2) DEFAULT NULL,
+  `day` smallint(2) DEFAULT NULL,
+  `hour` smallint(2) DEFAULT NULL,
+  `lat` decimal(4,3) DEFAULT NULL,
+  `long` decimal(4,3) DEFAULT NULL,
+  `pressure` smallint(4) DEFAULT NULL,
+  `wind` smallint(3) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `seasday` smallint(3) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+@
+\end{Answer}
+
+
+\begin{Exercise}
+Write a full table schema for the ten tables in the \pkg{usdanutrients} package and import them into the database server of your choice.  
+\end{Exercise}
+
+
+\begin{Answer}
+<<>>=
+# devtools::install_github("hadley/usdanutrients")
+library(usdanutrients)
+# data(package="usdanutrients")
+glimpse(food)
+@
+
+Valid answers will be analogous to those of the previous exercises. 
+
+\end{Answer}
+
+
+\begin{Exercise}
+Use the \pkg{macleish} package to download the weather data at the MacLeish Field Station. Write your own table schema from scratch and import these data into the database server of your choice. 
+\end{Exercise}
+
+\begin{Answer}
+Here is a sample schema for MySQL:
+
+<<cat-mysql-table-schema-macleish, echo=FALSE>>=
+library(macleish)
+cat(readChar(system.file(package = "macleish", "sql", "init.mysql"), 1e5))
+@
+
+This schema can be obtained by running:
+
+<<eval=FALSE>>=
+cat(readChar(system.file(package = "macleish", "sql", "init.mysql"), 1e5))
+@
+
+
+\end{Answer}
+
+
+
+\begin{Exercise}
+Use the \pkg{fec} package to download and unzip the federal election data for 2012 that were used in Chapter 2. Write your own table schema from scratch and import these data into the database server of your choice. 
+% XX watch out for hard coded chapter ref!
+\end{Exercise}
+
+\begin{Answer}
+Here is a sample schema for MySQL:
+
+<<cat-mysql-table-schema-fec, echo=FALSE>>=
+library(fec)
+cat(readChar(system.file(package = "fec", "sql", "init.mysql"), 1e5))
+@
+
+This schema can be obtained by running:
+
+<<eval=FALSE>>=
+cat(readChar(system.file(package = "macleish", "sql", "init.mysql"), 1e5))
+@
+
+\end{Answer}
+

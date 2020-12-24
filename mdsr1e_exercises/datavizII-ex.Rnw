@@ -1,0 +1,306 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+options(digits=4)
+fig.path='figures/datavizII-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+\section{Exercises}
+
+\begin{Exercise}
+
+Using the famous \data{Galton} data set from the \pkg{mosaicData} package:
+
+<<>>=
+library(mosaic)
+head(Galton)
+@
+
+\begin{enumerate}
+  \item Create a scatterplot of each person's \var{height} against their father's height
+  \item Separate your plot into facets by \var{sex}
+  \item Add regression lines to all of your facets
+\end{enumerate}
+Recall that you can find out more about the data set by running the command \cmd{?Galton}.
+
+\end{Exercise}
+
+\begin{Answer}
+
+\begin{enumerate}
+  \item 
+<<ggyaGalton>>=
+library(mosaic)
+data(Galton)
+ggplot(data = Galton, aes(x = father, y = height)) +
+  geom_point()
+@
+  \item 
+<<ggyaGalton2-ex>>=
+ggplot(data = Galton, aes(x = father, y = height)) +
+  geom_point() + 
+  facet_grid(~sex)
+@
+  \item 
+<<ggplotGalton2-ex>>=
+ggplot(data = Galton, aes(x = father, y = height)) +
+  geom_point() + 
+  geom_smooth(method = "lm") +
+  facet_grid(~sex) 
+@
+\end{enumerate}
+
+\end{Answer}
+
+\begin{Exercise}
+
+Using the \data{RailTrail} data set from the \pkg{mosaicData} package:
+
+<<>>=
+library(mosaic)
+head(RailTrail)
+@
+
+\begin{enumerate}
+  \item Create a scatterplot of the number of crossings per day \var{volume} against the high temperature that day
+  \item Separate your plot into facets by \var{weekday}
+  \item Add regression lines to the two facets
+\end{enumerate}
+
+\end{Exercise}
+
+\begin{Answer}
+
+\begin{enumerate}
+  \item 
+<<railtrail-1>>=
+ggplot(RailTrail, aes(x = hightemp, y = volume)) + 
+  geom_point()
+@
+  \item 
+<<railtrail-2>>=
+ggplot(RailTrail, aes(x = hightemp, y = volume)) + 
+  geom_point() + 
+  facet_wrap(~weekday)
+@
+  \item 
+<<railtrail-3>>=
+ggplot(RailTrail, aes(x = hightemp, y = volume)) + 
+  geom_point() + 
+  facet_wrap(~weekday) + 
+  geom_smooth(method = "lm")
+@
+\end{enumerate}
+
+\end{Answer}
+
+
+
+\index{subject}{Schuyler Sisters}%
+\index{subject}{Church, Angelica Schuyler}%
+\index{subject}{Angelica, NY}%
+\index{subject}{Hamilton, Alexander}%
+\begin{Exercise}
+\href{https://en.wikipedia.org/wiki/Angelica_Schuyler_Church}{Angelica Schuyler Church} (1756--1814) was the daughter of New York Governer Philip Schuyler and sister of 
+Elizabeth Schuyler Hamilton.  Angelica, New York was named after her.  Generate a plot of the reported proportion of babies born
+with the name Angelica over time and interpret the figure.
+\end{Exercise}
+\begin{Answer}
+<<hamiltonsisters>>=
+library(babynames)
+angelica <- filter(babynames, name == "Angelica")
+ggplot(data = angelica, aes(x = year, y = prop, color = sex)) + 
+  geom_line()
+@
+We see that there is a big jump in the number of babies named Angelica starting in the mid 1970's.  
+\end{Answer}
+
+\begin{Exercise}
+The following questions use the \data{Marriage} data set from the \pkg{mosaicData} package.
+
+<<message=FALSE>>=
+library(mosaic)
+head(Marriage, 2)
+@
+
+  \begin{enumerate}
+    \item Create an informative and meaningful data graphic.
+    \item Identify each of the visual cues that you are using, and describe how they are related to each variable. 
+    \item Create a data graphic with at least \emph{five} variables (either quantitative or categorical). For the purposes of this exercise, do not worry about making your visualization meaningful---just try to encode five variables into one plot. 
+
+  \end{enumerate}
+
+  
+\end{Exercise}
+\begin{Answer}
+Answers will vary. We will illustrate one potential solution. 
+
+\begin{enumerate}
+  \item 
+  
+<<marriage-1, message=FALSE>>=
+ggplot(data = Marriage, aes(x = age, y = prevcount, color = person)) + 
+  geom_point(alpha = 0.5) + geom_smooth()
+@
+
+  \item Position in the $x$-direction is mapped to age, position in the $y$-direction is mapped to the number of previous marriages, color is mapped to the status as bride or groom. Each point represents one person. The smoother line indicates a positive trend between age and number of previous marriages, up to about age 45. That is, not surprisingly, people who marry later in life tend to have had more previous marriages. 
+  
+  \item 
+
+<<marriage-2>>=
+ggplot(data = Marriage, aes(x = age, y = prevcount, 
+                            color = factor(hs), size = dayOfBirth)) + 
+  geom_point(alpha = 0.5) +
+  facet_wrap(~person)
+@
+
+\end{enumerate}
+\end{Answer}
+
+\begin{Exercise}
+  The \data{MLB\_teams} data set in the \pkg{mdsr} package contains information about Major League Baseball teams in the past four seasons. There are several quantitative and a few categorical variables present. See how many variables you can illustrate on a single plot in \R. The current record is 7. (Note: This is \textit{not} good graphical practice---it is merely an exercise to help you understand how to use visual cues and aesthetics!)
+
+<<>>=
+library(mdsr)
+head(MLB_teams, 4)
+@
+
+\end{Exercise}
+\begin{Answer}
+<<ggplotteamwin,fig.height=15, fig.width=10>>=
+library(mdsr)
+ggplot(MLB_teams) +
+  geom_point(aes(x = payroll / 1000000, y = WPct, color = teamID, 
+                 size = metroPop, shape = lgID, alpha = normAttend)) +
+  facet_wrap(~yearID, ncol = 1) +
+  xlab("Payroll (Millions of USD)") + 
+  ylab("Team Winning Percentage")
+@
+\end{Answer}
+
+
+\begin{Exercise}
+Use the \data{MLB\_teams} data in the \pkg{mdsr} package to create an informative data graphic that illustrates the relationship between winning percentage and payroll in context. 
+\end{Exercise}
+
+\begin{Answer}
+<<ggplotteamwin2, message=FALSE>>=
+ggplot(data = MLB_teams, aes(x = payroll / 1000000, y = WPct, 
+                             alpha = yearID,
+                             color = lgID, size = metroPop)) +
+  geom_point() + geom_smooth() + 
+  xlab("Payroll (Millions of USD)") + ylab("Team Winning Percentage")
+@
+\end{Answer}
+
+
+%\begin{Exercise}
+%Make this plot of \href{https://flowingdata.com/2013/09/25/the-most-unisex-names-in-us-history/}{the most unisex names in US history }
+%\end{Exercise}
+%
+%\begin{Answer}
+%<<eval=FALSE>>=
+%ggplot(data = bb_names)
+%@
+%
+%\end{Answer}
+
+\begin{Exercise}
+  Use the \func{make\_babynames\_dist} function in the \pkg{mdsr} package to recreate the ``Deadest Names" graphic from FiveThirtyEight (\url{http://tinyurl.com/zcbcl9o}).
+%  https://espnfivethirtyeight.files.wordpress.com/2014/05/silver-feature-names-dead2.png?w=575}
+
+<<>>=
+library(mdsr)
+babynames_dist <- make_babynames_dist()
+@
+<<>>=
+babynames_dist
+@
+
+\end{Exercise}
+
+\begin{Answer}
+<<deadest-names-ex>>=
+babynames_dist %>%
+  filter(year >= 1900) %>%
+  group_by(name, sex) %>%
+  summarize(N = n(), 
+            total_est_alive_today = sum(est_alive_today),
+            total = sum(n)) %>%
+  mutate(pct_dead = 1 - (total_est_alive_today / total)) %>%
+  filter(total > 50000) %>%
+  arrange(desc(pct_dead)) %>%
+  head(20) %>%
+ggplot(aes(x = reorder(name, pct_dead), y = pct_dead, fill = sex)) +
+  geom_bar(stat = "identity") + 
+  geom_text(aes(y = pct_dead + 0.05, label = paste(round(pct_dead * 100, 1), "%"))) + 
+  coord_flip() + 
+  ggtitle("Deadest Names", 
+    subtitle = "Estimated % of Americans with a given name born since 1900 who were dead as of Jan. 1, 2014") + 
+  scale_x_discrete(NULL) + scale_y_continuous(NULL) + 
+  scale_fill_manual(values = c("#f6b900", "#008fd5"))
+@
+
+\end{Answer}
+
+\begin{Exercise}
+The \pkg{macleish} package contains weather data collected every ten minutes in 2015 from two weather stations in Whately, MA. 
+
+<<message=FALSE>>=
+library(macleish)
+head(whately_2015)
+@
+
+Using \pkg{ggpplot2}, create a data graphic that displays the average temperature over each 10-minute interal (\var{temperature}) as a function of time (\var{when}). 
+\end{Exercise}
+
+\begin{Answer}
+<<macleish-ex-vizII,message=FALSE>>=
+library(macleish)
+ggplot(data = whately_2015, aes(x = as.Date(when), y = temperature)) +
+  geom_line(size = 0.3, color = "darkgray") + geom_smooth() + 
+  scale_x_date()
+@
+\end{Answer}
+
+\begin{Exercise}
+Using data from the \pkg{nasaweather} package, create a scatterplot between \var{wind} and \var{pressure}, with color being used to distinguish the \var{type} of storm. 
+\end{Exercise}
+
+\begin{Answer}
+<<storms-ex,message=FALSE>>=
+library(nasaweather)
+ggplot(data = storms, aes(x = pressure, y = wind, color = type)) + 
+  geom_point(alpha = 0.5)
+@
+\end{Answer}
+
+\begin{Exercise}
+Using data from the \pkg{nasaweather} package, use the \func{geom\_path} function to plot the path of each tropical storm in the \data{storms} data table. Use color to distinguish the storms from one another, and use facetting to plot each \var{year} in its own panel. 
+\end{Exercise}
+
+\begin{Answer}
+<<storms-ex2, fig.height=15, fig.width=10>>=
+library(nasaweather)
+bbox <- storms %>%
+  select(lat, long) %>%
+  apply(MARGIN = 2, range) %>%
+  as.data.frame()
+base_map <- ggplot(data = map_data("world"), aes(x = long, y = lat)) +
+  geom_path(aes(group = group), color = "black", size = 0.1) +
+  lims(x = bbox$long, y = bbox$lat)
+storms <- storms %>%
+  mutate(the_date = lubridate::ymd(paste(year, month, day)))
+base_map +
+  geom_path(data = storms, aes(color = name, alpha = 0.1, size = wind), 
+            arrow = arrow(length = unit(0.1, "inches"))) + 
+  facet_wrap(~year) + 
+  theme(legend.position = "none")
+@
+\end{Answer}
+

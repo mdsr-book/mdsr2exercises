@@ -1,0 +1,41 @@
+---
+chapter: "reproducible"
+author: ""
+difficulty: "Easy"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: bee-tell-roof
+---
+
+```{r bee-tell-roof-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Insert a chunk in an R Markdown document that generates an error.
+Set the options so that the file renders even though there is an error.
+(Note: Some errors are easier to diagnose if you can execute specific R statements during rendering and leave more evidence behind for forensic examination.)
+
+ <!--begin-answer-->
+Put this chunk
+near the top of your R Markdown document if you want to soldier on through errors, i.e., turn foo.Rmd into foo.md and/or foo.html no matter what. 
+
+``{r setup, include = FALSE, cache = FALSE}  
+knitr::opts_chunk$set(error = TRUE)  
+``
+
+This is also helpful if you are writing a tutorial and want to demo code that throws an error. 
+You might want to keep this as an RStudio snippet for easy insertion.
+
+It's also possible to set things so that errors are tolerated in a
+specific chunk.
+
+```{r alwaysrun, error = TRUE}  
+## code goes here
+```
+
+Use either of these strategies to 
+generate an R Markdown file that includes an error but compiles nonetheless.  (Kudos to 
+Jenny Bryan for describing this approach.)
+
+ <!--end-answer-->

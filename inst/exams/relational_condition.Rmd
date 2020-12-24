@@ -1,0 +1,51 @@
+Question
+========
+
+Recall the flight arrival data from the `nycflights13` package. 
+
+```{r, message=FALSE}
+library(tidyverse)
+library(nycflights13)
+
+glimpse(flights)
+glimpse(airports)
+```
+
+In the following chunk, the `flights` table from the `nycflights13` package is joined onto the `airports` table from that same package. 
+
+```{r, message=FALSE, eval=FALSE}
+flights %>%
+  left_join(airports, by = ___________)
+```
+
+Which of the following join conditions will return valid results? 
+
+Answerlist
+----------
+* `c("dest" = "faa")`
+* `c("origin" = "faa")`
+* `c("dest" = "name")`
+* `c("origin" = "name")`
+* `c("faa" = "dest")`
+* `c("name" = "origin")`
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+extitle: join condition
+exsection: relational
+exname: relational-condition
+extype: mchoice
+exsolution: 110000

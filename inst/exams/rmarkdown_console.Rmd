@@ -1,0 +1,33 @@
+Question
+========
+
+Consider the console vs. R Markdown analogy referenced in this tweet:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Searching for good analogy for <a href="https://twitter.com/hashtag/rstats?src=hash&amp;ref_src=twsrc%5Etfw">#rstats</a> Console vs. R Markdown document. Does having a conversation vs. writing a speech work?</p>&mdash; Ben Baumer (@BaumerBen) <a href="https://twitter.com/BaumerBen/status/907281798585077760?ref_src=twsrc%5Etfw">September 11, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+In this analogy, code being executed is analogous to words being spoken. The console is one possible audience, while an R Markdown script is another. 
+
+Which of the following statements support this analogy? 
+
+Answerlist
+----------
+* Running code in the console is like having a conversation, because things are said quickly and then usually forgotten.
+* Running code in the console is like giving a speech, because each word should be carefully chosen and is read in a strict sequence.
+* Running code in an R Markdown document is like having a conversation, because things are said quickly and then usually forgotten.
+* Running code in an R Markdown document is like giving a speech, because each word should be carefully chosen and is read in a strict sequence. 
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. The console is usually a safe place to make mistakes.
+* False. An R Markdown document should be edited carefully.  
+* True.
+
+Meta-information
+================
+exname: rmarkdown-console
+extype: mchoice
+exsolution: 1001

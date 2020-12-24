@@ -1,0 +1,36 @@
+Question
+========
+
+Consider the following pipeline:
+
+```{r error=TRUE, message=FALSE}
+library(tidyverse)
+mtcars %>%
+  filter(cyl == 4) %>%
+  select(mpg, cyl)
+```
+
+The equivalent code written in nested form is:
+
+Answerlist
+----------
+* `select(filter(mtcars, cyl == 4), mpg, cyl)`
+* `filter(select(mtcars, cyl == 4), mpg, cyl)`
+* `select(filter(mtcars, cyl == 4, mpg, cyl))`
+* `select(mtcars, filter(cyl == 4), mpg, cyl)`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: wrangling-pipe
+extype: schoice
+exsolution: 1000

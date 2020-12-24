@@ -1,0 +1,44 @@
+Question
+========
+
+The following output shows the error message that occurs when you try to pull changes from GitHub. 
+
+[Note that the command `git pull` is the same thing as clicking the Pull down-arrow in RStudio.]
+
+```{bash, eval=FALSE}
+$ git pull
+
+error: Your local changes to the following files would be overwritten by merge:
+        foo.R
+Please commit your changes or stash them before you merge.
+Aborting
+```
+
+Which of the following approaches would likely solve the problem? (Choose all that *might* apply). 
+
+Answerlist
+----------
+* Pull: `git pull`
+* Push: `git push`
+* Commit the changes to `foo.R`, then pull, then push. 
+* Revert the changes to `foo.R`, then pull. 
+* Check remotes: `git remote -v`
+
+Solution
+========
+
+Answerlist
+----------
+* False. This is what you just tried and it didn't work.
+* False. The problem is that you can't *pull*
+* True. This will commit your changes.
+* True. This will solve the problem but will throw away your changes.
+* False. This might help, but it won't solve the problem. 
+
+Meta-information
+================
+extitle: pull rejection
+exsection: github
+exname: github-pull-rejection
+extype: mchoice
+exsolution: 00110

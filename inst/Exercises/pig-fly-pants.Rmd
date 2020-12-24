@@ -1,0 +1,31 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Easy"
+date: 2020-06-26 
+version: 0.1
+tags: [first, second, third]
+id: pig-fly-pants
+---
+
+```{r pig-fly-pants-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Wikipedia defines a hashtag as "a type of metadata tag used on social networks such as Twitter and other microblogging services, allowing users to apply dynamic, user-generated tagging which makes it possible for others to easily find messages with a specific theme or content." A hashtag must begin with a hash character followed by other characters, and is terminated by a space or end of message. It is always safe to precede the # with a space, and to include letters without diacritics (e.g., accents), digits, and underscores." Provide a regular expression that matches whether a string contains a valid hashtag. 
+
+```{r}
+strings <- c(
+  "This string has no hashtags",
+  "#hashtag city!",
+  "This string has a #hashtag",
+  "This string has #two #hashtags"
+)
+```
+
+  <!--begin-answer-->
+```{r, eval=FALSE}
+grep(strings, pattern = "#[A-Za-z0-9]")
+```
+
+  <!--end-answer-->

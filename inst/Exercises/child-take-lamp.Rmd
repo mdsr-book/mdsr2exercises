@@ -1,0 +1,26 @@
+---
+chapter: "foundations"
+author: ""
+difficulty: "Easy"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: child-take-lamp
+---
+
+```{r child-take-lamp-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: We saw that a 95% confidence interval for a mean was constructed by taking the estimate and adding and subtracting two standard deviations.  How many standard deviations should be used if a 99% confidence interval is desired?
+
+ <!--begin-answer-->
+If we assume that our sample size is sufficiently large, we can assume that the distribution of the 
+sample means is approximately normal (if not true we need to use the appropriate $t$-distribution).  
+```{r }
+qnorm(1 - .01 / 2)
+```
+We need to multiple the standard deviation of the mean (standard error) by 2.58.
+  <!--end-answer-->
+
+

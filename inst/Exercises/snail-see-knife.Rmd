@@ -1,0 +1,44 @@
+---
+chapter: "dataviz-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: snail-see-knife
+---
+
+```{r snail-see-knife-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Using data from the `r pkg_macro(nasaweather)` package, use the `geom_path` function to plot the path of each tropical storm in the `storms` data table. Use color to distinguish the storms from one another, and use faceting to plot each `year` in its own panel. 
+
+
+<!--begin-answer-->
+```{r storms-ex2, fig.height=15, fig.width=10, message= FALSE, warning = FALSE}
+library(nasaweather)
+library(ggplot2)
+bbox <- storms %>%
+  select(lat, long) %>%
+  map(range) %>%
+  bind_rows()
+
+base_map <- ggplot(data = map_data("world"), aes(x = long, y = lat)) +
+  geom_path(aes(group = group), color = "black", size = 0.1) +
+  lims(x = pull(bbox, long), y = pull(bbox, lat))
+
+storms <- storms %>%
+  mutate(the_date = lubridate::ymd(paste(year, month, day)))
+base_map +
+  geom_path(
+    data = storms, aes(color = name, alpha = 0.1, size = wind),
+    arrow = arrow(length = unit(0.1, "inches"))
+  ) +
+  facet_wrap(~year) +
+  theme(legend.position = "none")
+```
+<!--end-answer-->
+
+

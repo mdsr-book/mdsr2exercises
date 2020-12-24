@@ -1,0 +1,55 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Medium"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: fox-write-bowl
+---
+
+```{r fox-write-bowl-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The following code undertakes some data analysis using the HELP (Health Evaluation and Linkage to Primary Care) trial.  
+
+```{r eval=FALSE}
+library(mosaic)
+ds <-
+  read.csv("http://nhorton.people.amherst.edu/r2/datasets/helpmiss.csv")
+summarise(group_by(
+  select(filter(mutate(ds,
+    sex = ifelse(female == 1, "F", "M")
+  ), !is.na(pcs)), age, pcs, sex),
+  sex
+), meanage = mean(age), meanpcs = mean(pcs), n = n())
+```
+
+Describe in words what computations are being done.
+Using the pipe notation, translate this code into a more readable version.
+
+<!--begin-answer-->
+This code generates a new variable called `sex` based on the value of the `female` variable, drops any observations missing the `pcs` variable, selects three variables, then displays the average age, PCS, and sample size for each of the two groups defined by `sex`.
+
+```{r eval=FALSE}
+library(mosaic)
+ds <-
+  read.csv("http://nhorton.people.amherst.edu/r2/datasets/helpmiss.csv")
+ds %>%
+  mutate(sex = ifelse(female == 1, "F", "M")) %>%
+  filter(!is.na(pcs)) %>%
+  select(age, pcs, sex) %>%
+  group_by(sex) %>%
+  summarise(meanage = mean(age), meanpcs = mean(pcs), count = n())
+```
+
+Here it is much clearer what each operation within the "pipe-stream" is doing.  
+It is straightforward to debug expressions in this manner by just leaving off the
+"\tt \%>\%" at each line: this will only evaluate the set of functions called
+to that point and display the intermediate output.
+
+<!--end-answer-->
+
+

@@ -1,0 +1,38 @@
+---
+chapter: "regression"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: crocodile-toss-kayak
+---
+
+```{r crocodile-toss-kayak-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `Gestation` data set in `r pkg_macro(mdsr)` contains birth weight, date, and gestational period collected as part of the Child Health and Development Studies. Information about the baby's parents---age, education, height, weight, and whether the mother smoked is also recorded.
+
+a. Fit a linear regression model for birthweight (`wt`) as a function of the mother's age (`age`).
+b. Find a 95% confidence interval and p-value for the slope coefficient.
+c. What do you conclude about the association between a mother's age and her baby's birthweight?
+
+
+ <!--begin-answer-->
+
+-  We can fit the model using the `lm()` function.
+
+```{r}
+mod <- lm(wt ~ age, data = Gestation)
+msummary(mod)
+confint(mod)
+```
+
+-  We observe a 95% confidence interval that ranges from -0.07 to 0.28 (associated p-value is 0.24).  
+-  We conclude that there is not a statistically significant association between maternal age and child birth weight.  (However, other factors may be confounding this relationship.)
+
+<!--end-answer-->
+
+

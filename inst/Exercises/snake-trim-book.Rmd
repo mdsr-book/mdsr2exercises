@@ -1,0 +1,25 @@
+---
+chapter: "join"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, onlineonly]
+id: snake-trim-book
+---
+
+```{r snake-trim-book-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: What type of join operation is depicted below? 
+
+```{r  out.width = "50%", echo = FALSE}
+knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/dplyr-right-join.png", sep = ""))
+```
+
+<!--answer-start-->
+`right_join`
+<!--answer-end-->
+
+

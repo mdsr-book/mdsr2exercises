@@ -1,0 +1,39 @@
+---
+chapter: "simulation"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: snake-send-linen
+---
+
+```{r snake-send-linen-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Sally and Joan plan to meet to study in their college campus center.  They are both impatient people who will only wait 10 minutes for the other before leaving.  Rather than pick a specific time to meet, they agree to head over to the campus center sometime between 7:00 and 8:00 pm.  Let both arrival times be normally distributed with mean 30 minutes past and a standard deviation of 10 minutes. Assume that they are independent of each other.  What is the probability that they actually meet?  Estimate the answer using simulation techniques introduced in this chapter, with at least 10,000 simulations.
+
+
+<!--begin-answer-->
+```{r sally3,message=FALSE,eval=TRUE,fig.keep="last"}
+library(mdsr)
+n <- 10000
+sim_meet <- data.frame(
+  sally <- rnorm(n, mean = 30, sd = 10),
+  joan <- rnorm(n, mean = 30, sd = 10)
+) %>%
+  mutate(result = ifelse(abs(sally - joan) <= 10,
+    "They meet", "They do not"
+  ))
+tally(~result, format = "percent", data = sim_meet)
+binom.test(~result, n, success = "They meet", data = sim_meet)
+ggplot(data = sim_meet, aes(x = joan, y = sally, color = result)) +
+  geom_point(alpha = 0.3) +
+  geom_abline(intercept = 10, slope = 1) +
+  geom_abline(intercept = -10, slope = 1)
+```
+<!--end-answer-->
+
+

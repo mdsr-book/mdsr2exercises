@@ -1,0 +1,39 @@
+Question
+========
+
+Consider the following data graphic from the *Economist* article, "[Democrats are winning voters’ wallets—and perhaps their hearts as well](hhttps://www.economist.com/graphic-detail/2018/10/17/democrats-are-winning-voters-wallets-and-perhaps-their-hearts-as-well)":
+
+![](https://www.economist.com/img/b/1000/534/90/sites/default/files/20181020_WOC443_0.png)
+
+Which of the following statements are true? 
+
+Answerlist
+----------
+* The visual cue of color saturation indicates the election year.
+* The visual cue of color hue indicates the election year. 
+* The visual cue of color saturation indicates the share of individual contributions.
+* The visual cue of color hue indicates the share of individual contributions.
+* The visual cue of color saturation indicates the type of district.
+* The visual cue of color hue indicates the type of district.
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+extitle: saturation vs. hue
+exsection: aesthetics
+exname: aesthetics-saturation
+extype: mchoice
+exsolution: 100000
+exshuffle: true

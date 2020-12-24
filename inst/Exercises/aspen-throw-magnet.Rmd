@@ -1,0 +1,23 @@
+---
+chapter: "modeling"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2020-09-30 
+version: 0.1
+tags: [first, second, third]
+id: aspen-throw-magnet
+---
+
+```{r aspen-throw-magnet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: In the first example in the chapter, a training dataset of 80% of the rows was created for the Census data.
+What would be the tradeoffs of using a 90%/10% split instead?
+
+ <!--begin-answer-->
+The 90%/10% split would use more of the data in training the dataset but have less to test.  
+There would still, however, be 3,256 observations in the test dataset which may be sufficient to assess the model.
+ <!--end-answer-->
+  

@@ -1,0 +1,99 @@
+---
+chapter: "foundations"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: fly-talk-boat
+---
+
+```{r fly-talk-boat-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `Whickham` data set in the `r pkg_macro(mosaicData)` package includes data on age, smoking, and mortality from a one-in-six survey of the electoral roll in Whickham, a mixed urban and rural district near Newcastle upon Tyne, in the United Kingdom. The survey was conducted in 1972--1974 to study heart disease and thyroid disease. A follow-up on those in the survey was conducted 20 years later. Describe the association between smoking status and mortality in this study.  Be sure to consider the role of age as a possible confounding factor.
+
+ <!--begin-answer-->
+
+We see that the risk of dying is lower for smokers than for non-smokers, since
+31.4% of the non-smokers died, but only 23.9% of the smokers did not survive over the ten year period.
+A graphical representation using a mosaicplot (also known as an *Eikosogram*) represents the cell
+probabilities as a function of area.
+
+```{r whick1}
+library(mdsr)
+library(mosaicData)
+Whickham <- mutate(Whickham,
+  agegrp = cut(age,
+    breaks = c(1, 44, 64, 100),
+    labels = c("18-44", "45-64", "65+")
+  )
+)
+mosaicplot(mosaic::tally(~ outcome + smoker, data = Whickham),
+  ylab = "Smoking status",
+  xlab = "Mortality status (after 10 years)", main = "", color = TRUE
+)
+with(Whickham, gmodels::CrossTable(smoker, outcome,
+  prop.c = FALSE, prop.chisq = FALSE,
+  prop.t = FALSE
+))
+```
+
+We note that the majority of subjects have survived, but that
+the area for the smokers who are still alive is larger than we would expect if there were no
+association between these variables.
+What could explain this result?
+
+Let's consider stratification by age of the participants.  The following displays describe the relationship
+between smoking and mortality over a 10--year period for those age 18--44, those 45-64, and subjects that were 65 or older at baseline.
+
+
+```{r whick2}
+with(
+  filter(Whickham, agegrp == "18-44"),
+  gmodels::CrossTable(smoker, outcome, prop.c = FALSE, prop.chisq = FALSE, prop.t = FALSE)
+)
+mosaicplot(mosaic::tally(~ agegrp + outcome, data = Whickham),
+  ylab = "mortality status (after 10 years)",
+  xlab = "Age group", main = "", color = TRUE
+)
+with(Whickham, gmodels::CrossTable(agegrp, smoker,
+  prop.c = FALSE, prop.chisq = FALSE,
+  prop.t = FALSE
+))
+```
+
+Not surprisingly, we see that
+mortality rates are highest for the oldest subjects.
+We also observe that
+there is an association between age group and smoking status.
+
+```{r whick3}
+mosaicplot(mosaic::tally(~ agegrp + smoker, data = Whickham),
+  ylab = "smoking status",
+  xlab = "Age group", main = "", color = TRUE
+)
+```
+
+Smoking is also associated with age, with those between
+the ages of 45 to 64 most likely to have been smokers at baseline.
+
+
+After controlling for age, smokers have a higher
+rate of mortality than non-smokers in this study.
+
+
+```{r whick4}
+with(filter(Whickham, agegrp == "65+"), gmodels::CrossTable(smoker, outcome,
+  prop.c = FALSE, prop.chisq = FALSE, prop.t = FALSE
+))
+```
+
+The same is true for the other groups.
+Simple methods such as stratification can allow analysts to think beyond two
+dimensions and reveal effects of confounding variables.  
+  <!--end-answer-->
+
+

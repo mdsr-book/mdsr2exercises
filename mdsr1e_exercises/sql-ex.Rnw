@@ -1,0 +1,250 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/sql-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ", warning=FALSE)
+@
+
+<<my.cnf, include=FALSE, eval=FALSE>>=
+# ~/.my.cnf file should look like this:
+[client]
+user=bbaumer
+password=your_password
+
+[clientscidb]
+host=scidb.smith.edu
+user=mth292
+password=RememberPi
+
+# Then use --defaults-group-suffix to access different DBs:
+mysql --defaults-group-suffix=scidb
+@
+
+<<knitr-mysql, echo=FALSE, eval=TRUE>>=
+opts_chunk$set(engine.opts = "--defaults-group-suffix=scidb -t airlines")
+@
+
+\section{Exercises}
+
+Each of the following exercises can be solved via a single SQL query. Equivalently, each can be solved via a single pipeline of \pkg{dplyr} commands. Write valid solutions using both methods. 
+
+The exercises about flights assume that you have access to an SQL database that has been populated with the appropriate flight delay data. Please see the \func{src\_scidb} function in the \pkg{mdsr} package for access to these data on a pre-populated server. To create your own database, use the \pkg{airlines} package.
+
+
+\begin{Exercise}
+  How many domestic flights flew into Dallas-Fort Worth (\val{DFW}) on May 14, 1998?
+\end{Exercise}
+  
+\begin{Answer}
+<<engine='mysql'>>=
+USE airlines;
+SELECT sum(1) as N
+FROM flights o
+WHERE year = 1998 AND Month = 5 AND day = 14
+  AND dest = 'DFW';
+@
+\end{Answer}
+  
+\begin{Exercise}
+  Find all flights between \val{JFK} and \val{SFO} in 1994. How many were cancelled? What percentage of the total number of flights were cancelled? 
+\end{Exercise}
+ 
+\begin{Answer}
+  
+<<ex2-solution,engine="mysql">>=
+USE airlines;
+SELECT 
+  sum(1) as numFlights, 
+  sum(cancelled) as numCancelled,
+  avg(cancelled) as pctCancelled
+FROM flights o
+WHERE year = 1994 
+  AND dest IN ('JFK', 'SFO') AND origin IN ('JFK', 'SFO')
+LIMIT 0,6;
+@
+\end{Answer}
+  
+\begin{Exercise}
+  Of all the destinations from Chicago O'Hare (\val{ORD}), which were the most common in 1997? 
+\end{Exercise}
+ 
+\begin{Answer}
+  
+<<engine="mysql">>=
+USE airlines;
+SELECT 
+  dest, 
+  sum(1) as numFlights
+FROM flights o
+WHERE year = 1997 
+  AND origin = 'ORD'
+GROUP BY dest
+ORDER BY numFlights desc
+LIMIT 0,6;
+@  
+  
+\end{Answer}
+ 
+\begin{Exercise}
+  Which airport had the highest average arrival delay time in 2008? 
+\end{Exercise}
+
+\begin{Answer}
+ 
+  
+<<engine="mysql">>=
+USE airlines;
+SELECT 
+  dest, 
+  sum(1) as numFlights,
+  avg(arr_delay) as avg_arr_delay
+FROM flights o
+WHERE year = 2008
+GROUP BY dest
+ORDER BY avg_arr_delay desc
+LIMIT 0,6;
+@  
+
+\end{Answer}
+ 
+
+ 
+\begin{Exercise}
+
+  How many domestic flights came into or flew out of Bradley Airport (\val{BDL}) in 2012?
+\end{Exercise}
+
+\begin{Answer}
+<<engine="mysql">>=
+USE airlines;
+SELECT * 
+FROM flights 
+WHERE Year = 2012 
+  AND (Dest = 'BDL' OR Origin = 'BDL')
+LIMIT 0,6;
+@
+
+\end{Answer}
+ 
+\begin{Exercise}
+  List the airline and flight number for all flights between \val{LAX} and \val{JFK} on September 26th, 1990.
+\end{Exercise}
+
+\begin{Answer}
+<<engine="mysql">>=
+USE airlines;
+SELECT carrier, flight 
+FROM flights 
+WHERE Year = 2012 AND Month = 9 AND day = 26 
+  AND Origin IN ('LAX', 'JFK') 
+  AND Dest IN ('LAX', 'JFK')
+LIMIT 0,6;
+@
+\end{Answer}
+
+\bigskip
+
+The following questions require use of the \pkg{Lahman} package and reference basic baseball terminology. Please see \url{https://en.wikipedia.org/wiki/Baseball_statistics} for comprehensive explanations of any acronyms. 
+
+\begin{Exercise}
+  List the names of all batters who have at least 300 home runs (\var{HR}) and 300 stolen bases (\var{SB}) in their careers and rank them by career batting average ($H/AB$). 
+\end{Exercise}
+
+\begin{Answer}
+<<engine="mysql">>=
+USE lahman;
+SELECT concat(namelast, ', ', namefirst) as name, 
+            sum(hr) as tHR, sum(sb) as tSB, 
+            sum(h) / sum(ab) as BAvg
+          FROM batting b
+          LEFT JOIN master m ON b.playerid = m.playerid
+          GROUP BY b.playerid
+          HAVING tHR >= 300 AND tSB >= 300
+          ORDER BY BAvg desc
+LIMIT 0,6;
+@
+  
+\end{Answer}
+ 
+\begin{Exercise}
+  List the names of all pitchers who have at least 300 wins (\var{W}) and 3,000 strikeouts (\var{SO}) in their careers and rank them by career winning percentage ($W/(W+L)$). 
+\end{Exercise}
+
+\begin{Answer}
+  
+<<engine="mysql">>=
+USE lahman;
+SELECT concat(namelast, ', ', namefirst) as name, 
+  sum(w) as tW, sum(so) as tSO, 
+  sum(w) / sum(w+l) as WPct
+FROM pitching p
+LEFT JOIN master m ON p.playerid = m.playerid
+GROUP BY p.playerid
+HAVING tW >= 300 AND tSO >= 3000
+ORDER BY WPct desc
+LIMIT 0,6;
+@
+\end{Answer}
+
+\begin{Exercise}
+The attainment of either 500 home runs (\var{HR}) or 3,000 hits (\var{H}) in a career is considered to be among the greatest achievements to which a batter can aspire. These milestones are thought to guarantee induction into the Baseball Hall of Fame, and yet several players who have attained either milestone have not been inducted into the Hall of Fame. Identify them. 
+\end{Exercise}
+
+\begin{Answer}
+<<engine="mysql">>=
+USE lahman;
+SELECT Name, tHR, tH, is_inducted 
+FROM
+  (SELECT m.hofID, 
+          concat(namelast, ' ', namefirst) as Name,
+          sum(hr) as tHR, sum(h) as tH
+   FROM batting b
+   JOIN master m ON m.playerid = b.playerid
+   GROUP BY b.playerid
+   HAVING tHR >= 500 OR tH >= 3000) as bg
+LEFT JOIN 
+  (SELECT h.hofID,
+          sum(if(inducted = 'Y', 1, 0)) as is_inducted
+   FROM halloffame h
+   GROUP BY h.hofID) as hof 
+ON hof.hofID = bg.hofID
+WHERE is_inducted < 1;
+@
+
+Craig Biggio was inducted into the Hall of Fame in 2015. Pete Rose was banned from baseball in 1989, and the candidacies of the other four players are compromised by their alleged (or confirmed) steroid use. 
+
+
+\end{Answer}
+
+\bigskip
+
+The following question may require more than one query, and a more thoughtful response. 
+
+\begin{Exercise}
+  Based on data from 2012 only, and assuming that transportation to the airport is not an issue, would you rather fly out of JFK, LaGuardia (LGA), or Newark (EWR)? Why or why not? 
+\end{Exercise}
+ 
+\begin{Answer}
+An extremely simplistic solution would just compare the average flight delays and proportion of flights that were cancelled.
+<<engine='mysql'>>=
+USE airlines;
+SELECT 
+  MAX(origin) as airport,
+  sum(1) as numFlights, 
+  sum(cancelled) as numCancelled,
+  avg(cancelled) as pctCancelled,
+  avg(arr_delay) as avgdelay
+FROM flights o
+WHERE year = 2012 
+  AND origin IN ('JFK', 'LGA', 'EWR')
+GROUP BY origin
+ORDER BY pctCancelled;
+@
+
+A more sophisticated analysis (left to the reader) would be to account for differences in carriers and destinations (since the airports have very different patterns of flights).  
+
+\end{Answer}

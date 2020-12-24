@@ -1,0 +1,51 @@
+---
+chapter: "modeling"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-09-30 
+version: 0.1
+tags: [first, second, third]
+id: aspen-talk-ship
+---
+
+```{r aspen-talk-ship-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Investigators in the HELP (Health Evaluation and Linkage to Primary Care) study were interested in modeling associations between demographic factors and a baseline measure of depressive symptoms `cesd`.
+They fit a linear regression model using the following predictors: `age`, `sex`, and `homeless` to the `HELPrct` data from the `r pkg_macro(mosaicData)` package.
+
+
+a. Calculate and interpret the coefficient of determination ($R^2$) for this model and the null model.
+
+ <!--begin-answer-->
+
+XX
+
+```{r message = FALSE}
+library(mosaic)
+rsquared(cesd_mod)
+```
+
+ <!--end-answer-->
+ 
+b. Calculate and interpret the root mean squared error for this model and for the null model.
+
+ <!--begin-answer-->
+
+XX
+
+
+ <!--end-answer-->
+ 
+c. Calculate and interpret the mean absolute error (MAE) for this model and the null model.
+
+ <!--begin-answer-->
+
+XX
+
+ <!--end-answer-->
+  
+  
+  

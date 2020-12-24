@@ -1,0 +1,32 @@
+---
+chapter: "ethics"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, onlineonly]
+id: dog-beat-candy
+---
+
+```{r dog-beat-candy-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: In the United States, most students apply for grants or subsidized loans to finance their college education. Part of this process involves filling in a federal government form called the Free Application for Federal Student Aid (FAFSA). The form asks for information about family income and assets. The form also includes a place for listing the universities to which the information is to be sent. The data collected by FAFSA includes confidential financial information (listing the schools eligible to receive the information is effectively giving permission to share the data with them).
+
+It turns out that the order in which the schools are listed carries important information. Students typically apply to several schools, but can attend only one of them. Until recently, admissions offices at some universities used the information as an important part of their models of whether an admitted student will accept admissions. The earlier in a list a school appears, the more likely the student is to attend that school. 
+
+Here's the catch from the student's point of view. Some institutions use statistical models to allocate grant aid (a scarce resource) where it is most likely to help ensure that a student enrolls.  For these schools, the more likely a student is deemed to accept admissions, the lower the amount of grant aid they are likely to receive.
+
+Is this ethical? Discuss. 
+
+
+<!--begin-answer-->
+ 
+Admissions offices and consultants have defended their practice with the argument that the baseline should be the smaller amount of grant aid and that, seen this way, the information is only used to set amounts greater than the baseline, in other words, to help students who are otherwise unlikely to attend the university. This argument might have traction against the argument of whether it's ethical to give different amounts of grant to different students in the same financial situation. From a data-ethics point of view, each student is being tricked into providing information about school preferences that he or she has not been explicitly asked to provide and this information is being used contrary to the student's interest.
+
+Fortunately for students and their families, in 2015 the US government stopped including information about the order of schools.
+  <!--end-answer-->
+
+

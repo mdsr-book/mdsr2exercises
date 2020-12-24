@@ -1,0 +1,497 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/simulation-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+
+\section{Exercises}
+
+\begin{Exercise}
+{\it The lonely recording device:} This problem demonstrates the ways that empirical simulations can complement
+analytic (closed-form) solutions.  Consider an example where a recording device that measures
+remote activity is placed in a remote location. The time, $T$, to failure of
+the remote device has an exponential distribution with mean of 3 years. Since the location
+is so remote, the device
+will not be monitored during its first two years of service. As a result, the time to
+discovery of its failure is $X$ = max$(T, 2)$. The problem here is to determine the average of the
+time to discovery of the truncated variable (in probability parlance, the expected
+value of the observed variable $X$, E[X]).
+
+The analytic solution is fairly straightforward, but requires calculus.
+We need to evaluate:
+$$E[X] = \int_0^{2} 2 * f(u) du + \int_2^{\infty} u * f(u) du,$$ 
+where $f(u) = 1/3 \exp{(-1/3*u)}$ for $u > 0$.  
+%We can use the calculus functions 
+%in the {\tt mosaic} package to find
+%the answer.
+%
+%\index{R}{antiD()}
+%\index{R}{library(mosaic)}
+%<<>>=
+%@
+
+Is calculus strictly necessary here?
+Conduct a simulation to estimate (or check) the value for the average time to discovery.
+\end{Exercise}
+
+
+\begin{Answer}
+
+Let's first find the analytic answer (though this is not required).
+<<>>=
+options(digits=6)
+library(mosaic)
+rate <- 1/3
+F1 <- mosaicCalc::antiD((lambda*exp(-lambda*t)) ~ t, lambda=rate) # f(T)
+F2 <- mosaicCalc::antiD((t*lambda*exp(-lambda*t)) ~ t, lambda=rate) # E[T]
+2*(F1(t=2) - F1(t=0)) + (F2(t=Inf) - F2(t=2))
+@
+
+<<echo=FALSE>>=
+set.seed(1000)
+@
+\index{R}{rexp()}%
+\index{R}{confint()}%
+\index{R}{t.test()}%
+\index{R}{pmax()}%
+<<>>=
+rate <- 1/3
+numsim <- 100000
+fail <- rexp(numsim, rate=rate)
+# map all values less than 2 to be 2
+fail[fail<2] <- 2  # or mean(pmax(2, fail))
+confint(t.test(fail))
+@
+
+We confirm that the mean time to discovery of failure is approximately 3.54 years.
+\end{Answer}
+
+\begin{Exercise}
+{\it More on the jobs number:} In this chapter, we considered a simulation where the true jobs number
+remained constant over time.  Modify the call to the function provided in that example so that the true situation is that 
+there are 15,000 new jobs created every month.  Set your random number seed to the value $1976$.  Summarize what you might conclude from these results as if you were a journalist without a background in data science.
+\end{Exercise}
+
+\begin{Answer}
+<<nytimes1>>=
+library(mosaic)
+set.seed(1976)
+truejobs <- 100
+sejobs <- 65
+gensamp <- function(truemean=truejobs, truesd=sejobs,
+                    nummonths=12, delta=15, id=1) {
+  sampyear <- rep(truemean, nummonths) +
+    rnorm(nummonths, mean=delta*(1:nummonths), sd=truesd)
+  return(data.frame(jobsnumber = sampyear,
+                    month=as.factor(1:nummonths),
+                    id=id))
+}
+
+df <- rbind(
+  gensamp(truemean=truejobs, truesd=0,      id="Truth"),
+  gensamp(truemean=truejobs, truesd=sejobs, id="Sample 1"),
+  gensamp(truemean=truejobs, truesd=sejobs, id="Sample 2"),
+  gensamp(truemean=truejobs, truesd=sejobs, id="Sample 3")
+)
+
+ggplot(data = df, aes(x = month, y = jobsnumber)) +
+  geom_hline(yintercept = truejobs, linetype = 2) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ id) + ylab("Number of new jobs (in thousands)")
+@
+
+One might look at samples 2 or 3 and conclude that job growth is stagnating (though the true pattern is that it is increasing each month).
+
+\end{Answer}
+
+\begin{Exercise}
+{\it Simulating data from a logistic regression model:} 
+Generate $n=5000$ observations from a logistic regression model with parameters 
+intercept $\beta_0=-1$, slope $\beta_1=0.5$, and distribution of the predictor being normal with mean 1 and standard deviation 1.
+Calculate and interpret the resulting parameter estimates and confidence intervals.
+\end{Exercise}
+
+\begin{Answer}
+\index{R}{rnorm()}
+\index{R}{runif()}
+\index{R}{ifelse()}
+\index{R}{exp()}
+\index{R}{cut()}
+\index{R}{sample()}
+\index{R}{coef()}
+\index{R}{glm()}
+\index{R}{family option}
+<<>>=
+intercept <- -1
+beta <- 0.5
+n <- 5000
+xtest <- rnorm(n, mean=1, sd=1)
+linpred <- intercept + (xtest * beta)
+prob <- exp(linpred)/(1 + exp(linpred))
+ytest <- ifelse(runif(n) < prob, 1, 0)
+logreg <- glm(ytest ~ xtest, family=binomial)
+coef(logreg)
+exp(coef(logreg))
+confint(logreg)
+exp(confint(logreg))
+@    
+
+We see that the true parameters have been recovered (our estimates differ only slightly).
+
+\end{Answer}
+
+\begin{Exercise}
+{\it The Monty Hall problem:}
+\index{subject}{Monty Hall problem}%
+\index{subject}{conditional!probability}%
+The Monty Hall problem illustrates a simple setting where intuition is often misleading.  The situation is 
+based on the TV game show ``Let's Make a Deal." 
+First, Monty (the host) puts a prize behind one of three doors. Then the player chooses a door. 
+Next, (without moving the prize) Monty opens an unselected door, revealing that the prize is not 
+behind it. The player may then switch to the other nonselected door. Should the player switch?
+
+Many people see that there are now two doors to choose between and feel that since Monty can 
+always open a nonprize door, there is still equal probability for each door. If that were the 
+case, the player might as well keep the original door.
+This intuition is so attractive that when Marilyn vos Savant asserted that the player should 
+switch (in her \textit{Parade} magazine column), there were reportedly 10,000 letters asserting she 
+was wrong.
+\index{subject}{vos Savant, Marilyn}%
+\index{subject}{Parade magazine@\emph{Parade} magazine}%
+
+A correct intuitive route is to observe that Monty's door is fixed. The probability that 
+the player has the right door is 1/3 before Monty opens the nonprize door, and remains 1/3 
+after that door is open. This means that the probability the prize is behind one of the other 
+doors is 2/3, both before and after Monty opens the nonprize door. After Monty opens the 
+nonprize door, the player gets a 2/3 chance of winning by switching to the remaining door. 
+If the player wants to win, they should switch doors.
+
+One way to prove to yourself that switching improves your chances of winning 
+is through simulation. In fact, even deciding 
+how to code the problem may be enough to convince yourself to switch.
+
+In the simulation,
+you need to 
+assign the prize to a door, then make an initial guess. If the guess was right, 
+Monty can open either door. We'll switch to the other door. Rather than have Monty choose 
+a door, we'll choose one, under the assumption that Monty opened the other one. 
+If our initial guess was wrong, Monty will open the 
+only remaining nonprize door, and when we switch we'll be choosing the prize door.
+\end{Exercise}
+
+\begin{Answer}
+We write two helper functions. In one, Monty opens a door, choosing at random 
+among the nonchosen doors if the initial choice was correct, or choosing the 
+one nonselected nonprize door if the initial choice was wrong. The other 
+function returns the door chosen by swapping. We use the {\tt sample()} function 
+to randomly pick one value. We then use these functions on 
+each trial with the apply() statement (section 5.4.2).  % XX watch out for hardcoded label!
+
+\index{R}{opendoor()}
+\index{R}{sample()}
+<<>>=
+numsim <- 10000
+doors <- 1:3
+opendoor <- function(x) { 
+   # input x is a vector with two values
+   # first element is winner, second is choice
+   if (x[1]==x[2])    # guess was right
+      return(sample(doors[-c(x[1])], 1)) 
+   else return(doors[-c(x[1],x[2])])
+}
+@
+
+<<>>=
+opendoor(c(1, 1))   # can return 2 or 3
+opendoor(c(1, 2))   # must return 3!
+@
+\noindent
+Recall that Monty can choose either door 2 or 3 to open when the winning door
+is initially chosen.  When the winning door and initial choice differ (as
+in the latter example), there is only one door which can be opened.
+
+
+\index{R}{swapdoor()}
+\index{R}{return()}
+<<>>=
+swapdoor <- function(x) { return(doors[-c(x[1], x[2])]) }
+swapdoor(c(1,1))
+swapdoor(c(1,2))
+@
+
+\noindent
+The {\tt swapdoor()} function works in a similar fashion.  Once these parts are in place, the
+simulation is straightforward.
+
+\index{R}{sample()}
+\index{R}{apply()}
+\index{R}{cbind()}
+\index{R}{replace option}
+<<>>=
+winner <- sample(doors, numsim, replace=TRUE)
+choice <- sample(doors, numsim, replace=TRUE)
+open <- apply(cbind(winner, choice), 1, opendoor)
+newchoice <- apply(cbind(open, choice), 1, swapdoor)
+@
+
+<<>>=
+cat("Without switching, won ",
+   round(sum(winner==choice)/numsim*100, 1),
+      " percent of the time.\n", sep="")
+cat("With switching, won ",
+   round(sum(winner==newchoice)/numsim*100, 1),
+      " percent of the time.\n", sep="")
+@
+
+
+
+\noindent
+We note (with some amusement) that Monty didn't actually offer this choice to the players: see \url{http://tinyurl.com/montynoswitch} for an interview with the details.
+\end{Answer}
+
+\begin{Exercise}
+{\it Restaurant violations:} Is there evidence that restaurant health inspectors in New York City also give the benefit of the doubt
+to those at the threshold between a B grade (14 to 27) or C grade (28 or above)?
+\end{Exercise}
+
+\begin{Answer}
+It looks like it happens in this range as well: there is a big drop between 27 and 28.
+<<restaurant-bar2>>=
+minval <- 25
+maxval <- 30
+justScores <- Violations %>%
+        filter(score >= minval & score <= maxval) %>%
+        select(dba, score) %>%
+        unique()
+gradeInflation <- tally(~ score, data=justScores)
+gradeInflation
+df <- data.frame(gradeInflation)
+ggplot(data = df, aes(y = Freq, x = score)) +
+  geom_hline(yintercept = truejobs, linetype = 2) +
+  geom_bar(stat = "identity") +
+  xlab("Number of new jobs (in thousands)")
+@
+\end{Answer}
+
+\begin{Exercise}
+{\it Equal variance assumption:} What is the impact of the violation of the equal variance
+assumption for linear regression models?  Repeatedly generate data from a ``true" model 
+given by the following code.
+<<>>=
+n <- 250
+rmse <- 1
+x1 <- rep(c(0,1), each=n/2)     # x1 resembles 0 0 0 ... 1 1 1
+x2 <- runif(n, min=0, max=5)
+beta0 <- -1
+beta1 <- 0.5
+beta2 <- 1.5
+y <- beta0 + beta1*x1 + beta2*x2 + rnorm(n, mean=0, sd=rmse + x2)
+@
+For each simulation, fit the linear regression model and display the distribution of 1,000 estimates of the $\beta_1$ parameter (note that you need to generate the vector of outcomes each time).  Does the distribution of the parameter follow a normal distribution?
+\end{Exercise}
+
+\begin{Answer}
+
+
+<<>>=
+set.seed(1899)
+@
+
+<<dosimhist2>>=
+dosim <- function() {
+  y <- beta0 + beta1*x1 + beta2*x2 + 
+       rnorm(n, mean=0, sd=rmse + x2)
+  mod <- lm(y ~ x1 + x2)
+  result <- coef(mod)[2]
+  return(result)  # coefficient for X1
+}
+res <- do(1000)*dosim()
+favstats(~ x1, data=res)
+ggplot(data=res, aes(x = x1)) +
+  geom_density() +
+  stat_function(fun=dnorm, args=list(mean=mean(res$x1), sd=sd(res$x1)),
+    linetype=2)+
+  ggtitle("distribution of regression parameter") +
+  scale_x_continuous("beta 1 coefficients")
+@
+
+While there is some deviation from the normal distribution (and slightly heaver tails), the normal approximation still works fairly effectively in this example.
+
+
+\end{Answer}
+
+\begin{Exercise}
+{\it Skewed residuals:} What is the impact if the residuals from a linear regression model are skewed (and not from a normal distribution)?
+Repeatedly generate data from a ``true" model given by:
+<<>>=
+n <- 250
+rmse <- 1
+x1 <- rep(c(0,1), each=n/2)     # x1 resembles 0 0 0 ... 1 1 1
+x2 <- runif(n, min=0, max=5)
+beta0 <- -1
+beta1 <- 0.5
+beta2 <- 1.5
+y <- beta0 + beta1*x1 + beta2*x2 + rexp(n, rate=1/2)
+@
+
+For each simulation, fit the linear regression model and display the distribution of 1,000 estimates of the $\beta_1$ parameter (note that you need to generate the vector of outcomes each time).
+\end{Exercise}
+
+\begin{Answer}
+
+<<plotexp>>=
+plotDist("exp", rate=1/2)
+@
+We can see that the distribution of the residuals is skewed.
+
+
+<<>>=
+set.seed(1899)
+@
+
+<<dosimhist1>>=
+dosim <- function() {
+  y <- beta0 + beta1*x1 + beta2*x2 + 
+       rexp(n, rate=1/2)
+  mod <- lm(y ~ x1 + x2)
+  result <- coef(mod)[2]
+  return(result)  # coefficient for X1
+}
+res <- do(1000)*dosim()
+favstats(~ x1, data=res)
+ggplot(data=res, aes(x = x1)) +
+  geom_density() +
+  stat_function(fun=dnorm, args=list(mean=mean(res$x1), sd=sd(res$x1)),
+    linetype=2)+
+  ggtitle("distribution of regression parameter") +
+  scale_x_continuous("beta 1 coefficients")
+@
+
+While there is some deviation from the normal distribution, the normal approximation works effectively when the residuals come from an exponential (skewed) distribution).  This is not unexpected given that the 
+central limit theorem holds since the sample size of n=\Sexpr{n} is sufficiently large.
+
+
+\end{Answer}
+
+\begin{Exercise}
+{\it Meeting in the campus center:} 
+Sally and Joan plan to meet to study in their college campus center.  They are both impatient people who will only wait 10 minutes for the other before leaving.  Rather than pick a specific time to meet, they agree to head over to the campus center sometime between 7:00 and 8:00 pm.  Let both arrival times be uniformly distributed over the hour, and assume that they are independent of each other.  What is the probability that they actually meet?  Find the exact (analytical) solution.
+\end{Exercise}
+
+\begin{Answer}
+
+Sally and Joan are trying to meet, but each only stay ten minutes if the other doesn't arrive.  Their arrival times are independent of each other and uniform on the interval 0 to 60.  Imagine a square with sides of length 60, where the x axis represents Sally's time and the y axis represents Joan.  They will meet if they arrive within 10 minutes (along the diagonal from (0,0) to (60,60)). It is straighforward to find the area of each of the two triangles (with base and height both 50 minutes) that define the regions where they won't meet.  Therefore, the probability that they meet is then equal to 1 - $(50/60)^2$ = 0.3056.
+
+<<sally2,fig.keep="last">>=
+1-(50/60)^2
+# empirical solution as a check
+n <- 10000
+sim_meet <- data.frame(
+  sally <- runif(n, min = 0, max = 60),
+  joan <- runif(n, min = 0, max = 60)) %>%
+  mutate(result = ifelse(abs(sally - joan) <= 10,
+    "They meet", "They do not"))
+tally(~ result, format = "percent", data = sim_meet)
+binom.test(~result, n, success = "They meet", data = sim_meet)
+ggplot(data = sim_meet, aes(x = joan, y = sally, color = result)) +
+  geom_point(alpha = 0.3) +
+  geom_abline(intercept = 10, slope = 1) +
+  geom_abline(intercept = -10, slope = 1)
+@
+
+\end{Answer}
+
+
+\begin{Exercise}
+{\it Meeting in the campus center (redux):} 
+Sally and Joan plan to meet to study in their college campus center.  They are both impatient people who will only wait 10 minutes for the other before leaving.  Rather than pick a specific time to meet, they agree to head over to the campus center sometime between 7:00 and 8:00 pm.  Let both arrival times be normally distributed with mean 30 minutes past and a standard deviation of 10 minutes. Assume that they are independent of each other.  What is the probability that they actually meet?  Estimate the answer using simulation techniques introduced in this chapter, with at least 10,000 simulations.
+\end{Exercise}
+
+\begin{Answer}
+<<sally3,message=FALSE,eval=TRUE,fig.keep="last">>=
+library(mdsr)
+n <- 10000
+sim_meet <- data.frame(
+  sally <- rnorm(n, mean=30, sd=10),
+  joan <- rnorm(n, mean=30, sd=10)) %>%
+  mutate(result = ifelse(abs(sally - joan) <= 10,
+    "They meet", "They do not"))
+tally(~ result, format = "percent", data = sim_meet)
+binom.test(~result, n, success = "They meet", data = sim_meet)
+ggplot(data = sim_meet, aes(x = joan, y = sally, color = result)) +
+  geom_point(alpha = 0.3) +
+  geom_abline(intercept = 10, slope = 1) +
+  geom_abline(intercept = -10, slope = 1)
+@
+\end{Answer}
+
+\begin{Exercise}
+Consider a queueing example where customers arrive at a bank at a given minute past the hour and are served by the next available teller.  
+Use the following data to explore wait times for a bank with one teller vs.\ one with two tellers, where the duration of the transaction is given below.
+<<echo=FALSE, results="asis">>=
+library(xtable)
+df <- data.frame(arrival=c(1,3,7,10,11,15), duration=c(3,2,5,6,8,1))
+xtable(df)
+@
+What is the average total time for customers in the bank with one teller?  What is the average for a bank with two tellers?
+\end{Exercise}
+
+\begin{Answer}
+For the bank with one teller the total times are 3, 3, 5, 8, 15, and 12 minutes (average of 7.7 minutes).
+For the bank with two tellers the total times are 3, 2, 5, 6, 9, and 2 minutes (average of 4.5 minutes).
+\end{Answer}
+
+\begin{Exercise}
+The time a manager takes to interview a job applicant has an exponential distribution with mean of half an hour, and these times are independent of each other.  The applicants are scheduled at quarter-hour intervals beginning at 8:00 am, and all of the applicants arrive exactly on time (this is an excellent thing to do, by the way).  When the applicant with an 8:15 am appointment arrives at the manager's office office, what is the probability that she will have to wait before seeing the manager?  What is the expected time that her interview will finish?
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+1- pexp(0.25, rate=2)
+@
+The empirical probability that she has to wait is 0.6065.
+
+<<>>=
+numsim <- 10000
+samp1 <- rexp(numsim, rate=2)  # E[X] = 1/2
+samp2 <- rexp(numsim, rate=2)  
+actual1 <- ifelse(samp1 < 0.25, 0.25, samp1)   
+actual2 <- actual1 + samp2
+favstats(~ actual2)
+count <- tally(~ (samp1 >= 0.25) ) 
+# Counting number of times the simulation goes over 15 min
+cat("Estimated chance that the applicant with an 8:15 appointment has to wait is", 
+    count[1]/numsim)
+@
+\end{Answer}
+
+
+\begin{Exercise}
+{\it Tossing coins:}
+Two people toss a fair coin 4 times each.  Find the probability that they throw equal numbers of heads.  Also estimate the probability that they throw equal numbers of heads using a simulation in \R (with an associated 95\% confidence interval for your estimate). 
+\end{Exercise}
+
+\begin{Answer}
+There are 70 ways for this to happen (out of $2^8$ possible outcomes), so P(both throw same)=$70/2^8=0.2734$.
+
+<<>>=
+70*(1/2)^8   # 1 + 16 + 36 + 16 + 1 = 70
+# here's a simulation
+set.seed(1992)
+n <- 10000
+part1 <- do(n)*rflip(4)
+part2 <- do(n)*rflip(4)
+success <- sum(part1$heads==part2$heads)
+success/n
+binom.test(success, n)
+@
+\end{Answer}
+
+
+

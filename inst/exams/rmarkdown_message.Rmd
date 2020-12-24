@@ -1,0 +1,40 @@
+Question
+========
+Consider the following R Markdown chunk:
+
+```{r}
+library(tidyverse)
+```
+
+Adding which chunk option would result in the following output and the same effect?:
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+Answerlist
+----------
+* `message = FALSE`
+* `echo = FALSE`
+* `warning = FALSE`
+* `include = FALSE`
+* `error = FALSE`
+* `eval = FALSE`
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. This suppresses the code in the chunk.
+* False. This suppresses warning messages.
+* False. This suppresses the output and the code.
+* False. This allows knitting to continue even if there is an error in the chunk.
+* False. This suppresses the evaluation of the code.
+
+Meta-information
+================
+exname: rmarkdown-messages
+extype: schoice
+exsolution: 100000

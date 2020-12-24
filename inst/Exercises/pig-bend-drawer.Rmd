@@ -1,0 +1,25 @@
+---
+chapter: "sqlII"
+author: ""
+difficulty: "Hard"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: pig-bend-drawer
+---
+
+```{r pig-bend-drawer-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a full table schema for the `mtcars` data set and import it into the database server of your choice.  
+
+
+ <!--begin-answer-->
+```{r echo=FALSE}
+library(etl)
+cat(readChar(system.file(package = "etl", "sql", "init.mysql"), 1e5))
+```
+ <!--end-answer-->
+
+

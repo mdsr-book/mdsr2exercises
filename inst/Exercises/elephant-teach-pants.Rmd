@@ -1,0 +1,95 @@
+---
+chapter: "ethics"
+author: "Nicholas Horton"
+difficulty: "Hard"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: elephant-teach-pants
+---
+
+```{r elephant-teach-pants-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: An investigative team wants to winnow the set of variables to include in their final multiple regression model.  They have 100 variables and one outcome measured for $n=250$ observations).  
+
+They use the following procedure:
+
+1. Fit each of the 100 bivariate models for the outcome as a function of a single predictor, then
+
+2. Include all of the significant predictors in the overall model.
+
+What does the distribution of the p-value for the overall test look like, assuming that there are no associations between any of the predictors and the outcome (all are assumed to be multivariate normal and independent).
+Carry out a simulation to check your answer.
+
+<!--begin-answer-->
+```{r elephant-teach-pants-answer1, cache = TRUE}
+numsim <- 250
+set.seed(1998)
+genmodel <- function(p = 100, n = 250, alpha = 0.05, twostage = TRUE) {
+  X <- matrix(rnorm(p * n), nrow = n)
+  y <- rnorm(n)
+  keep <- logical(p)
+  for (i in 1:p) {
+    mod <- lm(y ~ X[, i])
+    testpval <- coef(summary(mod))[2, 4]
+    keep[i] <- testpval < alpha
+  }
+  if (twostage == TRUE) {
+    keep <- logical(p)
+    for (i in 1:p) {
+      mod <- lm(y ~ X[, i])
+      testpval <- coef(summary(mod))[2, 4]
+      keep[i] <- testpval < alpha
+    }
+    smallX <- data.frame(y, X[, keep])
+  } else { # include all predictors
+    smallX <- data.frame(y, X)
+  }
+  overall <- lm(y ~ ., data = smallX)
+  return(overallp = broom::glance(overall)$p.value)
+}
+
+res <- tibble(
+  sim = 1:numsim, 
+  # should be uniform
+  p_value = map_dbl(sim, genmodel, twostage = FALSE)
+)
+mosaic::binom.test(~ (p_value < 0.05), data = res)
+```
+
+When all predictors are included in the model, the resulting overall p-value is uniform over the interval from zero to one, with only about 5\% between 0 and 0.05.
+
+```{r freedman1}
+ggplot(data = res, aes(x = p_value)) +
+  geom_histogram(binwidth = 0.05) +
+  xlab("distribution of overall p-value")
+```
+
+
+```{r }
+res <- res %>%
+  mutate(
+    # no longer uniform
+    p_value2 = map_dbl(sim, genmodel, twostage = TRUE)
+  ) 
+mosaic::binom.test(~ (p_value2 < 0.05), data = res)
+```
+
+Note that sometimes that model doesn't converge (if none of the predictors are statistically significant).  
+
+```{r freedman2}
+ggplot(data = res, aes(x = p_value2)) +
+  geom_histogram(binwidth = 0.005) +
+  xlab("distribution of overall p-value")
+```
+
+When only the significant predictors are included, the resulting overall p-values are much more likely to be significant (this procedure leads to a dramatically inflated Type-I error rate).
+
+<!--end-answer-->
+
+
+
+

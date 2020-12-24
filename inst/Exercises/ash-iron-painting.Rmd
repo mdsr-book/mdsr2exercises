@@ -1,0 +1,81 @@
+---
+chapter: "spatial-II"
+author: "mdsr1"
+difficulty: "Medium"
+date: 2020-06-24 
+version: 0.1
+tags: [first, second, third]
+id: ash-iron-painting
+---
+
+```{r ash-iron-painting-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyr)
+library(tidygeocoder)
+library(ggspatial)
+```
+
+
+TITLE GOES HERE: The `Violations` data frame in the `r pkg_macro(mdsr)` package contains information on violations noted in Board of Health inspections of New York City restaurants. These data contain spatial information in the form of addresses and zip codes. 
+
+a. Use the `geocode` function in `r pkg_macro(tidygeocoder)` to obtain spatial coordinates for these restaurants. 
+
+ <!--begin-answer-->
+```{r , message=FALSE}
+library(tidygeocoder)
+set.seed(1619)
+
+addresses <- Violations %>%
+  sample_n(5) %>%
+  mutate(address = paste(street, ", NY", zipcode))
+
+geocode(.tbl = addresses, address = address, method = "osm")
+```
+ <!--end-answer-->
+
+
+b. Using the spatial coordinates you obtained in the previous exercise, create an informative static map using `r pkg_macro(ggspatial)` that illustrates the nature and extent of restaurant violations in New York City.
+
+ <!--begin-answer-->
+```{r,message=FALSE, warning = FALSE}
+library(sf)
+library(ggspatial)
+library(tidygeocoder)
+
+set.seed(23)
+addresses <- Violations %>%
+  sample_n(10) %>%
+  mutate(address = paste(street, ", NY", zipcode))
+
+addresses <- cbind(geocode(.tbl = addresses, address = address, method = "osm"))
+
+addresses <- left_join(addresses, ViolationCodes, by = "violation_code")
+
+address_sf <- addresses %>%
+  filter(!is.na(lat)) %>%
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
+
+ggplot() +
+  annotation_map_tile(type = "osm") +
+  geom_sf(data = address_sf, aes(color = critical_flag, size = score))
+```
+
+ <!--end-answer-->
+
+
+c. Using the spatial coordinates you obtained in the previous exercises, create an informative interactive map using `leaflet` that illustrates the nature and extent of restaurant violations in New York City.
+
+ <!--begin-answer-->
+
+```{r}
+library(leaflet)
+
+leaflet() %>%
+  addTiles() %>%
+  addCircleMarkers(data = addresses %>% filter(long > -74, lat > 30, critical_flag == "Critical"), lng = ~long, lat = ~lat, popup = ~ paste("Restaurant Name : ", dba, "\n", " Violation: ", violation_description, "\n"), color = "red") %>%
+  addCircleMarkers(data = addresses %>% filter(long > -74, lat > 30, critical_flag == "Not Critical"), lng = ~long, lat = ~lat, popup = ~ paste("Restaurant Name : ", dba, "\n", " Violation: ", violation_description, "\n"), color = "blue")
+```
+
+ <!--end-answer-->

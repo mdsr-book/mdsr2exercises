@@ -1,0 +1,37 @@
+---
+chapter: "sqlI"
+author: ""
+difficulty: "Easy"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: fish-burn-saucer
+---
+
+```{r fish-burn-saucer-default, include = FALSE}
+library(etude)
+library(mdsr)
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:  Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
+How many domestic flights flew into Dallas-Fort Worth (DFW) on May 14, 2010?
+
+  
+<!--begin-answer-->
+```{r, warning = FALSE, message= FALSE}
+library(RMySQL)
+con <- mdsr::dbConnect_scidb(dbname = "airlines")
+
+myquery <- "
+SELECT sum(1) as N
+FROM flights o
+WHERE year = 2010 AND Month = 5 AND day = 14
+  AND dest = 'DFW';"
+
+dbGetQuery(con, myquery)
+```
+<!--end-answer-->
+
+

@@ -1,0 +1,250 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/netsci-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+\section{Exercises}
+
+\begin{Exercise}
+\label{ex:cross-join}
+In the \cmd{CROSS JOIN} query in the movies example, how could we have modified the SQL query to include the actor's and actresses' names in the original query? Why would this have been less efficient from a computational and data storage point of view? 
+\end{Exercise}
+
+\begin{Answer}
+We could have joined onto the \data{names} table twice---once for the \var{src} actors and again for the \var{dest} actors. This would have been far less efficient, since \cmd{JOIN}s are big operations, and this would have resulting in the actors names being repeated in the data for each \emph{edge}, as opposed to each \emph{vertex}. 
+\end{Answer}
+
+\begin{Exercise}
+Expand the Hollywood network by going further back in time. If you go back to 2000, which actor/actress has the highest degree centrality? Betweenness centrality? Eigenvector centrality?
+\end{Exercise}
+
+\begin{Answer}
+
+The following code should generate the graph, but we have suppressed the results here due to the time it takes to compile. 
+
+  <<eval=FALSE,message=FALSE>>=
+library(mdsr)
+db <- src_scidb("imdb")
+sql <- 
+  "SELECT a.person_id as src, b.person_id as dest, 
+    a.movie_id, 
+    a.nr_order * b.nr_order as weight, 
+    t.title, idx.info as ratings
+  FROM imdb.cast_info a 
+    CROSS JOIN imdb.cast_info b USING (movie_id)
+    LEFT JOIN imdb.title t ON a.movie_id = t.id
+    LEFT JOIN imdb.movie_info_idx idx ON idx.movie_id = a.movie_id
+  WHERE t.production_year >= 2000 AND t.kind_id = 1
+    AND info_type_id = 100 AND idx.info > 125000
+    AND a.nr_order <= 20 AND b.nr_order <= 20
+    AND a.role_id IN (1,2) AND b.role_id IN (1,2)
+    AND a.person_id < b.person_id
+  GROUP BY src, dest, movie_id"
+E <- DBI::dbGetQuery(db$con, sql) %>%
+  mutate(ratings = as.numeric(ratings))
+actor_ids <- unique(c(E$src, E$dest))
+V <- db %>%
+  tbl("name") %>%
+  filter(id %in% actor_ids) %>%
+  select(id, name) %>%
+  rename(actor_name = name) %>%
+  collect() %>%
+  arrange(id)
+@
+
+<<eval=FALSE>>=
+library(igraph)
+g <- graph_from_data_frame(E, directed = FALSE, vertices = V)
+
+g <- g %>%
+  set_vertex_attr("degree", value = degree(g)) %>%
+  set_vertex_attr("eigen", value = eigen_centrality(g)$vector) %>%
+  set_vertex_attr("pagerank", value = page_rank(g)$vector) %>%
+  set_vertex_attr("btw", value = igraph::betweenness(g, normalized = TRUE))
+get.data.frame(g, what = "vertices") %>%
+  arrange(desc(btw)) %>%
+  head()
+@
+
+\end{Answer}
+
+\begin{Exercise}
+For a while, \href{https://en.wikipedia.org/wiki/Edward_Snowden}{Edward Snowden} was trapped in a Moscow airport. Suppose that you were trapped not in \emph{one} airport, but in \emph{all} airports. If you were forced to randomly fly around the United States, where would you be most likely to end up? 
+\end{Exercise}
+\begin{Answer}
+
+You'd be most likely to end up in Atlanta.
+
+<<message=FALSE, warning=FALSE>>=
+library(mdsr)
+library(DBI)
+dbAir <- src_scidb("airlines")
+E <- dbGetQuery(dbAir$con, "SELECT origin as src, dest, sum(1) as N
+FROM flights WHERE year = 2012 GROUP BY origin, dest")
+
+library(igraph)
+g <- graph.data.frame(E, directed = TRUE)
+E(g)$weight <- E(g)$N / sum(E(g)$N)
+
+g <- g %>%
+  set_vertex_attr("pagerank", value = page_rank(g)$vector)
+get.data.frame(g, what = "vertices") %>%
+  arrange(desc(pagerank)) %>%
+  head()
+@
+
+\end{Answer}
+
+\begin{Exercise}
+What information do you need to compute the PageRank of the U.S. airport network? Write an SQL query to retrieve this information for 2012. 
+\end{Exercise}
+
+\begin{Answer}
+<<message=FALSE, warning=FALSE>>=
+library(mdsr)
+library(DBI)
+dbAir <- src_scidb("airlines")
+E <- dbGetQuery(dbAir$con, "SELECT origin as src, dest, sum(1) as N
+FROM flights WHERE year = 2012 GROUP BY origin, dest")
+@
+\end{Answer}
+
+\begin{Exercise}
+Use the data you pulled from SQL in the previous exercise and build the network as a \emph{weighted} \pkg{igraph} object, where the weights are proportional to the frequency of flights between each pair of airports.
+\end{Exercise}
+
+\begin{Answer}
+<<message=FALSE>>=
+library(igraph)
+g <- graph.data.frame(E, directed = TRUE) %>%
+  set_edge_attr("weight", value = E(.)$N / sum(E(.)$N))
+summary(g)
+@
+\end{Answer}
+
+\begin{Exercise}
+Compute the PageRank of each airport in your network from the previous exercise. What are the top 10 ``most central" airports? Where does Oakland International Airport (\val{OAK}) rank?
+\end{Exercise}
+  
+\begin{Answer}
+<<>>=
+g <- g %>%
+  set_vertex_attr("pagerank", value = page_rank(g)$vector)
+get.data.frame(g, what = "vertices") %>%
+  arrange(desc(pagerank)) %>%
+  head(10)
+@
+\end{Answer}
+
+\begin{Exercise}
+Update the vertex attributes of your network from the previous exercise with the geographic coordinates of each airport (available in the \data{airports} table). 
+\end{Exercise}
+
+\begin{Answer}
+<<warning=FALSE>>=
+vIds <- unique(c(E$src, E$dest))
+airports <- tbl(dbAir, "airports")
+V <- airports %>%
+  filter(faa %in% vIds) %>%
+  collect()
+@
+
+<<>>=
+Vg <- as_data_frame(g, what = "vertices") %>%
+  mutate(vId = 1:nrow(.))
+V <- full_join(x = V, y = Vg, by = c("faa" = "name"))
+
+g <- g %>%
+  set_vertex_attr("lat", index = V$vId, value = V$lat) %>%
+  set_vertex_attr("lon", index = V$vId, value = V$lon) %>%
+  set_vertex_attr("airport", index = V$vId, value = V$name)
+@
+
+\end{Answer}
+
+\begin{Exercise}
+Use \pkg{ggnetwork} to draw the airport network from the previous exercise. Make the thickness or transparency of each edge proportional to its weight. 
+\end{Exercise}
+
+\begin{Answer}
+<<anothermap3,message=FALSE, warning=FALSE, eval=TRUE>>=
+Vg <- get.data.frame(g, what = "vertices")
+plot(g, layout = layout.kamada.kawai, 
+     edge.width = 500*E(g)$weight, edge.color = "dodgerblue", 
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
+     vertex.label = NA, vertex.size = 100*V(g)$pagerank, 
+     vertex.color = "gold")
+@
+\end{Answer}
+
+\begin{Exercise}
+Overlay your airport network from the previous exercise on a U.S. map (see Chapter 14).  % XX watch out for hardcoded ref!
+\end{Exercise}
+
+\begin{Answer}
+<<anothermap2,message=FALSE, warning=FALSE>>=
+library(maps)
+map('state')
+plot(g, rescale = FALSE, add = TRUE, 
+     layout = as.matrix(Vg[, c("lon", "lat")]), 
+     edge.width = 500*E(g)$weight, edge.color = "dodgerblue", 
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
+     vertex.label = NA, vertex.size = 1000*V(g)$pagerank, 
+     vertex.color = "gold")
+@
+\end{Answer}
+
+\begin{Exercise}
+Project the map and the airport network from the previous exercise using the Lambert Conformal Conic projection (see Chapter 14).
+% XX hard coded ref!
+\end{Exercise}
+
+\begin{Answer}
+
+These plots don't look right here, but they look much better in the RStudio plot window.
+
+<<anothermap,message=FALSE, warning=FALSE, eval=FALSE>>=
+library(maptools)
+library(sp)
+data(wrld_simpl)
+states <- subset(wrld_simpl, NAME == "United States")
+proj <- CRS("+proj=lcc +lat_1=20 +lat_2=60 +lat_0=40 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs")
+library(rgdal)
+states.proj <- spTransform(states, proj)
+summary(g)
+V0 <- na.omit(Vg)
+coordinates(V0) <- ~lon + lat
+proj4string(V0) <- CRS("+proj=longlat")
+summary(V0)
+V0.proj <- spTransform(V0, proj)
+g0 <- induced.subgraph(g, vids = (!is.na(Vg$lon)))
+
+plot(states.proj)
+plot(g0, rescale = FALSE, add = TRUE, layout = V0.proj@coords, 
+     edge.width = 500*E(g0)$weight, edge.color = "dodgerblue", 
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
+     vertex.label = NA, vertex.size = 100000000*V(g0)$pagerank, 
+     vertex.color = "gold")
+@
+\end{Answer}
+
+\begin{Exercise}
+Crop the map you created in the previous exercise to zoom in on your local airport. 
+\end{Exercise}
+
+\begin{Answer}
+<<east-coast, eval=FALSE>>=
+plot(states.proj, xlim = c(1000000, 2000000), ylim = c(-600000, 1000000))
+plot(g0, rescale = FALSE, add = TRUE, layout = V0.proj@coords, 
+     edge.width = 500*E(g0)$weight, edge.color = "dodgerblue", 
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
+     vertex.label = NA, vertex.size = 100000000*V(g0)$pagerank, 
+     vertex.color = "gold")
+@
+\end{Answer}

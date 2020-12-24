@@ -1,0 +1,56 @@
+---
+chapter: "reproducible"
+author: ""
+difficulty: "Easy"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: gnbirch-sing-clock
+---
+
+```{r gnbirch-sing-clock-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+
+TITLE GOES HERE: Consider an R Markdown file that includes the following code chunks.
+What will be output when the file is rendered?
+
+
+````markdown
+`r ''````{r echo = FALSE}
+x <- 1:5
+```
+````
+
+````markdown
+`r ''````{r echo = FALSE}
+x <- x + 1
+```
+````
+
+````markdown
+`r ''````{r include = FALSE}
+x
+```
+````
+
+ <!--begin-answer-->
+
+```{r echo=FALSE}
+x <- 1:5
+```
+
+```{r echo=FALSE}
+x <- x + 1
+```
+
+```{r include=FALSE}
+x
+```
+
+This example yields no output (since the `include=FALSE` chunk option was set).  Note however,
+that the command was run so any side effects would be observed later.
+ <!--end-answer-->
+
+

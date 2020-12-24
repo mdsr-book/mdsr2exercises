@@ -1,0 +1,82 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Medium"
+date: 2020-06-14 
+version: 0.1
+tags: [first, second, onlineonly]
+id: walnut-see-table
+---
+
+```{r walnut-see-table-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+library(ggplot2)
+```
+
+TITLE GOES HERE: 
+
+a. Use regular expressions to determine the number of speaking lines [The Complete Works of William Shakespeare](http://www.gutenberg.org/cache/epub/100/pg100.txt). Here, we care only about how many times a character speaks---not what they say or for how long they speak. 
+
+<!--
+% XX NH need to fix this by making the data available.
+-->
+ 
+<!--begin-answer-->
+```{r,message=FALSE, warning = FALSE}
+shakespeare <- readRDS(paste(system.file("extdata", package = "mdsr2exercises"), "/Shakespeare.Rds", sep = ""))
+
+length(shakespeare)
+speaker_lines <- grep("^  [A-Z ]+\\.", shakespeare)
+length(speaker_lines)
+```
+
+<!--end-answer-->
+  
+
+b. Make a bar chart displaying the top 100 characters with the greatest number of lines. **Hint** you may want to use either the `stringr::str_extract` or `strsplit` function here.
+  
+<!--begin-answer-->
+Here are two different ways to get the list of speakers:
+```{r,message=FALSE}
+speakers <- str_extract(shakespeare, "^  [A-Z ]+\\.")
+
+words <- unlist(strsplit(shakespeare, "\\. "))
+speakers <- words[grep("^  [A-Z ]+$", words)]
+
+speaker_df <- speakers %>%
+  data.frame(speaker = .) %>%
+  filter(!is.na(speaker)) %>%
+  group_by(speaker) %>%
+  summarize(N = n()) %>%
+  arrange(desc(N)) %>%
+  head(100)
+ggplot(data = speaker_df, aes(x = reorder(speaker, N), y = N)) +
+  geom_bar(stat = "identity") +
+  coord_flip()
+```
+
+ 
+ <!--end-answer-->
+ 
+3. In this problem, you will do much of the work to recreate Mark Hansen's *Shakespeare Machine*. Start by watching a [video clip](http://vimeo.com/54858820) of the exhibit. Use *The Complete Works of William Shakespeare* and regular expressions to find all of the hyphenated words in Shakespeare Machine. How many are there? Use `\%in\%` to verify that your list contains the following hyphenated words pictured at 00:46 of the clip.
+
+<!--begin-answer-->
+```{r}
+hyphenated <- shakespeare[grep(" [a-z]+-[a-z,']+( |\\.|\\,|-)", shakespeare)]
+words <- unlist(strsplit(hyphenated, " "))
+res <- words[grep("-", words)]
+length(res)
+
+sm_words <- c(
+  "true-fix'd", "pale-hearted", "lean-fac'd", "hard-hearted",
+  "best-regarded", "thick-ribbed", "both-sides", "sea-like.",
+  "shrill-shrieking", "lust-stain'd", "tragical-historical,"
+)
+sm_words %in% res
+```
+
+ <!--end-answer-->
+
+

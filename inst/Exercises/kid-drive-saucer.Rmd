@@ -1,0 +1,46 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Easy"
+date: 2020-06-14 
+version: 0.1
+tags: [first, second, third]
+id: kid-drive-saucer
+---
+
+```{r kid-drive-saucer-default, include = FALSE}
+mdsr2exercises::setup()
+library(babynames)
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: Use the `babynames` data table from the `r pkg_macro(babynames)` package to find the 10 most popular:
+
+
+a. Boys' names ending in a vowel.
+
+b. Names ending with "joe," "jo," "Joe," or "Jo" (e.g., *Billyjoe*).
+
+
+ <!--begin-answer-->
+```{r,message=FALSE}
+babynames %>%
+  filter(sex == "M") %>%
+  filter(grepl("[aeiou]$", name)) %>%
+  group_by(name) %>%
+  summarize(total = sum(n)) %>%
+  arrange(desc(total)) %>%
+  head(., 10)
+```
+
+```{r,message=FALSE}
+babynames %>%
+  filter(grepl("Jo$|Joe$|jo$|joe$", name)) %>%
+  group_by(name) %>%
+  summarize(total = sum(n)) %>%
+  arrange(desc(total)) %>%
+  head(., 10)
+```
+ 
+ <!--end-answer-->

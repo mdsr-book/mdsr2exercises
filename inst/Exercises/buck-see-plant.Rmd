@@ -1,0 +1,121 @@
+---
+chapter: "spatial-II"
+author: "Ben Baumer"
+difficulty: "Hard"
+date: 2020-07-10 
+version: 0.1
+tags: [first, second, third]
+id: buck-see-plant
+---
+
+```{r buck-see-plant-default, include = FALSE}
+library(tidyverse)
+library(sf)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: GIS data in the form of shapefiles is all over the Web. Government agencies are particularly good sources for these. The following code downloads bike trail data in Massachusetts from MassGIS. Use `bike_trails` to answer the following questions: 
+
+```{r, message = FALSE}
+if (!file.exists("./biketrails_arc.zip")) {
+  part1 <- "http://download.massgis.digital.mass.gov/"
+  part2 <- "shapefiles/state/biketrails_arc.zip"
+  url <- paste(part1, part2, sep = "")
+  local_file <- basename(url)
+  download.file(url, destfile = local_file)
+  unzip(local_file, exdir = "./biketrails/")
+}
+```
+
+```{r}
+library(sf)
+dsn <- path.expand("./biketrails/biketrails_arc")
+st_layers(dsn)
+bike_trails <- read_sf(dsn)
+```
+
+
+a. How many distinct bike trail segments are there?
+
+  <!--begin-answer-->
+```{r}
+nrow(bike_trails)
+```
+
+  <!--end-answer-->
+
+b. What is the longest individual bike trail segment?
+
+ <!--begin-answer-->
+```{r}
+bike_trails %>%
+  arrange(desc(SHAPE_LEN)) %>%
+  head(1)
+```
+
+  <!--end-answer-->
+  
+  
+c. How many segments are associated with the Norwottuck Rail Trail?
+
+ <!--begin-answer-->
+```{r}
+bike_trails %>%
+  filter(grepl("Norwottuck Rail Trail", TRAILNAME))
+```
+
+  <!--end-answer-->
+  
+d. Among all of the named trails (which may have multiple features), which one has the longest total length?
+
+ <!--begin-answer-->
+```{r, message = FALSE}
+bike_trails %>%
+  group_by(TRAILNAME) %>%
+  summarize(
+    num_segments = n(),
+    total_length = sum(SHAPE_LEN)
+  ) %>%
+  arrange(desc(total_length))
+```
+
+  <!--end-answer-->
+  
+e. The bike trails are in a [Lambert conformal conic projection](https://en.wikipedia.org/wiki/Lambert_conformal_conic_projection). Note that the units of the coordinates are very different from lat/long. In order to get these data onto our leaflet map, we need to re-project them. Convert the bike trails to EPSG:4326, and create a leaflet map. 
+
+ <!--begin-answer-->
+
+```{r}
+library(leaflet)
+library(sf)
+dsn <- path.expand("./biketrails/biketrails_arc")
+bike_trails <- read_sf(dsn)
+bike_trails_4326 <- bike_trails %>%
+  st_transform(4326)
+leaflet() %>%
+  addTiles() %>%
+  addPolylines(data = bike_trails_4326)
+```
+
+  <!--end-answer-->
+
+f. Color-code the bike trails based on their length, and add an informative legend to the plot.
+
+ <!--begin-answer-->
+ 
+```{r}
+
+pal <- colorNumeric(
+  palette = "viridis",
+  domain = bike_trails_4326$SHAPE_LEN
+)
+
+leaflet(data = bike_trails_4326) %>%
+  addTiles() %>%
+  addPolylines(color = ~ pal(SHAPE_LEN)) %>%
+  addLegend("bottomright", pal = pal, values = ~SHAPE_LEN)
+```
+
+  <!--end-answer-->
+

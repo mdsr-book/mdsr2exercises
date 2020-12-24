@@ -1,0 +1,45 @@
+---
+chapter: reproducible
+author: ''
+difficulty: Medium
+date: '2020-07-19'
+version: 0.1
+tags:
+- first
+- second
+- third
+id: ant-begin-door
+---
+
+```{r ant-begin-door-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+```
+
+TITLE GOES HERE: The `r pkg_macro(knitr)` package allows the analyst to display nicely formatted
+tables and results when outputting to pdf files.
+Use the following code chunk as an example to create a similar display using your own data.
+
+```{r eval = TRUE}
+library(mdsr)
+library(mosaicData)
+mod <- broom::tidy(lm(cesd ~ mcs + sex, data = HELPrct))
+knitr::kable(
+  mod, 
+  digits = c(0, 2, 2, 2, 4), 
+  caption = "Regression model from HELP clinical trial.",
+  longtable = TRUE
+)
+```
+
+<!--begin-answer-->
+```{r eval = FALSE}
+library(palmerpenguins)
+mod <- broom::tidy(lm(body_mass_g ~ flipper_length_mm + sex, data = penguins))
+knitr::kable(mod, digits = c(0, 1, 1, 1, 4), longtable = TRUE)
+```
+
+<!--end-answer-->
+
+
+

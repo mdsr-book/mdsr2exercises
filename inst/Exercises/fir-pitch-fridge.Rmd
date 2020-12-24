@@ -1,0 +1,41 @@
+---
+chapter: "data-I"
+author: ""
+date: "First edition"
+version: 0.1
+difficulty: "Medium"
+tags: [baseball, second, third]
+id: fir-pitch-fridge 
+depends: kid-walk-chair
+---
+
+(ref:fir-pitch-fridge) Exercise in file fir-pitch-fridge
+
+```{r fir-pitch-fridge-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Using the `r df_macro(Teams)` data frame in the `r pkg_macro(Lahman)` package:
+
+a. Plot `r mdsr2exercises::var_macro(SLG)` versus `yearID` since 1954 conditioned by league (American vs. National, see `r mdsr2exercises::var_macro(lgID)`). Slugging percentage is total bases divided by at-bats. To compute total bases, you get 1 for a single, 2 for a double, 3 for a triple, and 4 for a home run.
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+library(Lahman)
+Teams <- mutate(Teams,
+  SLG = (H + X2B + 2 * X3B + 3 * HR) / AB
+)
+Teams %>%
+  filter(yearID >= 1954) %>%
+  ggplot(aes(x = yearID, y = SLG, color = lgID)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth()
+```
+<!--end-answer-->
+
+b. Is slugging percentage typically higher in the American League (AL) or the National League (NL)? Can you think of why this might be the case? 
+
+<!--begin-answer-->  
+The advent of the designated hitter (first added in the American League in 1973) seems to be associated with an increase in slugging percentage. 
+
+<!--end-answer-->

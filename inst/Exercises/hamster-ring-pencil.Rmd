@@ -1,0 +1,62 @@
+---
+chapter: "sqlI"
+author: ""
+difficulty: "Easy"
+date: 2020-07-09 
+version: 0.1
+tags: [first, second, third]
+id: hamster-ring-pencil
+---
+
+```{r hamster-ring-pencil-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+library(mdsr)
+library(RMySQL)
+```
+
+TITLE GOES HERE: Wideband acoustic immittance (WAI) is an area of biomedical research that strives to develop WAI measurements as noninvasive auditory diagnostic tools. WAI measurements are reported in many related formats, including absorbance, admittance, impedance, power reflectance, and pressure reflectance. More information can be found about this public facing WAI database at http://www.science.smith.edu/wai-database/home/about.
+
+```{r}
+library(RMySQL)
+db <- dbConnect(
+  MySQL(), 
+  user = "waiuser", 
+  password = "smith_waiDB", 
+  host = "scidb.smith.edu", 
+  dbname = "wai"
+)
+```
+
+a. How many female subjects are there in total across all studies?
+
+<!--begin-answer-->
+```{r}
+dbGetQuery(db, "SELECT COUNT(*) from Subjects WHERE Sex = 'Female';")
+```
+<!--end-answer-->
+
+
+b. Find the average absorbance for participants for each study, ordered by highest to lowest value.
+
+<!--begin-answer-->
+```{r}
+dbGetQuery(db, "SELECT AVG(absorbance), Identifier from Measurements
+                           GROUP BY Identifier
+                         ORDER BY AVG(absorbance) ;")
+```
+<!--end-answer-->
+
+
+c. Write a query to count all the measurements with a calculated absorbance of less than 0. 
+
+<!--begin-answer-->
+```{r}
+dbGetQuery(db, "SELECT COUNT(*) from Measurements
+                           WHERE absorbance < 0;")
+```
+<!--end-answer-->
+
+
+
+

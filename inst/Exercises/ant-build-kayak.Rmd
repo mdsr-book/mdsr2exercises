@@ -1,0 +1,80 @@
+---
+chapter: "join"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Hard"
+version: 0.1
+tags: [fec, second, onlineonly]
+id: ant-build-kayak 
+---
+
+(ref:ant-build-kayak) Exercise in file ant-build-kayak
+
+```{r ant-build-kayak-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+```
+
+TITLE GOES HERE: Using the same FEC data as the previous exercise, re-create Figure 2.8 XX CHECK XX from the text.  
+
+<!--% XX hardcoded ref.-->
+
+
+<!--begin-answer-->
+```{r ant-build-kayak-1, echo = TRUE, message= FALSE, warning = FALSE}
+library(fec12)
+spent2 <- contributions %>%
+  filter(transaction_pgi == "G") %>%
+  mutate(
+    spent_against = ifelse(transaction_tp %in% c("24A", "24N"), transaction_amt, 0),
+    spent_for = ifelse(!transaction_tp %in% c("24A", "24N"), transaction_amt, 0)
+  ) %>%
+  group_by(cand_id, phase = transaction_pgi) %>%
+  summarize(
+    N = n(),
+    total = sum(transaction_amt),
+    avg = mean(transaction_amt),
+    supporting = sum(spent_for),
+    against = sum(spent_against)
+  ) %>%
+  left_join(candidates, by = c("cand_id")) %>%
+  mutate(attack_pct = against / total) %>%
+  arrange(desc(total))
+
+district_money <- spent2 %>%
+  filter(cand_office == "H") %>%
+  group_by(
+    state = cand_st,
+    district = cand_office_district
+  ) %>%
+  summarize(
+    num_PACs = n(),
+    total_spent = sum(total),
+    dem_support = sum(ifelse(cand_pty_affiliation == "DEM", supporting, 0)) +
+      sum(ifelse(cand_pty_affiliation != "DEM", against, 0))
+  ) %>%
+  mutate(dem_money_pct = dem_support / total_spent)
+
+district_results <- results_house %>%
+  filter(!state %in% c("PR", "VI", "GU", "AS", "MP")) %>%
+  group_by(state, district = district_id) %>%
+  summarize(
+    num_candidates = n(),
+    total_votes = sum(general_votes, na.rm = TRUE),
+    dem_votes = sum(ifelse(party == "D", general_votes, 0))
+  ) %>%
+  mutate(dem_vote_pct = dem_votes / total_votes)
+
+money_results <- district_results %>%
+  left_join(district_money, by = c("state", "district"))
+ggplot(data = money_results, aes(x = dem_money_pct, y = dem_vote_pct)) +
+  geom_hline(yintercept = c(0.45, 0.55), lty = 3) +
+  geom_point(aes(size = total_spent, alpha = total_votes)) +
+  geom_smooth() +
+  scale_x_continuous(name = "Percentage of Money supporting Democratic candidate") +
+  scale_y_continuous(name = "Percentage of Votes Earned by Democratic candidate") +
+  scale_size(labels = scales::dollar) +
+  scale_alpha(labels = scales::comma)
+```
+<!--end-answer-->
+

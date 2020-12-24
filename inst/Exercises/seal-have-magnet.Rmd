@@ -1,0 +1,74 @@
+---
+chapter: "sqlII"
+author: ""
+difficulty: "Hard"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: seal-have-magnet
+---
+
+```{r seal-have-magnet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a full table schema for the five tables in the `r pkg_macro(nasaweather)` package and import them into the database server of your choice.  
+
+
+ <!--begin-answer-->
+```{r sql, eval=FALSE}
+CREATE TABLE `atmos` (
+  `lat` double DEFAULT NULL,
+  `long` double DEFAULT NULL,
+  `year` smallint(4) DEFAULT NULL,
+  `month` smallint(2) DEFAULT NULL,
+  `surftemp` double DEFAULT NULL,
+  `temp` double DEFAULT NULL,
+  `pressure` double DEFAULT NULL,
+  `ozone` bigint(20) DEFAULT NULL,
+  `cloudlow` double DEFAULT NULL,
+  `cloudmid` double DEFAULT NULL,
+  `cloudhigh` double DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `borders` (
+  `country` varchar(2) NOT NULL DEFAULT '',
+  `long` double DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `group` smallint(3) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `elev` (
+  `long` double DEFAULT NULL,
+  `lat` double DEFAULT NULL,
+  `elev` double DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `glaciers` (
+  `id` char(12) NOT NULL DEFAULT '',
+  `name` varchar(16) NOT NULL DEFAULT '',
+  `lat` double DEFAULT NULL,
+  `long` double DEFAULT NULL,
+  `area` varchar(5) NOT NULL DEFAULT '',
+  `country` varchar(2) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE `storms` (
+  `name` varchar(9) DEFAULT NULL,
+  `year` smallint(4) DEFAULT NULL,
+  `month` smallint(2) DEFAULT NULL,
+  `day` smallint(2) DEFAULT NULL,
+  `hour` smallint(2) DEFAULT NULL,
+  `lat` decimal(4,3) DEFAULT NULL,
+  `long` decimal(4,3) DEFAULT NULL,
+  `pressure` smallint(4) DEFAULT NULL,
+  `wind` smallint(3) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `seasday` smallint(3) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+```
+ <!--end-answer-->
+
+
+

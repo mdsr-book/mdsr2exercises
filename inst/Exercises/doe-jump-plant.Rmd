@@ -1,0 +1,22 @@
+---
+chapter: "reproducible"
+author: ""
+difficulty: "Easy"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: doe-jump-plant
+---
+
+```{r doe-jump-plant-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Why does the `r pkg_macro(mosaic)` package plain R Markdown template include the code chunk option `message=FALSE` when the `r pkg_macro(mosaic)` package is loaded?
+
+ <!--begin-answer-->
+By default the `r pkg_macro(mosaic)` package notes that a number of functions are masked.  Setting the
+chunk option `message=FALSE` suppresses these messages.
+ <!--end-answer-->
+
+

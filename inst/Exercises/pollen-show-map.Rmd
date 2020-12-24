@@ -1,0 +1,35 @@
+---
+chapter: "learning-I"
+author: ""
+difficulty: "Medium"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: pollen-show-map
+---
+
+```{r pollen-show-map-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `nasaweather` package contains data about tropical `storms` from 1995--2005. Consider the scatterplot between the `wind` speed and `pressure` of these `storms` shown below.
+
+```{r storms, message=FALSE, fig.height = 3}
+library(mdsr)
+library(nasaweather)
+ggplot(data = storms, aes(x = pressure, y = wind, color = type)) +
+  geom_point(alpha = 0.5)
+```
+
+The `type` of storm is present in the data, and four types are given: extratropical, hurricane, tropical depression, and tropical storm. There are [complicated and not terribly precise definitions](https://en.wikipedia.org/wiki/Tropical_cyclone#Classifications.2C_terminology.2C_and_naming) for storm type. Build a classifier for the `type` of each storm as a function of its `wind` speed and `pressure`.  
+
+Why would a decision tree make a particularly good classifier for these data?
+Visualize your classifier in the data space.
+
+  <!--begin-answer-->
+```{r }
+library(rpart)
+rpart(type ~ wind + pressure, data = storms)
+```
+  <!--end-answer-->

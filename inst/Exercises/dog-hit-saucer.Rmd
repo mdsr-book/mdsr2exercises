@@ -1,0 +1,34 @@
+---
+chapter: "data-I"
+author: "Daniel Kaplan"
+difficulty: "Easy"
+date: 2019-10-24 
+version: 0.1
+tags: [mistakes, second, third]
+id: dog-hit-saucer 
+---
+
+(ref:dog-hit-saucer) Exercise in file dog-hit-saucer
+
+```{r dog-hit-saucer-default, include = FALSE}
+mdsr2exercises::setup()
+library(babynames)
+```
+
+TITLE GOES HERE: We'll be working with the `r df_macro(babynames)` data frame in the `r pkg_macro(babynames)` package. To remind you what `babynames` looks like, here are a few rows.
+
+```{r echo=FALSE}
+set.seed(102)
+babynames %>% sample_n(3)
+```
+
+Say what's wrong (if anything) with each of the following wrangling commands. 
+
+a. `babynames %>% select(n > 100)` -A- `select()` takes variable names as arguments. `n > 100` is not a variable name. Probably, `filter()` was intended.
+b. `babynames %>% select(- year)` -A- Nothing's wrong.
+c. `babynames %>% mutate(name_length == nchar(name))` -A- The expression is correct except for one "little" thing: it uses `==` after the named argument rather than `=`. Remember, `==` tests for equality while `=` is used to distinguish the name of an argument from its value.
+d. `babynames %>% sex == M %>% select(-prop)` -A- The middle of the statement has `sex == M`, but it is not placed inside a data verb. 
+e. `babynames %>% select(year, year, sex)` -A- The statement will work, but there's no point in duplicating `year`. The output data frame will have just two columns, `year` and `sex`.
+f. `babynames %>% group_by(n) %>% summarize(ave = mean(n))` -A- Here, too, the statement is technically correct, but it is silly. First, the point of `group_by()` is to group (usually) multiple rows together, but since `n` has mostly unique values, there's not much grouping going on. Second, since the grouping is being done by `n`, we know for sure that `n` will the the same for every member of the group. Thus, `mean(n)` must always be exactly equal to `n`, so there's no point in calculating `ave`.
+g. `babynames %>% group_by(n > 100) %>% summarize(total = sum(n))` -A- The statement might look odd because `n > 100` is being used in `group_by()` rather than the name of a variable. But `n > 100` is effectively a variable. Here, there will be two groups, one with $n > 100$ and the other with $n <= 100$. The value of `total` from the `summarize()` operation will be the total number of babies in each of the two groups.
+

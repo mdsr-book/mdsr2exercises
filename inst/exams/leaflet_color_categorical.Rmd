@@ -1,0 +1,58 @@
+Question
+========
+
+The following chunk isolates the path of tropical storms that hit during 1992. 
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+storms92 <- storms %>%
+  filter(year == 1992) %>%
+  st_as_sf(coords = c("long", "lat")) %>%
+  st_set_crs(4326)
+```
+
+The following chunk attempts to map the paths of these tropical storms over time to color, but throws an error. 
+
+```{r, error=TRUE}
+library(leaflet)
+
+pal <- colorNumeric(palette = "Set2", domain = storms92$name)
+
+leaflet(storms92) %>%
+  addTiles() %>%
+  addCircles(color = ~pal(name)) %>%
+  addLegend(pal = pal, values = ~name, opacity = 0.8)
+```
+
+How can you fix the problem? 
+
+
+Answerlist
+----------
+* It should be `color = pal(name)`.
+* It should be `color = ~name`.
+* It should be `fill = ~pal(name)`.
+* It should be `aes(color = name)`.
+* It should be `colorFactor` instead of `colorNumeric`.
+
+
+Solution
+========
+
+Answerlist
+----------
+* False.  
+* False. 
+* False.
+* False. That's `ggplot` syntax. 
+* True.
+
+
+Meta-information
+================
+extitle: categorical color mapping
+exsection: leaflet
+exname: leaflet-color-categorical
+extype: schoice
+exsolution: 00001

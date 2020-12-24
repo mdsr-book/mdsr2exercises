@@ -1,0 +1,44 @@
+Question
+========
+
+Consider the following function definition, and subsequent call of that function. 
+
+```{r, error=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+summarize_species <- function(data, pattern = "Human") {
+  data %>%
+    filter(species == pattern) %>%
+    summarize(
+      num_people = n(),
+      avg_height = mean(height, na.rm = TRUE)
+    )
+}
+
+summarize_species("Wookiee")
+```
+
+What is the problem that causes the error?
+
+Answerlist
+----------
+* the `filter()` function expects a `data.frame`, but gets a `character` vector
+* you need to specify `pattern = "Wookiee"`
+* there is no object called `data` in the global environment
+* there is a mismatch between `Human` and `Wookiee`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. That will not solve the problem because there is no default for the `data` argument. 
+* False. It's not looking for `data` in the global environment. 
+* False. There is no mismatch. 
+
+Meta-information
+================
+exname: function-arguments
+extype: schoice
+exsolution: 1000

@@ -1,0 +1,35 @@
+Package: mdsr2exercises
+Type: Package
+Title: Exercises for the 2nd edition of MDSR
+Version: 0.6.3.2
+Authors@R: c(
+    person("Benjamin S.", "Baumer", email = "ben.baumer@gmail.com",
+      role = c("aut"), 
+           comment = c(ORCID = "0000-0002-3279-0516")),
+    person("Nicholas", "Horton", email = "nhorton@amherst.edu", role = "aut"),
+    person("Jessica", "Yu", email = "jeyu22@amherst.edu", role = "aut"),
+    person("Daniel", "Kaplan", email = "kaplan@macalester.edu", role = c("cre", "aut"))
+    )
+Depends:
+    R (>= 3.5.0)
+Imports:
+    clipr,
+    dplyr,
+    etude,
+    exams,
+    fs,
+    glue,
+    here,
+    readr,
+    rmarkdown,
+    tidyverse
+Suggests:
+    knitr
+Description: 
+    *Modern Data Science with R* is a standalone textbook for data science. 
+    This package contains the exercises for the second edition. 
+License: CC0
+Remotes: beanumber/etude
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1

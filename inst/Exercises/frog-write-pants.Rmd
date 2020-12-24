@@ -1,0 +1,26 @@
+---
+chapter: "dataviz-I"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: frog-write-pants
+---
+
+```{r frog-write-pants-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the two graphics related to *The New York Times* "Taxmageddon" article at http://www.nytimes.com/2012/04/15/sunday-review/coming-soon-taxmageddon.html. The first is ["Whose Tax Rates Rose or Fell"](http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt.html) and the second is ["Who Gains Most From Tax Breaks."](http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt2.html)
+
+a. Examine the two graphics carefully. Discuss what you think they convey. What story do the graphics tell? 
+b. Evaluate both graphics in terms of the taxonomy described in this chapter. Are the scales appropriate? Consistent? Clearly labeled? Do variable dimensions exceed data dimensions? 
+c. What, if anything, is misleading about these graphics?
+
+  <!--begin-answer-->
+a. Answers will vary. The main take-aways are that tax rates on the rich have fallen, while tax rates on the poor have not. Moreover, in terms of the ``cost" to the US Treasury, most tax breaks go to those in the top 20% in income. 
+b.  Answers will vary. In the first graphic, the $y$-scale is the tax rate, but there is no axis. The labels about the segment of the income distribution are not reflected in any quantity. The color scheme is not immediately helpful. The change in real pre-tax income figures to not have a corresponding quantitative representation. In the second graphic, the $y$-scale is very confusing, and possibly misleading. The scale is a percentage, and yet the income amounts on the left are *not* on a linear scale. 
+c. Answers will vary. Most obviously, the $y$-scales in either data graphic.
+
+  <!--end-answer-->

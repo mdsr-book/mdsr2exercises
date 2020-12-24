@@ -1,0 +1,65 @@
+---
+chapter: learning-II
+author: ''
+difficulty: Hard
+date: '2020-07-15'
+version: 0.1
+tags:
+- first
+- second
+- third
+id: aspen-forgive-sofa
+output: pdf_document
+---
+
+```{r aspen-forgive-sofa-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the College Scorecard Data from the `r pkg_macro(CollegeScorecard)` package to cluster educational institutions using the techniques described in this chapter.  Be sure to include variables related to student debt, number of students, graduation rate, and selectivity.  
+
+```{r}
+# remotes::install_github("Amherst-Statistics/CollegeScorecard")
+```
+
+<!--begin-answer-->
+
+Answers will vary.
+```{r plot-college-scorecard, warning = FALSE , message= FALSE}
+library(readr)
+library(CollegeScorecard)
+
+filename <- paste(system.file("extdata", package = "CollegeScorecard"),
+  "MERGED2016_17_PP.csv.bz2",
+  sep = "/"
+)
+colleges <- readr::read_csv(filename)
+
+colleges <- colleges %>%
+  select(ADM_RATE, PREDDEG, DEBT_N) %>%
+  filter(
+    ADM_RATE != "NULL", PREDDEG != "NULL", DEBT_N != "NULL",
+    DEBT_N != "PrivacySuppressed"
+  ) %>%
+  mutate(
+    ADM_RATE = as.numeric(ADM_RATE),
+    DEBT_N = as.numeric(DEBT_N)
+  )
+
+clusts <- colleges %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+
+colleges <- colleges %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+
+ggplot(data = colleges, aes(x = ADM_RATE, y = DEBT_N, color = factor(cluster))) +
+  geom_point()
+```
+<!--end-answer-->
+
+
+
+

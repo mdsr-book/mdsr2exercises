@@ -1,0 +1,36 @@
+---
+chapter: "data-II"
+author: "Ben Baumer"
+date: "First edition" 
+difficulty: "Easy"
+version: 0.1
+tags: [as.numeric, parse_number, character to number]
+id: zebra-teach-radio 
+---
+
+(ref:zebra-teach-radio) Exercise in file zebra-teach-radio
+
+```{r zebra-teach-radio-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the values returned by the `r mdsr2exercises::func_macro(as.numeric)` and `r mdsr2exercises::func_macro(parse_number)` functions when applied to the following vectors.  Describe the results and their implication.
+
+```{r zebra-teach-radio-1, echo = TRUE}
+x1 <- c("1900.45", "$1900.45", "1,900.45", "nearly $2000")
+x2 <- as.factor(x1)
+```
+
+<!--begin-answer-->
+
+```{r zebra-teach-radio-12, echo = TRUE, error=TRUE}
+as.numeric(x1)
+as.numeric(x2)
+readr::parse_number(x1)
+readr::parse_number(x2)
+```
+
+We see that as.numeric can't handle dollar signs, commas, or any extraneous text.  It's also  very confused by factors.
+<!--end-answer-->
+
+

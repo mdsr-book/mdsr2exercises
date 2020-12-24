@@ -1,0 +1,24 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Hard"
+date: 2020-08-16 
+version: 0.1
+tags: [first, second, third]
+id: spider-sit-linen
+---
+
+```{r spider-sit-linen-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:	Using data from the `r pkg_macro(Lahman)` package, create a Shiny app that displays career leaderboards similar to the one at http://www.baseball-reference.com/leaders/HR_season.shtml. Allow the user to select a statistic of their choice, and to choose between `Career`, `Active`, `Progressive`, and `Yearly League` leaderboards. (Hint: examples of similar apps can be found at the [Shiny gallery](https://shiny.rstudio.com/gallery).)
+
+ <!--begin-answer-->
+ 
+XX answer needed
+ 
+<!--end-answer-->

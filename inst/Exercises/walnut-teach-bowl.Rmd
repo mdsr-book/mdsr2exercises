@@ -1,0 +1,50 @@
+---
+chapter: "sqlII"
+author: ""
+difficulty: "Hard"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: walnut-teach-bowl
+---
+
+```{r walnut-teach-bowl-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a full table schema for two of the ten tables in the `r pkg_macro(usdanutrients)` package and import them into the database server of your choice.  
+
+```{r usda}
+# remotes::install_github("hadley/usdanutrients")
+library(usdanutrients)
+# data(package="usdanutrients")
+```
+
+ <!--begin-answer-->
+```{r}
+glimpse(food)
+```
+Here is an example using the `food table`:
+
+```{r, eval = FALSE}
+CREATE TABLE `food` (
+  `food_id` smallint(4) NOT NULL DEFAULT 0,
+  `grp_id` smallint(3) NOT NULL DEFAULT 0,
+  `food` char(255) NOT NULL DEFAULT '',
+  `food_abbr` char(255) NOT NULL DEFAULT '',
+  `common` char(255) NOT NULL DEFAULT '',
+  `manufacturer` char(255) NOT NULL DEFAULT '',
+  `survey` boolean NOT NULL DEFAULT false,
+  `refuse` char(255) NOT NULL DEFAULT '',
+  `ref_pct` smallint(2) NOT NULL DEFAULT 0,
+  `scientific` char(255) NOT NULL DEFAULT '',
+  `n_factor` decimal(21,20) NOT NULL DEFAULT 0,
+  `pro_factor` decimal(21,20) NOT NULL DEFAULT 0,
+  `fat_factor` decimal(21,20) NOT NULL DEFAULT 0,
+  `carb_factor` decimal(21,20) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`food_id`, `food`, `food_abbr`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+```
+<!--end-answer-->
+

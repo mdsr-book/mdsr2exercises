@@ -1,0 +1,45 @@
+---
+chapter: "join"
+author: ""
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [nycflights13, second, third]
+id: panda-catch-boat 
+---
+
+
+```{r panda-catch-boat-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+
+TITLE GOES HERE: Use the `r pkg("nycflights13")` package and the `r pkg_macro(flights)` and `r pkg_macro(planes)` tables to answer the following questions: 
+
+a. What is the oldest plane (specified by the `tailnum` variable) that flew from New York City airports in 2013?
+
+b. How many airplanes that flew from New York City are included in the `r df_macro(planes)` table?
+
+<!--begin-answer-->
+```{r panda-catch-boat-1}
+library(nycflights13)
+planes2 <- dplyr::select(planes, tailnum, year)
+flights2 <- dplyr::select(flights, tailnum)
+nyc_flights <- left_join(planes2, flights2) %>%
+  arrange(year) %>%
+  unique()
+head(nyc_flights)
+```
+
+N381AA, manufactured in 1956, is the oldest plane that flew from NYC in 2013.
+
+```{r panda-catch-boat-2}
+nyc_flights2 <- distinct(nyc_flights)
+nrow(nyc_flights2)
+```
+
+There are 3322 unique airplanes.
+
+<!--end-answer-->
+

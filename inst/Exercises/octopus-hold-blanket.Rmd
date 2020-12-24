@@ -1,0 +1,124 @@
+---
+chapter: "data-I"
+author: ""
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [nycflights13, second, third]
+id: octopus-hold-blanket 
+---
+
+(ref:octopus-hold-blanket) Exercise in file octopus-hold-blanket
+
+```{r octopus-hold-blanket-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `r pkg_macro(nycflights13)` package includes a table (`r df_macro(weather)`) that describes the weather during 2013. Use that table to answer the following questions: 
+
+a. What is the distribution of temperature in July, 2013?  Identify any important outliers in terms of the `r var_macro(wind_speed)` variable.  
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+library(nycflights13)
+
+july_temp <- weather %>%
+  filter(month == 7)
+ggplot(data = july_temp, aes(x = day, y = temp)) +
+  geom_point() +
+  labs(title = "Temperatures in July", y = "temperature (degrees F)") +
+  geom_smooth()
+```
+
+The distribution of temperature in July 2013 follows a rough zigzag pattern, with a low point around 75 and the high around 90.
+
+
+```{r, message = FALSE, warning = FALSE}
+ggplot(data = july_temp, aes(x = day, y = wind_speed)) +
+  geom_point() +
+  labs(title = "Wind Speeds in July", y = "wind speed (mph)")
+```
+
+There were a couple of days that the wind speed rose to around 25 mph, whereas the rest of the month did not generally have wind speeds much past 20 mph.
+
+<!--end-answer-->
+
+b. What is the relationship between `dewp` and `humid`?  
+
+<!--begin-answer-->
+```{r message=FALSE, warning=FALSE}
+ggplot(data = july_temp, aes(x = dewp, y = wind_speed)) +
+  geom_point() +
+  labs(
+    title = "Dewpoint and Wind Speeds in July", x = "dewpoint",
+    y = "wind speed"
+  ) +
+  geom_smooth()
+```
+
+There is no clear relationship between wind speed and dewpoint.
+
+<!--end-answer-->
+
+c. What is the relationship between `r var_macro(precip)` and `r var_macro(visib)`?
+
+<!--begin-answer-->
+
+```{r, message = FALSE, warning = FALSE}
+ggplot(data = july_temp, aes(x = precip, y = visib)) +
+  geom_point() +
+  labs(
+    title = "Precipitation and Visibility in July",
+    x = "precipitation", y = "visibility"
+  ) +
+  geom_smooth()
+```
+
+While the outlier in precipitation of about 0.35 makes the right side of the plot a bit chaotic, the plot shows a strong negative correlation between precipitation and visibility. This makes sense that when it is rainier, it is less visible outside.
+
+```{r, message = FALSE, warning = FALSE}
+library(nycflights13)
+
+days_precip <- weather %>%
+  dplyr::select(month, day, precip) %>%
+  filter(precip != 0) %>%
+  distinct(month, day)
+nrow(days_precip)
+```
+
+There was precipitation on 139 days in the NY area in 2013.
+
+```{r, message = FALSE, warning = FALSE}
+mean_visib_day <- weather %>%
+  mutate(wday = lubridate::wday(time_hour)) %>%
+  group_by(wday) %>%
+  summarize(mean = mean(visib), sd = sd(visib), n = n())
+mean_visib_day
+
+ggplot(data = mean_visib_day, aes(x = wday, y = mean)) +
+  geom_point() +
+  labs(
+    title = "Mean Visibility by Day of Week",
+    x = "day", y = "mean visibility"
+  )
+```
+
+It does not appear that the mean visibility between the days of the week varies all that much.
+
+```{r, message = FALSE, warning = FALSE}
+mean_visib_month <- weather %>%
+  group_by(month) %>%
+  summarize(mean = mean(visib))
+ggplot(data = mean_visib_month, aes(x = month, y = mean)) +
+  geom_point() +
+  labs(
+    title = "Mean Visibility by Month",
+    x = "month", y = "mean visibility"
+  )
+```
+
+While there is not a huge different in mean visibility between months, it would seem that summer months tend to have higher visibility than winter months. Additionally, May has a lower visibility than the months surrounding it, which makes sense since it is one of the rainiest months.
+
+<!--end-answer-->
+

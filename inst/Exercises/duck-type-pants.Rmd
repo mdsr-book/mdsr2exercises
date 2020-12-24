@@ -1,0 +1,97 @@
+---
+chapter: "simulation"
+author: "Nicholas Horton"
+difficulty: "Hard"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, onlineonly]
+id: duck-type-pants
+---
+
+```{r duck-type-pants-default, include = FALSE}
+library(mdsr)
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The Monty Hall problem illustrates a simple setting where intuition is often misleading.  The situation is based on the TV game show *Let's Make a Deal*.
+
+First, Monty (the host) puts a prize behind one of three doors. Then the player chooses a door. Next, (without moving the prize) Monty opens an unselected door, revealing that the prize is not behind it. The player may then switch to the other nonselected door. Should the player switch?
+
+Many people see that there are now two doors to choose between and feel that since Monty can always open a nonprize door, there is still equal probability for each door. If that were the case, the player might as well keep the original door. This intuition is so attractive that when Marilyn vos Savant asserted that the player should switch (in her *Parade* magazine column), there were reportedly 10,000 letters asserting she was wrong.
+
+A correct intuitive route is to observe that Monty's door is fixed. The probability that the player has the right door is 1/3 before Monty opens the nonprize door, and remains 1/3 after that door is open. This means that the probability the prize is behind one of the other doors is 2/3, both before and after Monty opens the nonprize door. After Monty opens the nonprize door, the player gets a 2/3 chance of winning by switching to the remaining door. If the player wants to win, they should switch doors.
+
+One way to prove to yourself that switching improves your chances of winning is through simulation. In fact, even deciding how to code the problem may be enough to convince yourself to switch.
+
+In the simulation, you need to assign the prize to a door, then make an initial guess. If the guess was right, Monty can open either door. We'll switch to the other door. Rather than have Monty choose a door, we'll choose one, under the assumption that Monty opened the other one. If our initial guess was wrong, Monty will open the only remaining nonprize door, and when we switch we'll be choosing the prize door.
+
+<!--begin-answer-->
+We write two helper functions. In one, Monty opens a door, choosing at random 
+among the nonchosen doors if the initial choice was correct, or choosing the 
+one nonselected nonprize door if the initial choice was wrong. The other 
+function returns the door chosen by swapping. We use the `sample()` function 
+to randomly pick one value. We then use these functions on 
+each trial with the apply() statement (section 5.4.2).  % XX watch out for hardcoded label!
+
+```{r }
+numsim <- 10000
+doors <- 1:3
+opendoor <- function(x) {
+  # input x is a vector with two values
+  # first element is winner, second is choice
+  if (x[1] == x[2]) { # guess was right
+    return(sample(doors[-c(x[1])], 1))
+  } else {
+    return(doors[-c(x[1], x[2])])
+  }
+}
+```
+
+```{r }
+opendoor(c(1, 1)) # can return 2 or 3
+opendoor(c(1, 2)) # must return 3!
+```
+
+Recall that Monty can choose either door 2 or 3 to open when the winning door
+is initially chosen.  When the winning door and initial choice differ (as
+in the latter example), there is only one door which can be opened.
+
+
+```{r }
+swapdoor <- function(x) {
+  return(doors[-c(x[1], x[2])])
+}
+swapdoor(c(1, 1))
+swapdoor(c(1, 2))
+```
+
+
+The `swapdoor()` function works in a similar fashion.  Once these parts are in place, the
+simulation is straightforward.
+
+```{r }
+winner <- sample(doors, numsim, replace = TRUE)
+choice <- sample(doors, numsim, replace = TRUE)
+open <- apply(cbind(winner, choice), 1, opendoor)
+newchoice <- apply(cbind(open, choice), 1, swapdoor)
+```
+
+```{r }
+cat("Without switching, won ",
+  round(sum(winner == choice) / numsim * 100, 1),
+  " percent of the time.\n",
+  sep = ""
+)
+cat("With switching, won ",
+  round(sum(winner == newchoice) / numsim * 100, 1),
+  " percent of the time.\n",
+  sep = ""
+)
+```
+
+
+We note (with some amusement) that Monty didn't actually offer this choice to the players: see (http://tinyurl.com/montynoswitch) for an interview with the details.
+<!--end-answer-->
+
+

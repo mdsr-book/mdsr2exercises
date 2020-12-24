@@ -1,0 +1,49 @@
+Question
+========
+
+Consider the following code chunk, which uses data from the `nycflights13` package about flights to and from three New York City airports in 2013. 
+
+`ct_airports` is a `tibble` that contains only those airports that are in the [Central Time Zone](https://en.wikipedia.org/wiki/Central_Time_Zone). 
+
+```{r, message=FALSE}
+library(tidyverse)
+library(nycflights13)
+ct_airports <- airports %>%
+  filter(tzone == "America/Chicago")
+
+glimpse(ct_airports)
+glimpse(flights)
+nrow(flights)
+nrow(ct_airports)
+```
+
+The result of the following chunk of code will be a `tibble` that contains how many rows? 
+
+```{r, eval=FALSE}
+flights %>%
+  right_join(ct_airports, by = c("dest" = "faa"))
+```
+
+
+Answerlist
+----------
+* 342: one for each airport in `ct_airports`.
+* 336,776: one for each flight in `flights`.
+* less than 336,776, because only flights from New York City to airports in the Central Time Zone are included.
+* more than 336,776, because each flights from New York City could have gone to multiple airports in the Central Time Zone. 
+
+Solution
+========
+
+Answerlist
+----------
+* False.
+* False.
+* True.
+* False.
+
+Meta-information
+================
+exname: relational-multiplicity
+extype: schoice
+exsolution: 0010

@@ -1,0 +1,22 @@
+---
+chapter: "dataI"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-07-10 
+version: 0.1
+tags: [first, second, onlineonly]
+id: dolphin-understand-chair
+---
+
+```{r dolphin-understand-chair-default, include = FALSE}
+library(etude)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: What combination of `dplyr` operations is depicted below? 
+
+![](https://rstudio-education.github.io/tidyverse-cookbook/images/dplyr-group_by.png)
+
+<!--answer-start-->
+`group_by()` + `summarize()`
+<!--answer-end-->

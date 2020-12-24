@@ -1,0 +1,53 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Easy"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: beech-make-bowl
+---
+
+```{r beech-make-bowl-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A user has typed the following commands into the RStudio console.  
+
+```{r }
+obj1 <- 2:10
+obj2 <- c(2, 5)
+obj3 <- c(TRUE, FALSE)
+obj4 <- 42
+```
+
+What values are returned by the following commands?
+
+```{r eval=FALSE}
+obj1 * 10
+obj1[2:4]
+obj1[-3]
+obj1 + obj2
+obj1 * obj3
+obj1 + obj4
+obj2 + obj3
+sum(obj2)
+sum(obj3)
+```
+
+
+<!--begin-answer-->
+```{r }
+obj1 * 10
+obj1[2:4]
+obj1[-3]
+obj1 + obj2
+obj1 * obj3
+obj1 + obj4
+obj2 + obj3
+sum(obj2)
+sum(obj3)
+```
+<!--end-answer-->
+

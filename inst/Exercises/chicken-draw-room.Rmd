@@ -1,0 +1,44 @@
+---
+chapter: "foundations"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: chicken-draw-room
+---
+
+```{r chicken-draw-room-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the bootstrap to generate a 95% confidence interval for the regression parameters in 
+a model for weight as a function of age for the `Gestation` data frame from the `r pkg_macro(mosaicData)` package.
+
+ <!--begin-answer-->
+
+```{r eval=TRUE, fig.height=3, fig.width=6, message=FALSE}
+library(mosaicData)
+mod <- lm(wt ~ age, data = Gestation)
+coef(mod)
+confint(mod)
+```
+
+```{r eval=TRUE, message=FALSE, error=TRUE}
+library(rsample)
+Gestation %>%
+  bootstraps(times = 2000) %>%
+  mutate(
+    mod = map(splits, ~lm(wt ~ age, data = as_tibble(.x))),
+    coefs = map(mod, coef),
+    age = map_dbl(coefs, pluck, 2)
+  ) %>%
+  pull(age) %>%
+  quantile(c(0.025, 0.5, 0.975))
+```
+For every year of age we would expect birth weight to increase by 0.1 ounces.
+The bootstrap percentile method yields a similar interval.  We are 95% confident that the slope for age is between -0.09 and 0.29.  
+  <!--end-answer-->
+
+

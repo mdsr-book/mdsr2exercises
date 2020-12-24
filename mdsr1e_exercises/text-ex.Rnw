@@ -1,0 +1,234 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/text-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+\section{Exercises}
+
+\begin{Exercise}
+  Speaking lines in Shakespeare's plays are identified by a line that starts with two spaces, then a string of capital letters and spaces (the character's name) followed by a period. Use \func{grep} to find all of the speaking lines in \textit{Macbeth}. How many are there? 
+\end{Exercise}
+\begin{Answer}
+<<>>=
+data(Macbeth_raw)
+macbeth <- strsplit(Macbeth_raw, "\r\n")[[1]]
+speaker_lines <- macbeth[grep("^  [A-Z ]+\\.", macbeth)]
+length(speaker_lines)
+head(speaker_lines, 3)
+@
+
+Be careful: sometimes meta data can be interspersed with the results.
+\end{Answer}
+  
+
+\begin{Exercise}
+  Find all the hyphenated words in one of Shakespeare's plays.
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+data(Macbeth_raw)
+lines <- strsplit(Macbeth_raw, "\r\n")[[1]]
+words <- strsplit(paste(lines, collapse = " "), " ")[[1]]
+grep("[a-z,A-Z]-[a-z,A-Z]", words, value = TRUE)
+@
+\end{Answer}
+
+\begin{Exercise}
+Use the \data{babynames} data table from the \pkg{babynames} package to find the ten
+most popular:
+\begin{enumerate}
+\item Boys' names ending in a vowel.
+\item Names ending with ``joe", ``jo", ``Joe", or ``Jo" (e.g., \val{Billyjoe}).
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+<<>>=
+library(babynames)
+babynames %>%
+  filter(sex == 'M') %>%
+  filter(grepl('[aeiou]$', name)) %>%
+  group_by(name) %>%
+  summarize(total = sum(n)) %>%
+  arrange(desc(total)) %>%
+  head(., 10)
+@
+<<>>=
+babynames %>%
+  filter(grepl('Jo$|Joe$|jo$|joe$', name)) %>%
+  group_by(name) %>%
+  summarize(total = sum(n)) %>%
+  arrange(desc(total)) %>%
+  head(., 10)
+@
+
+\end{Answer}
+
+
+\begin{Exercise}
+Find all of the adjectives in one of Shakespeare's plays that end in \val{more} or \val{less}.
+\end{Exercise}
+\begin{Answer}
+
+<<message=FALSE>>=
+data(Macbeth_raw)
+lines <- strsplit(Macbeth_raw, "\r\n")[[1]]
+words <- strsplit(paste(lines, collapse = " "), " ")[[1]]
+grep("[a-z]+(more|less)$", words, value = TRUE)
+@
+
+Note that this may return a few false positives (e.g. \val{bless}).
+
+\end{Answer}
+
+\begin{Exercise}
+Find all of the lines containing the stage direction \val{Exit} or \val{Exeunt} in one of Shakespeare's plays. 
+\end{Exercise}
+\begin{Answer}
+<<message=FALSE>>=
+data(Macbeth_raw)
+lines <- strsplit(Macbeth_raw, "\r\n")[[1]]
+grep("(Exit|Exeunt)", lines, value = TRUE)
+@
+\end{Answer}
+
+
+\begin{Exercise}
+Use regular expressions to determine the number of speaking lines \href{http://www.gutenberg.org/cache/epub/100/pg100.txt}{\textit{The Complete Works of William Shakespeare}}. Here, we care only about how many times a character speaks---not what they say or for how long they speak. 
+\end{Exercise}
+
+\begin{Answer}
+<<message=FALSE>>=
+complete_url <- "http://www.gutenberg.org/cache/epub/100/pg100.txt"
+require(RCurl)
+shakespeare <- complete_url %>%
+  getURL() %>%
+  strsplit(split = "\r\n") %>%
+  magrittr::extract2(1)
+length(shakespeare)
+speaker_lines <- shakespeare[grep("^  [A-Z ]+\\.", shakespeare)]
+length(speaker_lines)
+@
+\end{Answer}
+  
+\begin{Exercise}
+Make a bar chart displaying the top 100 characters with the greatest number of lines. 
+\emph{Hint}: you may want to use either the \func{stringr::str\_extract} or \func{strsplit} function here.
+\end{Exercise}
+
+\begin{Answer}
+Here are two different ways to get the list of speakers:
+
+<<ex-text-shakespeare>>=
+speakers <- stringr::str_extract(speaker_lines, "^  [A-Z ]+")
+words <- unlist(strsplit(speaker_lines, "\\. "))
+speakers <- words[grep("^  [A-Z ]+$", words)]
+
+speaker_df <- speakers %>%
+  data.frame(speaker = .) %>%
+  group_by(speaker) %>%
+  summarize(N = n()) %>%
+  arrange(desc(N)) %>%
+  head(100)
+ggplot(data = speaker_df, aes(x = reorder(speaker, N), y = N)) +
+  geom_bar(stat = "identity") + 
+  coord_flip()
+@
+
+\end{Answer}
+
+\begin{Exercise}
+In this problem, you will do much of the work to recreate Mark Hansen's \textit{Shakespeare Machine}. Start by watching a video clip (\url{http://vimeo.com/54858820}) of the exhibit.
+Use \textit{The Complete Works of William Shakespeare} and regular expressions to find all of the hyphenated words in Shakespeare Machine. How many are there? 
+Use \cmd{\%in\%} to verify that your list contains the following hyphenated words pictured at 00:46 of the clip.
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+hyphenated <- shakespeare[grep(" [a-z]+-[a-z,']+( |\\.|\\,|-)", shakespeare)]
+words <- unlist(strsplit(hyphenated, " "))
+res <- words[grep("-", words)]
+length(res)
+
+sm_words <- c("true-fix'd", "pale-hearted", "lean-fac'd", "hard-hearted", 
+  "best-regarded", "thick-ribbed", "both-sides", "sea-like.", 
+  "shrill-shrieking", "lust-stain'd", "tragical-historical,")
+sm_words %in% res
+@
+\end{Answer}
+
+
+\begin{Exercise}
+Find an interesting Wikipedia page with a table, scrape the data from it, and generate a figure that tells an interesting story. 
+Include an interpretation of the figure.
+\end{Exercise}
+
+\begin{Answer}
+
+One possibility involves the Wikipedia page of the highest grossing movies in history
+(adjusted for inflation).  As of September, 2016 this list was topped by \textit{Gone with the Wind}
+with more than \$3 billion grossed.
+<<bigmovies, message=FALSE>>=
+library(rvest)
+library(tidyr)
+my_html <- 
+  read_html("http://en.wikipedia.org/wiki/List_of_highest-grossing_films")
+tables <- my_html %>% html_nodes(css = "table")
+movies <- html_table(tables[[2]])
+names(movies)[3] <- "Gross2014dollars"
+movies <- movies %>%
+  mutate(GrossMil = readr::parse_number(Gross2014dollars)/1000000) %>%
+  mutate(Year = readr::parse_number(Year))
+movies
+ggplot(data = movies, aes(x = Year, y = GrossMil)) + 
+  geom_point()  + 
+  theme(legend.position = "none") + 
+  ylab("Gross (in millions of US 2014$)")
+@
+\end{Answer}
+
+\begin{Exercise}
+The site \url{stackexchange.com} displays questions and answers on technical topics.  
+The following code downloads the most recent \R questions related to the \pkg{dplyr} package. 
+
+<<message=FALSE>>=
+library(httr)
+# Find the most recent R questions on stackoverflow
+getresult <- GET("http://api.stackexchange.com",
+  path = "questions",
+  query = list(site = "stackoverflow.com", tagged = "dplyr"))
+stop_for_status(getresult) # Ensure returned without error
+questions <- content(getresult)  # Grab content
+names(questions$items[[1]])    # What does the returned data look like?
+length(questions$items)
+substr(questions$items[[1]]$title, 1, 68)
+substr(questions$items[[2]]$title, 1, 68)
+substr(questions$items[[3]]$title, 1, 68)
+@
+
+How many questions were returned?
+Without using jargon, describe in words what is being displayed and how it might be
+used.
+\end{Exercise}
+
+\begin{Answer}
+Answers will vary.  
+\end{Answer}
+
+\begin{Exercise}
+Repeat the process of downloading the content from \url{stackexchange.com} related to 
+the \pkg{dplyr} package and summarize the results.
+\end{Exercise}
+
+\begin{Answer}
+Answers will vary.  
+\end{Answer}
+
+
+

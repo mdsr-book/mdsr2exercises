@@ -1,0 +1,85 @@
+---
+chapter: data-I
+author: "Daniel Kaplan"
+date: '2019-10-24'
+difficulty: Easy
+version: 0.1
+tags:
+- babynames
+- join
+- third
+id: crow-burn-sheet
+---
+
+(ref:crow-burn-sheet) Exercise in file crow-burn-sheet
+
+```{r crow-burn-sheet-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(babynames)
+library(tidyverse)
+```
+
+TITLE GOES HERE: Here is a random subset of the `babynames` data frame in the `r pkg_macro("babynames")` package:
+
+
+```{r crow-burn-sheet-0, echo = FALSE}
+set.seed(103)
+Random_subset <- babynames %>%
+  filter(n > 22) %>%
+  sample_n(10)
+```
+
+```{r echo = TRUE}
+Random_subset
+```
+
+For each of the following tables wrangled from `Random_subset`, figure out what `r pkg_macro(dplyr)` wrangling statement will produce the result.
+
+a. Hint: Both rows and variables are missing from the original 
+```{r echo = FALSE}
+Random_subset %>%
+  filter(n > 40, n < 100) %>%
+  select(-prop)
+```
+
+<!--begin-answer-->
+The `prop` column has been dropped, so we know there is a `select(-prop)` command in the wrangling statement. Also, all the rows with $n < 40$ and $n > 85$ have been dropped, meaning that there is also a `filter()` in the wrangling statement, perhaps `filter(n < 40, n > 85)`.
+<!--end-answer-->
+
+b. Hint: the `nchar()` function is used in the statement.
+```{r echo = FALSE, message=FALSE}
+Random_subset %>% filter(nchar(name) == 6)
+```
+
+<!--begin-answer-->
+`nchar(name)` will calculate the number of letters in the `name` values. Both of the surviving rows have 6 letters. So a plausible wrangling statement is `filter(nchar(name) == 6)`.
+<!--end-answer-->
+
+c. Hint: Note the new column, which is constructed from `n` and `prop`.
+```{r echo=FALSE, message=FALSE}
+Random_subset %>%
+  filter(year == 1989) %>%
+  mutate(total = n / prop)
+```
+
+<!--begin-answer-->
+First, the surviving rows are both for 1989, suggesting that `filter(year == 1989)` is part of the wrangling statement. Next, the `total` column has two numbers that are almost exactly the same and are in the millions. Could this be the total number of babies born in 1989? Try `mutate(total = n / prop)`.
+<!--end-answer-->
+
+d. Hint: All the years are still there, but there are only 8 rows as opposed to the original 10 rows.
+
+```{r echo = FALSE, message=FALSE}
+Random_subset %>%
+  group_by(year) %>%
+  summarize(total = sum(n))
+```
+
+<!--begin-answer-->
+```{r, message=FALSE}
+Random_subset %>%
+  group_by(year) %>%
+  summarize(total = sum(n))
+```
+<!--end-answer-->
+

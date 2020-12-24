@@ -1,0 +1,33 @@
+Question
+========
+
+According to the [Data Values and Principles](https://datapractices.org/manifesto/) Manifesto, which of the following is **not** a value?
+
+Answerlist
+----------
+* Inclusion.
+* Experimentation.
+* Accountability.
+* Impact.
+* Reproducibility.
+
+
+Solution
+========
+
+Answerlist
+----------
+* False.
+* False.
+* False.
+* False.
+* True.
+
+
+Meta-information
+================
+extitle: manifesto values
+exsection: ethics
+exname: ethics-values
+extype: schoice
+exsolution: 00001

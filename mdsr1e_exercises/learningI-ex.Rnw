@@ -1,0 +1,261 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/learning-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+
+\section{Exercises}
+
+\begin{Exercise}
+The ability to get a good night's sleep is correlated with many positive health outcomes. The \data{NHANES} data set contains a binary variable \var{SleepTrouble} that indicates whether each person has trouble sleeping. For each of the following models:
+  \begin{enumerate}
+    \item Build a classifier for \var{SleepTrouble}
+    \item Report its effectiveness on the \data{NHANES} training data
+    \item Make an appropriate visualization of the model
+    \item Interpret the results. What have you learned about people's sleeping habits?
+  \end{enumerate}
+  
+You may use whatever variable you like, except for \var{SleepHrsNight}.
+
+\begin{enumerate}
+  \item Null model
+  \item Logistic regression
+  \item Decision tree
+  \item Random forest
+  \item Neural network
+  \item Na\"{i}ve Bayes
+  \item $k$-NN
+\end{enumerate}
+
+\end{Exercise}
+
+\begin{Answer}
+
+First we do some data cleaning. In this case, 22.3\% of the responses for \var{SleepTrouble} were \val{NA}'s. We choose to omit those responses. 
+
+<<>>=
+library(mdsr)
+library(NHANES)
+library(rpart)
+NHANES %>%
+  group_by(SleepTrouble) %>%
+  summarize(N = n())
+
+NHANES_good <- NHANES %>%
+  filter(!is.na(SleepTrouble))
+@
+
+Among those that did respond, about one quarter reported having troubling sleeping. 
+
+<<>>=
+NHANES_good %>%
+  summarize(N = n(), sleep_trouble = sum(SleepTrouble == "Yes")) %>%
+  mutate(sleep_pct = sleep_trouble / N)
+
+confusion_null <- NHANES_good %>%
+  select(SleepTrouble) %>%
+  mutate(sleep_trouble_hat = 0) %>%
+  table()
+
+confusion_null
+
+sum(diag(confusion_null)) / sum(confusion_null)
+@
+
+Thus, the effectiveness of the null model is \Sexpr{round(sum(diag(confusion_null)) / sum(confusion_null), 4)}. 
+
+We next fit a decision tree to the explanatory variables except for \var{SleepHrsNight}. 
+
+<<>>=
+tree <- rpart(SleepTrouble ~ . - SleepHrsNight, data = NHANES_good)
+
+confusion_tree <- NHANES_good %>%
+  mutate(sleep_trouble_hat = predict(tree, type = "class")) %>%
+  select(SleepTrouble, sleep_trouble_hat) %>%
+  table()
+
+sum(diag(confusion_tree)) / sum(confusion_tree)
+@
+
+The effectiveness of the decision tree is \Sexpr{round(sum(diag(confusion_tree)) / sum(confusion_tree), 4)}, which only slightly exceeds that of the null model. 
+
+The tree itself reveals that participants with 7 or more days of bad physical health \emph{and} 6 or more days of mental health are classified as having sleep trouble. All other participants are classified as not having sleep trouble. 
+
+<<>>=
+tree
+@
+
+This visualization tiles the plane with the model outputs, and then overlays the observed data. We make use of the \pkg{modelr} package in this example. 
+
+<<plottree, message=FALSE>>=
+tree2 <- rpart(SleepTrouble ~ DaysMentHlthBad + DaysPhysHlthBad, 
+               data = NHANES_good)
+library(modelr)
+grid <- NHANES %>%
+  data_grid(DaysMentHlthBad, 
+            DaysPhysHlthBad = seq_range(DaysPhysHlthBad, by = 1)) %>%
+  mutate(sleep_trouble_hat = predict(tree2, newdata = ., type = "class"))
+
+ggplot(grid, aes(x = DaysMentHlthBad, y = DaysPhysHlthBad, 
+                 fill = sleep_trouble_hat)) + 
+  geom_tile(alpha = 0.2) + 
+  geom_ref_line(h = 6.5) + geom_ref_line(v = 5.5) +
+  geom_point(data = NHANES_good, 
+             aes(color = SleepTrouble, fill = SleepTrouble), 
+             position = "jitter", alpha = 0.5)
+@
+
+
+\end{Answer}
+
+\begin{Exercise}
+Repeat the previous exercise, but now use the quantitative response variable \var{SleepHrsNight}. Build and interpret the following models:
+\begin{enumerate}
+  \item Null model
+  \item Multiple regression
+  \item Regression tree
+  \item Random forest
+  \item Ridge regression
+  \item LASSO
+\end{enumerate}
+\end{Exercise}
+
+\begin{Answer}
+
+We try a random forest. The story is a bit different here in that \var{BMI} and \var{Age} seem to have more predictive value for the number of hours slept. 
+
+<<message=FALSE>>=
+library(randomForest)
+tree_reg <- randomForest(SleepHrsNight ~ Gender + Age + BMI + 
+                           Race1 + Education + MaritalStatus + SmokeNow + 
+                           PhysActiveDays + DaysPhysHlthBad + DaysMentHlthBad, 
+                         data = NHANES, na.action = na.exclude, 
+                         ntree = 201, mtry = 3)
+tree_reg
+importance(tree_reg) %>%
+  as.data.frame(row.names = names(.)) %>%
+  tibble::rownames_to_column() %>%
+  arrange(desc(IncNodePurity))
+@
+\end{Answer}
+
+\begin{Exercise}
+Repeat either of the previous exercises, but this time first separate the \data{NHANES} data set uniformly at random into 75\% training and 25\% testing sets. Compare the effectiveness of each model on training vs.\ testing data. 
+\end{Exercise}
+
+\begin{Answer}
+The \pkg{modelr} package makes this easier. First we generate the training and testing sets.
+
+<<>>=
+library(modelr)
+NHANES_split <- crossv_mc(NHANES_good, n = 1, test = 0.25)
+
+NHANES_train <- NHANES_split %>%
+  pull(train) %>%
+  head(1) %>%
+  as.data.frame()
+
+NHANES_test <- NHANES_split %>%
+  pull(test) %>%
+  head(1) %>%
+  as.data.frame()
+@
+
+Next, we fit a decision tree model to the training set. 
+
+<<>>=
+tree_train <- rpart(SleepTrouble ~ DaysMentHlthBad + DaysPhysHlthBad, 
+                    data = NHANES_train)
+
+tree_train
+@
+
+Then we evaluate that model on the testing set. 
+
+<<>>=
+confusion_test <- NHANES_test %>%
+  mutate(sleep_trouble_hat = predict(tree_train, newdata = ., type = "class")) %>%
+  select(SleepTrouble, sleep_trouble_hat) %>%
+  table()
+
+sum(diag(confusion_test)) / sum(confusion_test)
+@
+
+\end{Answer}
+
+\begin{Exercise}
+Repeat the first exercise, but for the variable \var{PregnantNow}. What did you learn about who is pregnant? 
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+NHANES %>%
+  group_by(PregnantNow) %>%
+  summarize(N = n())
+
+NHANES_good <- NHANES %>%
+  filter(!is.na(PregnantNow))
+
+NHANES_good %>%
+  select(PregnantNow, Gender) %>%
+  table()
+@
+
+Note that only female respondents are potentially pregnant. 
+
+<<>>=
+rpart(PregnantNow ~ ., data = NHANES_good)
+@
+
+Not surprisingly, the first split in the decision tree occurs for those with high testosterone are considered pregnant. For those with low testerone, an examination of their urine (flow for those with low blood pressure, volume for those with high blood pressure) determines their classification. We start to get some clues about how home pregnancy tests---which analyze one's urine---work.  
+
+\end{Answer}
+
+\begin{Exercise}
+The \pkg{nasaweather} package contains data about tropical \data{storms} from 1995--2005. Consider the scatterplot between the \var{wind} speed and \var{pressure} of these \data{storms} shown below.
+
+<<storms, message=FALSE>>=
+library(mdsr)
+library(nasaweather)
+ggplot(data = storms, aes(x = pressure, y = wind, color = type)) + 
+  geom_point(alpha = 0.5)
+@
+
+The \var{type} of storm is present in the data, and four types are given: extratropical, hurricane, tropical depression, and tropical storm. There are \href{https://en.wikipedia.org/wiki/Tropical_cyclone#Classifications.2C_terminology.2C_and_naming}{complicated and not terribly precise definitions} for storm type. Build a classifier for the \var{type} of each storm as a function of its \var{wind} speed and \var{pressure}.  
+
+Why would a decision tree make a particularly good classifier for these data? Visualize your classifier in the data space in a manner 
+similar to Figure 8.10 or 8.11.  % XX hardcoded ref!
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+library(rpart)
+rpart(type ~ wind + pressure, data = storms)
+@
+\end{Answer}
+
+\begin{Exercise}
+Fit a series of supervised learning models to predict arrival delays for flights from 
+New York to \val{SFO} using the \pkg{nycflights13} package.  How do the conclusions change from
+the multiple regression model presented in the Statistical Foundations Chapter?
+\end{Exercise}
+\begin{Answer}
+Answers may vary. See solution to previous exercises in this chapters. 
+\end{Answer}
+
+\begin{Exercise}
+Use the College Scorecard Data (\url{https://collegescorecard.ed.gov/data}) to model student debt as a function of institutional characteristics using the techniques described in this chapter.  Compare and contrast results from at least three methods.  (Note that a considerable amount of data wrangling will be needed.)
+\end{Exercise}
+\begin{Answer}
+Answers will vary.
+\end{Answer}
+
+<<echo=FALSE, eval=FALSE>>=
+library(NeuralNetTools)   # don't remove this: it helps to ensure package list is complete
+@

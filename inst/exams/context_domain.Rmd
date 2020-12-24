@@ -1,0 +1,41 @@
+Question
+========
+
+The `starwars` data frame is provided by the `dplyr` package, and contains information about characters from the [*Star Wars*](https://en.wikipedia.org/wiki/Star_Wars) movie franchise.  
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+starwars
+```
+
+Unfortunately, you have never seen any of the *Star Wars* movies and you don't understand what some of the variables (e.g., `homeworld`, `species`) refer to, or what some of the values (e.g., "Tatooine") mean. 
+
+What can you do to get more information? 
+
+Answerlist
+----------
+* `?starwars`
+* `help("starwars")`
+* Type "starwars" in to the search box on the Help pane.
+* Google "Tatooine". 
+* Give up -- there is no way to find out more about `starwars`. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* True. 
+* True.
+* False.
+
+Meta-information
+================
+extitle: domain knowledge
+exsection: context
+exname: context-domain
+extype: mchoice
+exsolution: 11110

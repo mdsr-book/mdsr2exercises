@@ -1,0 +1,298 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/regression-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+\section{Exercises}
+
+\begin{Exercise}
+
+In the HELP (Health Evaluation and Linkage to Primary Care) study, investigators were interested in determining predictors of severe depressive symptoms (measured by the Center for Epidemiologic Studies---Depression scale, \var{cesd}) amongst a cohort enrolled at a substance abuse treatment facility. These predictors include \var{substance} of abuse (alcohol, cocaine, or heroin), \var{mcs} (a measure of mental well-being), gender, and housing status (housed or homeless). Answer  the following questions regarding the following multiple regression model.
+
+<<message=FALSE, eval=TRUE, warning=FALSE>>=
+library(mdsr)
+fm <- lm(cesd ~ substance + mcs + sex + homeless, data = HELPrct)
+msummary(fm)
+confint(fm)
+@
+
+\begin{enumerate}
+\item Write out the linear model.
+\item Calculate the predicted CESD for a female homeless cocaine-involved subject with
+an MCS score of 20.
+%\item Identify the null and alternative hypotheses for the 8 tests displayed above.
+
+\item Interpret the 95\% confidence interval for the {\tt substancecocaine} coefficient.
+
+\item Make a conclusion and summarize the results of a test of the {\tt homeless} parameter.
+\item Report and interpret the $R^2$ (coefficient of determination) for this model.
+%\item Which of the residual diagnostic plots are redundant?  
+\item What do we conclude about the distribution of the residuals?
+\item What do we conclude about the relationship between the fitted values and the residuals?
+\item What do we conclude about the relationship between the MCS score and the residuals?
+\item What other things can we learn from the residual diagnostics?
+\item Which observations should we flag for further study?
+\end{enumerate}
+
+\end{Exercise}
+
+\begin{Answer}
+\begin{enumerate}
+\item We can calculate this quantity using the {\tt makeFun()} function.
+<<>>=
+fmfun <- makeFun(fm)
+fmfun(substance="cocaine", mcs=20, sex="female", homeless="homeless")
+@
+The predicted CESD score given those factors is 41.4.
+
+\item The linear model is given by:
+$$E[CESD|X] = \beta_0 + \beta_1 COCAINE + \beta_2 HEROIN + \beta_3 MCS + \beta_4 MALE + \beta_5 HOUSED$$
+where for example, $\beta_0=57.78$.
+
+\item The 95\% confidence interval for the {\tt homeless} parameter (listed as {\tt HOUSED} above) ranges from -2.54 to 0.87.  We are 95\% confident that the true difference between housed and homeless subjects is in this range, after conditioning on the other factors in the model.
+
+\item Since the p-value is large (0.34) and the 95\% confidence interval includes 0, we conclude that after controlling for the other factors, housing status is not a significant predictor of CESD scores. 
+
+\item
+
+<<>>=
+rsquared(fm)
+@
+
+The coefficient of determination ($R^2$) is 0.49: nearly half of the variability in CESD scores is explained by the predictors in the model.
+
+\item We first generate a qqplot of the residuals (a histogram with superimposed normal curve might also be useful).
+
+<<foobl1, eval=TRUE>>=
+mplot(fm, which=2)
+@
+
+The distribution is approximately normal.  Some observations (e.g., 40, 351, and 433) have large residuals.
+
+\item 
+<<foobl2>>=
+mplot(fm, which=1)
+@
+
+We see that there is some modest deviation from linearity (particularly in the tails).  The same observations are flagged.
+
+\item
+We can add the residuals and fitted values into the dataframe, then generate the scatterplot with superimposed smoother.
+<<foobl3>>=
+HELPrct <- HELPrct %>%
+  mutate(resid = residuals(fm), fitted = fitted(fm))
+ggplot(data=HELPrct, aes(x = mcs, y = resid)) + 
+  geom_point() + 
+  stat_smooth(method = lm) + stat_smooth(method = loess, color = "green") +
+  ylab("Residuals") + xlab("MCS score")
+@
+The distribution is approximately linear.
+
+\item
+
+Other residual plots are available by default.
+
+<<foobl4>>=
+mplot(fm, which=3)
+@
+
+The scale-location plot indicates that the assumption of homoscedasticity (equal variance) appears to be hold as a function of fitted values.
+
+<<foobl5>>=
+mplot(fm, which=4)  
+@
+
+Three observations have extreme Cook's distance values.
+<<foobl6>>=
+mplot(fm, which=5)
+@
+
+The residuals versus leverage plot flags the same three points.
+
+\item We see that four points might merit further scrutiny.
+<<>>=
+HELPrct %>% 
+  select(cesd, fitted, resid, mcs, substance, mcs, sex) %>%
+  slice(c(40, 351, 433, 450))
+@
+
+\end{enumerate}
+\end{Answer}
+
+\begin{Exercise}
+Investigators in the HELP (Health Evaluation and Linkage to Primary Care) study were interested in modeling predictors of being \var{homeless} (one or more nights spent on the street or in a shelter in the past six months vs.\ housed) using baseline data from the clinical trial.  Fit and interpret a parsimonious model that would help the investigators identify predictors of homelessness.
+\end{Exercise}
+\begin{Answer}
+Answers may vary.  Consider the following.
+
+<<>>=
+logreg <- glm(homeless=="homeless" ~ sex + substance + pcs + mcs, 
+  family = binomial, data = HELPrct)
+msummary(logreg)
+exp(coef(logreg))
+@
+We see that males have 78\% higher odds of homelessness than females (controlling for other factors).  Similarly, cocaine-involved and heroin-involved subjects have lower odds than alcohol-involved subjects.  For every additional physical component score (PCS) value, odds of homelessless go down by 2\% (controlling for other factors).
+
+
+\end{Answer}
+
+\begin{Exercise}
+The \data{Gestation} data set contains birth weight, date, and gestational period collected as part of the Child Health and Development Studies. Information about the baby's parents---age, education, height, weight, and whether the mother smoked is also recorded.
+
+<<>>=
+library(mdsr)
+glimpse(Gestation)
+@
+
+
+\begin{enumerate}
+  \item Fit a linear regression model for birthweight (\var{wt}) as a function of the mother's age (\var{age}).
+  \item Find a 95\% confidence interval and p-value for the slope coefficient.
+  \item What do you conclude about the association between a mother's age and her baby's birthweight?
+\end{enumerate}
+
+\end{Exercise}
+\begin{Answer}
+\begin{enumerate}
+\item We can fit the model using the {\tt lm()} function.
+
+<<>>=
+mod <- lm(wt ~ age, data = Gestation)
+msummary(mod)
+confint(mod)
+@
+
+\item We observe a 95\% confidence interval that ranges from -0.07 to 0.28 (associated p-value is 0.24).  
+\item We conclude that there is not a statistically significant association between maternal age and child birth weight.  (However, other factors may be confounding this relationship.)
+\end{enumerate}
+
+\end{Answer}
+
+\begin{Exercise}
+The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The goal is to model the weight of the infants (\var{bwt}, in ounces) using variables including length of pregnancy in days (\var{gestation}), mother's age in years (\var{age}), mother's height in inches (\var{height}), whether the child was the first born (\var{parity}), mother's pregnancy weight in pounds (\var{weight}), and whether the mother was a smoker (\var{smoke}). 
+The summary table below shows the results of a regression model for predicting the average birth weight of babies based on all of the variables included in the data set.
+
+<<message=FALSE>>=
+library(mdsr)
+babies <- Gestation %>%
+  rename(bwt = wt, height = ht, weight = wt.1) %>%
+  mutate(parity = parity == 0, smoke = smoke > 0) %>%
+  select(id, bwt, gestation, age, height, weight, parity, smoke)
+mod <- lm(bwt ~ gestation + age + height + weight + parity + smoke, 
+  data = babies)
+coef(mod)
+@
+
+Answer the following questions regarding this linear regression model.
+\begin{enumerate}
+  \item The coefficient for \var{parity} is different than if you fit a linear model predicting weight using only that variable. Why might there be a difference?
+  
+  \item Calculate the residual for the first observation in the data set.
+  
+  \item The variance of the residuals is 249.28, and the variance of the birth weights of all babies in the data used to build the model is 335.94. Calculate the $R^2$ and the adjusted $R^2$. Note that there are 1,236 observations in the data set, but there was missing data in 62 of those observations, so only 1,174 observations were used to build the regression model.
+  
+  <<>>=
+var(~residuals(mod))
+var(~bwt, data = mod$model)
+@
+  \item This data set contains missing values. What happens to these rows when we fit the model? 
+\end{enumerate}
+
+\end{Exercise}
+\begin{Answer}
+\begin{enumerate}
+\item There could be possible confounders of the parity and weight association. As an example, moms with more kids may be more likely to smoke, and smokers might have smaller babies.  Such confounding factors might account for the changes.
+
+
+\item
+  <<>>=
+head(babies, 1)
+head(fitted(mod), 1)
+head(residuals(mod), 1)
+@
+
+\item The value of R-squared is 0.235.
+<<>>=
+msummary(mod)
+(335.94 - 249.28) / 335.94
+rsquared(mod)
+@
+\item The missing values are dropped from the model.  The analyst needs to be careful when adding the residuals and fitted values into the original dataset.
+\end{enumerate}
+\end{Answer}
+
+
+
+
+
+\begin{Exercise}
+
+In 1966 \href{http://en.wikipedia.org/wiki/Cyril_Burt}{Cyril Burt} published a paper called ``The genetic determination of differences in intelligence: A study of monozygotic twins reared apart." The data consist of IQ scores for [an assumed random sample of] 27 identical twins, one raised by foster parents, the other by the biological parents. 
+
+Here is the regression output for using \var{Biological} IQ to predict \var{Foster} IQ:
+
+<<message=FALSE, eval=TRUE>>=
+library(mdsr)
+library(faraway)
+mod <- lm(Foster ~ Biological, data = twins)
+coef(mod)
+rsquared(mod)
+@
+Which of the following is \textbf{FALSE}? Justify your answers.
+
+\begin{enumerate}
+\item Alice and Beth were raised by their biological parents. If Beth's IQ is 10 points higher than Alice's, then we would expect that her foster twin Bernice's IQ is 9 points higher than the IQ of Alice's foster twin Ashley. 
+\item Roughly 78\% of the foster twins' IQs can be accurately predicted by the model.
+\item The linear model is $\widehat{Foster} = 9.2 + 0.9 \times Biological$.
+\item Foster twins with IQs higher than average are expected to have biological twins with higher than average IQs as well.
+\end{enumerate}
+\end{Exercise}
+
+\begin{Answer}
+\begin{enumerate}
+\item TRUE
+\item FALSE: that is not a correct interpretation of the $R^2$ value.
+\item TRUE
+\item TRUE
+\end{enumerate}
+\end{Answer}
+
+\begin{Exercise}
+The \pkg{atus} package includes data from the American Time Use Survey (ATUS).  Use the \data{atusresp} dataset to model \var{hourly\_wage} as a function of other predictors in the dataset.
+\end{Exercise}
+
+\begin{Answer}
+
+Answers may vary.  See the following for one possibility.
+<<warning=FALSE>>=
+library(atus)
+summary(atusresp)
+@
+<<>>=
+analysis <- filter(atusresp, !is.na(hourly_wage))
+dim(analysis)
+mod <- lm(hourly_wage ~ ptft + hh_child + ind_code, 
+  data=analysis)
+@
+<<>>=
+anova(mod)
+@
+<<>>=
+msummary(mod)
+@
+<<>>=
+tally(~ ind_code, data=analysis)
+@
+<<moremplot>>=
+mplot(mod, which=2)
+@
+We see that (not surprisingly), part-time workers have significantly lower hourly wages than full time workers, and that not having a child is associated with an expected increase of \$0.16 (controlling for other factors).  Industry is a highly significant predictor (df=12, p$<$0.0001), with hospitality the lowest and public administration the highest.  The model explains 13.5\% of the variability in hourly wages and the distribution of the residuals is highly skewed (long right tail since wage is a non-negative variable).  
+
+\end{Answer}
+

@@ -1,0 +1,43 @@
+---
+chapter: "sqlI"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2020-08-25 
+version: 0.1
+tags: [first, second, third]
+id: elephant-type-pen
+---
+
+```{r elephant-type-pen-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Identify what years of data are available in the `flights` table of the `airlines` database.
+
+```{r eval = FALSE}
+library(tidyverse)
+library(mdsr)
+library(RMySQL)
+con <- dbConnect_scidb("airlines")
+```
+
+<!--begin-answer-->
+
+```{r}
+library(tidyverse)
+library(mdsr)
+library(RMySQL)
+con <- dbConnect_scidb("airlines")
+dbGetQuery(con, "SHOW TABLES")
+flights <- tbl(con, "flights")
+flights %>% 
+  group_by(year) %>%
+  summarize(n = n())
+```
+
+<!--end-answer-->
+
+

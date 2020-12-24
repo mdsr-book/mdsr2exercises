@@ -1,0 +1,51 @@
+Question
+========
+
+The following chunk creates a bar graph of median yearly income among states, as captured by the 2017 American Community Survey. 
+
+```{r, message=FALSE, warning=FALSE, fig.width=8}
+library(tidyverse)
+us_income <- us_rent_income %>%
+  filter(variable == "income")
+
+ggplot(us_income, aes(x = NAME, y = estimate)) + 
+  geom_col()
+```
+
+Each bar represents one state (or territory). 
+The state names appear on the $x$-axis, but they are impossible to read because they are overlapping. 
+
+Which of the following alterations would likely improve the readability of the plot? 
+
+Answerlist
+----------
+* Use `coord_flip()` to switch the $x$ and $y$ axes, because that would create more horizontal space for the state names. 
+* Use `scale_y_continuous()` to specify that the median income (in US dollars) is being plotted on the $y$ axis.
+* Divide the income values by 1000, then specify the units in the $y$ axis as "thousands of US dollars".
+* Reorder the bars so they are in order of median income, because alphabetical order doesn't mean much for states. 
+* Use the `labels` argument to `scale_y_continous()` to add a dollar sign (`$`).
+* Remove `NAME` from the $x$-axis, because it just takes up space and it's pretty obvious what the $x$ variable is. 
+* Add a title and subtitle that specifies what the plot is showing. 
+
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* True. 
+* True.
+* True.
+* True. 
+* True.
+
+Meta-information
+================
+extitle: improving axis labels
+exsection: context
+exname: context-labels
+extype: mchoice
+exsolution: 1111111

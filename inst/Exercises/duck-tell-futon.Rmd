@@ -1,0 +1,43 @@
+---
+chapter: dataviz-II
+author: ''
+difficulty: Medium
+date: '2020-07-14'
+version: 0.1
+tags:
+- first
+- second
+- third
+id: duck-tell-futon
+output: pdf_document
+---
+
+```{r duck-tell-futon-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `r pkg_macro(macleish)` package contains weather data collected every 10 minutes in 2015 from two weather stations in Whately, MA. 
+
+```{r message=FALSE}
+library(tidyverse)
+library(macleish)
+glimpse(whately_2015)
+```
+
+Using `r pkg_macro(ggplot2)`, create a data graphic that displays the average temperature over each 10-minute interval (`temperature`) as a function of time (`when`). 
+
+<!--begin-answer-->
+```{r macleish-ex-vizII,message=FALSE}
+whately_2015 <- whately_2015 %>%
+  mutate(Date = as.Date(when))
+ggplot(data = whately_2015, aes(x = Date, y = temperature)) +
+  geom_line(size = 0.3, color = "darkgray") +
+  labs(y = "Temperature (degrees C)", title = "Temperature measurements at Macleigh Field Station") +
+  geom_smooth() +
+  scale_x_date()
+```
+<!--end-answer-->
+
+

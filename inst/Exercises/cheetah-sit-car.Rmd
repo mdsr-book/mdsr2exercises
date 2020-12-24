@@ -1,0 +1,61 @@
+---
+chapter: "join"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [baseball, second, third]
+id: cheetah-sit-car 
+---
+
+```{r cheetah-sit-car-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r df_macro(Batting)`, `r df_macro(Pitching)`, and `r df_macro(Master)` tables in the `r pkg_macro(Lahman)` package to answer the following questions.
+
+a. Name every player in baseball history who has accumulated at least 300 home runs (`r mdsr2exercises::var_macro(HR)`) and at least 300 stolen bases (`r mdsr2exercises::var_macro(SB)`). You can find the first and last name of the player in the `r df_macro(Master)` data frame. Join this to your result along with the total home runs and total bases stolen for each of these elite players.
+
+<!--begin-answer-->
+```{r, message= FALSE, warning = FALSE}
+library(Lahman)
+Batting %>%
+  group_by(playerID) %>%
+  summarize(tHR = sum(HR), tSB = sum(SB)) %>%
+  filter(tHR >= 300 & tSB >= 300) %>%
+  left_join(Master, by = c("playerID" = "playerID")) %>%
+  select(nameFirst, nameLast, tHR, tSB) %>%
+  arrange(desc(tHR))
+```
+<!--end-answer-->
+
+b. Similarly, name every pitcher in baseball history who has accumulated at least 300 wins (`r mdsr2exercises::var_macro(W)`) and at least 3,000 strikeouts (`r mdsr2exercises::var_macro(SO)`).
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+Pitching %>%
+  group_by(playerID) %>%
+  summarize(tW = sum(W), tSO = sum(SO)) %>%
+  filter(tW >= 300 & tSO >= 3000) %>%
+  left_join(Master, by = c("playerID" = "playerID")) %>%
+  select(nameFirst, nameLast, tW, tSO) %>%
+  arrange(desc(tSO))
+```
+<!--end-answer-->
+
+c. Identify the name and year of every player who has hit at least 50 home runs in a single season. Which player had the lowest batting average in that season?
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+Batting %>%
+  group_by(playerID, yearID) %>%
+  summarize(tHR = sum(HR), BA = sum(H) / sum(AB)) %>%
+  filter(tHR >= 50) %>%
+  left_join(Master, by = c("playerID" = "playerID")) %>%
+  select(nameFirst, nameLast, yearID, tHR, BA) %>%
+  ungroup() %>%
+  arrange(BA)
+```
+Jose Bautista had 54 homeruns in 2010, but had a batting average of only 0.260.
+<!--end-answer-->

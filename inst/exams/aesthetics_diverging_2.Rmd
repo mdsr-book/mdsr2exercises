@@ -1,0 +1,36 @@
+Question
+========
+
+Consider the following data graphic about results from the [2016 presidential election in Massachusetts](https://www.wbur.org/politicker/2016/11/08/massachusetts-election-map).
+
+![](https://d279m997dpfwgl.cloudfront.net/wp/2016/11/massmapcanvas-1000x600.jpg)
+
+The color palette used in this graphic is:
+
+Answerlist
+----------
+* sequential, single-hue
+* sequential, multi-hue
+* diverging, single-hue
+* diverging, multi-hue
+* categorical
+
+Solution
+========
+
+Answerlist
+----------
+* False, this scale is diverging
+* False, this scale is diverging
+* False, this scale is multi-hue
+* True.
+* False, this scale is diverging
+
+
+Meta-information
+================
+extitle: sequential vs. diverging in Mass
+exsection: aesthetics
+exname: aesthetics-diverging-2
+extype: schoice
+exsolution: 00010

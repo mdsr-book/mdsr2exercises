@@ -1,0 +1,48 @@
+---
+chapter: "data-II"
+author: "Ben Baumer"
+date: "First edition" 
+difficulty: "Medium"
+version: 0.1
+tags: [scraping, second, third]
+id: turtle-light-kayak 
+---
+
+(ref:turtle-light-kayak) Exercise in file turtle-light-kayak
+
+```{r turtle-light-kayak-default, include = FALSE}
+mdsr2exercises::setup()
+library(rvest)
+library(tidyverse)
+library(mdsr)
+```
+
+TITLE GOES HERE: Using the approach described in Section 5.5.4 of the text, find another table in Wikipedia that can be scraped and visualized.  Be sure to interpret your graphical display.
+<!-- % XX hardcoded ref -->
+
+
+<!--begin-answer-->
+```{r}
+library(rvest)
+library(ggplot2)
+library(mdsr)
+
+options(scipen = 999)
+url <- "https://en.wikipedia.org/wiki/List_of_highest-grossing_animated_films"
+tables <- url %>%
+  read_html() %>%
+  html_nodes("table")
+
+computer_animated <- html_table(tables[[1]]) %>%
+  mutate(
+    Worldwide_gross = (gsub("\\$", "", `Worldwide gross`)),
+    Worldwide_gross = (gsub(",", "", Worldwide_gross)),
+    Worldwide_gross = as.numeric(Worldwide_gross)
+  ) %>%
+  head(10)
+
+ggplot(data = computer_animated, aes(x = Title, y = Worldwide_gross)) +
+  geom_bar(stat = "identity")
+```
+
+<!--end-answer-->

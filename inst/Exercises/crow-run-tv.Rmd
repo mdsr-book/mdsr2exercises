@@ -1,0 +1,29 @@
+---
+chapter: "data-II"
+author: "Ben Baumer"
+difficulty: Easy
+date: '2020-07-14'
+version: 0.1
+tags: [first, second, onlineonly]
+id: crow-run-tv
+output: pdf_document
+---
+
+```{r crow-run-tv-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: What type of join operation is depicted below? 
+
+XX BB need to move back to online version of exercises
+
+```{r  out.width = "50%", echo = FALSE, warning = FALSE}
+knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/dplyr-full-join.png", sep = ""))
+```
+
+
+<!--answer-start-->
+`full_join`
+<!--answer-end-->
+
+

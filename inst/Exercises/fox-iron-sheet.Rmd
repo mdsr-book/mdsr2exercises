@@ -1,0 +1,38 @@
+---
+chapter: "data-I"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [baseball, second, third]
+id: fox-iron-sheet 
+---
+
+(ref:fox-iron-sheet) Exercise in file fox-iron-sheet
+
+```{r fox-iron-sheet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:  Using the `r df_macro(Teams)` data frame in the `r pkg_macro(Lahman)` package:
+
+a. Create a factor called `r mdsr2exercises::var_macro(election)` that divides the `r mdsr2exercises::var_macro(yearID)` into 4-year blocks that correspond to U.S. presidential terms. The first presidential term started in 1788. They each last 4 years and are still on the schedule set in 1788.
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+library(Lahman)
+Teams %>%
+  mutate(election = factor(cut(yearID,
+    breaks = seq(from = 1788, to = 2017, by = 4)
+  ))) %>%
+  group_by(election) %>%
+  summarize(N = n(), tHR = sum(HR)) %>%
+  arrange(desc(tHR))
+```
+<!--end-answer-->
+
+b. During which term have the most home runs been hit? -A- The interval from 2001--2004 (corresponding to George W. Bush's first term) was associated with the most homeruns.
+
+
+

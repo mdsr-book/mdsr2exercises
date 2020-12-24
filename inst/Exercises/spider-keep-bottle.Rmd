@@ -1,0 +1,43 @@
+---
+chapter: "regression"
+author: ""
+difficulty: "Easy"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: spider-keep-bottle
+---
+
+```{r spider-keep-bottle-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: In 1966, [Cyril Burt](http://en.wikipedia.org/wiki/Cyril_Burt) published a paper called *The genetic determination of differences in intelligence: A study of monozygotic twins reared apart.* The data consist of IQ scores for [an assumed random sample of] 27 identical twins, one raised by foster parents, the other by the biological parents. 
+
+Here is the regression output for using `Biological` IQ to predict `Foster` IQ:
+
+```{r message=FALSE, eval=TRUE}
+library(mdsr)
+library(faraway)
+mod <- lm(Foster ~ Biological, data = twins)
+coef(mod)
+rsquared(mod)
+```
+Which of the following is **FALSE**? Justify your answers.
+
+-  Alice and Beth were raised by their biological parents. If Beth's IQ is 10 points higher than Alice's, then we would expect that her foster twin Bernice's IQ is 9 points higher than the IQ of Alice's foster twin Ashley. 
+-  Roughly 78% of the foster twins' IQs can be accurately predicted by the model.
+-  The linear model is $\widehat{Foster} = 9.2 + 0.9 \times Biological$.
+-  Foster twins with IQs higher than average are expected to have biological twins with higher than average IQs as well.
+
+ <!--begin-answer-->
+
+-  TRUE
+-  FALSE: that is not a correct interpretation of the $R^2$ value.
+-  TRUE
+-  TRUE
+
+<!--end-answer-->
+
+

@@ -1,0 +1,59 @@
+---
+chapter: "spatial-I"
+author: ""
+difficulty: "Hard"
+date: 2020-06-24 
+version: 0.1
+tags: [first, second, third]
+id: pine-shut-knob
+---
+
+```{r pine-shut-knob-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: Use the `r pkg_macro(tidycensus)` package to conduct a spatial analysis of the Census data it contains for your home state. Can you illustrate how the demography of your state varies spatially? 
+
+ <!--begin-answer-->
+
+Note: `r pkg_macro(tidycensus)` requires an API key; instructions for obtaining the key can be found [here.](https://walker-data.com/tidycensus/articles/basic-usage.html)
+```{r, results = 'hide', message= FALSE}
+library(tidycensus)
+library(leaflet)
+library(sf)
+
+MA <- get_acs(
+  geography = "county",
+  variables = c(medincome = "B19013_001"),
+  state = "MA",
+  year = 2018,
+  geometry = TRUE
+)
+```
+
+
+```{r}
+pal <- colorQuantile(palette = "YlGnBu", domain = MA$estimate, n = 5)
+
+MA$geometry <- st_transform(MA$geometry, "+proj=longlat +datum=WGS84")
+
+leaflet(MA) %>%
+  addTiles(data = MA$geometry) %>%
+  addPolygons(
+    color = ~ pal(MA$estimate),
+    popup = ~ paste("District: ", MA$NAME, "</br>", " Median Income ($): ", MA$estimate),
+    opacity = 1, fillOpacity = .5
+  ) %>%
+  addLegend("bottomright",
+    pal = pal, values = ~estimate,
+    title = "Median Income Quantile (2018)",
+    opacity = 1
+  )
+```
+
+
+ <!--end-answer-->
+
+

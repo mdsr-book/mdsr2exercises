@@ -1,0 +1,30 @@
+Question
+========
+
+Suppose you want to visit airports in Boston (`BOS`), New York (`JFK`, `LGA`), San Francisco (`SFO`), Chicago (`ORD`, `MDW`), and Los Angeles (`LAX`). You have data about flight delays in a `data.frame` called `flights`. You have written a pipeline that, for any given airport code (e.g., `LGA`), will return a `data.frame` with two columns: the airport code, and the average arrival delay time. 
+
+What workflow would be **most efficient** for computing the average arrival delay time for all seven airports? 
+
+Answerlist
+----------
+* Convert the pipeline into a function and iterate it over a vector containing the list of airport codes. 
+* Convert the pipeline into a function and call it on each airport code individually.
+* Copy-and-paste the pipeline code seven times and then change the airport code in each one manually. 
+* Phone a friend.
+
+
+Solution
+========
+
+Answerlist
+----------
+* Most efficient.
+* More efficient.
+* Least efficient.
+* C'mon, this is data science, not a gameshow!
+
+Meta-information
+================
+exname: iteration-workflow
+extype: schoice
+exsolution: 1000

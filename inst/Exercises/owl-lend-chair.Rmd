@@ -1,0 +1,23 @@
+---
+chapter: "modeling"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2020-09-30 
+version: 0.1
+tags: [first, second, third]
+id: owl-lend-chair
+---
+
+```{r owl-lend-chair-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Without using jargon, describe what a receiver operating characteristic (ROC) curve is and why it is important in predictive analytics and machine learning.
+
+ <!--begin-answer-->
+
+XX
+
+ <!--end-answer-->
+  

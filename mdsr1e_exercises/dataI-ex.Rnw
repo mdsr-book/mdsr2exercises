@@ -1,0 +1,17 @@
+Translated to mdsr2exercises files:
+
+"cheetah-sit-car.Rmd"
+"eagle-grow-piano.Rmd"
+"fir-pitch-fridge.Rmd"
+"fish-blow-dish.Rmd"
+"fish-hit-dress.Rmd"
+"fox-iron-sheet.Rmd"
+"hamster-speak-book.Rmd"
+"kid-walk-chair.Rmd"
+"monkey-do-mug.Rmd"
+"octopus-hold-blanket.Rmd"
+"owl-freeze-roof.Rmd"
+"panda-catch-boat.Rmd"
+"panda-take-bulb.Rmd"
+"pine-tug-dish.Rmd"
+"spider-blow-lamp.Rmd"

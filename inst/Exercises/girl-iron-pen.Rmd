@@ -1,0 +1,25 @@
+---
+chapter: "data-II"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [babynames, second, third]
+id: girl-iron-pen 
+---
+
+(ref:girl-iron-pen) Exercise in file girl-iron-pen
+
+```{r girl-iron-pen-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Replicate the functionality of `r mdsr2exercises::func_macro(make_babynames_dist)` from the `r mdsr2exercises::pkg_macro(mdsr)` package to wrangle the original tables from the `r mdsr2exercises::pkg_macro(babynames)` package.
+
+
+<!--begin-answer-->
+```{r girl-iron-pen-1, echo = TRUE}
+mdsr::make_babynames_dist
+```
+<!--end-answer-->
+

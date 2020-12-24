@@ -1,0 +1,24 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-08-16 
+version: 0.1
+tags: [first, second, third]
+id: birch-keep-map
+---
+
+```{r birch-keep-map-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:	Create a Shiny app that demonstrates the use of at least five widgets.
+
+<!--begin-answer-->
+ 
+XX answer needed
+ 
+<!--end-answer-->

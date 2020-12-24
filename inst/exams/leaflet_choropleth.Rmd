@@ -1,0 +1,70 @@
+Question
+========
+
+Consider the following choropleth of the population of the various United States. 
+The color of each state corresponds to its population, as measured in 2015. 
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+library(usmap)
+
+states <- us_map() %>%
+  st_as_sf(coords = c("x", "y")) %>%
+  st_set_crs(usmap_crs()) %>%
+  group_by(group, full) %>%
+  summarize(do_union = FALSE) %>%
+  st_cast("POLYGON") %>%
+  st_transform(4326) %>%
+  left_join(statepop, by = "full")
+```
+
+```{r, error=TRUE, eval=TRUE}
+library(leaflet)
+
+pal <- colorBin(
+  palette = "YlGnBu", 
+  domain = states$pop_2015, 
+  bins = c(0, 1e6, 5e6, 1e7, 3e7, Inf)
+)
+
+leaflet(states) %>%
+  addTiles() %>%
+  addPolygons(
+    fillColor = ~pal(pop_2015), 
+    fillOpacity = 0.5, 
+    weight = 0.3
+  ) %>%
+  addLegend("bottomleft", pal = pal, values = ~pop_2015)
+```
+
+Suppose that you did not like this particular set of colors. 
+How could you change the plot to use a different set of colors? 
+
+Answerlist
+----------
+* change the `palette` argument to `colorBin()`.
+* change the `fillColor` argument to `addPolygons()`. 
+* change the `values` argument to `addLegend()`.
+* change the `fillOpacity` argument to `addPolygons()`.
+* change the `domain` argument to `colorBin()`.
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This would alter the appearance of the states, but not change the set of colors. 
+* False. This would change the legend, but not the colors of the states. 
+* False. This would change the shading of the states, but not the set of colors.
+* False. This would change the mapping of colors to population values, but not the set of colors. 
+
+
+Meta-information
+================
+extitle: choropleth
+exsection: leaflet
+exname: leaflet-choropleth
+extype: schoice
+exsolution: 10000

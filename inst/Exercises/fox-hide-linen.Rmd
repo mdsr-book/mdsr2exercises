@@ -1,0 +1,24 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-08-16 
+version: 0.1
+tags: [first, second, third]
+id: fox-hide-linen
+---
+
+```{r fox-hide-linen-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:	Using data from the `r pkg_macro(palmerpenguins)` package, create a Shiny app that displays measurements from the `penguins` dataframe. Allow the user to select a species or a gender, and to choose between various attributes on a scatterplot. (Hint: examples of similar apps can be found at the [Shiny gallery](https://shiny.rstudio.com/gallery)).
+
+ <!--begin-answer-->
+ 
+XX answer needed
+ 
+<!--end-answer-->

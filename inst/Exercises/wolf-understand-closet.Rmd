@@ -1,0 +1,22 @@
+---
+chapter: "data-I"
+author: ""
+difficulty: "Easy"
+date: 2020-07-02 
+version: 0.1
+tags: [first, second, onlineonly]
+id: wolf-understand-closet
+---
+```{r wolf-understand-closet-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Which `dplyr` operation is depicted below? 
+
+```{r  out.width = "50%", echo = FALSE}
+knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/dplyr-mutate.png", sep = ""))
+```
+
+<!--answer-start-->
+`mutate`
+<!--answer-end-->

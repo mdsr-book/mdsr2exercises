@@ -1,0 +1,34 @@
+---
+chapter: "simulation"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, onlineonly]
+id: girl-run-scarf
+---
+
+```{r girl-run-scarf-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider a queuing example where customers arrive at a bank at a given minute past the hour and are served by the next available teller.  
+Use the following data to explore wait times for a bank with one teller vs. one with two tellers, where the duration of the transaction is given below.
+
+```{r echo=FALSE, results="asis"}
+df <- tibble(
+  arrival = c(1, 3, 7, 10, 11, 15), 
+  duration = c(3, 2, 5, 6, 8, 1)
+)
+knitr::kable(df)
+```
+What is the average total time for customers in the bank with one teller?  What is the average for a bank with two tellers?
+
+
+<!--begin-answer-->
+For the bank with one teller the total times are 3, 3, 5, 8, 15, and 12 minutes (average of 7.7 minutes).
+For the bank with two tellers the total times are 3, 2, 5, 6, 9, and 2 minutes (average of 4.5 minutes).
+<!--end-answer-->
+
+

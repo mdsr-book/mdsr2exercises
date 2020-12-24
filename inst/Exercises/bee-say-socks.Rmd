@@ -1,0 +1,26 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Easy"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: bee-say-socks
+---
+
+```{r bee-say-socks-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Which of these kinds of names should be wrapped with quotation marks when used in R?
+
+-  function name
+-  file name
+-  the name of an argument in a named argument
+-  object name
+
+<!--begin-answer-->
+File names need to be in quotes.
+<!--end-answer-->
+
+

@@ -1,0 +1,32 @@
+---
+chapter: "modeling"
+author: "Nicholas Horton"
+difficulty: "Hard"
+date: 2020-09-30 
+version: 0.1
+tags: [first, second, third]
+id: maple-sleep-sofa
+---
+
+```{r maple-sleep-sofa-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Smoking is an important public health concern. Use the `NHANES` data from the `r pkg_macro(NHANES)` package to develop a logistic regression model that identifies predictors of current smoking among those 20 or older. (Hint: note that the `SmokeNow` variable is missing for those who have never smoked: you will need to recode the variable to construct your outcome variable.)
+
+```{r message = FALSE}
+library(tidyverse)
+library(NHANES)
+mosaic::tally(~ SmokeNow + Smoke100, data = filter(NHANES, Age >= 20))
+```
+
+ <!--begin-answer-->
+Answers may vary.  XX
+
+```{r }
+library(mdsr)
+```
+
+ <!--end-answer-->
+  

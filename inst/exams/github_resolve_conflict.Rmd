@@ -1,0 +1,46 @@
+Question
+========
+
+The following output shows a merge conflict in a file named `mp2.Rmd`. 
+
+```
+<<<<<<< HEAD:mp2.Rmd
+babynames %>%
+  filter(name == "Benjamin")
+-------
+babynames %>%
+  filter(name %in% c("Ben", "Benito"))
+  group_by(name)
+>>>>>>> issue-5:mp2.Rmd
+```
+
+Which of the following statements are true? 
+
+Answerlist
+----------
+* The conflict occurred because two people tried to edit the same part of the same file. 
+* The conflict must be resolved manually because `git` has no way of knowing which of the two code chunks you prefer. 
+* The conflict can be resolved by just deleting line 4 (`=======`)
+* The conflict can be resolved by deleting lines 1, 4, and 8. 
+* The best way to resolve the conflict is by deleting lines 1, 4, and 8, and also resolving the discrepancies in the code. 
+
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* False. You also have to delete lines 1 and 8.
+* True, but this probably won't solve your code problems. 
+* True.
+
+Meta-information
+================
+extitle: resolve conflict
+exsection: github
+exname: github-resolve-conflict
+extype: mchoice
+exsolution: 11011

@@ -1,0 +1,43 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-08-16 
+version: 0.1
+tags: [first, second, third]
+id: finch-bite-chair
+---
+
+```{r finch-bite-chair-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:	The following code generates a scatterplot with marginal histograms.
+
+```{r gghistogram, fig.asp = 0.4, warning=FALSE}
+p <- ggplot(HELPrct, aes(x = age, y = cesd)) +
+  geom_point() +
+  theme_classic() +
+  stat_smooth(method = "loess", formula = y ~ x, size = 2)
+ggExtra::ggMarginal(p, type = "histogram", binwidth = 3)
+```
+
+Find an example where such a display might be useful. Be sure to interpret your graphical display
+
+
+ <!--begin-answer-->
+ 
+Answer may vary.  But here's one example.
+
+```{r gghistogram2, warning=FALSE}
+p <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+  geom_point() +
+  theme_classic() +
+  stat_smooth(method = "loess", formula = y ~ x, size = 2)
+ggExtra::ggMarginal(p, type = "histogram", binwidth = 3)
+```
+
+<!--end-answer-->

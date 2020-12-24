@@ -1,0 +1,50 @@
+---
+chapter: "algorithmic"
+author: ""
+difficulty: "Medium"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: bird-chew-dress
+---
+
+```{r bird-chew-dress-default, include = FALSE}
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: 
+
+a. Write a function called `count_na` that, when given a vector as an argument, will count the number of `NA's` in that vector.  
+Count the number of missing values in the `SEXRISK` variable in the `HELPfull` data frame in the `r pkg_macro(mosaicData)` package.
+
+ <!--begin-answer-->
+```{r }
+library(mosaicData)
+count_na <- function(x) {
+  return(sum(is.na(x)))
+}
+
+HELPfull %>%
+  pull(SEXRISK) %>%
+  count_na()
+
+summary(HELPfull$SEXRISK)
+```
+  <!--end-answer-->
+
+b. Apply `count_na` to the columns of the `Teams` data frame from the `r pkg_macro(Lahman)` package. 
+How many of the columns have missing data?
+
+ <!--begin-answer-->
+```{r, message=FALSE}
+library(Lahman)
+missvars <- Teams %>%
+  map_int(count_na)
+
+mosaic::tally(~missvars)
+missvars["SF"]
+```
+A total of `length(missvars)` columns have missing data. 
+The `SF` column (denoting [sacrifice flies](https://en.wikipedia.org/wiki/Sacrifice_fly)) has the second most missing values (due to a relatively recent decision to record this statistic).
+  <!--end-answer-->

@@ -1,0 +1,43 @@
+Question
+========
+
+Consider the following data graphic from the *Economist* article, "[Temporary economic downturns have long-lasting consequences](https://www.economist.com/graphic-detail/2018/10/19/temporary-economic-downturns-have-long-lasting-consequences)":
+
+![](https://www.economist.com/sites/default/files/20181020_WOC966.png)
+
+Suppose that this data graphic was created in `ggplot2`. Consider *only the left-most panel titled "Gender"*. 
+Which of the following statements are true? 
+
+Answerlist
+----------
+* The `color` aesthetic is mapped to the "gender" variable.
+* The `color` aesthetic is mapped to the "reduction of earnings" variable.
+* Vertical position is mapped to the "reduction of earnings" variable.
+* Vertical position is mapped to the "years since graduation" variable.
+* Horizontal position is mapped to the "years since graduation" variable.
+* Horizontal position is mapped to the "reduction of earnings" variable.
+* The `geom_line()` function is used to draw the lines.
+* The `geom_point()` function is used to draw the lines.
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* True.
+* False.
+* True.
+* False.
+* True.
+* False.
+
+Meta-information
+================
+extitle: visual cues
+exsection: aesthetics
+exname: aesthetics-mapping
+extype: mchoice
+exsolution: 10101010

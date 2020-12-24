@@ -1,0 +1,56 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Easy"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: beech-sing-blanket
+---
+
+```{r beech-sing-blanket-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A user has typed the following commands into the RStudio console:  
+
+```{r }
+mylist <- list(x1 = "sally", x2 = 42, x3 = FALSE, x4 = 1:5)
+```
+
+What values do each of the following commands return?
+```{r eval=FALSE}
+is.list(mylist)
+names(mylist)
+length(mylist)
+mylist[[2]]
+mylist[["x1"]]
+mylist$x2
+length(mylist[["x4"]])
+class(mylist)
+typeof(mylist)
+class(mylist[[4]])
+typeof(mylist[[3]])
+```
+
+
+<!--begin-answer-->
+```{r }
+is.list(mylist)
+names(mylist)
+length(mylist)
+mylist[[2]]
+mylist[["x1"]]
+mylist$x2
+length(mylist[["x4"]])
+class(mylist)
+typeof(mylist)
+class(mylist[[4]])
+typeof(mylist[[3]])
+```
+<!--end-answer-->
+
+
+
+

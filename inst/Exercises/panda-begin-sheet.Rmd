@@ -1,0 +1,33 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Medium"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: panda-begin-sheet
+---
+
+```{r panda-begin-sheet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The following concepts should have some meaning to you: package, function, command, argument, assignment, object, object name, data frame, named argument, quoted character string.  
+
+Construct an example of R commands
+that make use of at least four of these.  Label which part of your example R command corresponds to each.
+
+<!--begin-answer-->
+Answers may vary.  One example:
+
+```{r eval=FALSE}
+library(readr) # package, function call, argument
+ds <- read_csv("http://www.mysite.com/myfile", progress = TRUE)
+# quoted character string, named argument
+```
+<!--end-answer-->
+
+
+
+

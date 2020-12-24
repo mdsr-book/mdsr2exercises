@@ -1,0 +1,50 @@
+Question
+========
+
+The following chunk creates a scatterplot of human character from [*Star Wars*](https://en.wikipedia.org/wiki/Star_Wars), according to their mass and height. 
+
+```{r, message=FALSE, fig.width=8}
+library(tidyverse)
+humans <- starwars %>%
+  filter(species == "Human")
+nrow(humans)
+
+library(ggrepel)
+ggplot(humans, aes(x = mass, y = height)) + 
+  geom_point() + 
+  geom_label_repel(aes(label = name))
+```
+
+There are `r nrow(humans)` humans in the data set. 
+The **Warning** claims that "13 rows containing missing values" were removed. 
+
+Why? 
+
+Answerlist
+----------
+* Because there were 13 characters for whom no `height` was recorded.
+* Because there were 13 characters for whom no `mass` was recorded. 
+* Because there were 13 characters for whom no `name` was recorded. 
+* Because there were 13 characters for whom at least one of `height`, `mass`, or `name` was not recorded. 
+* Because of the $3 * 35 = 105$ data points necessary to make the plot, 13 were missing. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* False. In fact, only four characters are missing `height`, but all of them are also missing `mass`.
+* False. This is in fact true, but it's not deducible from the information given. 
+* False. None of the characters are missing `name`.
+* True.
+* False. In fact, 17 data points are missing.  
+
+
+Meta-information
+================
+extitle: missing observations
+exsection: context
+exname: context-missing
+extype: schoice
+exsolution: 00010

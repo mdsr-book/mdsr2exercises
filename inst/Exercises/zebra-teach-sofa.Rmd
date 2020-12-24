@@ -1,0 +1,39 @@
+---
+chapter: "algorithmic"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-08-09 
+version: 0.1
+tags: [first, second, onlineonly]
+id: zebra-teach-sofa
+---
+
+```{r zebra-teach-sofa-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following function definition, and subsequent call of that function. 
+
+```{r, eval=FALSE, message=FALSE}
+library(tidyverse)
+summarize_species <- function(data, pattern = "Human") {
+  data %>%
+    filter(species == pattern) %>%
+    summarize(
+      num_people = n(),
+      avg_height = mean(height, na.rm = TRUE)
+    )
+}
+summarize_species("Wookiee")
+```
+
+What errors are there in this function definition and call?
+
+<!--answer-start-->
+1. the `filter()` function expects a `data.frame`, but gets a `character` vector
+1. the `data` argument expects a `data.frame`, but gets a `character` vector
+1. There is no default for the `data` argument
+<!--answer-end-->
+
+

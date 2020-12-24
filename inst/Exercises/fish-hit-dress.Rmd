@@ -1,0 +1,39 @@
+---
+chapter: "data-I"
+author: ""
+date: "first edition"
+difficulty: "Medium"
+version: 0.1
+tags: [nycflights13, second, third]
+id: fish-hit-dress 
+---
+
+(ref:fish-hit-dress) Exercise in file fish-hit-dress
+
+```{r fish-hit-dress-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r pkg_macro(nycflights13)` package and the `r df_macro(flights)` data frame to answer the following questions: What month had the highest proportion of cancelled flights?  What month had the lowest?  Interpret any seasonal patterns.
+
+<!--begin-answer-->
+```{r fish-hit-dress-1, message = FALSE, warning = FALSE}
+library(nycflights13)
+flights2 <- flights %>%
+  group_by(month) %>%
+  summarize(
+    cancelled = sum(is.na(arr_delay)),
+    total = n(),
+    prop_cancelled = cancelled / total
+  )
+ggplot(data = flights2, aes(x = month, y = prop_cancelled)) +
+  geom_point() +
+  labs(
+    title = "Proportion of Cancelled Flights Each Month",
+    y = "proportion cancelled"
+  )
+```
+
+February had the highest proportion of cancelled flights while October had the lowest. The data shows that February, December, and summer are the periods with the greatest number of cancellations, which may be because they are often also the stormiest and snowiest periods of the year, with severe weather likely to be causing cancellations.
+
+<!--end-answer-->

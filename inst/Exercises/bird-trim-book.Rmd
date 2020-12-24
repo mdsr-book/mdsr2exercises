@@ -1,0 +1,39 @@
+---
+chapter: "simulation"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: bird-trim-book
+---
+
+```{r bird-trim-book-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The time a manager takes to interview a job applicant has an exponential distribution with mean of half an hour, and these times are independent of each other.  The applicants are scheduled at quarter-hour intervals beginning at 8:00 am, and all of the applicants arrive exactly on time (this is an excellent thing to do, by the way).  When the applicant with an 8:15 am appointment arrives at the manager's office office, what is the probability that she will have to wait before seeing the manager?  What is the expected time that her interview will finish?
+
+<!--begin-answer-->
+```{r }
+1 - pexp(0.25, rate = 2)
+```
+The empirical probability that she has to wait is 0.6065.
+
+```{r }
+numsim <- 10000
+samp1 <- rexp(numsim, rate = 2) # E[X] = 1/2
+samp2 <- rexp(numsim, rate = 2)
+actual1 <- ifelse(samp1 < 0.25, 0.25, samp1)
+actual2 <- actual1 + samp2
+favstats(~actual2)
+count <- tally(~ (samp1 >= 0.25))
+# Counting number of times the simulation goes over 15 min
+cat(
+  "Estimated chance that the applicant with an 8:15 appointment has to wait is",
+  count[1] / numsim
+)
+```
+<!--end-answer-->
+
+

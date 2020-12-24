@@ -1,0 +1,63 @@
+---
+chapter: "learning-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: octopus-bet-roof
+---
+
+```{r octopus-bet-roof-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Carry out and interpret a clustering of vehicles from another manufacturer using the 
+approach outlined in the first section of the chapter.
+
+<!--begin-answer-->
+```{r eval= TRUE, warning= FALSE, message = FALSE}
+library(readxl)
+
+if (!file.exists("./fueleconomy/2016 FEGuide for DOE-OK to release-no-sales-5-8-2019McLarenforpublic.xlsx")) {
+  download.file("https://www.fueleconomy.gov/feg/epadata/16data.zip",
+    destfile = "./fueleconomy.zip"
+  )
+  unzip("./fueleconomy.zip", exdir = "./fueleconomy/")
+}
+
+filename <- list.files("./fueleconomy/", pattern = "public\\.xlsx")[1]
+fullfilename <- paste0("./fueleconomy/", filename)
+cars <- read_excel(fullfilename) %>% data.frame()
+```
+
+```{r, message= FALSE, warning = FALSE }
+library(mdsr)
+cars <- cars %>%
+  rename(
+    make = Mfr.Name, model = Carline, displacement = Eng.Displ,
+    cylinders = X..Cyl, city_mpg = City.FE..Guide....Conventional.Fuel,
+    hwy_mpg = Hwy.FE..Guide....Conventional.Fuel, gears = X..Gears
+  ) %>%
+  select(make, model, displacement, cylinders, gears, city_mpg, hwy_mpg) %>%
+  distinct(model, .keep_all = TRUE) %>%
+  filter(make == "Ford Motor Company")
+rownames(cars) <- cars$model
+car_diffs <- dist(cars)
+```
+
+```{r cardists, fig.height=11, fig.width=6}
+library(ape)
+car_diffs %>%
+  hclust() %>%
+  as.phylo() %>%
+  plot(cex = 0.8, label.offset = 1)
+```
+
+A clear truck/small-car split is observed.  For the trucks, the first split is between large trucks/cars and big trucks and vans.
+<!--end-answer-->
+
+
+

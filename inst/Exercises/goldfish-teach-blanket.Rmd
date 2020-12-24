@@ -1,0 +1,37 @@
+---
+chapter: "learning-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: goldfish-teach-blanket
+---
+
+```{r goldfish-teach-blanket-default, include = FALSE}
+library(tidyverse)
+library(mclust)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Re-fit the $k$--means algorithm on the `BigCities` data with a different value of $k$ (i.e., not six). Experiment with different values of $k$ and report on the sensitivity of the algorithm to changes in this parameter. 
+
+<!--begin-answer-->
+```{r cluster-plot-8236,message=FALSE}
+BigCities <- world_cities %>%
+  arrange(desc(population)) %>%
+  head(4000) %>%
+  select(longitude, latitude)
+library(mclust)
+city_clusts <- BigCities %>%
+  kmeans(centers = 8) %>%
+  fitted("classes") %>%
+  as.character()
+BigCities <- BigCities %>% mutate(cluster = city_clusts)
+BigCities %>% ggplot(aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = cluster), alpha = 0.5)
+```
+<!--end-answer-->
+
+

@@ -1,0 +1,32 @@
+Question
+========
+
+Which one of the following statements about `git` (and/or GitHub) is **false**? 
+
+Answerlist
+----------
+* `git` is a [version control](https://en.wikipedia.org/wiki/Version_control) system that allows you to track changes in the history of a software project.
+* GitHub is a website that provides hosting services for `git` projects. 
+* The only way to use `git` is through the [command line](https://en.wikipedia.org/wiki/Command-line_interface) (or [UNIX shell](https://en.wikipedia.org/wiki/Unix_shell)).
+* Many professional data scientists use `git` and GitHub to collaborate on software projects. 
+
+
+
+
+Solution
+========
+
+Answerlist
+----------
+* This statement is true. 
+* This statement is true. 
+* This statement is false, there are several GUIs for `git`. 
+* This statement is true. 
+
+Meta-information
+================
+extitle: what is git?
+exsection: github
+exname: github-git
+extype: schoice
+exsolution: 0010

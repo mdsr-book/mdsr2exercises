@@ -1,0 +1,58 @@
+---
+chapter: "algorithmic"
+author: ""
+difficulty: "Hard"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: tiger-know-stove
+---
+
+```{r tiger-know-stove-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Benford's law concerns the frequency distribution of leading digits from numerical data.
+Write a function that takes a vector of numbers and returns the empirical distribution
+of the first digit.  Apply this function to data from the `corporate.payment` data set in the `r pkg_macro(benford.analysis)` package.
+
+
+ <!--begin-answer-->
+```{r, message=FALSE, warning=FALSE}
+library(benford.analysis)
+library(readr)
+options(digits = 3)
+
+benforddist <- c(
+  0.301, 0.176, 0.125, 0.097, 0.079,
+  0.067, 0.058, 0.051, 0.046
+)
+cumsum(benforddist)
+
+cbind(k = 1:9, benforddist, cumsum(benforddist))
+
+
+grabfirstdigit <- function(x) {
+  firstdigit <- substring(parse_number(x), first = 1, last = 1)
+  firstdigit <- firstdigit[firstdigit != "-"]
+  firstdigit <- firstdigit[firstdigit != "0"]
+  return(firstdigit)
+}
+```
+
+```{r benfordplot}
+
+grabfirstdigit("231")
+grabfirstdigit(c("3097.24", "-123.48", "99.8", "0.97", "5043"))
+
+data(corporate.payment)
+class(corporate.payment$Amount)
+corpdigits <- grabfirstdigit(as.character(corporate.payment$Amount))
+tally(~corpdigits, format = "proportion")
+
+plot(benford(corporate.payment$Amount, number.of.digits = 1))
+```
+  <!--end-answer-->
+
+

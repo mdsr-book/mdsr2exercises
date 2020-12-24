@@ -1,0 +1,56 @@
+---
+chapter: "simulation"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: dolphin-fight-pan
+---
+
+```{r dolphin-fight-pan-default, include = FALSE}
+library(etude)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:  Consider an example where a recording device that measures remote activity is placed in a remote location. The time, $T$, to failure of the remote device has an exponential distribution with mean of 3 years. Since the location is so remote, the device will not be monitored during its first 2 years of service. As a result, the time to
+discovery of its failure is $X$ = max$(T, 2)$. The problem here is to determine the average of the time to discovery of the truncated variable (in probability parlance, the expected value of the observed variable $X$, E[X]).
+
+The analytic solution is fairly straightforward, but requires calculus. We need to evaluate:
+$$E[X] = \int_0^{2} 2 f(u) du + \int_2^{\infty} u f(u) du,$$ where $f(u) = 1/3 \exp{(-1/3 u)}$ for $u > 0$.  
+We can use the calculus functions in the `mosaicCalc` package to find the answer.
+
+Is calculus strictly necessary here?
+Conduct a simulation to estimate (or check) the value for the average time to discovery.
+
+<!--begin-answer-->
+
+Let's first find the analytic answer (though this is not required).
+```{r, message = FALSE}
+library(mosaicCalc)
+library(mosaic)
+
+options(digits = 6)
+rate <- 1 / 3
+F1 <- mosaicCalc::antiD((lambda * exp(-lambda * t)) ~ t, lambda = rate) # f(T)
+F2 <- mosaicCalc::antiD((t * lambda * exp(-lambda * t)) ~ t, lambda = rate) # E[T]
+2 * (F1(t = 2) - F1(t = 0)) + (F2(t = Inf) - F2(t = 2))
+```
+
+```{r echo=FALSE}
+set.seed(1000)
+```
+
+```{r }
+rate <- 1 / 3
+numsim <- 100000
+fail <- rexp(numsim, rate = rate)
+# map all values less than 2 to be 2
+fail[fail < 2] <- 2 # or mean(pmax(2, fail))
+confint(t.test(fail))
+```
+
+We confirm that the mean time to discovery of failure is approximately 3.54 years.
+<!--end-answer-->
+
+

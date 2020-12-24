@@ -1,0 +1,40 @@
+---
+chapter: "learning-I"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2020-10-02 
+version: 0.1
+tags: [first, second, third]
+id: snail-ring-shirt
+---
+
+```{r snail-ring-shirt-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: Use the `HELPrct` data from the `r pkg_macro(mosaicData)` to fit a tree model to the following predictors: `age`, `sex`, `cesd`, and `substance`.
+
+a. Plot the resulting tree and interpret the results.
+
+b. What is the accuracy of your decision tree?
+
+ <!--begin-answer-->
+
+```{r}
+library(tidymodels)
+library(mosaicData)
+form <- formula("homeless ~ age + sex + cesd + substance")
+mod_tree <- decision_tree(mode = "classification") %>%
+   set_engine("rpart") %>%
+   fit(form, data = HELPrct)
+mod_tree
+```
+
+XX accuracy
+ 
+ 
+<!--end-answer-->
+
+ 

@@ -1,0 +1,39 @@
+---
+chapter: "data-I"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [baseball, second, third]
+id: eagle-grow-piano 
+depends: kid-walk-chair
+---
+
+(ref:eagle-grow-piano) Exercise in file eagle-grow-piano
+
+```{r eagle-grow-piano-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Using the `r df_macro(Teams)` data frame in the `r pkg_macro(Lahman)` package, display the top-5 teams ranked in terms of slugging percentage ($SLG$) in Major League Baseball history. Repeat this using teams since 1969. Slugging percentage is total bases divided by at-bats. To compute total bases, you get 1 for a single, 2 for a double, 3 for a triple, and 4 for a home run.
+
+<!--begin-answer-->
+```{r}
+library(Lahman)
+Teams <- mutate(Teams,
+  SLG = (H + X2B + 2 * X3B + 3 * HR) / AB
+)
+Teams %>%
+  select(yearID, teamID, lgID, SLG) %>%
+  arrange(desc(SLG)) %>%
+  head(5)
+Teams %>%
+  filter(yearID >= 1969) %>%
+  select(yearID, teamID, lgID, SLG) %>%
+  arrange(desc(SLG)) %>%
+  head(5)
+```
+<!--end-answer-->
+
+

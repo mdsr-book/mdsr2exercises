@@ -1,0 +1,25 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Easy"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: fir-begin-book
+---
+
+```{r fir-begin-book-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consult the documentation for `CPS85` in the `r pkg_macro(mosaicData)` package to determine the meaning of CPS.
+
+<!--begin-answer-->
+```{r eval=FALSE}
+library(mosaicData)
+?CPS85
+```
+We see that CPS stands for current population survey.
+
+<!--end-answer-->
+

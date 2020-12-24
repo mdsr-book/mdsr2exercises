@@ -1,0 +1,41 @@
+---
+chapter: "algorithmic"
+author: ""
+difficulty: "Medium"
+date: 2020-07-17 
+version: 0.1
+tags: [first, second, third]
+id: kangaroo-burn-socks
+---
+
+```{r kangaroo-burn-socks-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a function called `grab_name` that, when given a name and a year as an argument, returns the rows from the `babynames` data frame in the `r pkg_macro(babynames)` package that match that name for that year (and returns an error if that name and year combination does not match any rows).
+Run the function once with the arguments `Ezekiel` and `1883` and once with `Ezekiel` and `1983`.
+
+ <!--begin-answer-->
+```{r }
+library(babynames)
+grab_name <- function(x, myyear) {
+  result <- babynames %>%
+    filter(name == x, year == myyear)
+  if (nrow(result) == 0) {
+    stop("Name/year combination not found")
+  } else {
+    return(result)
+  }
+}
+grab_name("Ezekiel", 1883)
+grab_name("Ezekiel", 1983)
+```
+
+```{r, eval = FALSE}
+grab_name("Ezekiel2", 1983) # error message
+```
+
+  <!--end-answer-->
+

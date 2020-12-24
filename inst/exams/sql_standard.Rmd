@@ -1,0 +1,32 @@
+Question
+========
+
+Which of the following statements about SQL and relational database management systems (RDBMSs) are **false**? 
+
+
+Answerlist
+----------
+* The theoretical foundation for RDBMSs was developed in the 1960s and 1970s by E.F. Codd. 
+* The first SQL databases were implemented in the 1970s. 
+* MySQL is the only flavor of SQL worth learning about. 
+* All SQL implementations adhere to strict standards, so any code you write for MySQL will automatically run verbatim on PostgreSQL. 
+* `dplyr` was created before SQL. 
+
+Solution
+========
+
+Answerlist
+----------
+* False. E.F. Codd *did* develop the theoretical foundation for SQL.
+* False. The first SQL databases *were* implemented in the 1970s.
+* True. MySQL is just one worthwhile implementation of SQL.
+* True. Although there is an ANSI SQL standard, it is only loosely followed. 
+* True. `dplyr` was created with SQL in mind. 
+
+Meta-information
+================
+extitle: SQL standards
+exsection: sql
+exname: sql-standard
+extype: mchoice
+exsolution: 00111

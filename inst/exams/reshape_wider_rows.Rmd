@@ -1,0 +1,51 @@
+Question
+========
+
+The `drug_use_young` data frame shown below contains 9 rows and 3 columns. It records drug usage rates among 12--14-year-olds. 
+
+```{r, message=FALSE, echo=FALSE}
+library(tidyverse)
+library(fivethirtyeight)
+drug_use_young <- drug_use %>%
+  filter(age < 15) %>%
+  select(age, alcohol_use, marijuana_use, cocaine_use) %>%
+  pivot_longer(-age, names_to = "drug", values_to = "usage_rate")
+drug_use_young
+```
+
+The following application of `pivot_wider()` will result in a `tibble` with how many rows and columns? 
+
+```{r, eval=FALSE}
+drug_use_young %>%
+  pivot_wider(names_from = drug, values_from = usage_rate)
+```
+
+
+Answerlist
+----------
+* 3 rows and 4 columns
+* 3 rows and 3 columns
+* 3 rows and 2 columns
+* 6 rows and 3 columns
+* 6 rows and 4 columns
+* 9 rows and 3 columns
+* 9 rows and 4 columns
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: reshape-wider-rows
+extype: schoice
+exsolution: 1000000

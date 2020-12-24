@@ -1,0 +1,20 @@
+---
+chapter: "ethics"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: calf-freeze-knife
+---
+
+```{r calf-freeze-knife-default, include = FALSE}
+library(etude)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A reporter carried out a clinical trial of chocolate where a small number of overweight subjects who had received medical clearance were randomized to either eat dark chocolate or not to eat dark chocolate.  They were followed for a period and their change in weight was recorded from baseline until the end of the study.  More than a dozen outcomes were recorded and one proved to be significantly different in the treatment group than the outcome.  This study was publicized and received coverage from a number of magazines and television programs.  Outline the ethical considerations that arise in this situation.
+
+  <!--begin-answer-->
+While answers may vary, many ethical issues arise in this example.  These include the lack of filed protocol for the study (which was undertaken by a journalist hoping to shed light on poor conduct and reporting of trials), minimal vetting of the pay-to-publish journal where the results were published, and the inadequate due diligence of the media outlets that reported the results.
+  <!--end-answer-->

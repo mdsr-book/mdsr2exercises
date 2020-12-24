@@ -1,0 +1,148 @@
+---
+chapter: "spatial"
+author: ""
+difficulty: "Hard"
+date: 2020-06-24 
+version: 0.1
+tags: [first, second, onlineonly]
+id: cow-take-bulb
+---
+
+```{r cow-take-bulb-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: 
+
+a. Use the `airlines` data to make the airline route map for another carrier in another year. 
+
+ <!--begin-answer-->
+
+XX turned off answer
+
+We will proceed to generate the network for US Airways (an airline that merged with American Airlines) in 2010.
+```{r eval = FALSE, warning=FALSE}
+library(sf)
+db <- src_scidb("airlines")
+flights <- tbl(db, "flights")
+carriers <- tbl(db, "carriers")
+airports <- tbl(db, "airports")
+```
+
+```{r eval = FALSE, warning=FALSE}
+grabairline <- function(my_year = 2013, my_carrier = "DL") {
+  flights %>%
+    filter(year == my_year, carrier == my_carrier) %>%
+    left_join(airports, by = c("dest" = "faa")) %>%
+    group_by(dest) %>%
+    summarize(
+      N = n(), lon = max(lon), lat = max(lat),
+      # note use of MySQL syntax instead of dplyr
+      name = min(CONCAT(
+        "(", dest, ") ",
+        REPLACE(name, " Airport", "")
+      ))
+    ) %>%
+    collect() %>%
+    na.omit() %>%
+    data.frame()
+}
+```
+
+```{r eval = FALSE, warning=FALSE}
+usair2010 <- grabairline(my_year = 2010, my_carrier = "US") %>%
+  st_as_sf(coords = c("lon", "lat")) %>%
+  st_set_crs(4326)
+glimpse(usair2010)
+```
+
+
+```{r usairmap, eval = FALSE, warning=FALSE, fig.height=15, fig.width=10, message = FALSE}
+library(ggspatial)
+route_map <- ggplot(usair2010) +
+  annotation_map_tile() +
+  geom_sf(alpha = 0.5, aes(size = N)) +
+  scale_size()
+route_map
+```
+ <!--end-answer-->
+
+
+b. Compare the airline route map for Delta Airlines in 2013 to the same map for Delta in 2003 and 1993. Discuss the history of Delta's use of hub airports. Quantify changes over time.  Reflect on the more general westward expansion of air travel in the United States. 
+
+ <!--begin-answer-->
+
+We will use the tables and the `grabairline` function from the previous 
+problem.
+
+```{r eval = FALSE, warning=FALSE}
+dest2013 <- grabairline(my_year = 2013)
+
+dest2013 <- dest2013 %>%
+  mutate(prop2013 = N / sum(N)) %>%
+  filter(prop2013 > 0.001) %>%
+  select(prop2013, dest, lat, lon)
+glimpse(dest2013)
+```
+```{r eval = FALSE, warning=FALSE}
+dest2003 <- grabairline(my_year = 2003)
+
+dest2003 <- dest2003 %>%
+  mutate(prop2003 = N / sum(N)) %>%
+  filter(prop2003 > 0.001) %>%
+  select(prop2003, dest, lat, lon)
+```
+```{r eval = FALSE, warning=FALSE}
+dest1993 <- grabairline(my_year = 1993)
+
+dest1993 <- dest1993 %>%
+  mutate(prop1993 = N / sum(N)) %>%
+  filter(prop1993 > 0.001) %>%
+  select(prop1993, dest, lat, lon)
+```
+
+```{r, eval = FALSE, message= FALSE}
+ds <- dest1993 %>%
+  left_join(dest2003) %>%
+  left_join(dest2013) %>%
+  mutate(
+    change1 = prop2003 - prop1993,
+    change2 = prop2013 - prop1993
+  )
+```
+
+```{r eval = FALSE }
+ds %>%
+  skimsr::skim(change1, change2)
+```
+
+```{r eval = FALSE}
+arrange(ds, desc(change1)) %>% head()
+arrange(ds, change1) %>% head()
+```
+
+From 1993 to 2003, the proportion of Delta flights involving Atlanta airport increased by 9.3\%, while the proportion involving Dallas-Ft Worth decreased by 6.1\%.
+
+
+```{r eval = FALSE}
+arrange(ds, desc(change2)) %>% head()
+arrange(ds, change2) %>% head()
+```
+
+From 2003 to 2013, the proportion of Delta flights involving Atlanta airport increased by another 8.5\%, while the number of flights through DFW decreased by 8.9\%.
+
+The following figure displays the changes from 2003 to 2013.
+```{r routeexercise, eval = FALSE, warning=FALSE, fig.height=15, fig.width=10, message= FALSE}
+library(ggspatial)
+route_map <- ggplot(ds) +
+  annotation_map_tile() +
+  geom_sf(alpha = 0.5, aes(size = N)) +
+  scale_size()
+route_map
+```
+
+
+ <!--end-answer-->
+

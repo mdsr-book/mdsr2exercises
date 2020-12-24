@@ -1,0 +1,31 @@
+Question
+========
+
+Which `dplyr` operation is depicted below? 
+
+![](https://rstudio-education.github.io/tidyverse-cookbook/images/dplyr-arrange.png)
+
+Answerlist
+----------
+* `arrange()`
+* `filter()`
+* `select()`
+* `mutate()`
+* `summarize()`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: wrangling-arrange
+extype: schoice
+exsolution: 10000

@@ -1,0 +1,65 @@
+---
+chapter: "sqlII"
+author: ""
+difficulty: "Hard"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: frog-become-saw
+---
+
+```{r frog-become-saw-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a full table schema for the two tables in the `r pkg_macro(fueleconomy)` package and import them into the database server of your choice.  
+
+
+ <!--begin-answer-->
+You may find this idiom useful to find the maximum length of each variable.
+
+```{r , message=FALSE, warning=FALSE}
+library(fueleconomy)
+common %>%
+  map(nchar) %>%
+  map(max)
+
+vehicles %>%
+  map(nchar) %>%
+  map(max)
+```
+
+Then write your schema accordingly. 
+
+```{r mysql, eval=FALSE}
+DROP TABLE IF EXISTS `common`;
+
+CREATE TABLE `common` (
+  `make` varchar(17) NOT NULL DEFAULT '',
+  `model` varchar(17) NOT NULL DEFAULT '',
+  `n` smallint(3) DEFAULT NULL,
+  `years` smallint(2) DEFAULT NULL,
+  PRIMARY KEY (`make`, `model`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `vehicles`;
+
+CREATE TABLE `vehicles` (
+  `id` mediumint(5) DEFAULT NULL,
+  `make` varchar(34) NOT NULL DEFAULT '',
+  `model` varchar(39) NOT NULL DEFAULT '',
+  `year` smallint(4) DEFAULT NULL,
+  `class` varchar(34) NOT NULL DEFAULT '',
+  `trans` varchar(32) NOT NULL DEFAULT '',
+  `drive` varchar(26) NOT NULL DEFAULT '',
+  `cyl` smallint(2) DEFAULT NULL,
+  `disp` decimal(3,2) DEFAULT NULL,
+  `fuel` varchar(27) NOT NULL DEFAULT '',
+  `hwy` smallint(2) DEFAULT NULL,
+  `cty` smallint(2) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+```
+ <!--end-answer-->
+
+

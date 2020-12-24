@@ -1,0 +1,31 @@
+---
+chapter: "appR"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-08-09 
+version: 0.1
+tags: [first, second, third]
+id: bear-bid-drawer
+---
+
+```{r bear-bid-drawer-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+library(mdsr)
+detach("package:dplyr")
+```
+
+TITLE GOES HERE: The following code chunk throws an error. 
+
+```{r error=TRUE}
+mtcars %>%
+  select(mpg, cyl)
+```
+
+What is the problem? 
+
+<!--answer-start-->
+You need to load the `tidyverse`.
+<!--answer-end-->
+
+

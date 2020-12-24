@@ -1,0 +1,43 @@
+---
+chapter: "learning-I"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-09-22 
+version: 0.1
+tags: [first, second, third]
+id: tiger-toss-canoe
+---
+
+```{r tiger-toss-canoe-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Pre-natal care has been shown to be associated with better health of babies and mothers. Use the `NHANES` data set in the `NHANES` package to develop a predictive model for the `PregnantNow` variable. What did you learn about who is pregnant?
+
+<!--begin-answer-->
+```{r, message = FALSE, warning=FALSE}
+library(rpart)
+library(NHANES)
+NHANES %>%
+  group_by(PregnantNow) %>%
+  summarize(N = n())
+
+NHANES_good <- NHANES %>%
+  filter(!is.na(PregnantNow))
+
+NHANES_good %>%
+  select(PregnantNow, Gender) %>%
+  table()
+```
+
+Note that only female respondents are potentially pregnant.
+
+```{r }
+rpart(PregnantNow ~ ., data = NHANES_good)
+```
+
+Not surprisingly, the first split in the decision tree occurs for those with high testosterone are considered pregnant. For those with low testerone, an examination of their urine (flow for those with low blood pressure, volume for those with high blood pressure) determines their classification. We start to get some clues about how home pregnancy tests---which analyze one's urine---work.
+
+
+
+<!--end-answer-->

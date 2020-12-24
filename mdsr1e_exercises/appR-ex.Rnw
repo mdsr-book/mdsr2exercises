@@ -1,0 +1,240 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/appR-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+\section{Exercises}
+
+\begin{Exercise}
+A user has typed the following commands into the \RStudio console.  
+
+<<>>=
+obj1 <- 2:10
+obj2 <- c(2, 5)
+obj3 <- c(TRUE, FALSE)
+obj4 <- 42
+@
+
+What values are returned by the following commands?
+
+<<eval=FALSE>>=
+obj1 * 10
+obj1[2:4]
+obj1[-3]
+obj1 + obj2
+obj1 * obj3
+obj1 + obj4
+obj2 + obj3
+sum(obj2)
+sum(obj3)
+@
+
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+obj1 * 10
+obj1[2:4]
+obj1[-3]
+obj1 + obj2
+obj1 * obj3
+obj1 + obj4
+obj2 + obj3
+sum(obj2)
+sum(obj3)
+@
+
+\end{Answer}
+
+\begin{Exercise}
+A user has typed the following commands into the \RStudio console.  
+
+<<>>=
+a <- c(10, 15)
+b <- c(TRUE, FALSE)
+c <- c("happy", "sad")
+@
+
+What do each of the following commands return?  Describe the class of the object as well as its value.
+
+<<eval=FALSE>>=
+data.frame(a, b, c)
+cbind(a, b)
+rbind(a, b)
+cbind(a, b, c)
+list(a, b, c)[[2]]
+@
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+data.frame(a, b, c)
+cbind(a, b)
+rbind(a, b)
+cbind(a, b, c)
+list(a, b, c)[[2]]
+@
+\end{Answer}
+
+\begin{Exercise}
+A user has typed the following commands into the \RStudio console.  
+
+<<>>=
+mylist <- list(x1="sally", x2=42, x3=FALSE, x4=1:5)
+@
+
+What values do each of the following commands return?
+<<eval=FALSE>>=
+is.list(mylist)
+names(mylist)
+length(mylist)
+mylist[[2]]
+mylist[["x1"]]
+mylist$x2
+length(mylist[["x4"]])
+class(mylist)
+typeof(mylist)
+class(mylist[[4]])
+typeof(mylist[[3]])
+@
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+is.list(mylist)
+names(mylist)
+length(mylist)
+mylist[[2]]
+mylist[["x1"]]
+mylist$x2
+length(mylist[["x4"]])
+class(mylist)
+typeof(mylist)
+class(mylist[[4]])
+typeof(mylist[[3]])
+@
+\end{Answer}
+
+\begin{Exercise}
+The following code undertakes some data analysis using the HELP (Health Evaluation and Linkage to Primary Care) trial.  
+
+<<eval=FALSE>>=
+library(mosaic)
+ds <- 
+   read.csv("http://nhorton.people.amherst.edu/r2/datasets/helpmiss.csv")
+summarise(group_by(select(filter(mutate(ds,
+  sex = ifelse(female==1, "F", "M")), !is.na(pcs)), age, pcs, sex),
+  sex), meanage=mean(age), meanpcs=mean(pcs),n=n())
+@
+
+Describe in words what computations are being done.
+Using the ``pipe" notation, translate this code into a more readable version.
+\end{Exercise}
+
+\begin{Answer}
+This code generates a new variable called \obj{sex} based on the value of the \obj{female} variable, drops any observations missing the \obj{pcs} variable, selects three variables, then displays the average age, PCS, and sample size for each of the two groups defined by \obj{sex}.
+
+<<eval=FALSE>>=
+library(mosaic)
+ds <- 
+   read.csv("http://nhorton.people.amherst.edu/r2/datasets/helpmiss.csv")
+ds %>%
+   mutate(sex = ifelse(female==1, "F", "M")) %>%
+   filter(!is.na(pcs)) %>%
+   select(age, pcs, sex) %>%
+   group_by(sex) %>%
+   summarise(meanage = mean(age), meanpcs = mean(pcs), count = n())
+@
+
+Here it is much clearer what each operation within the ``pipe-stream" is doing.  
+It is straightforward to debug expressions in this manner by just leaving off the
+{\tt \%>\%} at each line: this will only evaluate the set of functions called
+to that point and display the intermediate output.
+
+\end{Answer}
+
+\begin{Exercise}
+The following concepts should have some meaning to you: package, function, command, argument, assignment, 
+object, object name, data frame, named argument, quoted character string.  Construct an example of \R\ commands
+that make use of at least four of these.  Label which part of your example \R\ command corresponds to each.
+\end{Exercise}
+\begin{Answer}
+Answers may vary.  One example:
+
+<<eval=FALSE>>=
+library(readr)  # package, function call, argument
+ds <- read_csv("http://www.mysite.com/myfile", progress = TRUE)  
+# quoted character string, named argument
+@
+\end{Answer}
+
+\begin{Exercise}
+Which of these kinds of names should be wrapped with quotation marks when used in R?
+\begin{enumerate}
+\item function name
+\item file name
+\item the name of an argument in a named argument
+\item object name
+\end{enumerate}
+
+\end{Exercise}
+\begin{Answer}
+File names need to be in quotes.
+\end{Answer}
+
+
+\begin{Exercise}
+What's wrong with this statement?
+<<eval=FALSE>>=
+help(NHANES, package <- "NHANES")
+@
+\end{Exercise}
+\begin{Answer}
+Options to functions must use the = sign.
+\end{Answer}
+
+\begin{Exercise}
+Consult the documentation for \obj{CPS85} in the \pkg{mosaicData} package to determine the meaning of CPS.
+\end{Exercise}
+\begin{Answer}
+<<eval=FALSE>>=
+library(mosaicData)
+?CPS85
+@
+We see that CPS stands for current population survey.
+\end{Answer}
+
+\begin{Exercise}
+For each of the following assignment statements, describe the error (or note why it does not generate an error).
+<<eval=FALSE>>=
+result1 <- sqrt 10
+result2 <-- "Hello to you!"
+3result <- "Hello to you"
+result4 <- "Hello to you
+result5 <- date()
+@
+\end{Exercise}
+\begin{Answer}
+The first statement is invalid (improper syntax for function argument).  The second uses an invalid assignment operator.
+The third tries to assign to an invalid object name.  The fourth has unmatched quotes.  The last is correct.
+\end{Answer}
+
+%\begin{Exercise}
+%The \func{date} function returns an indication of the current time and date.  What arguments does \func{date} take?  What kind of object is the result from \func{date}?  What kind of object is the result from \func{Sys.time}?
+%\end{Exercise}
+%\begin{Answer}
+%The \func{date} function takes no arguments.  
+%<<>>=
+%class(date())
+%class(date)   # note that this is different!
+%class(Sys.time())
+%@
+%It returns a character string.  The \func{Sys.time} function returns an object of form \cmd{POSIXct} and \cmd{POSIXlt}.
+%\end{Answer}
+

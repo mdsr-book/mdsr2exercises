@@ -1,0 +1,36 @@
+---
+chapter: "foundations"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, onlineonly]
+id: doe-trim-bottle
+---
+
+```{r doe-trim-bottle-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Here is an short excerpt from an article, "Benefits of the Dinner Table Ritual", in the *New York Times*, May 3, 2005.
+
+The family dinner has long been an example of family togetherness. But recently, scientists have been coming up with compelling reasons ... for families to pull up a chair around the table.
+Recent studies have begun to shore up the idea that family dinners [that is, eating dinner together as a family] can have an effect.
+
+For example, a 2004 study of 4,746 children 11 to 18 years old, published in *The Archives of Pediatrics and Adolescent Medicine*, found that frequent family meals were associated with a lower risk of smoking, drinking and using marijuana; with a lower incidence of depressive symptoms and suicidal thoughts; and with better grades.
+
+Another study last year, a survey of 12- to 17-year-olds by the National Center on Addiction and Substance Abuse at Columbia University, found that teenagers who reported eating two or fewer dinners a week with family members were more than one and a half times as likely to smoke, drink or use illegal substances than were teenagers who had five to seven family dinners.  $\ldots$ A study from the University of Minnesota published last year found that adolescent girls who reported 
+having more frequent family meals and a positive atmosphere during those meals were less likely to have eating disorders.
+
+Explain in what ways the studies, as reported, do and do not provide a compelling reason for families to eat together frequently.
+
+Considering the study done by the National Center on Addition and Substance Abuse, describe what might have been the explanatory and response variables measured, and what sort of model they would have 
+used.
+
+ <!--begin-answer-->
+The results of the observational studies have serious potential limitations given the potential for other confounding relationships to mar the observed associations.  It is possible that the family meals are just a proxy for another factor, or for the outcomes to be affecting family meals (reverse causation).
+
+The researchers considered the family meal status to be the explanatory variable and substance use the outcome.  A logistic regression model could have been fit (ideally one that included possible confounders of the relationship between family meals and drug use).  
+  <!--end-answer-->
+
+

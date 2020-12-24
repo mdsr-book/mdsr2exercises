@@ -1,0 +1,200 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/algo-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+
+\section{Exercises}
+
+
+\begin{Exercise}
+Write a function called \func{grab\_name} that, when given a name and a year as an argument, returns the rows from the \obj{babynames} data frame in the \pkg{babynames} package that match that name for that year (and returns an error if that name and year combination does not match any rows).
+Run the function once with the arguments \cmd{Ezekiel} and \cmd{1883} and once with \cmd{Ezekiel} and \cmd{1983}.
+\end{Exercise}
+\begin{Answer}
+<<>>=
+library(babynames)
+grab_name <- function(x, myyear) { 
+  result <- babynames %>%
+    filter(name == x, year == myyear) 
+  if (nrow(result) == 0) {
+    stop("Name/year combination not found")
+  } else {
+    return(result)
+  }
+}
+grab_name('Ezekiel', 1883) 
+grab_name('Ezekiel', 1983)
+grab_name('Ezekiel2', 1983)
+@
+\end{Answer}
+
+
+\begin{Exercise}
+Write a function called \func{count\_name} that, when given a name as an argument, returns the total number of births by year from the \obj{babynames} data frame in the \pkg{babynames} package that match that name.  The function should return one row per year that matches (and generate an error message if there are no matches).
+Run the function once with the argument \cmd{Ezekiel} and once with \cmd{Ezze}.
+\end{Exercise}
+\begin{Answer}
+<<>>=
+library(babynames)
+count_name <- function(x) { 
+  if (is.element(x, babynames$name)) {
+    babynames %>%
+      filter(name == x) %>% 
+      group_by(year) %>% 
+      summarize(total = (sum(n))) %>% 
+      return()
+  }
+  else {
+    stop("Name not found")
+  }
+}
+count_name('Ezekiel') %>% head()
+count_name('Ezze')
+@
+\end{Answer}
+
+
+  \begin{Exercise} Write a function called \func{count\_na} that, when given a vector as an argument, will count the number of \val{NA}s in that vector.  Count the number of missing values
+in the \obj{SEXRISK} variable in the \data{HELPfull} data frame in the \pkg{mosaicData} package.
+  \end{Exercise}
+\begin{Answer}
+<<>>=
+count_na <- function(x) {
+  return(sum(is.na(x)))
+}
+with(HELPfull, count_na(SEXRISK))
+HELPfull %>%
+  select(SEXRISK) %>%
+  count_na()
+summary(HELPfull$SEXRISK)
+@
+\end{Answer}
+\begin{Exercise} Apply \func{count\_na} to the columns of the \data{Teams} data frame from the
+\pkg{Lahman} package. How many of the columns have missing data?
+  \end{Exercise}
+\begin{Answer}
+<<>>=
+library(Lahman)
+missvars <- apply(Teams, 2, count_na)
+tally(~ missvars)
+missvars["SF"]
+@
+A total of 13 columns have missing data.  The {\tt SF} column (denoting sacrifice flies) has the most missing values (likely due to a relatively recent decision to record this statistic).
+\end{Answer}
+
+  \begin{Exercise} Write a function called \func{cum\_min} that, when given a vector as an 
+argument, returns the cumulative minimum of that vector.  Compare  the result of your function
+to the built-in \func{cummin} function for the vector \cmd{c(4, 7, 9, -2, 12)}.
+  \end{Exercise}
+\begin{Answer}
+<<>>=
+cum_min <- function(x) {
+  if (!is.numeric(x)) { stop("input must be numeric.\n") }
+  minval <- x
+  minval[1] <- x[1]
+  if (length(x)==1) { return(minval) }
+  for (i in 2:length(x)) {
+    minval[i] <- ifelse(minval[i-1] > x[i], x[i], minval[i-1])
+  }
+  return(minval)
+}
+cum_min("hello")
+x <- c(4, 7, 9, -2, 12); x
+cum_min(x)
+cummin("hello")
+cummin(x)
+@
+
+\end{Answer}
+
+\begin{Exercise} 
+Write a function called \func{prop\_cancel} that takes as arguments a month number
+and destination airport and returns the proportion of flights missing arrival delay for each day to that destination.
+Apply this function to the \pkg{nycflights13} package for February and Atlanta airport (\cmd{ATL}) and again with an invalid month number.
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+library(nycflights13)
+prop_cancel <- function(monthnum, airport) {
+  if (!is.numeric(monthnum)) { stop("monthnum must be numeric.\n") }
+  if (monthnum < 1 | monthnum > 12) 
+    { stop("monthnum must be between 1 and 12.\n") }
+  res <- flights %>%
+    filter(month==monthnum, dest==airport) %>%
+    mutate(missdelay = is.na(arr_delay)) %>%
+    group_by(day) %>%
+    summarize(count = n(), propmiss = mean(missdelay))
+  return(res)
+}
+prop_cancel("ATL", 2)
+prop_cancel(22, "ATL")
+prop_cancel(2, "ATL")
+@
+The second week of 
+January, 2013 was a bad time for flights from NYC airports to Atlanta.
+
+\end{Answer}
+
+\begin{Exercise} 
+Write a function called \func{map\_negative} that takes as arguments a data frame and the
+name of a variable and returns that data frame with the negative values of the variable
+replaced by zeroes.  Apply this function the \obj{cyl} variable in the \obj{mtcars} data set.
+\end{Exercise}
+
+\begin{Answer}
+<<>>=
+map_negative <- function(data, varname) {
+  data[eval(varname)] <- -data[eval(varname)]
+  return(data)
+}
+map_negative(mtcars, "cyl")
+@
+\end{Answer}
+
+\begin{Exercise}
+Benford's law concerns the frequency distribution of leading digits from numerical data.
+Write a function that takes a vector of numbers and returns the empirical distribution
+of the first digit.  Apply this function to data from the \obj{corporate.payment} 
+data set in the \pkg{benford.analysis} package.
+\end{Exercise}
+
+\begin{Answer}
+<<message=FALSE>>=
+library(benford.analysis)   
+library(readr)
+options(digits=3)
+
+benforddist <- c(0.301, 0.176, 0.125, 0.097, 0.079, 
+  0.067, 0.058, 0.051, 0.046)
+cumsum(benforddist)
+
+cbind(k=1:9, benforddist, cumsum(benforddist))
+
+
+grabfirstdigit <- function(x) {
+  firstdigit <- substring(parse_number(x), first=1, last=1)
+  firstdigit <- firstdigit[firstdigit != "-"]
+  firstdigit <- firstdigit[firstdigit != "0"]
+  return(firstdigit)
+}
+@
+<<benfordplot>>=
+grabfirstdigit("231")
+grabfirstdigit(c("3097.24", "-123.48", "99.8", "0.97", "5043"))
+
+data(corporate.payment)
+corpdigits <- grabfirstdigit(corporate.payment$Amount)
+tally(~ corpdigits, format="proportion")
+
+plot(benford(corporate.payment$Amount, number.of.digits=1))
+@
+\end{Answer}
+

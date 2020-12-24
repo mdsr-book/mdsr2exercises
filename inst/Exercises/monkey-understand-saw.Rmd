@@ -1,0 +1,41 @@
+---
+chapter: "simulation"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: monkey-understand-saw
+---
+
+```{r monkey-understand-saw-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `Violations` dataset in the `r pkg_macro(mdsr)` package contains information about health violations across different restaurants in New York City. Is there evidence that restaurant health inspectors in New York City give the benefit of the doubt to those at the threshold between a B grade (14 to 27) or C grade (28 or above)?
+
+<!--begin-answer-->
+It looks like it happens in this range as well: there is a big drop between 27 and 28.
+```{r, message=FALSE}
+library(mdsr)
+minval <- 25
+maxval <- 30
+justScores <- Violations %>%
+  filter(score >= minval & score <= maxval) %>%
+  select(dba, score) %>%
+  unique()
+gradeInflation <- tally(~score, data = justScores)
+gradeInflation
+df <- data.frame(gradeInflation)
+ggplot(data = df, aes(y = Freq, x = score)) +
+  geom_hline(yintercept = truejobs, linetype = 2) +
+  geom_bar(stat = "identity") +
+  xlab("Number of new jobs (in thousands)")
+```
+<!--end-answer-->
+
+
+
+

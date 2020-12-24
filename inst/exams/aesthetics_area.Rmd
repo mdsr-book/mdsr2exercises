@@ -1,0 +1,62 @@
+Question
+========
+
+The following chunk summarizes the number of tropical storms that have achieved a certain status (e.g., hurricane, tropical depression, or tropical storm) as well the [category of severity of the storm](https://en.wikipedia.org/wiki/Tropical_cyclone#Classifications,_terminology,_and_naming). 
+
+```{r, message=FALSE}
+library(tidyverse)
+
+storms_summary <- storms %>%
+  group_by(status, category) %>%
+  summarize(num_storms = n_distinct(name))
+
+storms_summary
+```
+
+The two plots shown below show the same data. 
+In the plot on the left, the area of the dots is proportional to the number of storms. 
+In the plot on the right, the radius of the dots is proportional to the number of storms. 
+
+```{r, fig.show='hold', out.width="50%"}
+storm_plot <- ggplot(storms_summary, aes(x = status, y = category)) + 
+  geom_point(aes(size = num_storms))
+
+# left figure
+storm_plot
+
+# right figure
+storm_plot + 
+  scale_radius()
+```
+
+Which of the following statements are true? 
+
+Answerlist
+----------
+* The figure on the left is more accurate, because the *area* of the dots is proportional to the number of storms. 
+* The figure on the right is more accurate, because the *radius* of the dots is proportional to the number of storms. 
+* The area of the dot representing tropical depressions of category -1 should be *almost* four times as big as the dot representing category 4 hurricanes. This is true in the figure on the left.
+* The area of the dot representing tropical depressions of category -1 should be *almost* four times as big as the dot representing category 4 hurricanes. This is true in the figure on the right.
+* The area of the dot representing tropical depressions of category -1 should be *more than* four times as big as the dot representing category 4 hurricanes. This is true in the figure on the left.
+* The area of the dot representing tropical depressions of category -1 should be *more than* four times as big as the dot representing category 4 hurricanes. This is true in the figure on the right.
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* True.
+* False. The dot is more than four times as big. 
+* False. It should be almost four times as big. 
+* False. It should be almost four times as big. 
+
+Meta-information
+================
+extitle: Area
+exsection: aesthetics
+exname: aesthetics-area
+extype: mchoice
+exsolution: 101000

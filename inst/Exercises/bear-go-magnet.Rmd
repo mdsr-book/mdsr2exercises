@@ -1,0 +1,32 @@
+---
+chapter: "dataviz-II"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2020-12-22 
+version: 0.1
+tags: [onlineonly, visualization, visual cues, taxonomy]
+id: bear-go-magnet
+---
+
+```{r bear-go-magnet-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: 
+
+Consider the live [Wikipedia Recent Changes Map](http://www.hatnote.com/#en). 
+
+a. Identify the visual cues, coordinate system, and scale(s). 
+b. How many variables are depicted in the graphic? Explicitly link each variable to a visual cue that you listed above. 
+c. Critique this data graphic using the taxonomy described in this chapter. 
+
+<!--answer-start-->
+The map shows where and how often unregistered users are editing Wikipedia articles. The main message that I took away is that people all over the world are editing Wikipedia articles almost every second.
+
+a. Visual cues: position (of dots), color, shade
+Coordinate system: geographic
+Scale: There is no scale shown, but the projection is not Mercator. It could be Gall-Peters. 
+b. There are many variables here. Latitude and longitude are mapped to geographic location. The Wikipedia article title and the name of the editor's location are shown in the log and on the popup. Color is mapped to the country of the most recent edit. 
+c. The way that a dot appears on the map and the country where the edit was made turns yellow whenever an edit is made is clear and thought-provoking. However, it is not so clear why some dots are red and some are blue -- this should be made more clear by a legend. It is somewhat misleading that you have to read the blurb at the very bottom in order to know that this is only mapping edits by unregistered users, because the title makes it seem like it is for all users.
+
+<!--answer-end-->

@@ -1,0 +1,36 @@
+---
+chapter: "data-II"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: kid-become-plant
+---
+
+```{r kid-become-plant-default, include = FALSE}
+library(mdsr)
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following pipeline:
+
+```{r error=TRUE, message=FALSE}
+library(tidyverse)
+mtcars %>%
+  filter(cyl == 4) %>%
+  select(mpg, cyl)
+```
+
+Rewrite this in nested form on a single line.  Which set of commands do you prefer and why?
+
+
+
+<!--answer-start-->
+The equivalent code written in nested form is:
+
+`select(filter(mtcars, cyl == 4), mpg, cyl)`
+<!--answer-end-->
+
+

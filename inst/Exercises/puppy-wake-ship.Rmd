@@ -1,0 +1,23 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Easy"
+date: 2020-06-26 
+version: 0.1
+tags: [first, second, third]
+id: puppy-wake-ship
+---
+
+```{r puppy-wake-ship-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A ZIP (zone improvement program) code is a code used by the United States Postal Service to route mail. The Zip + 4 code include the five digits of the ZIP Code, followed by a hyphen and four digits that designate a more specific location. Provide a regular expression that matches strings that consist of a Zip + 4 code. 
+
+<!--begin-answer-->
+```{r, eval = FALSE}
+grep(pattern = "[0-9]{5}-[0-9]{4}", value = TRUE)
+```
+
+<!--end-answer-->
+

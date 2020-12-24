@@ -1,0 +1,53 @@
+Question
+========
+
+The following SQL query attempts to retrieve the birthdates of people in the [IMDb](https://en.wikipedia.org/wiki/IMDb) named "Michael Jordan". 
+Note that this includes both [NBA legend Michael Jordan](https://en.wikipedia.org/wiki/Michael_Jordan) and [Black Panther](https://en.wikipedia.org/wiki/Black_Panther_(film)) superstar [Michael B. Jordan](https://en.wikipedia.org/wiki/Michael_B._Jordan). 
+
+```{sql connection=mdsr::dbConnect_scidb("imdb"), error=TRUE, eval=FALSE}
+SELECT id, name, info AS birthdate
+FROM name
+LEFT JOIN person_info 
+  ON name.id = person_info.person_id
+WHERE name LIKE 'Jordan, Michael%'
+AND info_type_id = 21;
+```
+
+However, this query returns the following error message:
+
+```
+Error in .local(conn, statement, ...) : 
+  could not run statement: Column 'id' in field list is ambiguous
+Calls: <Anonymous> ... engine -> <Anonymous> -> <Anonymous> -> .local -> .Call
+Execution halted
+```
+
+What is the problem?
+
+
+Answerlist
+----------
+* There is a column named `id` in both the `person_info` and `name` tables. 
+* In the `ON` clause, it should say `imdb.name.id`.
+* In the `ON` clause, it should say `person_info.id`.
+* In the `ON` clause, it should say `name.person_id`.
+* In the `FROM` clause, it should say `name AS n`.
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This won't solve the problem. 
+* False. That would be incorrect match. 
+* False. There is no column called `person_id` in `name`.
+* False. That won't help. 
+
+Meta-information
+================
+extitle: ambiguous column
+exsection: sql
+exname: sql-ambiguous
+extype: schoice
+exsolution: 1000

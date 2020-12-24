@@ -1,0 +1,33 @@
+---
+chapter: "text"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-06-25 
+version: 0.1
+tags: [first, second, third]
+id: boy-iron-fridge
+---
+
+```{r boy-iron-fridge-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+library(DickinsonPoems)
+```
+
+TITLE GOES HERE: Find all titles of Emily Dickinson's poems (not including the Roman numerals) in the first 10 poems of the `r pkg_macro(DickinsonPoems)` package. 
+(Hint: the titles are all caps.)
+
+  <!--begin-answer-->
+```{r}
+library(DickinsonPoems)
+all_poems <- map(DickinsonPoems::list_poems()[1:10], get_poem)
+
+# Removing the roman numerals at the beginning of each chapter
+all_poems <- map(all_poems, tail, -1)
+
+all_poems %>%
+  map(str_subset, pattern = "^[A-Z ]+\\.") %>%
+  unlist()
+```
+  <!--end-answer-->

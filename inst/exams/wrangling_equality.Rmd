@@ -1,0 +1,35 @@
+Question
+========
+
+The following code chunk throws an error. 
+
+```{r error=TRUE, message=FALSE}
+library(tidyverse)
+mtcars %>%
+  filter(cyl = 4)
+```
+
+The error suggests that you need to use `==` inside of `filter()`. Why? 
+
+Answerlist
+----------
+* Because you are testing for equality, not asserting it.
+* Because R doesn't like you
+* Because Hadley prefers `==`
+* Because `cyl` is a numeric variable
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: wrangling-equality
+extype: schoice
+exsolution: 1000

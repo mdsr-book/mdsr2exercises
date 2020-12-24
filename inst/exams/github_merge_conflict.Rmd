@@ -1,0 +1,42 @@
+Question
+========
+
+The following output shows the error message that occurs when you try to pull changes from GitHub. 
+
+[Note that the command `git pull` is the same thing as clicking the Pull down-arrow in RStudio.]
+
+```{bash, eval=FALSE}
+$ git pull
+Auto-merging foo.R
+CONFLICT (content): Merge conflict in foo.R
+```
+
+What should you do next?
+
+Answerlist
+----------
+* Pull: `git pull`
+* Push: `git push`
+* PANIC!!
+* Light your computer on fire. 
+* Calmly open `foo.R` and inspect it for conflicts
+
+
+Solution
+========
+
+Answerlist
+----------
+* False. This is what you just tried and it didn't work.
+* False. You have to resolve the conflict first. 
+* False. 
+* False.
+* True.
+
+Meta-information
+================
+extitle: merge conflict
+exsection: github
+exname: github-merge-conflict
+extype: schoice
+exsolution: 00001

@@ -1,0 +1,33 @@
+---
+chapter: "text"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-10-02 
+version: 0.1
+tags: [first, second, third]
+id: giraffe-bite-glasses
+---
+
+```{r giraffe-bite-glasses-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: Generate a regular expression to return the second word in a vector.
+
+```{r}
+x <- c("one two three", "four five six", "SEVEN EIGHT")
+```
+
+When applied to vector x, the result should be:
+
+```{r echo = FALSE}
+str_replace(x, "[A-Za-z]* ([A-Za-z]*) ?[A-Za-z]*", "\\1")
+```
+ <!--begin-answer-->
+
+```{r echo = TRUE}
+str_replace(x, "[A-Za-z]* ([A-Za-z]*) ?[A-Za-z]*", "\\1")
+```
+ <!--end-answer-->

@@ -1,0 +1,89 @@
+---
+chapter: "data-II"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-08-30 
+version: 0.1
+tags: [first, second, third]
+id: birch-sell-bowl
+---
+
+```{r birch-sell-bowl-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `HELPfull` data within the `r pkg("mosaicData")` package contains information about the Health Evaluation and Linkage to Primary Care (HELP) randomized trial in *tall* format. 
+
+a) Generate a table of the data for subjects (`ID`) 1, 2, and 3 that includes the `ID` variable, the `TIME` variable, and the `DRUGRISK` and `SEXRISK` variables (measures of drug and sex risk-taking behaviors, respectively).
+
+
+
+<!--answer-start-->
+
+```{r birch-sell-bowl-1}
+library(mosaicData)
+HELPfull %>%
+  select(ID, TIME, DRUGRISK, SEXRISK) %>%
+  filter(ID <= 3)
+```
+
+<!--answer-end-->
+
+b) The HELP trial was designed to collect information at 0, 6, 12, 18, and 24 month intervals. At which timepoints were measurements available on the `*RISK` variables for subject 3?
+
+<!--answer-start-->
+The subject was observed at baseline, six months, and 24 months.
+<!--answer-end-->
+
+c) Let's restrict our attention to the data from the baseline (`TIME = 0`) and 6-month data.  Use the `pivot_wider()` function from the `r pkg("dplyr")` package to create a table that looks like the following:
+
+```{r echo = FALSE}
+HELPfull %>%
+  select(ID, TIME, DRUGRISK, SEXRISK) %>%
+  filter(ID <= 3, TIME < 12) %>%
+  pivot_wider(
+    id_cols = ID, 
+    values_from = c(DRUGRISK, SEXRISK),
+    names_from = TIME
+  )
+```
+
+<!--answer-start-->
+```{r echo = TRUE}
+HELPfull %>%
+  select(ID, TIME, DRUGRISK, SEXRISK) %>%
+  filter(ID <= 3, TIME < 12) %>%
+  pivot_wider(
+    id_cols = ID, 
+    values_from = c(DRUGRISK, SEXRISK),
+    names_from = TIME
+  )
+```
+
+<!--answer-end-->
+
+
+d) Repeat this process using all subjects.  What is the Pearson correlation between  the baseline (`TIME = 0`) and 6-month `DRUGRISK` scores?  Repeat this for the `SEXRISK` scores. (Hint: use the `use = "complete.obs"` option from the `cor()` function.)
+
+<!--answer-start-->
+
+```{r echo = TRUE, message = FALSE}
+HELPwide <- HELPfull %>%
+  filter(TIME < 12) %>%
+  pivot_wider(
+    id_cols = ID, 
+    values_from = c(DRUGRISK, SEXRISK),
+    names_from = TIME
+  )
+
+HELPwide %>%
+  summarize(
+    drug_risk_cor = cor(DRUGRISK_0, DRUGRISK_6, use = "complete.obs"),
+    sex_risk_cor = cor(SEXRISK_0, SEXRISK_6, use = "complete.obs")
+  )
+```
+The Pearson correlation between the `DRUGRISK` variables is 0.60 while for the `SEXRISK` variables is 0.51. These are moderate associations.
+<!--answer-end-->
+
+
+

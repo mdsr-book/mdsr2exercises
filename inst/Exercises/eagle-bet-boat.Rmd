@@ -1,0 +1,123 @@
+---
+chapter: "not working"
+author: ""
+difficulty: "Medium"
+date: 2020-06-29 
+version: 0.1
+tags: [first, second, third]
+id: eagle-bet-boat
+---
+##Text
+```{r eagle-bet-boat-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(tidytext)
+```
+
+
+TITLE GOES HERE: 
+
+
+Clickbait headlines are an all too common phenomenon in our everyday lives. The dataset `` from the `` package gives a sample of news headlines, some of which are considered clickbait and others not.
+
+XX need to add in way to access articles
+
+1. Identify any patterns or common words across articles that contain clickbait titles. 
+
+  <!--begin-answer-->
+```{r}
+library(tidytext)
+
+common_words <- articles %>%
+  filter(clickbait == TRUE) %>%
+  select(title) %>%
+  unnest_tokens(text, title) %>%
+  count(text, sort = TRUE)
+
+
+common_bigrams <- articles %>%
+  filter(clickbait == TRUE) %>%
+  select(title) %>%
+  unnest_tokens(text, title, token = "ngrams", n = 2) %>%
+  count(text, sort = TRUE)
+```
+  <!--end-answer-->
+
+2. Many articles that use clickbait typically have numbers in their titles (ex: "10 places you must visit..."). Find articles that have any numbers in the titles. 
+
+  <!--begin-answer-->
+```{r}
+library(tidytext)
+digits <- articles %>%
+  filter(str_detect(articles$title, "^[[:digit:]]+"))
+
+digits %>%
+  count(clickbait)
+```
+
+  <!--end-answer-->
+
+
+3. Find the number of words in each article. Is there any evidence to suggest that clickbait headlines are wordier?
+
+  <!--begin-answer-->
+
+```{r}
+library(tidytext)
+library(stringr)
+
+num <- articles %>%
+  mutate(len = (str_count(title, " ") + 1))
+
+num.click <- num %>%
+  filter(clickbait == TRUE) %>%
+  mean(num.click$len)
+
+num.not <- num %>%
+  filter(clickbait == FALSE)
+
+mean(num.not$len)
+```
+
+  <!--end-answer-->
+
+4. Is there a relationship between the proportion of capital letters in a sentence and whether or not a headline has clickbait? Justify your answer. Hint: use the `words()` function to find the number of words in an article.  
+
+  <!--begin-answer-->
+```{r}
+library(tidytext)
+
+click.cap <- articles %>%
+  filter(clickbait == TRUE) %>%
+  mutate(ncap = str_count(title, pattern = "[A-Z]+"))
+mean(click.cap$ncap)
+
+not.click.cap <- articles %>%
+  filter(clickbait == FALSE) %>%
+  mutate(ncap = str_count(title, pattern = "[A-Z]+"))
+
+mean(not.click.cap$ncap)
+```
+  <!--end-answer-->
+
+
+5. Are clickbait headline articles more likely to have words with greater positive/negative sentiment?
+
+```{r}
+
+click <- articles %>%
+  filter(clickbait == TRUE) %>%
+  select(title) %>%
+  unnest_tokens(text, title) %>%
+  inner_join(get_sentiments("afinn"), by = c("text" = "word"))
+
+not.click <- articles %>%
+  filter(clickbait == FALSE) %>%
+  select(title) %>%
+  unnest_tokens(text, title) %>%
+  inner_join(get_sentiments("afinn"), by = c("text" = "word"))
+
+# add average values
+```
+
+

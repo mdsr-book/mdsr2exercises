@@ -1,0 +1,223 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/spatial-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+
+\section{Exercises}
+
+\begin{Exercise}
+Use the spatial data in the \pkg{macleish} package and \pkg{ggmap} to make an informative static map of the MacLeish Field Station property. You may want to consult with \url{https://www.smith.edu/ceeds/macleish_maps.php} for inspiration and context. 
+\end{Exercise}
+
+\begin{Answer}
+<<macleishfoo, eval=TRUE, warning=FALSE>>=
+library(macleish)
+library(ggmap)
+library(broom)
+base_map <- get_map("MacLeish Field Station", zoom = 16, maptype = "hybrid") %>%
+  ggmap()
+
+base_map +
+  geom_polygon(data = tidy(macleish_layers[["boundary"]]), 
+               aes(x = long, y = lat, group = group), alpha = 0.3) + 
+  geom_point(data = tidy(macleish_layers[["landmarks"]]), color = "red", 
+             aes(x = coords.x1, y = coords.x2)) + 
+  geom_path(data = tidy(macleish_layers[["streams"]]), 
+           aes(x = long, y = lat, group = piece), color = "blue") +
+  geom_path(data = tidy(macleish_layers[["trails"]]), 
+           aes(x = long, y = lat, group = piece), color = "brown")
+
+@
+\end{Answer}
+
+\begin{Exercise}
+Use the spatial data in the \pkg{macleish} package and \pkg{leaflet} to make an informative interactive map of the MacLeish Field Station property. 
+\end{Exercise}
+\begin{Answer}
+<<eval=FALSE>>=
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addPolygons(data = macleish_layers[["boundary"]], weight = 1) %>%
+  addPolygons(data = macleish_layers[["buildings"]], weight = 1) %>%
+  addMarkers(data = subset(macleish_layers[["landmarks"]], 
+    grepl("Met", Label)), popup = ~Label)
+@
+\end{Answer}
+
+\begin{Exercise}
+The \data{Violations} data frame in the \pkg{mdsr} contains information on Board of Health violations by New York City restaurants. These data contain spatial information in the form of addresses and zip codes. Use the \func{geocode} function in \pkg{ggmap} to obtain spatial coordinates for these restaurants. 
+\end{Exercise}
+\begin{Answer}
+<<eval=FALSE>>=
+library(ggmap)
+addresses <- Violations %>%
+  head(10) %>%
+  mutate(address = paste(dba, building, street, zipcode)) %>%
+  select(address)
+geocode(location = addresses$address)
+@
+\end{Answer}
+
+\begin{Exercise}
+Using the spatial coordinates you obtained in the previous exercise, create an informative static map using \pkg{ggmap} that illustrates the nature and extent of restaurant violations in New York City.
+\end{Exercise}
+\begin{Answer}
+Answers will vary.
+\end{Answer}
+
+\begin{Exercise}
+Using the spatial coordinates you obtained in the previous exercises, create an informative interactive map using \pkg{leaflet} that illustrates the nature and extent of restaurant violations in New York City.
+\end{Exercise}
+\begin{Answer}
+Answers will vary.
+\end{Answer}
+
+
+\begin{Exercise}
+Use the \pkg{tigris} package to make the congressional election district map for your home state. Do you see evidence of gerrymandering? Why or why not?
+\end{Exercise}
+\begin{Answer}
+Answers will vary.
+\end{Answer}
+
+
+\begin{Exercise}
+Use the \pkg{tigris} package to conduct a spatial analysis of the Census data it contains for your home state. Can you illustrate how the demography of your state varies spatially? 
+\end{Exercise}
+\begin{Answer}
+Answers will vary.
+\end{Answer}
+
+
+\begin{Exercise}
+Use the \pkg{airlines} data to make the airline route map for another carrier in another year. 
+\end{Exercise}
+\begin{Answer}
+
+We will proceed to generate the network for US Airways in 2010.
+<<warning=FALSE>>=
+db <- src_scidb("airlines")
+flights <- tbl(db, "flights")
+carriers <- tbl(db, "carriers")
+airports <- tbl(db, "airports")
+@
+
+<<warning=FALSE>>=
+grabairline <- function(my_year=2013, my_carrier="DL") {
+  flights %>%
+    filter(year == my_year, carrier == my_carrier) %>%
+    left_join(airports, by = c("dest" = "faa")) %>%
+    group_by(dest) %>%
+    summarize(N = n(), lon = max(lon), lat = max(lat),
+      # note use of MySQL syntax instead of dplyr
+      name = min(CONCAT("(", dest, ") ",
+      REPLACE(name, " Airport", "")))) %>%
+    collect() %>%
+    na.omit() %>%
+    data.frame()
+}
+@
+
+<<warning=FALSE>>=
+usair2010 <- grabairline(my_year=2010, my_carrier="US")
+glimpse(usair2010)
+@
+<<usairmap, warning=FALSE, fig.height=15, fig.width=10>>=
+library(ggmap)
+route_map <- qmap("junction city, kansas", zoom = 4, maptype = "roadmap") +
+  geom_point(data = usair2010, alpha = 0.5,
+             aes(x = lon, y = lat, size = N)) +
+  scale_size() +
+  theme_map()
+route_map
+@
+\end{Answer}
+
+\begin{Exercise}
+Compare the airline route map for Delta Airlines in 2013 to the same map for Delta in 2003 and 1993. Discuss the history of Delta's use of hub airports. Quantify changes over time.  Reflect on the more general westward expansion of air travel in the United States. 
+\end{Exercise}
+\begin{Answer}
+
+We will use the tables and the \func{grabairline} function from the previous 
+problem.
+
+<<warning=FALSE>>=
+dest2013 <- grabairline(my_year=2013); dim(dest2013)
+totflights <- sum(~ N, data=dest2013); totflights
+dest2013 <- dest2013 %>% mutate(prop2013 = N/totflights) %>%
+  filter(prop2013 > 0.001) %>%
+  select(prop2013, dest, lat, lon)
+glimpse(dest2013)
+@
+<<warning=FALSE>>=
+dest2003 <- grabairline(my_year=2003); dim(dest2003)
+totflights <- sum(~ N, data=dest2003); totflights
+dest2003 <- dest2003 %>% mutate(prop2003 = N/totflights) %>%
+  filter(prop2003 > 0.001) %>%
+  select(prop2003, dest, lat, lon)
+@
+<<warning=FALSE>>=
+dest1993 <- grabairline(my_year=1993); dim(dest1993)
+totflights <- sum(~ N, data=dest1993); totflights
+favstats(~ N, data=dest1993)
+dest1993 <- dest1993 %>% mutate(prop1993 = N/totflights) %>%
+  filter(prop1993 > 0.001) %>%
+  select(prop1993, dest, lat, lon)
+@
+
+<<>>=
+ds <- left_join(dest1993, dest2003)
+ds <- left_join(ds, dest2013)
+ds <- mutate(ds, change1 = prop2003 - prop1993, change2 = prop2013 - prop1993)
+favstats(~ change1, data=ds)
+@
+
+<<>>=
+favstats(~ change2, data=ds)
+@
+
+<<>>=
+arrange(ds, desc(change1)) %>% head()
+arrange(ds, change1) %>% head()
+@
+
+From 1993 to 2003, the proportion of Delta flights involving Atlanta airport increased by 9.3\%, while the proportion involving Dallas-Ft Worth decreased by 6.1\%.
+
+
+<<>>=
+arrange(ds, desc(change2)) %>% head()
+arrange(ds, change2) %>% head()
+@
+
+From 2003 to 2013, the proportion of Delta flights involving Atlanta airport increased by another 8.5\%, while the number of flights through DFW decreased by 8.9\%.
+
+The following figure displays the changes from 2003 to 2013.
+<<routeexercise, warning=FALSE, fig.height=15, fig.width=10>>=
+library(ggmap)
+route_map <- qmap("junction city, kansas", zoom = 4, maptype = "roadmap") +
+  geom_point(data = ds, alpha = 0.5,
+             aes(x = lon, y = lat, size = change2)) +
+  scale_size() +
+  theme_map()
+route_map
+@
+
+
+\end{Answer}
+
+\begin{Exercise}
+Researchers at UCLA maintain historical congressional district shapefiles (see \url{http://cdmaps.polisci.ucla.edu/shp}). Use these data to discuss the history of gerrymandering in the United States. Is the problem better or worse today? 
+\end{Exercise}
+\begin{Answer}
+  Answers will vary.
+\end{Answer}
+
+

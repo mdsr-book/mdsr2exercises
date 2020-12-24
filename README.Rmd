@@ -1,0 +1,131 @@
+---
+output: github_document
+---
+
+<!-- The README.md file is auto-generated from README.Rmd.  Please be sure to make changes in that file -->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# mdsr2exercises
+
+<!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+![R-CMD-check](https://github.com/beanumber/mdsr2exercises/workflows/R-CMD-check/badge.svg)
+![Render README](https://github.com/beanumber/mdsr2exercises/workflows/Render%20README/badge.svg)
+<!-- badges: end -->
+
+The goal of the **mdsr2exercises** packages is to provide exercises for the 2nd edition of *Modern Data Science with R*. 
+
+## Installation
+
+Install from [GitHub](https://github.com):
+ 
+
+```{r install, eval=FALSE}
+#install.packages("remotes")
+remotes::install_github("beanumber/etude")
+remotes::install_github("beanumber/mdsr2exercises")
+```
+
+## Summary
+
+This package contains the following set of exercises:
+
+```{r load, message=FALSE}
+library(mdsr2exercises)
+library(dplyr)
+library(tidyr)
+```
+
+```{r table, results = "asis"}
+summary_table <- mdsr_exercise_all() %>%
+  group_by(chapter, difficulty) %>%
+  filter(!grepl("onlineonly", tags)) %>%
+  count() %>%
+  pivot_wider(names_from = difficulty, values_from = n) %>%
+  rowwise() %>%
+  mutate(N = sum(c_across(where(is.numeric)), na.rm = TRUE)) %>%
+  arrange(desc(N)) %>%
+  relocate(chapter, Easy, Medium) %>%
+  janitor::adorn_totals("row") 
+knitr::kable(summary_table)
+```
+
+Here is the summary of the online only exercises:
+
+```{r online, results = "asis"}
+summary_table <- mdsr_exercise_all() %>%
+  group_by(chapter, difficulty) %>%
+  filter(grepl("onlineonly", tags)) %>%
+  count() %>%
+  pivot_wider(names_from = difficulty, values_from = n) %>%
+  rowwise() %>%
+  mutate(N = sum(c_across(where(is.numeric)), na.rm = TRUE)) %>%
+  arrange(desc(N)) %>%
+  relocate(chapter, Easy, Medium) %>%
+  janitor::adorn_totals("row") 
+knitr::kable(summary_table)
+```
+
+
+
+
+## Example
+
+We can build a `tibble` of exercises that you want to show.
+Also specify any options, as documented in `etude::etude_list()`.
+Here, we show how to display the first two exercises associated with a particular chapter.
+
+```{r exercises, results = "asis", message=FALSE}
+exercises <- mdsr_exercise_ls(chapter == "data-I") %>%
+  select(-author, -date) %>%
+  head(2)
+knitr::kable(exercises)
+```
+
+
+Second, give the in-line command `knit_mdsr_exercises(exercises)`:
+
+## Exercises
+
+`r knit_mdsr_exercises(exercises)`
+
+## Exercises with answers
+
+To display answers, add the `show_answers = TRUE` option.
+
+## Creating new exercises
+
+Exercises are stored in `inst/Exercises`. To create a new exercise, call `mdsr_exercise_new()`. 
+
+Please also see the [**etude** template vignette](https://github.com/dtkaplan/etude/blob/master/vignettes/templates.Rmd)
+
+## Quizzes
+
+**mdsr2exercises** also contains quiz and exam questions in the **exams** format. 
+
+The `write_moodle()` function wraps `exams::exams2moodle()` to create XML files that can be imported into Moodle. 
+
+```{r write-moodle, eval=FALSE}
+write_moodle(
+  pattern = "wrangling", 
+  quiz_name = "wrangling", 
+  dir = tempdir()
+)
+```
+
+
+## Version and last updated
+
+```{r citation, warning = FALSE}
+citation(package = "mdsr2exercises")
+```
+
+The file was last updated `r date()` GMT.

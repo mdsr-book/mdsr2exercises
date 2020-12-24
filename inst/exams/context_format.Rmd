@@ -1,0 +1,50 @@
+Question
+========
+
+The following chunk creates a bar graph of median monthly rent among states, as captured by the 2017 American Community Survey. 
+Only those states with median monthly rents above $1200 are shown.
+
+```{r, message=FALSE, warning=FALSE, fig.width=8}
+library(tidyverse)
+us_income <- us_rent_income %>%
+  filter(variable == "rent", estimate > 1200)
+
+ggplot(us_income, aes(x = NAME, y = estimate)) + 
+  geom_col() + 
+  scale_x_discrete(NULL) + 
+  scale_y_continuous("Average Monthly Rent")
+```
+
+How could you make the values on the vertical axis appear as dollar amounts (e.g., `$1,000` instead of `1000`.)
+
+Answerlist
+----------
+* Set the `labels` argument to `scale_y_continuous()` to `scales::dollar`.
+* Set the `breaks` argument to `scale_y_continuous()` to `scales::dollar`.
+* Set the `labels` argument to `scale_y_continuous()` to `scales::comma`.
+* Set the `breaks` argument to `scale_y_continuous()` to `scales::comma`.
+* Set the `labels` argument to `scale_y_continuous()` to `scales::percent`.
+* Set the `breaks` argument to `scale_y_continuous()` to `scales::percent`.
+
+
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. 
+* False. 
+* False. 
+* False. 
+* False. 
+
+Meta-information
+================
+extitle: formatting axis labels
+exsection: context
+exname: context-format
+extype: schoice
+exsolution: 100000

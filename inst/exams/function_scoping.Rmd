@@ -1,0 +1,45 @@
+Question
+========
+
+Consider the following function definition, and subsequent call of that function. 
+
+```{r, error=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+summarize_species <- function(pattern = "Human") {
+  x <- starwars %>%
+    filter(species == pattern) %>%
+    summarize(
+      num_people = n(),
+      avg_height = mean(height, na.rm = TRUE)
+    )
+}
+
+summarize_species("Wookiee")
+x
+```
+
+What causes this error? 
+
+Answerlist
+----------
+* `x` is a local variable that only exists within the execution of the function `summarize_species()`, and doesn't exist in the global environment. 
+* the function needs to end with `return(x)`.
+* `starwars` doesn't exist in the global environment.
+* `x` is a global variable that always exists.
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: function-scoping
+extype: schoice
+exsolution: 1000

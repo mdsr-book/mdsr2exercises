@@ -1,0 +1,275 @@
+% $Id: book.tex,v 1.89 2009/08/13 14:28:54 nhorton Exp $
+\documentclass[oneside]{book}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{makeidx,epsfig,multind}
+\usepackage{setspace,graphicx,alltt,url}%
+\usepackage{float}    % for fig.pos='H'
+\usepackage{rotfloat} % for sidewaysfigure
+%\usepackage{subfigure}   % for subfigure
+%\usepackage{subfig}   % for subfigure
+\usepackage{subcaption}  % an alternative package for sub figures
+\newcommand{\subfloat}[2][need a sub-caption]{\subcaptionbox{#1}{#2}}
+%\usepackage[noae]{Sweave}
+%\usepackage[notOne]{SasWeave}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{framed}
+\usepackage{hyperref}
+\usepackage{xspace}
+\usepackage{soul}
+\usepackage{capt-of} % for captions outside of floats
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,decorations.pathmorphing,backgrounds,positioning,fit,through,decorations.pathreplacing}
+
+% for knitr
+\usepackage[]{graphicx}\usepackage[]{color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\usepackage{exercise}    % include questions and answers
+%\usepackage[noanswer]{exercise}   % noanswer for no answers
+
+\numberwithin{Answer}{chapter}
+\numberwithin{Exercise}{chapter}
+
+\renewcommand{\floatpagefraction}{.8}%
+
+\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
+\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
+\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
+\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
+\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
+\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
+\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
+\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
+\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\let\hlesc\hlstd \let\hlpps\hlstd \let\hllin\hlstd \let\hlslc\hlcom \let\hlppc\hlcom
+\usepackage{alltt}
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+
+\newcommand{\cran}{\href{http://www.R-project.org/}{CRAN}}
+\newcommand{\pkg}[1]{\hlkwb{\texttt{#1}}}
+\newcommand{\argument}[1]{\hlkwc{\texttt{#1}}}
+\newcommand{\func}[1]{\hlkwd{\texttt{#1}()}}
+\newcommand{\var}[1]{\hlstd{\texttt{#1}}}
+\newcommand{\val}[1]{\hlstr{\texttt{#1}}}
+\newcommand{\data}[1]{\hlstd{\texttt{#1}}}
+\newcommand{\cmd}[1]{\texttt{#1}}
+\newcommand{\obj}[1]{\texttt{#1}}
+\newcommand{\bX}{\mathbf{X}}
+\newcommand{\bv}{\mathbf{v}}
+\newcommand{\bP}{\mathbf{P}}
+\newcommand{\nflights}{163 million\xspace}
+% Make a nicer C++
+\def\Cpp{C{\raise.5ex\hbox{\footnotesize ++ }}}
+\newcommand{\nick}[1]{\sethlcolor{yellow}\hl{[NH]: #1}}
+\newcommand{\ben}[1]{\sethlcolor{green}\hl{[BB]: #1}}
+% Danny
+\newcommand{\inTextExample}[1]{\emph{Example: #1}}
+% For new vocabulary words.  Put in index and in margin.
+\newcommand{\vocab}[1]{{\em #1}}
+\newcommand{\marginnote}[1]{\paragraph{#1}}
+\newcommand{\vocabInMargin}[3][0cm]{{\marginnote[#1]{{\sc #2}: #3}}}
+\newcommand{\vocabDefinition}[3][0cm]{{\vocab{#2}\marginnote[#1]{{\sc #2}: #3\\ $\ $}}}
+
+% Nick needed
+\newcommand{\ii}[1]{{\it #1}}
+\newcommand{\bb}[1]{{\bf #1}}
+
+
+\makeindex{R}
+\makeindex{subject}
+\setcounter{tocdepth}{2}
+\newcommand{\entry}[1]
+{ \vspace{.2in} {\it #1} \vspace{.1in} }
+
+\newcommand{\R}{\textsf{R}\xspace}
+\newcommand{\RStudio}{\textsf{RStudio}\xspace}
+
+%\newtheorem{tip}{Pro Tip}
+\newenvironment{tip}
+{ \noindent \rule{\textwidth}{0.5pt} \textbf{Pro Tip}: }
+{ \ \hrulefill \\ }
+
+\newcommand{\smspace}{ \vspace{.1in} }
+
+\makeatletter
+
+\usepackage{fancyvrb}
+\usepackage{color}
+\usepackage{calc}
+
+\definecolor{greybg}{gray}{.9}
+
+\newsavebox{\codeblockbox}
+
+\newenvironment{codeblock}{\begin{lrbox}{\codeblockbox}%
+                          \begin{minipage}{\linewidth -2\fboxsep}}
+                         {\end{minipage}%
+                          \end{lrbox}%
+                          \colorbox{greybg}{\usebox{\codeblockbox}}}
+
+\newenvironment{helpcodeblock}{\noindent \begin{lrbox}{\codeblockbox}%
+                          \begin{minipage}{\linewidth -2\fboxsep}}
+                         {\end{minipage}%
+                          \end{lrbox}%
+                          \colorbox{greybg}{\usebox{\codeblockbox}}}
+
+
+
+
+\makeatother
+
+\textwidth=33pc
+\textheight=51pc
+
+\begin{document}
+\title{ Sample Solutions for Modern Data Science with R
+  \\ {\small \copyright\ 2017 Baumer, Kaplan, and Horton }}
+\author{Benjamin S. Baumer, Daniel T. Kaplan, and Nicholas J. Horton}
+
+\pagenumbering{roman}
+%\begin{doublespace}
+\maketitle 
+
+\frontmatter
+\tableofcontents
+%\include{preface}
+%\listoftables
+%\listoffigures
+\mainmatter
+\pagenumbering{arabic}
+
+
+
+\pagestyle{headings}
+
+
+
+
+
+\chapter{Prologue: Why data science?}
+
+This document includes sample solutions for exercises in \emph{Modern Data Science with R} along some sample exams.
+Additional instructor materials (including freely downloadable sample chapters and related resources) can be found at \url{http://mdsr-book.github.io}.  
+
+We welcome
+suggestions and improvements in these solutions.
+
+\chapter{Data visualization I}
+\input{datavizI-ex}
+
+\chapter{Data visualization II}
+\input{datavizII-ex}
+
+\chapter{Data wrangling I}
+\input{dataI-ex}
+
+\chapter{Data wrangling II}
+\input{dataII-ex}
+
+\chapter{Ethical considerations and guidelines}
+\input{ethics-ex}
+
+
+\chapter{Statistical foundations}
+\input{foundations-ex}
+
+\chapter{Statistical learning and predictive analytics}
+\input{learningI-ex}
+
+\chapter{Unsupervised learning}
+\input{learningII-ex}
+
+\chapter{Simulation}
+\input{simulation-ex}
+
+
+
+\chapter{Data visualization III}
+\input{datavizIII-ex}
+
+\chapter{Querying SQL databases}
+\input{sql-ex}
+
+\chapter{Database administration}
+\input{sqlII-ex}
+
+\chapter{Working with spatial data}
+\input{spatial-ex}
+
+\chapter{Text mining}
+\input{text-ex}
+
+\chapter{Network science}
+\input{netsci-ex}
+
+\chapter{Epilogue: Towards ``big data"}
+
+There are no exercises in this chapter.
+
+\appendix
+\part{Appendices}
+%\backmatter
+
+\chapter{Packages used in this book}
+
+There are no exercises in this appendix.
+
+\chapter{Introduction to R and RStudio}
+\input{appR-ex}
+
+\chapter{Algorithmic thinking / writing a function}
+\input{algorithmic-ex}
+
+\chapter{Reproducible analysis and workflow}
+\input{reproducible-ex}
+
+\chapter{Regression modeling}
+\input{regression-ex}
+
+\part{Exams}
+\chapter{Exams}
+
+\input{exams}
+
+\end{document}
+

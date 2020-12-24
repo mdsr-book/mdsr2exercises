@@ -1,0 +1,32 @@
+---
+chapter: "dataviz-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: fox-lose-tv
+---
+
+```{r fox-lose-tv-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `MLB_teams` data in the `r pkg_macro(mdsr)` package to create an informative data graphic that illustrates the relationship between winning percentage and payroll in context. 
+
+<!--begin-answer-->
+```{r ggplotteamwin2, message=FALSE}
+library(mdsr)
+
+ggplot(data = MLB_teams, aes(
+  x = payroll / 1000000, y = WPct,
+  alpha = yearID,
+  color = lgID, size = metroPop
+)) +
+  geom_point() +
+  geom_smooth() +
+  xlab("Payroll (Millions of USD)") +
+  ylab("Team Winning Percentage")
+```
+<!--end-answer-->

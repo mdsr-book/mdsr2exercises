@@ -1,0 +1,36 @@
+Question
+========
+
+The following code chunk throws an error. 
+
+```{r error=TRUE, message=FALSE}
+library(tidyverse)
+mtcars %>%
+  filter(cylinders == 4)
+```
+
+What is the problem? 
+
+
+Answerlist
+----------
+* There is no variable called `cylinders` in `mtcars`.
+* You forgot to load the `tidyverse`.
+* You need a single equal sign instead of `==`.
+* Some other reason.
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: debugging-object
+extype: schoice
+exsolution: 1000

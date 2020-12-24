@@ -1,0 +1,60 @@
+Question
+========
+
+The `population` data frame contains three columns: `country`, `year`, and `population`.
+The data encode each country's population over time. 
+
+```{r, message=FALSE}
+library(tidyverse)
+population
+```
+
+The following function takes the name of a country as a `character` vector, and returns a one-row `tibble` with the entry in `population` corresponding to the year in which that country had its highest population. 
+
+```{r}
+max_pop <- function(country_name) {
+  population %>%
+    filter(country == country_name) %>%
+    arrange(desc(population)) %>%
+    head(1)
+}
+```
+
+For example, according to these data the population of [Germany](https://en.wikipedia.org/wiki/Germany) peaked in 2004.
+
+```{r}
+max_pop("Germany")
+```
+
+Suppose that you want to retrieve the most populous years for the three countries stored in the `character` vector `my_countries`. 
+
+```{r}
+my_countries <- c("Germany", "Ghana", "Russian Federation", "United States of America")
+```
+
+Which of the following calls will **return a `tibble`**?
+
+Answerlist
+----------
+* `map_dfr(my_countries, max_pop)`
+* `map(my_countries, max_pop)`
+* `map_chr(my_countries, max_pop)`
+* `map2(my_countries, max_pop)`
+* `map(.f = my_countries, max_pop)`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This will return a `list`.
+* False. `max_pop()` does return a `character` vector.
+* False. `map2()` requires three arguments. 
+* False. `.f` should be the name of the function. 
+
+Meta-information
+================
+exname: iteration-map-dfr
+extype: schoice
+exsolution: 10000

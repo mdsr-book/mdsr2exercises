@@ -1,0 +1,42 @@
+---
+chapter: "simulation"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: elm-send-rug
+---
+
+```{r elm-send-rug-default, include = FALSE}
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Two people toss a fair coin 4 times each.  Find the probability that they throw equal numbers of heads.  Also estimate the probability that they throw equal numbers of heads using a simulation in R (with an associated 95% confidence interval for your estimate). 
+
+<!--begin-answer-->
+There are 70 ways for this to happen (out of $2^8$ possible outcomes), so P(both throw same)=$70/2^8=0.2734$.
+
+```{r, message = FALSE}
+70 * (1 / 2)^8 # 1 + 16 + 36 + 16 + 1 = 70
+# here's a simulation
+set.seed(1992)
+n <- 10000
+sims <- tibble(
+  part1 = map_dbl(1:n, ~mosaic::nflip(4)),
+  part2 = map_dbl(1:n, ~mosaic::nflip(4)),
+  success = part1 == part2
+) %>%
+  summarize(
+    successes = sum(success),
+    success_rate = sum(success) / n
+  )
+
+binom.test(sims$successes, n)
+```
+<!--end-answer-->
+
+
+
+

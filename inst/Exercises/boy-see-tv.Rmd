@@ -1,0 +1,165 @@
+---
+chapter: "not-working"
+author: ''
+difficulty: Hard
+date: '2020-07-01'
+version: 0.1
+tags: [first, second, onlineonly]
+id: boy-see-tv
+output: pdf_document
+---
+
+```{r boy-see-tv-default, include = FALSE}
+library(sf)
+library(mdsr)
+library(leaflet)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: One of the more juvenile pleasures of flying is reading the material in the seat pocket in front of you. The amount of information that the airline is willing to tell you about their business never ceases to amaze. In addition to the layout of the terminals for the airports that the airlines serves, they always show a domestic airlines route map. But while those old route maps are probably long gone, the `airlines` data gives us the ability to resurrect *historical* airline route maps---for any airline. 
+
+The following exercises will guide you in creating a visualization using airline data. 
+
+
+a. To make an informative map, we will need two pieces of information: a list of airports and the number of flights that it handled that year, and a list of all the segments that the carrier flew that year. First we will make connections to the `mdsr_data("flights")` and `mdsr_data("airports")` tables, respectively. 
+
+`index_entry("R", "library(airlines)")`
+`index_entry("R", "tbl()")`
+```{r eval=TRUE, warning=FALSE}
+db <- src_scidb("airlines")
+airports <- tbl(db, "airports")
+flights <- tbl(db, "flights")
+```
+
+Working with Delta Airlines (before their merger with Northwest Airlines) in 2016, find the airports that the airline services. Hint: query the `mdsr_data("flights")` table, but join on the `mdsr_data("airports")` table to retrieve the name and location of the airport
+
+<!--begin-answer-->
+```{r, warning = FALSE}
+my_carrier <- "DL"
+my_year <- 2016
+
+destinations <- flights %>%
+  filter(year == my_year, carrier == my_carrier) %>%
+  left_join(airports, by = c("dest" = "faa")) %>%
+  group_by(dest) %>%
+  summarize(
+    N = n(), lon = max(lon), lat = max(lat),
+    # note use of MySQL syntax instead of dplyr
+    name = min(CONCAT(
+      "(", dest, ") ",
+      REPLACE(name, " Airport", "")
+    ))
+  ) %>%
+  collect() %>%
+  na.omit() %>%
+  st_as_sf(coords = c("lon", "lat")) %>%
+  st_set_crs(4326)
+```
+
+<!--end-answer-->
+
+
+b. Next, we need to know about the flights between each airport that will make up the segments in our map. How many flights went between each pair of airports?  
+
+<!--begin-answer-->
+```{r segments, warning=FALSE}
+segments <- flights %>%
+  filter(year == my_year, carrier == my_carrier) %>%
+  group_by(origin, dest) %>%
+  summarize(N = n()) %>%
+  left_join(airports, by = c("origin" = "faa")) %>%
+  left_join(airports, by = c("dest" = "faa")) %>%
+  collect() %>%
+  na.omit()
+dim(segments)
+```
+
+<!--end-answer-->
+
+c. To plot our segments correctly, first convert them to a `sf` object. Create separate `sf` objects for the origins and destinations, each of which will be `POINT` geometries. For each segment (e.g., `JFK` to `SFO`), there will be one row in `origins` with the location information for the origin airport, and another row in `dests` with the location information for the destination airport. 
+
+<!--begin-answer-->
+
+```{r segments-sf}
+origins <- segments %>%
+  select(origin, dest, lat.x, lon.x) %>%
+  st_as_sf(coords = c("lon.x", "lat.x")) %>%
+  ungroup()
+
+dests <- segments %>%
+  select(origin, dest, lat.y, lon.y) %>%
+  st_as_sf(coords = c("lon.y", "lat.y")) %>%
+  ungroup()
+```
+
+<!--end-answer-->
+
+We will combine these two data frames, and then aggregate them using `group_by`. Now, each segment will be matched with the location information for both airports. Those two `POINT` geometries will by combined by `summarize` into a `MULTIPOINT` geometry. We then convert that `MULTIPOINT` geometry into a `LINESTRING` geometry using `st_cast`. 
+
+```{r, message= FALSE}
+segments_sf <- rbind(origins, dests) %>%
+  group_by(origin, dest) %>%
+  summarize(num_points = n()) %>%
+  st_cast("LINESTRING") %>%
+  st_set_crs(4326)
+
+head(segments_sf, 5)
+```
+
+
+d. Make a map of the Delta hubs using `ggplot2`. Plot the airports as dots, with the area of each dot proportional to the number of flights that it served. 
+
+<!--begin-answer-->
+```{r}
+route_map <- ggplot() +
+  ggspatial::annotation_map_tile(zoom = 4, type = "osm") +
+  geom_sf(
+    data = destinations, alpha = 0.5,
+    aes(size = N)
+  ) +
+  scale_size() +
+  theme_void()
+
+route_map
+```
+
+<!--end-answer-->
+
+
+e. Now create a map that shows the connections between airports. Use the frequency of connections to change the color of the lines. 
+
+<!--begin-answer-->
+```{r delta-route-map, warning=FALSE, fig.cap="Full route map for Delta Airlines in 2006.", message= FALSE}
+route_map +
+  geom_sf(
+    data = segments_sf$geometry, aes(color = segments_sf$num_points),
+    size = 0.05, arrow = arrow(length = unit(0.3, "cm"))
+  )
+```
+
+<!--end-answer-->
+
+
+f. Recreate the same map in exercise 5 using the `leaflet` package.
+
+<!--begin-answer-->
+
+```{r}
+library(leaflet)
+
+
+l_map <- leaflet() %>%
+  addTiles() %>%
+  addCircles(
+    data = destinations, weight = 1,
+    radius = ~ sqrt(N) * 500, popup = ~name
+  ) %>%
+  addPolylines(data = segments_sf$geometry, weight = 0.4) %>%
+  setView(lng = -80, lat = 38, zoom = 6)
+
+l_map
+```
+
+
+
+<!--end-answer-->

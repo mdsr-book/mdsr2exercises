@@ -1,0 +1,45 @@
+Question
+========
+
+The `population` data frame contains three columns: `country`, `year`, and `population`.
+The data encode each country's population over time. 
+
+```{r, message=FALSE}
+library(tidyverse)
+population
+```
+
+The following chunk fits a [linear regression](https://en.wikipedia.org/wiki/Linear_regression) model for `population` as a function of `year` for each country separately. 
+
+```{r, eval=FALSE}
+population %>%
+  group_by(country) %>%
+  group_map(~lm(population ~ year, data = .))
+```
+
+Which of the following statements is **false**?
+
+Answerlist
+----------
+* The first `~` (in the call to `group_map()`) tells R that what follows is an expression. 
+* The second `~` (in the call to `lm()`) species the formula for the regression model. 
+* This chunk returns a `list`, with each item being a regression model object. 
+* The dot `.` refers to the `tibble` corresponding to each country. 
+* Changing `group_map()` to `group_modify()` would produce the same result.
+
+Solution
+========
+
+Answerlist
+----------
+* This statement is true.
+* This statement is true.
+* This statement is true.
+* This statement is true.
+* Correct. This statement is false.
+
+Meta-information
+================
+exname: iteration-group-map
+extype: schoice
+exsolution: 00001

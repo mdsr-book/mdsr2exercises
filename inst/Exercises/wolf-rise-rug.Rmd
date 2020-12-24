@@ -1,0 +1,34 @@
+---
+chapter: "regression"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: wolf-rise-rug
+---
+
+```{r wolf-rise-rug-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Investigators in the HELP (Health Evaluation and Linkage to Primary Care) study were interested in modeling predictors of being `homeless` (one or more nights spent on the street or in a shelter in the past six months vs. housed) using baseline data from the clinical trial.  Fit and interpret a parsimonious model that would help the investigators identify predictors of homelessness.
+
+ <!--begin-answer-->
+Answers may vary.  Consider the following.
+
+```{r }
+library(mdsr)
+logreg <- glm(homeless == "homeless" ~ sex + substance + pcs + mcs,
+  family = binomial, data = HELPrct
+)
+msummary(logreg)
+exp(coef(logreg))
+```
+We see that males have 78% higher odds of homelessness than females (controlling for other factors).  Similarly, cocaine-involved and heroin-involved subjects have lower odds than alcohol-involved subjects.  For every additional physical component score (PCS) value, odds of homelessless go down by 2% (controlling for other factors).
+
+
+<!--end-answer-->
+
+

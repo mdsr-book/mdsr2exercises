@@ -1,0 +1,58 @@
+Question
+========
+
+The following chunk attempts to plot the path of [Hurricane Andrew](https://en.wikipedia.org/wiki/Hurricane_Andrew), which decimated the Bahamas, Florida, and the Gulf Coast in 1992. 
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+andrew <- storms %>%
+  filter(year == 1992, name == "Andrew") %>%
+  select(name, lat, long) %>%
+  st_as_sf(coords = c("lat", "long")) %>%
+  st_set_crs(4326)
+andrew
+```
+
+```{r}
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addCircles(data = andrew)
+```
+
+The points appear to be south of Africa and even over [Antarctica](https://en.wikipedia.org/wiki/Antarctica). 
+This is not even close to [Florida](https://en.wikipedia.org/wiki/Florida). 
+
+What went wrong? 
+
+
+
+Answerlist
+----------
+* In the `coords` argument, `lat` and `long` are in the wrong order. 
+* The [CRS](https://en.wikipedia.org/wiki/Spatial_reference_system) is wrong -- it shouldn't be 4326. 
+* The data in `storms` is not accurate. 
+* It should be `addPolylines()` instead of `addCircles()`.
+* The OpenStreetMap data is out-of-date. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. 4326 is the correct CRS.
+* False. The data is accurate. 
+* False. `addPolylines()` will throw an error. 
+* False. The map data is accurate. 
+
+
+Meta-information
+================
+extitle: switched lat and long
+exsection: leaflet
+exname: leaflet-latlong
+extype: schoice
+exsolution: 10000

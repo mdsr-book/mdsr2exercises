@@ -1,0 +1,54 @@
+Question
+========
+
+The following SQL query attempts to retrieve the birthdates of people in the [IMDb](https://en.wikipedia.org/wiki/IMDb) named "Michael Jordan". 
+Note that this includes both [NBA legend Michael Jordan](https://en.wikipedia.org/wiki/Michael_Jordan) and [Black Panther](https://en.wikipedia.org/wiki/Black_Panther_(film)) superstar [Michael B. Jordan](https://en.wikipedia.org/wiki/Michael_B._Jordan). 
+
+```{sql connection=mdsr::dbConnect_scidb("imdb"), error=TRUE, eval=FALSE}
+SELECT n.id, name, info AS birthdate
+FROM name AS n
+LEFT JOIN person_info 
+  ON n.id = pi.person_id
+WHERE n.name LIKE 'Jordan, Michael%'
+AND pi.info_type_id = 21;
+```
+
+However, this query returns the following error message:
+
+```
+Error in .local(conn, statement, ...) : 
+  could not run statement: Unknown column 'pi.info_type_id' in 'where clause'
+Calls: <Anonymous> ... engine -> <Anonymous> -> <Anonymous> -> .local -> .Call
+Execution halted
+```
+
+Which of the following changes would fix the problem solely and completely (i.e., without requiring any other changes)?
+
+
+Answerlist
+----------
+* Add `AS pi` to the `LEFT JOIN` clause.
+* Change `pi.person_id` to `person_info.person_id` in the `ON` clause. 
+* Change `pi.info_type_id` to `person_info.info_type_id` in the `WHERE` clause. 
+* Change `pi.person_id` to `person_info.person_id` **and** change `pi.info_type_id` to `person_info.info_type_id` in the `WHERE` clause. 
+* Add `AS pi` to the `SELECT` clause.
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This only fixes part of the problem.  
+* False. This only fixed part of the problem. 
+* True.
+* False.  
+
+Meta-information
+================
+extitle: table alias
+exsection: sql
+exname: sql-alias
+extype: mchoice
+exsolution: 10010

@@ -1,0 +1,238 @@
+<<cache=TRUE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/learningII-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE,message=FALSE>>=
+options(continue="  ")
+opts_chunk$set(fig.height = 5)
+library(mdsr)
+@
+
+\section{Exercises}
+
+\begin{Exercise}
+Consider the $k$-means clustering algorithm applied to the \data{BigCities} data and displayed in Figure~9.4. Would you expect to obtain different results if the location coordinates were \emph{projected} (see Chapter 14)?  % XX careful with refs!
+\end{Exercise}
+\begin{Answer}
+Possibly, but not necessarily. It depends on how grossly the coordinates are distorted from one projection to the next. Here we use a \href{https://en.wikipedia.org/wiki/Cassini_projection}{Cassini projection} to produce a different set of coordinates. The clustering algorithm still basically picks up on the continents in the same way, even though the map looks quite different. 
+
+<<message=FALSE>>=
+BigCities <- WorldCities %>% 
+  arrange(desc(population)) %>%
+  head(4000) %>% 
+  select(longitude, latitude)
+glimpse(BigCities)
+@
+
+<<message=FALSE>>=
+library(sp)
+coordinates(BigCities) <- ~longitude + latitude
+proj4string(BigCities) <- CRS("+proj=longlat")
+BigCities_proj <- BigCities %>%
+  spTransform(CRS("+proj=cass +lon_0=12.4521272222222 +lat_0=41.9244030555555 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+@
+
+<<cluster-cities-projected, message=FALSE>>=
+set.seed(15)
+library(mclust)
+city_clusts <- BigCities_proj %>%
+  coordinates() %>%
+  kmeans(centers = 6) %>%
+  fitted("classes") %>% 
+  as.character()
+big_clusters <- BigCities_proj %>% 
+  as.data.frame() %>%
+  mutate(cluster = city_clusts)
+ggplot(data = big_clusters, aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = cluster), alpha = 0.5)
+@
+\end{Answer}
+
+\begin{Exercise}
+Carry out and interpret a clustering of vehicles from another manufacturer using the 
+approach outlined in Section 9.1.1.  % XX careful with refs!
+\end{Exercise}
+\begin{Answer}
+<<eval=FALSE>>=
+download.file("https://www.fueleconomy.gov/feg/epadata/16data.zip",
+              destfile = "data/fueleconomy.zip")
+unzip("data/fueleconomy.zip", exdir = "data/fueleconomy/")
+@
+<<>>=
+library(mdsr)
+library(readxl)
+filename <- list.files("data/fueleconomy", pattern = "public\\.xlsx")[1]
+cars <- read_excel(paste0("data/fueleconomy/", filename)) %>% data.frame()
+cars <- cars %>%
+  rename(make = Mfr.Name, model = Carline, displacement = Eng.Displ,
+    cylinders = X..Cyl, city_mpg = City.FE..Guide....Conventional.Fuel,
+    hwy_mpg = Hwy.FE..Guide....Conventional.Fuel, gears = X..Gears) %>%
+  select(make, model, displacement, cylinders, gears, city_mpg, hwy_mpg) %>%
+  distinct(model, .keep_all = TRUE) %>%
+  filter(make == "Ford Motor Company")
+rownames(cars) <- cars$model
+car_diffs <- dist(cars)
+@
+<<cardists, fig.height=11, fig.width=6>>=
+library(ape)
+car_diffs %>%
+  hclust() %>%
+  as.phylo() %>%
+  plot(cex = 0.8, label.offset = 1)
+@
+A clear truck/small-car split is observed.  For the trucks, the first split is between large trucks/cars and big trucks and vans.
+\end{Answer}
+
+\begin{Exercise}
+Project the \data{WorldCities} coordinates using the Gall--Peters projection and run the $k$-means algorithm again. Are the resulting clusters importantly different from those identified in Figure 9.4?  % XX careful with refs.
+\end{Exercise}
+\begin{Answer}
+
+The clusters are slightly different, most noticeably in Africa. 
+
+<<cluster-plot-635>>=
+BigCities_gp <- BigCities %>%
+  spTransform(CRS("+proj=cea +lon_0=0 +lat_ts=45 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs "))
+
+city_clusts <- BigCities_gp %>%
+  coordinates() %>%
+  kmeans(centers = 6) %>%
+  fitted("classes") %>% 
+  as.character()
+
+big_clusters <- BigCities_gp %>% 
+  as.data.frame() %>%
+  mutate(cluster = city_clusts)
+
+ggplot(data = big_clusters, aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = cluster), alpha = 0.5)
+@
+\end{Answer}
+
+\begin{Exercise}
+Re-fit the $k$--means algorithm on the \data{BigCities} data with a different value of $k$ (i.e., not six). Experiment with different values of $k$ and report on the sensitivity of the algorithm to changes in this parameter. 
+\end{Exercise}
+\begin{Answer}
+<<cluster-plot-8236,message=FALSE>>=
+BigCities <- WorldCities %>% 
+  arrange(desc(population)) %>%
+  head(4000) %>% 
+  select(longitude, latitude)
+library(mclust)
+city_clusts <- BigCities %>% 
+  kmeans(centers = 8) %>%
+  fitted("classes") %>% 
+  as.character()
+BigCities <- BigCities %>% mutate(cluster = city_clusts)
+BigCities %>% ggplot(aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = cluster), alpha = 0.5)
+@
+\end{Answer}
+
+\begin{Exercise}
+Baseball players are voted into the Hall of Fame by the members of the Baseball Writers of America Association. Quantitative criteria are used by the voters, but they are also allowed wide discretion. The following code identifies the position players who have been elected to the Hall of Fame and tabulates a few basic statistics, including their number of career hits (\var{H}), home runs (\var{HR}), and stolen bases (\var{SB}). Use the \func{kmeans} function to perform a cluster analysis on these players. Describe the properties that seem common to each cluster. 
+<<message=FALSE>>=
+library(mdsr)
+library(Lahman)
+hof <- Batting %>%
+  group_by(playerID) %>%
+  inner_join(HallOfFame, by = c("playerID" = "playerID")) %>%
+  filter(inducted == "Y" & votedBy == "BBWAA") %>%
+  summarize(tH = sum(H), tHR = sum(HR), tRBI = sum(RBI), tSB = sum(SB)) %>%
+  filter(tH > 1000)
+@
+\end{Exercise}
+\begin{Answer}
+<<ex-hof-cluster>>=
+clusts <- hof %>%
+  select(-playerID) %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+hof <- hof %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+ggplot(data = hof, aes(x = tH, y = tHR, size = tSB, color = factor(cluster))) + 
+  geom_point()
+@
+
+In the figure, cluster 2 is comprised of players who had many stolen bases but not so many home runs. These are typically smaller, faster players like Tony Gwynn and Rickey Henderson. Clusters 1 and 3 are distinguished mainly by the longevity of their careers. Those with more than 2500 hits are in cluster 1, while those with fewer than 2500 hits are in cluster 3. Cluster 3 contains many catchers (who don't play everyday and are valued for their defense) and players like Jackie Robinson whose brilliant careers were shortened for a variety of reasons. 
+
+\end{Answer}
+
+
+\begin{Exercise}
+Building on the previous exercise, compute new statistics and run the clustering algorithm again. Can you produce clusters that you think are more pure? Justify your choices. 
+\end{Exercise}
+\begin{Answer}
+
+For example, here we compute each player's \href{https://en.wikipedia.org/wiki/Power%E2%80%93speed_number}{power-speed number}, which combines their home runs and stolen bases into a single statistic. Addiing this variable to our dataset results in clusters that are more clearly separated by total hits. Cluster 2 now consists almost entirely of catchers. 
+
+<<hof-cluster2-ex-2384>>=
+hof <- hof %>%
+  mutate(psn = (2 * tHR * tSB) / (tHR + tSB))
+clusts <- hof %>%
+  select(-playerID) %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+hof <- hof %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+ggplot(data = hof, aes(x = tH, y = tHR, size = psn, color = factor(cluster))) + 
+  geom_point()
+@
+\end{Answer}
+
+
+\begin{Exercise}
+Perform the clustering on \emph{pitchers} who have been elected to the Hall of Fame. Use wins (\var{W}), strikeouts (\var{SO}), and saves (\var{SV}) as criteria. 
+\end{Exercise}
+\begin{Answer}
+<<message=FALSE>>=
+hof <- Pitching %>%
+  group_by(playerID) %>%
+  inner_join(HallOfFame, by = c("playerID" = "playerID")) %>%
+  filter(inducted == "Y" & votedBy == "BBWAA") %>%
+  summarize(tW = sum(W), tSO = sum(SO), tSV = sum(SV)) %>%
+  filter(tSO > 500)
+@
+
+Here the clusters are very distinct and seems to be based entirely on strikeouts. Note that only a handful of pitchers in the Hall of Fame have accumualated many saves, and that the clustering algorithm did not group them together. 
+
+<<ex-hof-cluster2>>=
+clusts <- hof %>%
+  select(-playerID) %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+hof <- hof %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+ggplot(data = hof, aes(x = tW, y = tSO, size = tSV, color = factor(cluster))) + 
+  geom_point()
+@
+\end{Answer}
+
+\begin{Exercise}
+Use the College Scorecard Data (\url{https://collegescorecard.ed.gov/data}) to cluster educational institutions using the techniques described in this chapter.  Be sure to include variables related to student debt, number of students, graduation rate, and selectivity.  (Note that a considerable amount of data wrangling will be needed.)
+\end{Exercise}
+\begin{Answer}
+Answers will vary.
+<<plot-college-scorecard, error=TRUE, include=FALSE, eval=FALSE>>=
+library(readr)
+colleges <- read_csv("https://ed-public-download.app.cloud.gov/downloads/Most-Recent-Cohorts-Scorecard-Elements.csv")
+clusts <- colleges %>%
+  select(SAT_AVG_ALL, PREDDEG, WOMENONLY) %>%
+  mutate(SAT_AVG_ALL = parse_number(SAT_AVG_ALL), 
+         WOMENONLY = parse_number(WOMENONLY)) %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+colleges <- colleges %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+ggplot(data = hof, aes(x = tW, y = tSO, size = tSV, color = factor(cluster))) + 
+  geom_point()
+@
+\end{Answer}
+

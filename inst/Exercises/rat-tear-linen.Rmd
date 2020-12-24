@@ -1,0 +1,38 @@
+---
+chapter: "sqlII"
+author: ""
+difficulty: "Hard"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, onlineonly]
+id: rat-tear-linen
+---
+
+```{r rat-tear-linen-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r pkg_macro(fec12)` package to download and unzip the federal election data for 2012 that were used in Chapter 2. Write your own table schema from scratch and import these data into the database server of your choice. 
+
+ <!--begin-answer-->
+Here is a sample schema for MySQL:
+
+XX BB to update?
+
+```{r cat-mysql-table-schema-fec, echo=FALSE, message=FALSE, warning=FALSE}
+if (!require(fec)) {
+  remotes::install_github("beanumber/fec")
+}
+cat(readChar(system.file(package = "fec", "sql", "init.mysql"), 1e5))
+```
+
+This schema can be obtained by running:
+
+```{r eval=FALSE}
+cat(readChar(system.file(package = "fec", "sql", "init.mysql"), 1e5))
+```
+
+ <!--end-answer-->
+
+

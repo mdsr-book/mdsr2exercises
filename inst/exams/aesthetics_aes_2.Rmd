@@ -1,0 +1,37 @@
+Question
+========
+
+Consider the following call to `ggplot()`. 
+
+```{r, message=FALSE}
+library(tidyverse)
+ggplot(mtcars, aes(x = disp, y = mpg), color = am) +
+  geom_point()
+```
+
+The points are black because...
+
+Answerlist
+----------
+* ...the mapping of `am` to `color` is outside the call to `aes()`
+* ...there is an object called `am` in the global environment
+* ...there is no variable called `am` in `mtcars`
+* ...you forgot to load the `tidyverse`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False, that's possible, but unlikely
+* False.
+* False.
+
+Meta-information
+================
+extitle: why points black?
+exsection: aesthetics
+exname: aesthetics-aes-2
+extype: schoice
+exsolution: 1000

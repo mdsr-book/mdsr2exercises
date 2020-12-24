@@ -1,0 +1,46 @@
+Question
+========
+
+Consider the following two projections of the world.
+The map on the left shows the [Mercator projection](https://en.wikipedia.org/wiki/Mercator_projection).
+The map on the right shows the [Gall-Peters projection](https://en.wikipedia.org/wiki/Gall%E2%80%93Peters_projection).
+
+```{r, message=FALSE, warning=FALSE, echo=FALSE, fig.show='hold', out.width="50%"}
+library(mapproj)
+library(maps)
+map("world", projection = "mercator", wrap = TRUE)
+map("world", projection = "cylequalarea", param = 45, wrap = TRUE)
+```
+
+Which of the following statements are true?
+
+Answerlist
+----------
+* The Mercator projection is very commonly used in the United States. 
+* The Mercator projection distorts the relative size of land masses. Those closer to the North or South Pole appear much larger than they actually are. 
+* Africa is actually 14 times larger than Greenland. 
+* The Gall-Peters projection is an equal-area projection, meaning that it preserves areas. 
+* The Gall-Peters projection is conformal, meaning that it preserves angles locally. 
+* The different properties of the Mercator vs. Gall-Peters projections were notably at the center of controversy surrounding the notion of cartographic imperialism. 
+
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* True.
+* True.
+* False. The Gall-Peters projection is not conformal. 
+* True.
+
+Meta-information
+================
+extitle: properties of projections
+exsection: spatial
+exname: spatial-projections
+extype: mchoice
+exsolution: 111101

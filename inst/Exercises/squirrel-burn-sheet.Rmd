@@ -1,0 +1,46 @@
+---
+chapter: "learning-II"
+author: "Daniel Kaplan"
+date: 2020-07-15 
+version: 0.1
+difficulty: "Hard"
+tags: [first, second, third]
+id: squirrel-burn-sheet
+---
+
+```{r squirrel-burn-sheet-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Project the `world_cities` coordinates using the Gall-Peters projection and run the $k$-means algorithm again. Are the resulting clusters importantly different from those identified in the chapter? 
+
+```{r}
+library(tidyverse)
+library(mdsr)
+big_cities <- world_cities %>%
+  arrange(desc(population)) %>%
+  head(4000) %>%
+  select(longitude, latitude)
+```
+
+
+<!--begin-answer-->
+
+The clusters are slightly different, most noticeably in Africa. 
+
+```{r cluster-plot-635, eval = FALSE}
+city_clusts <- big_cities %>% 
+  kmeans(centers = 6) %>%
+  fitted("classes") %>% 
+  as.character()
+big_cities <- big_cities %>% 
+  mutate(cluster = city_clusts)
+big_cities %>% 
+  ggplot(aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = cluster), alpha = 0.5)
+```
+<!--end-answer-->
+
+

@@ -1,0 +1,33 @@
+Question
+========
+
+Consider the following sentence:
+
+"The quick brown fox jumps over the lazy dog."
+
+Adding which text decoration would make the word "jumps" a hyperlink to [the Wikipedia article](https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog) about this sentence? 
+
+Answerlist
+----------
+* ```[jumps](https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog)```
+* ```[https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog](jumps)```
+* ```(jumps)[https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog]```
+* ```(https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog)[jumps]```
+* ```![jumps](https://en.wikipedia.org/wiki/The_quick_brown_fox_jumps_over_the_lazy_dog)```
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. 
+* False. 
+* False. 
+* False. This tries to load an image at that URL.
+
+Meta-information
+================
+exname: rmarkdown-link
+extype: schoice
+exsolution: 10000

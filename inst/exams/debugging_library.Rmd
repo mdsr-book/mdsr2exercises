@@ -1,0 +1,35 @@
+Question
+========
+
+The following code chunk throws an error. 
+
+```{r error=TRUE}
+mtcars %>%
+  select(mpg, cyl)
+```
+
+What is the problem? 
+
+
+Answerlist
+----------
+* You forgot to load the `tidyverse`
+* The pipe has to go at the beginning of the second line. 
+* There is no column in `mtcars` called `cyl`
+* You forgot to install the `tidyverse` package.
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: debugging-library
+extype: schoice
+exsolution: 1000

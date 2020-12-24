@@ -1,0 +1,16 @@
+---
+chapter: "dataviz-I"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-09-26 
+version: 0.1
+tags: [first, second, third]
+id: camel-feel-knob
+---
+
+```{r camel-feel-knob-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Pick one of the Science Notebook entries at https://www.edwardtufte.com/tufte (e.g., "Making better inferences from statistical graphics").
+Write a brief reflection on the graphical principles that are illustrated by this entry.

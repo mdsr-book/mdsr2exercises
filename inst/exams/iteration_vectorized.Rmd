@@ -1,0 +1,43 @@
+Question
+========
+
+Consider the following list of names of countries. 
+
+```{r, message=FALSE}
+library(tidyverse)
+
+my_countries <- c("Germany", "Ghana", "Russian Federation", "United States of America")
+```
+
+The following chunk shows two ways of counting the number of spaces (` `) in the name of each of our countries. 
+The results are identical.
+
+```{r}
+str_count(my_countries, " ")
+map_int(my_countries, str_count, " ")
+```
+
+Which method is more efficient (i.e., faster) and why? 
+
+Answerlist
+----------
+* Using `str_count()` only is faster, because `str_count()` is vectorized. 
+* Using `map_int()` is faster, because it causes a loop. 
+* It doesn't matter -- the results are the same. 
+* You could compute it even faster by using `lapply()` instead of `map_int()`. 
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This way is slower because of the loop. 
+* False. It matters and `str_count()` is faster. 
+* False. `lapply()` and `map()` are basically the same and a vectorized function will be faster than both. 
+
+Meta-information
+================
+exname: iteration-vectorized
+extype: schoice
+exsolution: 1000

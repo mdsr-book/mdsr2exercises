@@ -1,0 +1,47 @@
+Question
+========
+
+Consider the following data graphic created by this chunk of code:
+
+```{r mtcars-geom-smooth, message=FALSE}
+library(tidyverse)
+ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  geom_point(aes(color = factor(am))) + 
+  geom_smooth(se = FALSE)
+```
+
+Currently, the points are alternately colored peach and teal based on whether they represent a car that has a manual or automatic transmission. There is one blue line that illustrates the trend for all cars. 
+
+How can the code be changed to show two lines, one peach-colored line illustrating the trend for automatic transmission cars, and a separate teal line illustrating the trend for manual transmission cars, while keeping the points colored as they are? Select all that apply.
+
+Answerlist
+----------
+* Move the mapping of `am` to the color aesthetic to the `ggplot()` function.
+* Move the mapping to `am` to the color aesthetic to the `geom_smooth()` function.
+* Copy the mapping of `am` to the color aesthetic to the `ggplot()` function.
+* Copy the mapping of `am` to the color aesthetic to the `geom_smooth()` function.
+* Remove the call to `aes()` inside `geom_point()`.
+* Remove the call to `aes()` inside `ggplot()`.
+
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This will color the lines but not the points.
+* True. The mapping in `geom_point()` becomes redundant, but still works.  
+* True. 
+* False.
+* False.
+
+
+Meta-information
+================
+extitle: inheritance
+exsection: aesthetics
+exname: aesthetics-inheritance
+extype: mchoice
+exsolution: 101100

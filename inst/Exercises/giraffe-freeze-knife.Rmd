@@ -1,0 +1,37 @@
+---
+chapter: dataviz-II
+author: ''
+difficulty: Medium
+date: '2020-07-14'
+version: 0.1
+tags:
+- first
+- second
+- third
+id: giraffe-freeze-knife
+output: pdf_document
+---
+
+```{r giraffe-freeze-knife-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `MLB_teams` data set in the `r pkg_macro(mdsr)` package contains information about Major League Baseball teams from 2008--2014. There are several quantitative and a few categorical variables present. See how many variables you can illustrate on a single plot in R. The current record is 7. (Note: This is *not* good graphical practice---it is merely an exercise to help you understand how to use visual cues and aesthetics!)
+
+
+<!--begin-answer-->
+```{r ggplotteamwin,fig.height=15, fig.width=10}
+library(mdsr)
+ggplot(MLB_teams) +
+  geom_point(aes(
+    x = payroll / 1000000, y = WPct, color = teamID,
+    size = metroPop, shape = lgID, alpha = normAttend
+  )) +
+  facet_wrap(~yearID, ncol = 1) +
+  xlab("Payroll (Millions of USD)") +
+  ylab("Team Winning Percentage")
+```
+<!--end-answer-->
+
+

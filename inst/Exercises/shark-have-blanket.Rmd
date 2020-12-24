@@ -1,0 +1,45 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Easy"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: shark-have-blanket
+---
+
+```{r shark-have-blanket-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A user has typed the following commands into the RStudio console.  
+
+```{r }
+a <- c(10, 15)
+b <- c(TRUE, FALSE)
+c <- c("happy", "sad")
+```
+
+What do each of the following commands return?  Describe the class of the object as well as its value.
+
+```{r eval=FALSE}
+data.frame(a, b, c)
+cbind(a, b)
+rbind(a, b)
+cbind(a, b, c)
+list(a, b, c)[[2]]
+```
+
+
+<!--begin-answer-->
+```{r }
+data.frame(a, b, c)
+cbind(a, b)
+rbind(a, b)
+cbind(a, b, c)
+list(a, b, c)[[2]]
+```
+<!--end-answer-->
+
+
+

@@ -1,0 +1,27 @@
+---
+chapter: "dataviz-II"
+author: ""
+difficulty: "Easy"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: oak-begin-bottle
+---
+
+```{r oak-begin-bottle-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: [Angelica Schuyler Church](https://en.wikipedia.org/wiki/Angelica_Schuyler_Church) (1756--1814) was the daughter of New York Governer Philip Schuyler and sister of 
+Elizabeth Schuyler Hamilton.  Angelica, New York was named after her.  Using the `r pkg_macro(babynames)` package generate a plot of the reported proportion of babies born with the name Angelica over time and interpret the figure.
+
+<!--begin-answer-->
+```{r hamiltonsisters}
+library(babynames)
+angelica <- filter(babynames, name == "Angelica")
+ggplot(data = angelica, aes(x = year, y = prop, color = sex)) +
+  geom_line()
+```
+We see that there is a big jump in the number of babies named Angelica starting in the mid 1970's.  
+<!--end-answer-->

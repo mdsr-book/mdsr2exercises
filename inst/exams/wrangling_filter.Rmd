@@ -1,0 +1,31 @@
+Question
+========
+
+Which `dplyr` operation is depicted below? 
+
+![](https://rstudio-education.github.io/tidyverse-cookbook/images/dplyr-filter.png)
+
+Answerlist
+----------
+* `filter()`
+* `arrange()`
+* `select()`
+* `mutate()`
+* `summarize()`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: wrangling-filter
+extype: schoice
+exsolution: 10000

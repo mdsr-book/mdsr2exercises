@@ -1,0 +1,44 @@
+---
+chapter: "text"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-06-25 
+version: 0.1
+tags: [first, second, third]
+id: aspen-tear-plate
+---
+
+```{r aspen-tear-plate-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+library(DickinsonPoems)
+```
+
+TITLE GOES HERE: Create a DTM (document term matrix) for the collection of Emily Dickinson's poems in the `r pkg_macro(DickinsonPoems)`  package.  Find the terms with the highest *tf.idf* scores. Choose one of these terms and find any of its strongly correlated terms. 
+
+```{r}
+# remotes::install_github("Amherst-Statistics/DickinsonPoems")
+```
+
+<!--begin-answer-->
+```{r, warning=FALSE,message=FALSE}
+# remotes::install_github("Amherst-Statistics/DickinsonPoems")
+library(tm)
+library(DickinsonPoems)
+
+all_poems <- purrr::map(DickinsonPoems::list_poems(), get_poem)
+poemCorpus <- Corpus(VectorSource(all_poems))
+poemCorpus <- poemCorpus %>%
+  tm_map(stripWhitespace) %>%
+  tm_map(removeNumbers) %>%
+  tm_map(removePunctuation) %>%
+  tm_map(content_transformer(tolower)) %>%
+  tm_map(removeWords, stopwords("english"))
+
+DTM <- DocumentTermMatrix(poemCorpus, control = list(weighting = weightTfIdf))
+
+findFreqTerms(DTM, lowfreq = 3)
+findAssocs(DTM, terms = "friend", corlimit = 0.5)
+```
+  <!--end-answer-->

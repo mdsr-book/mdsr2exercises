@@ -1,0 +1,66 @@
+---
+author: "Nicholas Horton"
+chapter: dataviz-III
+date: '2020-08-16'
+difficulty: Medium
+id: hamster-think-room
+tags:
+- first
+- second
+- third
+version: 0.1
+---
+
+```{r hamster-think-room-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+```
+
+TITLE GOES HERE:	Create a Shiny app to display an interactive time series plot of the `r pkg_macro(macleish)` weather data. Include a selection box to alternate between data from the `whately_2015` and `orchard_2015` weather stations.
+Add a selector of dates to include in the display. Do you notice any irregularities?
+
+ <!--begin-answer-->
+
+```{r eval = FALSE}
+library(tidyverse)
+library(shiny)
+library(macleish)
+library(mdsr)
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    if (input$dataset=="whately_2015") {
+      ds <- whately_2015
+    } else {
+      ds <- orchard_2015
+    }
+    ds <- mutate(ds, date = as.Date(when))
+    res <- ggplot(filter(ds, date > input$mindate, date < input$maxdate),
+                  aes(x = date, y = temperature)) +
+      geom_line() +
+      labs(y = "Temperature (degrees C)")
+    print(res)
+  })
+}
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons("dataset", "Which dataset:",
+                   c("Met data" = "whately_2015",
+                     "Orchard data" = "orchard_2015")),
+      dateInput("mindate", "Starting date", value = as.Date("2015-01-01"),
+                min = as.Date("2015-01-01"), max = as.Date("2015-12-31")),
+      dateInput("maxdate", "Starting date", value = as.Date("2015-12-31"),
+                min = as.Date("2015-01-01"), max = as.Date("2015-12-31"))
+    ),
+    mainPanel(plotOutput("distPlot"))
+  )
+)
+
+shinyApp(ui = ui, server = server)
+```
+
+Something is definitely awry for the Orchard data in November.
+ 
+<!--end-answer-->

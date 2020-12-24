@@ -1,0 +1,47 @@
+Question
+========
+
+The following SQL query attempts to retrieve the birthdates of people in the [IMDb](https://en.wikipedia.org/wiki/IMDb) named "Michael Jordan". 
+Note that this includes both [NBA legend Michael Jordan](https://en.wikipedia.org/wiki/Michael_Jordan) and [Black Panther](https://en.wikipedia.org/wiki/Black_Panther_(film)) superstar [Michael B. Jordan](https://en.wikipedia.org/wiki/Michael_B._Jordan). 
+
+```{sql connection=mdsr::dbConnect_scidb("imdb"), error=TRUE, eval=TRUE}
+SELECT n.id, name, info AS birthdate
+FROM name AS n
+LEFT JOIN person_info AS pi
+  ON n.id = pi.id
+WHERE n.name LIKE 'Jordan, Michael%'
+AND pi.info_type_id = 21;
+```
+
+This query does not throw an error, but returns no results. 
+Since we know that at least two actors in the database are named Michael Jordan, this result is wrong. 
+
+What went wrong? 
+
+
+Answerlist
+----------
+* We should have matched the `id` column in `name` to the `person_id` column in `person_info` instead of the `id` column. 
+* We should have matched the `id` column in `name` to the `id` column in `person_info` instead of the `person_id` column. 
+* We should have matched the `person_id` column in `name` to the `id` column in `person_info`.
+* We misspelled "Jordan".
+* We should have added `LIMIT 0, 10`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. 
+* False. 
+* False. 
+* False.  
+
+Meta-information
+================
+extitle: wrong column
+exsection: sql
+exname: sql-wrong
+extype: schoice
+exsolution: 10000

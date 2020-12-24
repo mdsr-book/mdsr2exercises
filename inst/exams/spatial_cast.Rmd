@@ -1,0 +1,56 @@
+Question
+========
+
+The following chunk creates an `sf` object called `storms92` that contains data about tropical storms in 1992.
+Data -- including location and atmospheric measurements -- were recorded every 6 hours. 
+Thus, each observation (row) in this data frame represents a particular storm at a particular moment in time.
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+storms92 <- storms %>%
+  filter(year == 1992) %>%
+  st_as_sf(coords = c("long", "lat"))
+storms92
+```
+
+The following chunk aggregates the data by storm, converts the resulting `MULTIPOINT` geometry into `LINESTRING`, computes the length of the path traveled by each storm, and then sorts the data frame in descending order by storm. 
+
+```{r, eval=FALSE}
+storms92 %>%
+  group_by(name) %>%
+  summarize(num_obs = n(), do_union = FALSE) %>%
+  _________("LINESTRING") %>%
+  mutate(distance = st_length(geometry)) %>%
+  arrange(desc(distance))
+```
+
+A single function call is omitted. 
+What is it? 
+
+Answerlist
+----------
+* `st_cast()`
+* `st_transform()`
+* `st_combine()`
+* `st_union()`
+* `st_intersection()`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. 
+* False. 
+* False. 
+* False. 
+
+Meta-information
+================
+extitle: cast
+exsection: spatial
+exname: spatial-cast
+extype: schoice
+exsolution: 10000

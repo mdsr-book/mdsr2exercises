@@ -1,0 +1,36 @@
+Question
+========
+
+Consider the following choropleth showing the projected outcome of the [2020 U.S. Presidential Election](https://en.wikipedia.org/wiki/2020_United_States_presidential_election). 
+
+<div align="center"><a href="https://www.270towin.com/maps/2020-projected-results"><img src="https://www.270towin.com/map-images/2020-projected-results.png" width="800"></a><br><small><img style="vertical-align:middle;" src="https://www.270towin.com/uploads/3rd_party_270_30px.png" alt="" /> Click the map to create your own at <a href="https://www.270towin.com/maps/2020-projected-results">270toWin.com</a></small></div>
+
+Which of the following statements are true? 
+
+Answerlist
+----------
+* You can tell that this is not a Mercator projection because the [49th parallel](https://en.wikipedia.org/wiki/49th_parallel_north) (along the northern border of Montana, etc.) is curved and not straight. 
+* This maps distorts reality, since the percentage of the area on the map that is blue is not proportional to the percentage of electoral votes won by Biden. 
+* [Electoral votes](https://en.wikipedia.org/wiki/Electoral_college) are allocated to each state based on its *population*. But on the map, each state takes up visual space based on its *area*. 
+* The map would likely be improved by having states with fewer electoral votes appear in a more neutral color. 
+* [Alaska](https://en.wikipedia.org/wiki/Alaska) is smaller than [Texas](https://en.wikipedia.org/wiki/Texas). 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* True.
+* True.
+* False. Alaska is much bigger than Texas. 
+
+Meta-information
+================
+extitle: visual metaphor of area
+exsection: spatial
+exname: spatial-area
+extype: mchoice
+exsolution: 11110

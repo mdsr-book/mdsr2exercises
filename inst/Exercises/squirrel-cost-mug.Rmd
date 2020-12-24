@@ -1,0 +1,65 @@
+---
+chapter: "simulation"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: squirrel-cost-mug
+---
+
+```{r squirrel-cost-mug-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: What is the impact of the violation of the equal variance
+assumption for linear regression models?  Repeatedly generate data from a "true" model given by the following code.
+```{r }
+n <- 250
+rmse <- 1
+x1 <- rep(c(0, 1), each = n / 2) # x1 resembles 0 0 0 ... 1 1 1
+x2 <- runif(n, min = 0, max = 5)
+beta0 <- -1
+beta1 <- 0.5
+beta2 <- 1.5
+y <- beta0 + beta1 * x1 + beta2 * x2 + rnorm(n, mean = 0, sd = rmse + x2)
+```
+For each simulation, fit the linear regression model and display the distribution of 1,000 estimates of the $\beta_1$ parameter (note that you need to generate the vector of outcomes each time).  Does the distribution of the parameter follow a normal distribution?
+
+<!--begin-answer-->
+
+
+```{r }
+set.seed(1899)
+```
+
+```{r dosimhist2}
+dosim <- function() {
+  y <- beta0 + beta1 * x1 + beta2 * x2 +
+    rnorm(n, mean = 0, sd = rmse + x2)
+  mod <- lm(y ~ x1 + x2)
+  result <- coef(mod)[2]
+  return(result) # coefficient for X1
+}
+res <- map_dbl(1:1000, ~dosim()) %>%
+  enframe(value = "x1")
+
+res %>%
+  skim(x1)
+
+ggplot(data = res, aes(x = x1)) +
+  geom_density() +
+  stat_function(
+    fun = dnorm, args = list(mean = mean(res$x1), sd = sd(res$x1)),
+    linetype = 2
+  ) +
+  ggtitle("distribution of regression parameter") +
+  scale_x_continuous("beta 1 coefficients")
+```
+
+While there is some deviation from the normal distribution (and slightly heaver tails), the normal approximation still works fairly effectively in this example.
+
+<!--end-answer-->
+
+

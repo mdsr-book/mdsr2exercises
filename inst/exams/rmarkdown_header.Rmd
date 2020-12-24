@@ -1,0 +1,37 @@
+Question
+========
+
+Consider the following Markdown source:
+
+```
+## Section
+
+# Chapter
+
+### Subsection
+```
+
+In the rendered output, which word appears in the largest font? 
+
+Answerlist
+----------
+* Chapter, because it only has one `#`
+* Section, because it comes first
+* Subsection, because it has the most `#`'s
+* It's impossible to tell, because it depends on what comes before this
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. 
+* False. 
+* False. 
+
+Meta-information
+================
+exname: rmarkdown-header
+extype: schoice
+exsolution: 1000

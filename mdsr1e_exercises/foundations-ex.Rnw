@@ -1,0 +1,348 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/foundations-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+library(parallel)
+set.seed(1999)
+@
+
+
+
+\section{Exercises}
+\begin{Exercise}
+Calculate and interpret a 95\% confidence interval for the mean age of mothers from the
+\data{Gestation} data set from the \pkg{mosaicData} package.
+\end{Exercise}
+
+<!--begin-answer-->
+
+<<>>=
+library(mosaicData)
+favstats(~ age, data = Gestation)
+confint(lm(age ~ 1, data=Gestation))
+@
+We are 95\% confident that the mean age of mothers in the population is between 26.9 and 27.6 years.
+
+<!--end-answer-->
+
+\begin{Exercise}
+Use the bootstrap to generate and interpret a 95\% confidence interval for the median age of mothers
+for the \data{Gestation} data set from the \pkg{mosaicData}
+package.
+\end{Exercise}
+
+<!--begin-answer-->
+<<eval=TRUE>>=
+library(mosaicData)
+favstats(~ age, data = Gestation)
+@
+
+<<echo=FALSE>>=
+set.seed(1971)
+@
+
+<<eval=TRUE, message=FALSE>>=
+bstrap <- do(2000) * median(~ age, data = resample(Gestation), na.rm=TRUE)
+names(bstrap)
+favstats(~ median, data=bstrap)
+qdata(~ median, c(0.025, 0.975), data = bstrap)
+@
+We are 95\% confident that the median age of mothers in the population is 26 or 27.
+
+<!--end-answer-->
+
+\begin{Exercise}
+Use the bootstrap to generate a 95\% confidence interval for the regression parameters in
+a model for weight as a function of age for the \data{Gestation} data frame from the \pkg{mosaicData}
+package.
+\end{Exercise}
+
+<!--begin-answer-->
+
+<<eval=TRUE, fig.height=3, fig.width=6, message=FALSE>>=
+library(mosaicData)
+mod <- lm(wt ~ age, data = Gestation)
+coef(mod)
+confint(mod)
+@
+
+<<eval=TRUE, message=FALSE>>=
+bstrap <- do(2000) * coef(lm(wt ~ age, data = resample(Gestation)))
+favstats(~ age, data=bstrap)
+qdata(~ age, c(0.025, 0.975), data = bstrap)
+@
+For every year of age we would expect birth weight to increase by 0.1 ounces.
+The bootstrap percentile method yields a similar interval.
+We are 95\% confident that the slope for age is between -0.09 and 0.29.
+<!--end-answer-->
+
+\begin{Exercise}
+We saw that a 95\% confidence interval for a mean was constructed by taking the estimate and adding and subtracting
+two standard deviations.  How many standard deviations should be used if a 99\% confidence interval
+is desired?
+\end{Exercise}
+<!--begin-answer-->
+If we assume that our sample size is sufficiently large, we can assume that the distribution of the
+sample means is approximately normal (if not true we need to use the appropriate $t$-distribution).
+<<>>=
+qnorm(1-.01/2)
+@
+We need to multiple the standard deviation of the mean (standard error) by 2.58.
+<!--end-answer-->
+
+\begin{Exercise}
+{\it Minnesota Twins:}
+In 2010, the Minnesota Twins played their first season at Target Field. However, up
+through 2009, the Twins played at the Metrodome (an indoor stadium). In the Metrodome, air ventilator fans are used both to keep the roof up and to ventilate the stadium. Typically, the air is  blown from all directions into the center of the stadium.
+
+According to a retired supervisor in the Metrodome, in the late innings
+of some games the fans would be modified so that the ventilation
+air would blow out from home plate toward the outfield. The idea is that the
+air flow might increase the length of a fly ball. To see if manipulating
+the fans could possibly make any difference, a group of students at the
+University of Minnesota and their professor built a `cannon' that used
+compressed air to shoot baseballs. They then did the following experiment.
+
+\begin{itemize}
+\item Shoot balls at angles around 50 degrees with velocity of around 150 feet per second.
+\item Shoot balls under two different settings: headwind (air blowing from outfield toward
+home plate) or tailwind (air blowing from home plate toward outfield).
+\item  Record other variables: weight of the ball (in grams), diameter of the ball (in cm), and
+distance of the ball's flight (in feet).
+\end{itemize}
+
+
+Background: People who know little or nothing about baseball might find these basic facts useful.  The batter stands near ``home plate" and tries to hit the ball toward the outfield.  A ``fly ball" refers to a ball that is hit into the air.  It is desirable to hit
+the ball as far as possible.  For reasons of basic physics, the distance is maximized when the ball is hit at an intermediate angle steeper than 45 degrees from the horizontal.
+
+The variables are described in the following table.
+
+\begin{center}
+\begin{tabular}{l|l} \hline
+\var{Cond} & the wind conditions, a categorical variable with levels \val{Headwind}, \val{Tailwind}  \\
+\var{Angle} & the angle of ball's trajectory  \\
+\var{Velocity} & velocity of ball in feet per second  \\
+\var{BallWt} & weight of ball in grams \\
+\var{BallDia} & diameter of ball in inches \\
+\var{Dist} & distance in feet of the flight of the ball \\ \hline
+\end{tabular}
+\end{center}
+
+Here is the
+output of several models.
+<<eval=FALSE>>=
+> lm1 <- lm(Dist ~ Cond, data=ds)  # FIRST MODEL
+@
+<<eval=FALSE>>=
+> summary(lm1)
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  350.768      2.179 160.967   <2e-16 ***
+CondTail       5.865      3.281   1.788   0.0833 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 9.499 on 32 degrees of freedom
+Multiple R-squared: 0.0908,     Adjusted R-squared: 0.06239
+F-statistic: 3.196 on 1 and 32 DF,  p-value: 0.0833
+@
+<<eval=FALSE>>=
+> confint(lm1)
+                2.5 %    97.5 %
+(Intercept) 346.32966 355.20718
+CondTail     -0.81784  12.54766
+@
+<<eval=FALSE>>=
+> # SECOND MODEL
+> lm2 <- lm(Dist ~ Cond + Velocity + Angle + BallWt + BallDia, data=ds)
+> summary(lm2)
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept) 181.7443   335.6959   0.541  0.59252
+CondTail      7.6705     2.4593   3.119  0.00418 **
+Velocity      1.7284     0.5433   3.181  0.00357 **
+Angle        -1.6014     1.7995  -0.890  0.38110
+BallWt       -3.9862     2.6697  -1.493  0.14659
+BallDia     190.3715    62.5115   3.045  0.00502 **
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.805 on 28 degrees of freedom
+Multiple R-squared: 0.5917,     Adjusted R-squared: 0.5188
+F-statistic: 8.115 on 5 and 28 DF,  p-value: 7.81e-05
+@
+<<eval=FALSE>>=
+> confint(lm2)
+                   2.5 %     97.5 %
+(Intercept) -505.8974691 869.386165
+CondTail       2.6328174  12.708166
+Velocity       0.6155279   2.841188
+Angle         -5.2874318   2.084713
+BallWt        -9.4549432   1.482457
+BallDia       62.3224999 318.420536
+@
+
+Consider the results from the model of {\tt Dist} as a function
+of {\tt Cond} (first model).
+Briefly summarize what this model says about the relationship between the wind conditions and the distance travelled by the ball.  Make sure to say something sensible about the strength of evidence that there is any relationship at all.
+\end{Exercise}
+<!--begin-answer-->
+The model predicted that the ball would travel an additional 5.87 feet (on average) with a tail wind compared to a head wind.  The 95\% confidence interval for the parameter ranges from -0.82 to 12.55, with an associated p-value of 0.08.  We fail to reject the null hypothesis that there is a difference due to tail wind (since zero is contained in the interval).  The $R^2$ value of 0.09 indicates that less than 10\% of variability in distance is explained by the model.
+
+One concern is that other factors may be confounding the relationship (since we're not sure that the conditions were randomized or that randomization was successful).
+<!--end-answer-->
+
+\begin{Exercise}
+{\it Twins, continued:} Briefly summarize the model that has {\tt Dist} as the response variable and includes the other variables as explanatory variables (second model) by reporting and interpretating the {\tt CondTail} parameter.
+This second model suggests a somewhat different result for the
+relationship between {\tt Dist} and {\tt Cond}.  Summarize the differences and explain in statistical terms why the inclusion of the other explanatory variables has affected the results.
+\end{Exercise}
+<!--begin-answer-->
+Conditional on the other factors (velocity, angle, ball weight, ball
+diameter, we would expect the ball to travel another 7.67 feet farther (95\% confidence ranges from 2.63 to 12.71 feet) with a tail wind compared to a head wind (p=0.004).  Nearly 3/5th of the variability of distance is now accounted for by the model (the other predictors have soaked up a considerable amount of variability and accounted for possible confounders).  We conclude that there is a significant improvement in distance with a tail wind.
+<!--end-answer-->
+
+\begin{Exercise}
+{\it Smoking and mortality:}
+The \obj{Whickham} data set in the \pkg{mosaicData} package includes data on age, smoking, and mortality from a one-in-six survey of the electoral roll in Whickham, a mixed urban and rural district near Newcastle upon Tyne, in the United Kingdom. The survey was conducted in 1972--1974 to study heart disease and thyroid disease. A follow-up on those in the survey was conducted twenty years later.
+Describe the association between smoking status and mortality in this study.  Be sure to consider the role of age as a possible confounding factor.
+\end{Exercise}
+<!--begin-answer-->
+
+
+We see that the risk of dying is lower for smokers than for non-smokers, since
+31.4\% of the non-smokers died, but only 23.9\% of the smokers did not survive over the ten year period.
+A graphical representation using a mosaicplot (also known as an \emph{Eikosogram}) represents the cell
+probabilities as a function of area.
+
+<<whick1>>=
+library(gmodels)
+library(mdsr)
+Whickham <- mutate(Whickham,
+  agegrp = cut(age, breaks=c(1, 44, 64, 100),
+  labels=c("18-44", "45-64", "65+")))
+mosaicplot(tally(~ outcome + smoker, data=Whickham),
+  ylab="Smoking status",
+  xlab="Mortality status (after 10 years)", main="", color=TRUE)
+with(Whickham, CrossTable(smoker, outcome, prop.c=FALSE, prop.chisq=FALSE,
+  prop.t=FALSE))
+@
+
+We note that the majority of subjects have survived, but that
+the area for the smokers who are still alive is larger than we would expect if there were no
+association between these variables.
+What could explain this result?
+
+Let's consider stratification by age of the participants.  The following displays describe the relationship
+between smoking and mortality over a 10--year period for those age 18--44, those 45-64, and subjects that were 65 or older at baseline.
+
+
+<<whick2>>=
+with(filter(Whickham, agegrp=="18-44"),
+  CrossTable(smoker, outcome, prop.c=FALSE, prop.chisq=FALSE, prop.t=FALSE))
+mosaicplot(tally(~ agegrp + outcome, data=Whickham),
+  ylab="mortality status (after 10 years)",
+  xlab="Age group", main="", color=TRUE)
+with(Whickham, CrossTable(agegrp, smoker, prop.c=FALSE, prop.chisq=FALSE,
+  prop.t=FALSE))
+@
+
+Not surprisingly, we see that
+mortality rates are highest for the oldest subjects.
+We also observe that
+there is an association between age group and smoking status.
+
+<<whick3>>=
+mosaicplot(tally(~ agegrp + smoker, data=Whickham), ylab="smoking status",
+  xlab="Age group", main="", color=TRUE)
+@
+
+Smoking is also associated with age, with those between
+the ages of 45 to 64 most likely to have been smokers at baseline.
+
+
+After controlling for age, smokers have a higher
+rate of mortality than non-smokers in this study.
+
+
+<<whick4>>=
+with(filter(Whickham, agegrp=="65+"), CrossTable(smoker, outcome,
+  prop.c=FALSE, prop.chisq=FALSE, prop.t=FALSE))
+@
+
+The same is true for the other groups.
+Simple methods such as stratification can allow analysts to think beyond two
+dimensions and reveal effects of confounding variables.
+<!--end-answer-->
+
+\begin{Exercise}
+A data scientist working for a company that sells mortgages for new home purchases might be interested in determining what factors might be predictive of defaulting on the loan.  Some of the mortgagees have missing income
+in their data set.  Would it be reasonable for the analyst to drop these loans from their analytic data set?  Explain.
+
+\end{Exercise}
+<!--begin-answer-->
+No: missing data on this important factor is likely not ignorable (see \url{http://www.bankrate.com/finance/mortgages/why-mortgage-lenders-want-tax-returns-1.aspx} for a discussion).
+<!--end-answer-->
+
+\begin{Exercise}
+{\it Missing data:}
+The \obj{NHANES} data set in the \pkg{NHANES} package includes survey data collected by the U.S.\ National Center for Health Statistics (NCHS), which has conducted a series of health and nutrition surveys since the early 1960s.
+An investigator is interested in fitting a model to predict the probability that a female subject will have a diagnosis
+of diabetes.  Predictors for this model include age and BMI.  Imagine that only 1/10 of the data are available but that these data
+are sampled randomly from the full set of observations (this mechanism is called ``Missing Completely at Random", or MCAR).  What implications will this sampling have on the results?
+\end{Exercise}
+<!--begin-answer-->
+The only implication is efficiency: we will be less certain about our conclusion because we have a smaller sample size.
+<!--end-answer-->
+
+
+\begin{Exercise}
+{\it More missing data:}
+Imagine that only 1/10 of the data are available but that these data are sampled from the full set of observations such that
+missingness depends on age, with older subjects less likely to be observed than younger subjects.
+(this mechanism is called ``Covariate Dependent Missingness", or CDM).  What implications will this sampling have on the results?
+\end{Exercise}
+<!--begin-answer-->
+We need to ensure that we we see the full range of ages to be able to correctly model the
+functional form of the relationship between age and diabetes.  Efficiency is an issue in any case.
+<!--end-answer-->
+
+
+\begin{Exercise}
+{\it More missing data:}
+Imagine that only 1/10 of the data are available but that these data are sampled from the full set of observations such that
+missingness depends on diabetes status
+(this mechanism is called ``Non-Ignorable Non-Response", or NINR).  What implications will this sampling have on the results?
+\end{Exercise}
+<!--begin-answer-->
+Here we're also concerned with bias, since the subjects with complete data are not a sample of the full sample and the missingness
+is related to the unobserved values.
+<!--end-answer-->
+
+\begin{Exercise}
+Here is an short excerpt from an article, ``Benefits of the Dinner Table Ritual," in the \emph{New York Times}, May 3, 2005.
+\begin{quote}
+The family dinner has long been an example of family togetherness. But recently, scientists have been coming up with compelling reasons ... for families to pull up a chair around the table.
+Recent studies have begun to shore up the idea that family dinners [that is, eating dinner together as a family] can have an effect.
+
+For example, a 2004 study of 4,746 children 11 to 18 years old, published in \emph{The Archives of Pediatrics and Adolescent Medicine}, found that frequent family meals were associated with a lower risk of smoking, drinking and using marijuana; with a lower incidence of depressive symptoms and suicidal thoughts; and with better grades.
+
+Another study last year, a survey of 12- to 17-year-olds by the National Center on Addiction and Substance Abuse at Columbia University, found that teenagers who reported eating two or fewer dinners a week with family members were more than one and a half times as likely to smoke, drink or use illegal substances than were teenagers who had five to seven family dinners.  $\ldots$ A study from the University of Minnesota published last year found that adolescent girls who reported
+having more frequent family meals and a positive atmosphere during those meals were less likely to have eating disorders.
+\end{quote}
+
+Explain in what ways the studies, as reported, do and do not provide a compelling reason for families to eat together frequently.
+
+Considering the study done by the National Center on Addition and Substance Abuse, describe what might have been the explanatory and response variables measured, and what sort of model they would have
+used.
+\end{Exercise}
+<!--begin-answer-->
+The results of the observational studies have serious potential limitations given the potential for other confounding relationships to mar the observed associations.  It is possible that the family meals are just a proxy for another factor, or for the outcomes to be affecting family meals (reverse causation).
+
+The researchers considered the family meal status to be the explanatory variable and substance use the outcome.  A logistic regression model could have been fit (ideally one that included possible confounders of the relationship between family meals and drug use).
+<!--end-answer-->

@@ -1,0 +1,46 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Easy"
+date: 2020-06-14 
+version: 0.1
+tags: [first, second, third]
+id: calf-know-mug
+---
+
+```{r calf-know-mug-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: 
+
+
+a. Find all of the adjectives in *Macbeth* that end in *more* or *less* using `Machbeth_raw` in `r pkg_macro(mdsr)`.
+ 
+
+<!--begin-answer-->
+```{r, message=FALSE}
+data(Macbeth_raw)
+lines <- strsplit(Macbeth_raw, "\r\n")[[1]]
+words <- strsplit(paste(lines, collapse = " "), " ")[[1]]
+grep("[a-z]+(more|less)$", words, value = TRUE)
+```
+Note that this may return a few false positives (e.g. *bless*).
+  
+<!--end-answer-->
+ 
+b. Find all of the lines containing the stage direction *Exit* or *Exeunt* in *Macbeth*. 
+ 
+
+<!--begin-answer-->
+```{r, message=FALSE}
+data(Macbeth_raw)
+lines <- strsplit(Macbeth_raw, "\r\n")[[1]]
+grep("(Exit|Exeunt)", lines, value = TRUE)
+```
+  
+ <!--end-answer-->
+
+

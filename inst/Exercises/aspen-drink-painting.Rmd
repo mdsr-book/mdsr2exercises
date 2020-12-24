@@ -1,0 +1,52 @@
+---
+chapter: "dataviz-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: aspen-drink-painting
+---
+
+```{r aspen-drink-painting-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The following questions use the `Marriage` data set from the `r pkg_macro(mosaicData)` package.
+
+```{r message=FALSE}
+library(mosaicData)
+```
+
+a. Create an informative and meaningful data graphic.
+b. Identify each of the visual cues that you are using, and describe how they are related to each variable. 
+c. Create a data graphic with at least *five* variables (either quantitative or categorical). For the purposes of this exercise, do not worry about making your visualization meaningful---just try to encode five variables into one plot. 
+
+<!--begin-answer-->
+Answers will vary. We will illustrate one potential solution. 
+  
+```{r marriage-1, message=FALSE}
+ggplot(data = Marriage, aes(x = age, y = prevcount, color = person)) +
+  labs(y  = "Previous marriages") +
+  geom_point(alpha = 0.5) +
+  geom_smooth()
+```
+
+ Position in the $x$-direction is mapped to age, position in the $y$-direction is mapped to the number of previous marriages, color is mapped to the status as bride or groom. Each point represents one person. The smoother line indicates a positive trend between age and number of previous marriages, up to about age 45. That is, not surprisingly, people who marry later in life tend to have had more previous marriages. 
+
+```{r marriage-2}
+Marriage <- Marriage %>%
+  mutate(`Grades completed` = factor(hs))
+ggplot(data = Marriage, aes(
+  x = age, y = prevcount,
+  color = `Grades completed`, size = dayOfBirth
+)) +
+  labs(y  = "Previous marriages") +
+  geom_point(alpha = 0.5) +
+  facet_wrap(~person)
+```
+
+<!--end-answer-->
+
+

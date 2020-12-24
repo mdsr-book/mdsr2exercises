@@ -1,0 +1,42 @@
+Question
+========
+Consider the following R Markdown document:
+
+```{r, message=FALSE, error=TRUE}
+library(ggplot2)
+
+humans <- starwars %>%
+  filter(species == "Human")
+```
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+
+ggplot(humans, aes(x = mass, y = height)) + 
+  geom_point()
+```
+
+What single change would fix both errors? 
+
+Answerlist
+----------
+* Moving `library(tidyverse)` to the first row. 
+* Changing the first pipe (`%>%`) to a plus (`+`)
+* Removing `library(ggplot2)`
+* Putting the second chunk first
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. `filter()` does work with the `+`.
+* False. This won't change anything. 
+* False. This would result in `humans` being not found. 
+
+Meta-information
+================
+exname: rmarkdown-error
+extype: schoice
+exsolution: 1000

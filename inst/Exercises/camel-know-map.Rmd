@@ -1,0 +1,30 @@
+---
+chapter: "modeling"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-09-30 
+version: 0.1
+tags: [first, second, third]
+id: camel-know-map
+---
+
+```{r camel-know-map-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: What impact does the random number seed have on our results?
+
+a. Repeat the Census logistic regression model that controlled only for capital gains but using a different random number seed (365 instead of 364) for the 80%/20% split.  Would you expect big  differences in the accuracy using the training data?  Testing data?  
+
+b. Repeat the process using a random number seed of 366.  What do you conclude?
+
+ <!--begin-answer-->
+Answers may vary.  Consider the following. XX
+
+```{r }
+library(mdsr)
+```
+
+ <!--end-answer-->
+  

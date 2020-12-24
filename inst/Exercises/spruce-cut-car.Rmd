@@ -1,0 +1,30 @@
+---
+chapter: "appR"
+author: ""
+difficulty: "Easy"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: spruce-cut-car
+---
+
+```{r spruce-cut-car-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: For each of the following assignment statements, describe the error (or note why it does not generate an error).
+
+```{r eval=FALSE}
+result1 <- sqrt 10
+result2 <-- "Hello to you!"
+3result <- "Hello to you"
+result4 <- "Hello to you
+result5 <- date()
+```
+
+<!--begin-answer-->
+The first statement is invalid (improper syntax for function argument).  The second uses an invalid assignment operator.
+The third tries to assign to an invalid object name.  The fourth has unmatched quotes.  The last is correct.
+<!--end-answer-->
+
+

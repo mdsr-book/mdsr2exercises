@@ -1,0 +1,26 @@
+---
+chapter: "dataviz-II"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-08-09 
+version: 0.1
+tags: [first, second, onlineonly]
+id: calf-fly-stove
+---
+
+```{r calf-fly-stove-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following data graphic about [Denzel Washington](https://en.wikipedia.org/wiki/Denzel_Washington), a two-time Academy Award-winning actor. It may be helpful to read the original article, entitled "[The Four Types of Denzel Washington Movies](https://fivethirtyeight.com/features/the-four-types-of-denzel-washington-movies/)".
+
+```{r  out.width = "50%", echo = FALSE}
+knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/hickey-denzel-1.png", sep = ""))
+```
+
+What variable is mapped to the color aesthetic? 
+
+<!--answer-start-->
+Movie type, as defined in the article.
+<!--answer-end-->
+

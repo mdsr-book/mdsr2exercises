@@ -1,0 +1,57 @@
+Question
+========
+
+The following call to `skimr::skim()` displays summary statistics about the `species` variable in the `starwars` data frame. 
+
+```{r, error=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+
+starwars %>%
+  skimr::skim(species)
+```
+
+Consider the following function definition, and subsequent call of that function. 
+
+```{r}
+summarize_species <- function(species = "Human") {
+  starwars %>%
+    filter(species == species) %>%
+    summarize(
+      num_people = n(),
+      avg_height = mean(height, na.rm = TRUE)
+    )
+}
+
+summarize_species("Wookiee")
+```
+
+The function does not throw an error, but does not return the intended results. 
+We know the results are incorrect, because there not 83 [Wookiee](https://en.wikipedia.org/wiki/Wookiee)s in [*Star Wars*](https://en.wikipedia.org/wiki/Star_Wars). 
+
+Which of the following causes the problem?  
+
+Answerlist
+----------
+* Setting `species == species` in the call to `filter()` is problematic, because R cannot distinguish between the argument to our function named `species` and the variable in `starwars` named `species`. 
+* There should be an extra set of parentheses around the call to `summarize()`. 
+* The expression starting with `num_people` has to be on the same line as `summarize()`.
+* You need to add a `return()` statement at the end of the function.
+* There is no object called `starwars` in the global environment. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: function-arg-matching
+extype: schoice
+exsolution: 10000

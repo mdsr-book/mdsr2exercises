@@ -1,0 +1,47 @@
+---
+chapter: "algorithmic"
+author: ""
+difficulty: "Medium"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: snake-see-pan
+---
+
+```{r snake-see-pan-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a function called `cum_min()` that, when given a vector as an 
+argument, returns the cumulative minimum of that vector.  Compare  the result of your function
+to the built-in `cummin()` function for the vector `c(4, 7, 9, -2, 12)`.
+
+ <!--begin-answer-->
+```{r }
+cum_min <- function(x) {
+  if (!is.numeric(x)) {
+    stop("input must be numeric.\n")
+  }
+  minval <- x
+  minval[1] <- x[1]
+  if (length(x) == 1) {
+    return(minval)
+  }
+  for (i in 2:length(x)) {
+    minval[i] <- ifelse(minval[i - 1] > x[i], x[i], minval[i - 1])
+  }
+  return(minval)
+}
+x <- c(4, 7, 9, -2, 12)
+cum_min(x)
+cummin("hello")
+cummin(x)
+```
+```{r, eval = FALSE}
+# error
+cum_min("hello")
+```
+
+  <!--end-answer-->
+
+

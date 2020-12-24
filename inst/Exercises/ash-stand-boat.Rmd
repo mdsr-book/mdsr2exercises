@@ -1,0 +1,43 @@
+---
+chapter: "sqlI"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: ash-stand-boat
+---
+
+```{r ash-stand-boat-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
+Of all the destinations from Chicago O'Hare (ORD), which were the most common in 2010? 
+
+ 
+<!--begin-answer-->
+  
+```{r, warning = FALSE, message= FALSE}
+library(RMySQL)
+con <- mdsr::dbConnect_scidb(dbname = "airlines")
+
+myquery <-
+  'SELECT 
+  dest, 
+  sum(1) as numFlights
+FROM flights 
+WHERE year = 2010 
+  AND origin = "ORD"
+GROUP BY dest
+ORDER BY numFlights desc
+LIMIT 0,6;'
+
+dbGetQuery(con, myquery)
+```  
+  
+<!--end-answer-->
+
+

@@ -1,0 +1,46 @@
+---
+chapter: "sqlI"
+author: ""
+difficulty: "Hard"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: seal-lend-glasses
+---
+
+```{r seal-lend-glasses-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+```
+
+TITLE GOES HERE: The following open-ended question may require more than one query and a thoughtful response.
+Based on data from 2012 only, and assuming that transportation to the airport is not an issue, would you rather fly out of JFK, LaGuardia (LGA), or Newark (EWR)? Why or why not? 
+Use the `dbConnect_scidb` function to connect to the `airlines` database.
+
+<!--begin-answer-->
+An extremely simplistic solution would just compare the average flight delays and proportion of flights that were canceled.
+```{r, warning = FALSE, message= FALSE}
+library(RMySQL)
+con <- mdsr::dbConnect_scidb(dbname = "airlines")
+
+myquery <- 'SELECT 
+  MAX(origin) as airport,
+  sum(1) as numFlights, 
+  sum(cancelled) as numCancelled,
+  avg(cancelled) as pctCancelled,
+  avg(arr_delay) as avgdelay
+FROM flights o
+WHERE year = 2012 
+  AND origin IN ("JFK", "LGA", "EWR")
+GROUP BY origin
+ORDER BY pctCancelled;'
+
+dbGetQuery(con, myquery)
+```
+
+A more sophisticated analysis (left to the reader) would be to account for differences in carriers and destinations (since the airports have very different patterns of flights).  
+
+<!--end-answer-->
+
+
+

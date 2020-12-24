@@ -1,0 +1,63 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Easy"
+date: 2020-06-25 
+version: 0.1
+tags: [first, second, third]
+id: dog-wake-roof
+---
+
+```{r dog-wake-roof-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: Given the vector of words below, determine the output of the following regular expressions without running the R code. 
+
+
+```{r}
+x <- c(
+  "popular", "popularity", "popularize", "popularise",
+  "Popular", "Population", "repopulate", "reproduce",
+  "happy family", "happier\tfamily", " happy family", "P6dn"
+)
+x
+```
+
+```{r,eval = FALSE}
+str_subset(x, pattern = "pop")                  #1
+str_detect(x, pattern = "^pop")                 #2
+str_detect(x, pattern = "populari[sz]e")        #3
+str_detect(x, pattern = "pop.*e")               #4
+str_detect(x, pattern = "p[a-z]*e")             #5
+str_detect(x, pattern = "^[Pp][a-z]+.*n")       #6
+str_subset(x, pattern = "^[^Pp]")               #7
+str_detect(x, pattern = "^[A-Za-p]")            #8
+str_detect(x, pattern = "[ ]")                  #9
+str_subset(x, pattern = "[\t]")                 #10
+str_detect(x, pattern = "[ \t]")                #11
+str_subset(x, pattern = "^[ ]")                 #12
+```
+
+
+
+<!--begin-answer-->
+
+```{r,eval = TRUE}
+str_subset(x, pattern = "pop")                  #1
+str_detect(x, pattern = "^pop")                 #2
+str_detect(x, pattern = "populari[sz]e")        #3
+str_detect(x, pattern = "pop.*e")               #4
+str_detect(x, pattern = "p[a-z]*e")             #5
+str_detect(x, pattern = "^[Pp][a-z]+.*n")       #6
+str_subset(x, pattern = "^[^Pp]")               #7
+str_detect(x, pattern = "^[A-Za-p]")            #8
+str_detect(x, pattern = "[ ]")                  #9
+str_subset(x, pattern = "[\t]")                 #10
+str_detect(x, pattern = "[ \t]")                #11
+str_subset(x, pattern = "^[ ]")                 #12
+```
+
+<!--end-answer-->

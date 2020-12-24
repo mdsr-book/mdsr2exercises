@@ -1,0 +1,53 @@
+---
+chapter: "text"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-10-02 
+version: 0.1
+tags: [first, second, third]
+id: bird-trim-lamp
+---
+
+```{r bird-trim-lamp-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: A text analytics project is using scanned data to create a corpus.
+Many of the lines have been hyphenated in the original text.
+
+```{r}
+text_lines <- tibble(
+  lines = c("This is the first line.",
+           "This line is hyphen- ",
+           "ated. It's very diff-",
+           "icult to use at present.")
+)
+```
+
+Write a function that can be used to remove the hyphens and concatenate the parts of the words that are split on the line where they first appeared.
+
+ <!--begin-answer-->
+
+```{r,message=FALSE, warning=FALSE}
+fix_hyphens <- function(lines) {
+  stopifnot(is.character(lines))
+  n <- length(lines)
+  clean_lines <- lines
+  for (line in 1:(n-1)) {
+    if (grepl("[a-z]\\-\\s*$", lines[line])) {
+      first_word_of_line <- stringr::word(clean_lines[line + 1], 1)
+      clean_lines[line] <- paste(clean_lines[line], first_word_of_line, sep = " ")
+      clean_lines[line] <- stringr::str_replace(clean_lines[line], "-\\s+", "")
+      clean_lines[line + 1] <- stringr::str_replace(clean_lines[line + 1], first_word_of_line, "")
+    }
+  }
+  return(clean_lines)
+}
+text_lines %>%
+  mutate(lines = fix_hyphens(lines))
+```
+
+ <!--end-answer-->
+

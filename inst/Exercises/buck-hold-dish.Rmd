@@ -1,0 +1,22 @@
+---
+chapter: "ethics"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: buck-hold-dish
+---
+
+```{r buck-hold-dish-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: In 2006, AOL released a database of search terms that users had used in the prior month (see http://www.nytimes.com/2006/08/09/technology/09aol.html).  Research this disclosure and the reaction that ensued.  What ethical issues are involved?  What potential impact has this disclosure had?
+
+ <!--begin-answer-->
+
+While answers may vary, solutions should note there many AOL users were reidentified in this data set, some of which engaged in societally undesirable or illegal practices. The disclosure led to much stricter data releases (or embargoes on such releases) moving forward.
+  <!--end-answer-->
+
+

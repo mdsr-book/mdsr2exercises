@@ -1,0 +1,24 @@
+---
+chapter: "reproducible"
+author: ""
+difficulty: "Easy"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: pine-lie-piano
+---
+
+```{r pine-lie-piano-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Describe in words what the following excerpt from an R Markdown file will display when rendered.
+
+```
+$\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 \cdot x + \epsilon$
+```
+ <!--begin-answer-->
+The rendered file will display: $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 \cdot x + \epsilon$.  The implication is that arbitrary LaTeX commands can be included in R Markdown files to format mathematical expressions.
+ <!--end-answer-->
+
+

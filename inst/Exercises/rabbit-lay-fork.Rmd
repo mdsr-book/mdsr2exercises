@@ -1,0 +1,46 @@
+---
+chapter: "dataviz-II"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-08-11 
+version: 0.1
+tags: [first, second, onlineonly]
+id: rabbit-lay-fork
+---
+
+```{r rabbit-lay-fork-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: LEDECKY: Consider the following data graphic about world-class swimmers. Emphasis is on [Katie Ledecky](https://en.wikipedia.org/wiki/Katie\_Ledecky), a five-time Olympic gold medalist. It may be helpful to peruse the original article, entitled "[Katie Ledecky Is The Present And The Future Of Swimming](https://fivethirtyeight.com/features/katie-ledecky-is-the-present-and-the-future-of-swimming/)".
+
+```{r echo=FALSE}
+knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/ledecky.png", sep = ""))
+```
+
+Suppose that the graphic was generated from a data frame like the one shown below (it wasn't---these are fake data). 
+
+```{r, echo=FALSE}
+tibble::tribble(
+  ~name, ~gender, ~distance, ~time_in_sd,
+  "Ledecky", "F", 100, -0.8,
+  "Ledecky", "F", 200, 1.7,
+  "Ledecky", "F", 400, 2.9
+)
+```
+
+Note: Recall that [*standard deviation*](https://en.wikipedia.org/wiki/Standard_deviation) is a measure of the spread of a set of numbers. In this case, a time that is +1 standard deviation *above* the mean is *faster* than the average time (among the top 50 times).
+
+1. What variable is mapped to the position aesthetic in the horizontal direction? 
+1. What variable is mapped to the color aesthetic in the vertical direction?
+1. What variable is mapped to the position aesthetic in the vertical direction?
+
+<!--answer-start-->
+1. `distance`
+1. `time_in_sd`
+1. `gender`
+<!--answer-end-->
+
+
+

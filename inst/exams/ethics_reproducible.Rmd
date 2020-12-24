@@ -1,0 +1,38 @@
+Question
+========
+
+In the following paper, the authors argue that economies can grow even after implementing austerity measures. 
+
+- Reinhart, C. M., & Rogoff, K. S. (2010). [Growth in a Time of Debt](https://www.nber.org/system/files/working_papers/w15639/w15639.pdf). *American Economic Review*, 100(2), 573-78.
+
+It was later discovered that these findings were the result of an error in the calculations made on a spreadsheet. 
+
+- Herndon, T., Ash, M., & Pollin, R. (2014). [Does high public debt consistently stifle economic growth? A critique of Reinhart and Rogoff](https://doi.org/10.1093/cje/bet075). *Cambridge Journal of Economics*, 38(2), 257-279. 
+
+Which of the following statements is **false**?
+
+Answerlist
+----------
+* Reinhart and Rogoff honored their professional obligations by providing reasonable access to their software and data. 
+* If Herndon had not attempted to reproduce Reinhart and Rogoff's result, the error might never have been detected. 
+* The error would likely have been easier to detect if the analysis had been done in a scriptable language (like R or Python) instead of a spreadsheet (Microsoft Excel), because formulas in spreadsheets are obscured and easy to manipulate.
+* Since the error was ultimately detected, there was no harm done. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* True.
+* True. 
+* False. There was quite a bit of harm done because policymakers read the paper. 
+
+Meta-information
+================
+extitle: reproducible
+exsection: ethics
+exname: ethics-reproducible
+extype: mchoice
+exsolution: 0001

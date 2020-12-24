@@ -1,0 +1,32 @@
+---
+chapter: "sqlII"
+author: ""
+difficulty: "Easy"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, onlineonly]
+id: duck-pay-tv
+---
+
+```{r duck-pay-tv-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following queries:
+
+XX BB ?? how should they know what is indexed?
+
+```{r eval=FALSE, engine="mysql"}
+SELECT * FROM flights WHERE cancelled = 1;
+SELECT * FROM flights WHERE carrier = "DL";
+```
+
+Which query will execute faster? Justify your answer.
+
+
+ <!--begin-answer-->
+The latter is faster because there is an index built on `carrier`.
+
+ <!--end-answer-->
+
+

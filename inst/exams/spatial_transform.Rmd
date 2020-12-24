@@ -1,0 +1,49 @@
+Question
+========
+
+The following chunk imports a county map of [North Carolina](https://en.wikipedia.org/wiki/North_Carolina) as an `sf` object. 
+
+```{r, message=FALSE}
+library(tidyverse)
+library(sf)
+nc <- system.file("shape/nc.shp", package = "sf") %>%
+  st_read(quiet = TRUE)
+nc
+```
+
+The following chunk will re-project the data from the [EPSG 4267](https://epsg.io/4267) [Coordinate Reference System](https://en.wikipedia.org/wiki/Spatial_reference_system) to [EPSG 4326](https://epsg.io/4326). 
+What function fills in the blank?
+
+```{r, eval=FALSE}
+nc %>%
+  ____________(4326)
+```
+
+
+Answerlist
+----------
+* `st_transform`
+* `st_set_crs`
+* `st_crs`
+* `st_cast`
+* `st_make_valid`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This resets the CRS but does not re-project the coordinates.
+* False. This retrieves the CRS.
+* False.
+* False. 
+
+
+Meta-information
+================
+extitle: st_transform
+exsection: spatial
+exname: spatial-transform
+extype: schoice
+exsolution: 10000

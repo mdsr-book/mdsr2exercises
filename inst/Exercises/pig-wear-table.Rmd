@@ -1,0 +1,45 @@
+---
+chapter: "learning-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: pig-wear-table
+---
+
+```{r pig-wear-table-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Perform the clustering on *pitchers* who have been elected to the Hall of Fame using the `Pitching` dataset in the `Lahman` package. Use wins (`W`), strikeouts (`SO`), and saves (`SV`) as criteria. 
+
+<!--begin-answer-->
+```{r message=FALSE}
+library(Lahman)
+hof <- Pitching %>%
+  group_by(playerID) %>%
+  inner_join(HallOfFame, by = c("playerID" = "playerID")) %>%
+  filter(inducted == "Y" & votedBy == "BBWAA") %>%
+  summarize(tW = sum(W), tSO = sum(SO), tSV = sum(SV)) %>%
+  filter(tSO > 500)
+```
+
+Here the clusters are very distinct and seems to be based entirely on strikeouts. Note that only a handful of pitchers in the Hall of Fame have accumualated many saves, and that the clustering algorithm did not group them together. 
+
+```{r ex-hof-cluster2}
+clusts <- hof %>%
+  select(-playerID) %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+hof <- hof %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+ggplot(data = hof, aes(x = tW, y = tSO, size = tSV, color = factor(cluster))) +
+  geom_point()
+```
+<!--end-answer-->
+
+

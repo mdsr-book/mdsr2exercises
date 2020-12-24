@@ -1,0 +1,60 @@
+Question
+========
+
+The following chunk attempts to plot the path of [Hurricane Andrew](https://en.wikipedia.org/wiki/Hurricane_Andrew), which decimated the Bahamas, Florida, and the Gulf Coast in 1992. 
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+library(macleish)
+library(usmap)
+
+andrew <- storms %>%
+  filter(year == 1992, name == "Andrew") %>%
+  st_as_sf(coords = c("long", "lat")) %>%
+  st_set_crs(4326) %>%
+  st_transform(usmap_crs()) %>%
+  summarize(do_union = FALSE) %>%
+  st_cast("LINESTRING")
+
+states <- us_map(regions = "states") %>%
+  st_as_sf(coords = c("x", "y")) %>%
+  st_set_crs(usmap_crs()) %>%
+  group_by(group, full) %>%
+  summarize(do_union = FALSE) %>%
+  st_cast("POLYGON")
+
+ggplot() + 
+  geom_sf(data = states) +
+  geom_sf(data = andrew, color = "blue") 
+```
+
+Which of the following commands would **compute** the polygons corresponding to only those states through which Hurricane Andrew passed? 
+
+Answerlist
+----------
+* `st_intersection(states, andrew)`
+* `st_intersects(states, andrew)`
+* `st_union(states, andrew)`
+* `st_difference(states, andrew)`
+* `st_sym_difference(states, andrew)`
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This could allow you to compute the states, but it would **not** return the polygons. 
+* False.  
+* False. 
+* False. 
+
+Meta-information
+================
+extitle: st_intersection
+exsection: spatial
+exname: spatial-intersection
+extype: schoice
+exsolution: 10000

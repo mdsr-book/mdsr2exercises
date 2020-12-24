@@ -1,0 +1,22 @@
+---
+chapter: "ethics"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: bee-type-roof
+---
+
+```{r bee-type-roof-default, include = FALSE}
+mdsr2exercises::setup()
+```
+ 
+TITLE GOES HERE: A data scientist compiled data from several public sources (voter registration, political contributions, tax records) that were used to predict sexual orientation of individuals in a community.  What ethical considerations arise that should guide use of such data sets?
+
+  <!--begin-answer-->
+  
+While answers may vary, it should be noted that there may be unintended consequences in terms of user reidentification that arise from posting data sets.  To help minimize possible damage, analysts should remove certain variables (not just username) that would make it more straightforward to reidentify the users. 
+  <!--end-answer-->
+
+

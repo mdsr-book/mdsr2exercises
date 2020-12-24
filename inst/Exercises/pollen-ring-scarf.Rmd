@@ -1,0 +1,62 @@
+---
+chapter: learning-I
+author: ''
+difficulty: "Medium"
+date: '2020-07-14'
+version: 0.1
+tags:
+- first
+- second
+- third
+id: pollen-ring-scarf
+output: pdf_document
+---
+
+```{r pollen-ring-scarf-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+library(mdsr)
+```
+
+TITLE GOES HERE: Use the College Scorecard Data from the `CollegeScorecard` package to model student debt as a function of institutional characteristics using the techniques described in this chapter.  Compare and contrast results from at least three methods.  
+
+```{r eval = FALSE}
+# remotes::install_github("Amherst-Statistics/CollegeScorecard")
+library(CollegeScorecard)
+```
+
+  <!--begin-answer-->
+Example using decision trees: 
+```{r, warning = FALSE, message = FALSE, eval = FALSE}
+# remotes::install_github("Amherst-Statistics/CollegeScorecard")
+library(CollegeScorecard)
+library(rpart)
+set.seed(232)
+
+filename <- paste(system.file("extdata", package = "CollegeScorecard"),
+  "MERGED2016_17_PP.csv.bz2",
+  sep = "/"
+)
+colleges <- readr::read_csv(filename)
+
+df <- colleges %>%
+  select(DEBT_MDN, ADM_RATE, REGION, COSTT4_A, C150_4, 
+         PAR_ED_PCT_1STGEN, FTFTPCTPELL) %>%
+  filter(DEBT_MDN != "PrivacySuppressed") %>%
+  mutate(high_debt = if_else(as.numeric(DEBT_MDN) > 9500, TRUE, FALSE)) %>%
+  sample_n(2000)
+
+rpart(DEBT_MDN ~ ADM_RATE + REGION + COSTT4_A + C150_4 + 
+        PAR_ED_PCT_1STGEN + FTFTPCTPELL, data = df)
+```
+
+
+
+  <!--end-answer-->
+
+```{r echo=FALSE, eval=FALSE}
+library(NeuralNetTools) # don't remove this: it helps to ensure package list is complete
+```
+
+
+

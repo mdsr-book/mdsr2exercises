@@ -1,0 +1,33 @@
+---
+chapter: "reproducible"
+author: ""
+difficulty: "Easy"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: wgoldfish-beat-bottle
+---
+
+```{r wgoldfish-beat-bottle-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Describe the implications of changing `warning=TRUE` to `warning=FALSE` in the following code chunk.
+
+
+```{r warning=TRUE}
+sqrt(-1)
+```
+
+ <!--begin-answer-->
+When warning is `TRUE`, R generates a warning message.
+```{r warning=TRUE}
+sqrt(-1)
+```
+If set to `FALSE`, the message is suppressed.
+```{r warning=FALSE}
+sqrt(-1)
+```
+ <!--end-answer-->
+
+

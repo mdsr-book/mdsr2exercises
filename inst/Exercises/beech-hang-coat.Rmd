@@ -1,0 +1,44 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Hard"
+date: 2020-06-29 
+version: 0.1
+tags: [first, second, third]
+id: beech-hang-coat
+---
+
+```{r beech-hang-coat-default, include = FALSE}
+library(pdxTrees)
+library(mdsr)
+library(tidyverse)
+library(tidytext)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `pdxTrees_parks` dataset from the `r pkg_macro(pdxTrees)` package contains information on thousands of trees in the Portland, Oregon area. Using the `species_factoid` variable, investigate any interesting trends within the facts.
+
+  <!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+library(tidytext)
+library(pdxTrees)
+
+pdxTrees_parks <- pdxTrees::get_pdxTrees_parks() 
+
+# most common facts
+pdxTrees_parks %>%
+  filter(!is.na(Species_Factoid)) %>%
+  count(Species_Factoid, sort = TRUE) %>%
+  head(5)
+
+
+tree_facts <- data.frame(facts = unique(pdxTrees_parks$Species_Factoid))
+
+unnest_tokens(tree_facts, input = facts, output = words) %>%
+  count(words) %>%
+  arrange(desc(n)) %>%
+  anti_join(stop_words, by = c("words" = "word")) %>%
+  head(10)
+```
+
+  <!--end-answer-->

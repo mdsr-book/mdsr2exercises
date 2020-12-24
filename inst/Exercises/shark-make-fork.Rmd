@@ -1,0 +1,56 @@
+---
+chapter: "learning-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: shark-make-fork
+---
+
+```{r shark-make-fork-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+library(mdsr)
+```
+
+TITLE GOES HERE: Consider the $k$-means clustering algorithm applied to the BigCities data.
+Would you expect to obtain different results if the location coordinates were *projected* (see the "Working with spatial data" chapter)?  
+
+
+<!--begin-answer-->
+Possibly, but not necessarily. It depends on how grossly the coordinates are distorted from one projection to the next. Here we use a [Cassini projection](https://en.wikipedia.org/wiki/Cassini_projection) to produce a different set of coordinates. The clustering algorithm still basically picks up on the continents in the same way, even though the map looks quite different. 
+
+```{r message=FALSE}
+BigCities <- world_cities %>%
+  arrange(desc(population)) %>%
+  head(4000) %>%
+  select(longitude, latitude)
+
+```
+
+```{r message=FALSE}
+library(sp)
+coordinates(BigCities) <- ~ longitude + latitude
+proj4string(BigCities) <- CRS("+proj=longlat")
+BigCities_proj <- BigCities %>%
+  spTransform(CRS("+proj=cass +lon_0=12.4521272222222 +lat_0=41.9244030555555 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+```
+
+```{r cluster-cities-projected, message=FALSE}
+set.seed(15)
+library(mclust)
+city_clusts <- BigCities_proj %>%
+  coordinates() %>%
+  kmeans(centers = 6) %>%
+  fitted("classes") %>%
+  as.character()
+big_clusters <- BigCities_proj %>%
+  as_tibble() %>%
+  mutate(cluster = city_clusts)
+ggplot(data = big_clusters, aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = cluster), alpha = 0.5)
+```
+<!--end-answer-->
+
+

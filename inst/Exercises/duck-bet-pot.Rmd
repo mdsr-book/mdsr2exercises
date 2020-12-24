@@ -1,0 +1,60 @@
+---
+chapter: "regression"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: duck-bet-pot
+---
+
+```{r duck-bet-pot-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The Child Health and Development Studies investigate a range of topics. One study, in particular, considered all pregnancies among women in the Kaiser Foundation Health Plan in the San Francisco East Bay area. The goal is to model the weight of the infants (`bwt`, in ounces) using variables including length of pregnancy in days (`gestation`), mother's age in years (`age`), mother's height in inches (`height`), whether the child was the first born (`parity`), mother's pregnancy weight in pounds (`weight`), and whether the mother was a smoker (`smoke`). 
+The summary table that follows shows the results of a regression model for predicting the average birth weight of babies based on all of the variables included in the data set.
+
+```{r message=FALSE}
+library(mdsr)
+library(mosaicData)
+babies <- Gestation %>%
+  rename(bwt = wt, height = ht, weight = wt.1) %>%
+  mutate(parity = parity == 0, smoke = smoke > 0) %>%
+  select(id, bwt, gestation, age, height, weight, parity, smoke)
+mod <- lm(bwt ~ gestation + age + height + weight + parity + smoke,
+  data = babies
+)
+coef(mod)
+```
+
+Answer the following questions regarding this linear regression model.
+
+a. The coefficient for `parity` is different than if you fit a linear model predicting weight using only that variable. Why might there be a difference?
+  
+b. Calculate the residual for the first observation in the data set.
+  
+c. This data set contains missing values. What happens to these rows when we fit the model? 
+
+ <!--begin-answer-->
+
+There could be possible confounders of the parity and weight association. As an example, moms with more kids may be more likely to smoke, and smokers might have smaller babies.  Such confounding factors might account for the changes.
+
+```{r }
+head(babies, 1)
+head(fitted(mod), 1)
+head(residuals(mod), 1)
+```
+
+The value of R-squared is 0.235.
+```{r }
+mosaic::msummary(mod)
+(335.94 - 249.28) / 335.94
+mosaic::rsquared(mod)
+```
+The missing values are dropped from the model.  The analyst needs to be careful when adding the residuals and fitted values into the original dataset.
+
+<!--end-answer-->
+
+

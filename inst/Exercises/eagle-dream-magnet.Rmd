@@ -1,0 +1,88 @@
+---
+chapter: data-II
+author: "Ben Baumer"
+date: "First edition"
+difficulty: Medium
+version: 0.1
+tags:
+- first
+- second
+- third
+id: eagle-dream-magnet
+output: pdf_document
+---
+
+
+```{r eagle-dream-magnet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: An analyst wants to calculate the pairwise differences between the Treatment and Control values for a small data set from a crossover trial (all subjects received both treatments) that
+consists of the following observations.
+
+```{r echo=FALSE, warning = FALSE}
+library(xtable)
+ds1 <- tibble(id = c(1:3, 1:3), group = c(rep("T", 3), rep("C", 3)), vals = c(4, 6, 8, 5, 6, 10))
+```
+
+```{r }
+ds1
+```
+
+\vspace{.05in}
+
+Then use the following code to create the new `diff` variable.
+
+```{r eval=FALSE}
+Treat <- filter(ds1, group == "T")
+Control <- filter(ds1, group == "C")
+all <- mutate(Treat, diff = Treat$vals - Control$vals)
+all
+```
+
+Verify that this code works for this example and generates the correct values of $-1$, 0, and $-2$.  Describe two problems that might arise if the data set is not sorted in a particular
+order or if one of the observations is missing for one of the subjects.  Provide an alternative approach to generate this
+variable that is more robust (hint: use `pivot_wider`).
+
+<!--begin-answer-->
+Possible problems:
+
+1. If the data are not in the same order within the two treatments, this approach will yield invalid results.
+```{r echo=TRUE, message=FALSE, warning = FALSE}
+ds2 <- tibble(
+  id = c(1:3, 3:1),
+  group = c(rep("T", 3), rep("C", 3)),
+  vals = c(4, 6, 8, 10, 6, 5)
+)
+Treat <- filter(ds2, group == "T")
+Control <- filter(ds2, group == "C")
+all <- mutate(Treat, diff = Treat$vals - Control$vals)
+all
+```
+
+2. If the data are not balanced (same number of observations for each of the new treatments) the code will yield a warning message.
+```{r message=FALSE, warning = TRUE}
+ds3 <- tibble(
+  id = c(1:3, 1:2),
+  group = c(rep("T", 3), rep("C", 2)),
+  vals = c(4, 6, 8, 5, 6)
+)
+Treat <- filter(ds3, group == "T")
+Control <- filter(ds3, group == "C")
+all <- mutate(Treat, diff = Treat$vals - Control$vals)
+all
+```
+
+We see that both examples yielded incorrect values (and one warning).
+
+A better approach would be to use `pivot_wider()`.
+```{r message=FALSE, warning = FALSE}
+library(tidyr)
+ds2 %>%
+  pivot_wider(names_from = group, values_from = vals) %>%
+  mutate(diff = T - C)
+```
+
+This approach yields the correct answer even though the data set is in a different order for the control observations.
+<!--end-answer-->

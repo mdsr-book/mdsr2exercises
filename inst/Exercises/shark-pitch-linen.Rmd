@@ -1,0 +1,67 @@
+---
+chapter: "spatial-II"
+author: ""
+difficulty: "Medium"
+date: 2020-06-24 
+version: 0.1
+tags: [first, second, third]
+id: shark-pitch-linen
+---
+
+```{r shark-pitch-linen-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: 
+
+
+a. Use the spatial data in the `r pkg_macro(macleish)` package and `r pkg_macro(ggspatial)` to make an informative static map of the MacLeish Field Station property. 
+
+  <!--begin-answer-->
+```{r macleishfoo, eval=FALSE, warning=FALSE, message=FALSE}
+library(broom)
+library(sf)
+library(ggspatial)
+library(macleish)
+
+boundary <- macleish_layers %>%
+  pluck("boundary")
+
+landmarks <- macleish_layers %>%
+  pluck("landmarks")
+
+streams <- macleish_layers %>%
+  pluck("streams")
+
+trails <- macleish_layers %>%
+  pluck("trails")
+
+ggplot() +
+  annotation_map_tile(type = "osm", zoomin = 0) +
+  geom_sf(data = trails, color = "brown") +
+  geom_sf(data = streams, color = "blue") +
+  geom_sf(data = landmarks, size = 3)
+```
+  <!--end-answer-->
+
+
+b. Use the spatial data in the `macleish` package and `leaflet` to make an informative interactive map of the MacLeish Field Station property. 
+
+  <!--begin-answer-->
+```{r, message=FALSE, eval = FALSE}
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addPolygons(data = macleish_layers[["boundary"]], weight = 1) %>%
+  addPolygons(data = macleish_layers[["buildings"]], weight = 1) %>%
+  addMarkers(data = subset(
+    macleish_layers[["landmarks"]],
+    grepl("Met", Label)
+  ), popup = ~Label)
+```
+  <!--end-answer-->
+
+
+

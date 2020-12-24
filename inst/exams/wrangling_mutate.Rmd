@@ -1,0 +1,31 @@
+Question
+========
+
+Which `dplyr` operation is depicted below? 
+
+![](https://rstudio-education.github.io/tidyverse-cookbook/images/dplyr-mutate.png)
+
+Answerlist
+----------
+* `mutate()`
+* `filter()`
+* `arrange()`
+* `select()`
+* `summarize()`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: wrangling-mutate
+extype: schoice
+exsolution: 10000

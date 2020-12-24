@@ -1,0 +1,30 @@
+---
+chapter: "dataviz-I"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-06-30 
+version: 0.1
+tags: [first, second, third]
+id: buck-sing-oven
+---
+
+```{r buck-sing-oven-default, include = FALSE}
+library(tidyverse)
+```
+
+TITLE GOES HERE: Consider the following data graphic. 
+
+```{r mtcars-ex1, fig.asp = 0.35}
+ggplot(mtcars, aes(x = disp, y = mpg)) +
+  geom_point()
+```
+
+The `am` variable takes the value `0` if the car has [automatic transmission](https://en.wikipedia.org/wiki/Automatic_transmission) and `1` if the car has [manual transmission](https://en.wikipedia.org/wiki/Manual_transmission).
+How could you differentiate the cars in the graphic based on their transmission type?
+
+<!--answer-start-->
+Map the `color` aesthetic to the `am` variable.
+<!--answer-end-->
+
+
+

@@ -1,0 +1,23 @@
+---
+chapter: "data-I"
+author: "Nicholas Horton"
+date: "first edition" 
+difficulty: "Easy"
+version: 0.1
+tags: [data verbs]
+id: spider-blow-lamp 
+---
+
+(ref:spider-blow-lamp) Exercise in file spider-blow-lamp
+
+```{r spider-blow-lamp-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Each of these tasks can be performed using a single data verb.  For each task, say which verb it is:
+
+a. Find the average of one of the variables. -A- `summarize()` with `mean()`
+b. Add a new column that is the ratio between two variables. -A- `mutate()`
+c. Sort the cases in descending order of a variable. -A- `arrange()` with `desc()`
+d. Create a new data table that includes only those cases that meet a criterion. -A- `filter()`
+e. From a data table with three categorical variables A, B, and C, and a quantitative variable X, produce a data frame that has the same cases but only the variables A and X. -A- `select()`

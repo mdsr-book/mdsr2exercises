@@ -1,0 +1,59 @@
+---
+chapter: "dataviz-II"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [multivariate, second, third]
+id: snake-forgive-pan
+---
+
+```{r snake-forgive-pan-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+
+TITLE GOES HERE: Using the `penguins` data set from the `r pkg_macro(palmerpenguins)` package:
+
+
+a. Create a scatterplot of `bill_length_mm` against `bill_depth_mm` where individual species are colored and a regression line is added to each species. Add regression lines to all of your facets.
+What do you observe about the association of bill depth and bill length?
+
+<!--begin-answer-->
+
+```{r ggyaGalton}
+library(palmerpenguins)
+```
+
+```{r ggyaGalton2-ex, warning = FALSE}
+ggplot(data = penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
+  labs(x = "Bill depth (mm)", y = "Bill length (mm)") +
+  geom_point() +
+  facet_grid(~sex) +
+  geom_smooth(method = "lm")
+```
+
+
+
+<!--end-answer-->
+
+b. Repeat the same scatterplot but now separate your plot into facets by `species`.
+How would you summarize the association between bill depth and bill length.
+
+<!--begin-answer-->
+
+```{r ggyaGalton3-ex, warning = FALSE, message = FALSE}
+ggplot(data = penguins, aes(x = bill_depth_mm, y = bill_length_mm, colour = sex)) +
+  labs(x = "Bill depth (mm)", y = "Bill length (mm)") +
+  geom_point() +
+  facet_grid(~species) +
+  geom_smooth(method = "lm")
+```
+
+
+
+<!--end-answer-->
+
+
+

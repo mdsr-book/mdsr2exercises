@@ -1,0 +1,38 @@
+Question
+========
+
+Consider the following data graphic from the *Economist* article, "[Temporary economic downturns have long-lasting consequences](https://www.economist.com/graphic-detail/2018/10/19/temporary-economic-downturns-have-long-lasting-consequences)":
+
+![](https://www.economist.com/sites/default/files/20181020_WOC966.png)
+
+Notice that the labels on the $x$-axis are given in odd numbers of years since graduation (i.e., 1, 3, 5, 7, ...).
+Suppose that you wanted to change these to even numbers (i.e., 2, 4, 6, 8, ...). 
+What function would you use to change the labels on the $x$-axis? 
+
+Answerlist
+----------
+* `scale_x_continuous()`, because "Years since graduation" is a continuous variable.
+* `scale_x_discrete()`, because "Years since graduation" is a discrete variable.
+* `scale_color_discrete()`, because "Years since graduation" is a discrete variable.
+* `labs()`, because the numbers are labels
+* `geom_text()`, because the labels are text
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. Although it's possible that "Years since graduation" could be coded as a categorical variable, that would make it impossible to draw the lines representing the actual data. 
+* False. That scale only works for color.
+* False. You could change the **name** of the axis this way, but not the labels.
+* False. That function displays text on the data graphic itself, not on the axes. 
+
+Meta-information
+================
+extitle: scales
+exsection: context
+exname: context-scale
+extype: schoice
+exsolution: 10000

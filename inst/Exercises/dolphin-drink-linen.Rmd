@@ -1,0 +1,65 @@
+---
+chapter: "dataviz-II"
+author: ''
+difficulty: Hard
+date: '2020-07-14'
+version: 0.1
+tags:
+- babynames
+- second
+- third
+id: dolphin-drink-linen
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r dolphin-drink-linen-default, include = FALSE}
+library(etude)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r mdsr2exercises::func_macro(make_babynames_dist)` function in the `r pkg_macro(mdsr)` package to recreate the "Deadest Names" graphic from FiveThirtyEight (https://fivethirtyeight.com/features/how-to-tell-someones-age-when-all-you-know-is-her-name).
+
+```{r, message=FALSE, warning = FALSE}
+library(tidyverse)
+library(mdsr)
+babynames_dist <- make_babynames_dist()
+```
+
+<!--begin-answer-->
+```{r deadest-names-ex, message= FALSE, warning = FALSE}
+babynames_dist %>%
+  filter(year >= 1900) %>%
+  group_by(name, sex) %>%
+  summarize(
+    N = n(),
+    total_est_alive_today = sum(est_alive_today),
+    total = sum(n)
+  ) %>%
+  mutate(pct_dead = 1 - (total_est_alive_today / total)) %>%
+  filter(total > 50000) %>%
+  arrange(desc(pct_dead)) %>%
+  head(20) %>%
+  ggplot(aes(x = reorder(name, pct_dead), y = pct_dead, fill = sex)) +
+  geom_bar(stat = "identity") +
+  geom_text(
+    aes(
+      y = pct_dead + 0.05, 
+      label = paste(round(pct_dead * 100, 1), "%")
+      )
+    ) +
+  coord_flip() +
+  ggtitle("Deadest Names",
+    subtitle = 
+      "Estimated % of Americans with a given name\nborn since 1900 who were dead as of Jan. 1, 2014"
+  ) +
+  scale_x_discrete(NULL) +
+  scale_y_continuous(NULL) +
+  scale_fill_manual(values = c("#f6b900", "#008fd5"))
+```
+
+<!--end-answer-->
+
+

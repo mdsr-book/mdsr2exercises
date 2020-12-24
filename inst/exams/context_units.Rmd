@@ -1,0 +1,46 @@
+Question
+========
+
+The following chunk creates a scatterplot of human character from [*Star Wars*](https://en.wikipedia.org/wiki/Star_Wars), according to their mass and height. 
+
+```{r, message=FALSE, warning=FALSE, fig.width=8}
+library(tidyverse)
+humans <- starwars %>%
+  filter(species == "Human")
+
+library(ggrepel)
+ggplot(humans, aes(x = mass, y = height)) + 
+  geom_point() + 
+  geom_label_repel(aes(label = name))
+```
+
+Which of the following additions to the plot would add useful contextual information? 
+
+
+Answerlist
+----------
+* `scale_x_continuous("Mass (kg)")`
+* `scale_y_continuous("Height (cm)")`
+* `scale_y_continuous("Mass (kg)")`
+* `scale_y_continuous("Height (kg)")`
+* `labs(title = "Human characters in Star Wars")`
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* False. Mass is on the $x$-axis.
+* False. Height is measured in centimeters.
+* True. 
+
+Meta-information
+================
+extitle: units
+exsection: context
+exname: context-units
+extype: mchoice
+exsolution: 11001

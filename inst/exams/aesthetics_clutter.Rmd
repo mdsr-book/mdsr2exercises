@@ -1,0 +1,26 @@
+Question
+========
+
+Every data graphic must use color, even if it's not necessary to convey new information. 
+
+Answerlist
+----------
+* True.
+* False.
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False, redundant use of color can provide visual clutter.
+
+Meta-information
+================
+extitle: always use color?
+exsection: aesthetics
+exname: aesthetics-clutter
+extype: schoice
+exsolution: 01

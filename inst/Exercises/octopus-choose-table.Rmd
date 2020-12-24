@@ -1,0 +1,35 @@
+---
+chapter: "iteration"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [baseball, second, third]
+id: octopus-choose-table 
+depends: girl-catch-room
+---
+
+(ref:octopus-choose-table) Exercise in file octopus-choose-table
+
+```{r octopus-choose-table-default, include = FALSE}
+mdsr2exercises::setup()
+```
+TITLE GOES HERE: The team IDs corresponding to Brooklyn baseball teams from the `r mdsr2exercises::df_macro(Teams)` data frame from the `r mdsr2exercises::pkg_macro(Lahman)` package are listed below. Use  `r mdsr2exercises::func_macro(map_int)`  to find the number of seasons in which each of those teams played by calling a function called `count_seasons`.
+
+```{r octopus-choose-table-1, echo = TRUE}
+library(Lahman)
+bk_teams <- c("BR1", "BR2", "BR3", "BR4", "BRO", "BRP", "BRF")
+```
+
+<!--begin-answer-->
+```{r octopus-choose-table-2, echo = TRUE}
+count_seasons <- function(team) {
+  seasons <- Lahman::Teams %>%
+    filter(team == teamID) %>%
+    nrow()
+  return(seasons)
+}
+
+map_int(bk_teams, count_seasons)
+```
+<!--end-answer-->

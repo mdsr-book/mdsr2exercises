@@ -1,0 +1,38 @@
+Question
+========
+
+Consider the following pipeline:
+
+```{r error=TRUE, message=FALSE}
+library(tidyverse)
+mtcars %>%
+  group_by(cyl) %>%
+  summarize(avg_mpg = mean(mpg)) %>%
+  filter(am == 1)
+```
+
+The problem is:
+
+
+Answerlist
+----------
+* There is no variable called `am` in the result of `summarize()`, because `am` does not appear in the calls to either `group_by()` or `summarize()`. 
+* There is no variable called `am` in `mtcars`.
+* You need to specify that `na.rm = TRUE`.
+* It should say `am = 1`.
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False.
+* False.
+* False.
+
+Meta-information
+================
+exname: debugging-summarize
+extype: schoice
+exsolution: 1000

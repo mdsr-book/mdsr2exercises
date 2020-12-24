@@ -1,0 +1,32 @@
+---
+chapter: "data-I"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-07-10 
+version: 0.1
+tags: [first, second, third]
+id: elm-hurt-dish
+---
+
+```{r elm-hurt-dish-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+```
+
+TITLE GOES HERE: Consider the following pipeline:
+
+```{r eval = FALSE, error=TRUE, message=FALSE}
+library(tidyverse)
+mtcars %>%
+  group_by(cyl) %>%
+  summarize(avg_mpg = mean(mpg)) %>%
+  filter(am == 1)
+```
+
+What is the problem with this pipeline?
+
+<!--answer-start-->
+
+There is no variable called `am` in the result of `summarize()`, because `am` does not appear in the calls to either `group_by()` or `summarize()`. 
+
+<!--answer-end-->

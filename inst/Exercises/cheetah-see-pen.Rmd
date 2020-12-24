@@ -1,0 +1,24 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Hard"
+date: 2020-08-16 
+version: 0.1
+tags: [first, second, third]
+id: cheetah-see-pen
+---
+
+```{r cheetah-see-pen-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:	Repeat the earlier question using the weather data from the MacLeish field station, but include context on major storms listed on the Wikipedia pages: [2014--2015 North American Winter](https://en.wikipedia.org/wiki/2014%E2%80%9315_North_American_winter) and
+[2015--2016 North American Winter](https://en.wikipedia.org/wiki/2015%E2%80%9316_North_American_winter).
+
+ <!--begin-answer-->
+ 
+ XX answer needed!
+ 
+<!--end-answer-->

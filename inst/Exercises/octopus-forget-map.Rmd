@@ -1,0 +1,40 @@
+---
+chapter: "dataviz-I"
+author: ""
+difficulty: "Easy"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, onlineonly]
+id: octopus-forget-map
+---
+
+```{r octopus-forget-map-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+
+TITLE GOES HERE: Choose *one* of the data graphics listed at http://mdsr-book.github.io/exercises.html#exercise_23
+and answer the following questions. Be sure to indicate which graphical display you picked.
+
+2. [World’s Top 10 Best Selling Cigarette Brands, 2004-2007](http://vizwiz.blogspot.com/2009/12/simple-is-better.html)
+#. ~~[GNPD Usage by Food Categories](http://www.nrsmithdesign.com/wp-content/uploads/2012/10/data-graphic.jpg)~~
+#. [UK University Rankings](http://static.guim.co.uk/sys-images/Guardian/Pix/maps_and_graphs/2010/9/7/1283876186403/Top-universities-graphic-001.jpg)
+#. [Childhood Obesity in the US](http://www.sparkpe.org/blog/wp-content/uploads/2010/07/childhood-obesity-bmi.gif)
+#. [Relationship between ages and psychosocial maturity](http://ars.els-cdn.com/content/image/1-s2.0-S1043276005002602-gr2.jpg)
+
+a. Identify the visual cues, coordinate system, and scale(s). 
+b. How many variables are depicted in the graphic? Explicitly link each variable to a visual cue that you listed above. 
+c. Critique this data graphic using the taxonomy described in this chapter. 
+
+
+
+  <!--begin-answer-->
+
+We critique the [this graphic](http://www.npr.org/news/graphics/2012/09/pm-incometax/gr-pm-incometax3-462.gif) from the Tax Policy Center. 
+
+
+  -  Color is a visual cue that is mapped to the categorical variable of taxpayer status. Angle is the visual cue that is mapped to the numeric variable of the percentage of people. This exploding pie chart uses a radial coordinate system, and the scale is percentage. 
+  -  There are two variables: percentage of taxpayers, and reason taxpayer status.
+  -  Aside from the common criticisms of pie charts in general, this pie chart makes two strange choices. First, the exploding nature of the pie chart (having pieces of the pie fall out of it) is pointless and distracting. Second, the use of color is odd. By using multiple shades of red, it implies an ordinal scale to the categorical variable of taxpayer status. But there is no logical ordering of this variable. Thus, a qualitative color scale would have been more appropriate. 
+
+  <!--end-answer-->

@@ -1,0 +1,121 @@
+---
+chapter: "foundations"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, onlineonly]
+id: horse-have-car
+---
+
+```{r horse-have-car-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: In 2010, the Minnesota Twins played their first season at Target Field. However, up
+through 2009, the Twins played at the Metrodome (an indoor stadium). In the Metrodome, air ventilator fans are used both to keep the roof up and to ventilate the stadium. Typically, the air is  blown from all directions into the center of the stadium.
+
+According to a retired supervisor in the Metrodome, in the late innings
+of some games the fans would be modified so that the ventilation
+air would blow out from home plate toward the outfield. The idea is that the
+air flow might increase the length of a fly ball. To see if manipulating
+the fans could possibly make any difference, a group of students at the
+University of Minnesota and their professor built a `cannon' that used
+compressed air to shoot baseballs. They then did the following experiment.
+
+
+-  Shoot balls at angles around 50 degrees with velocity of around 150 feet per second.
+-  Shoot balls under two different settings: headwind (air blowing from outfield toward
+home plate) or tailwind (air blowing from home plate toward outfield).
+-   Record other variables: weight of the ball (in grams), diameter of the ball (in cm), and
+distance of the ball's flight (in feet).
+
+
+Background: People who know little or nothing about baseball might find these basic facts useful.  The batter stands near "home plate" and tries to hit the ball toward the outfield.  A "fly ball" refers to a ball that is hit into the air.  It is desirable to hit 
+the ball as far as possible.  For reasons of basic physics, the distance is maximized when the ball is hit at an intermediate angle steeper than 45 degrees from the horizontal.
+
+Description of variables:
+
+- `Cond`: the wind conditions, a categorical variable with levels `Headwind`, `Tailwind`
+- `Angle`: the angle of ball's trajectory 
+- `Velocity`: velocity of ball in feet per second  
+- `BallWt`: weight of ball in grams 
+- `BallDia`: diameter of ball in inches 
+- `Dist`: distance in feet of the flight of the ball
+
+Here is the
+output of several models: 
+```{r eval=FALSE}
+> lm1 <- lm(Dist ~ Cond, data = ds)  # FIRST MODEL
+```
+
+```{r eval=FALSE}
+> summary(lm1)
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept)  350.768      2.179 160.967   <2e-16 ***
+CondTail       5.865      3.281   1.788   0.0833 .
+
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 9.499 on 32 degrees of freedom
+Multiple R-squared: 0.0908,     Adjusted R-squared: 0.06239
+F-statistic: 3.196 on 1 and 32 DF,  p-value: 0.0833
+```
+
+```{r eval=FALSE}
+> confint(lm1)
+                2.5 %    97.5 %
+(Intercept) 346.32966 355.20718
+CondTail     -0.81784  12.54766
+```
+
+```{r eval=FALSE}
+> # SECOND MODEL
+> lm2 <- lm(Dist ~ Cond + Velocity + Angle + BallWt + BallDia, data = ds)
+> summary(lm2)
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)
+(Intercept) 181.7443   335.6959   0.541  0.59252
+CondTail      7.6705     2.4593   3.119  0.00418 **
+Velocity      1.7284     0.5433   3.181  0.00357 **
+Angle        -1.6014     1.7995  -0.890  0.38110
+BallWt       -3.9862     2.6697  -1.493  0.14659
+BallDia     190.3715    62.5115   3.045  0.00502 **
+
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 6.805 on 28 degrees of freedom
+Multiple R-squared: 0.5917,     Adjusted R-squared: 0.5188
+F-statistic: 8.115 on 5 and 28 DF,  p-value: 7.81e-05
+```
+
+```{r eval=FALSE}
+> confint(lm2)
+                   2.5 %     97.5 %
+(Intercept) -505.8974691 869.386165
+CondTail       2.6328174  12.708166
+Velocity       0.6155279   2.841188
+Angle         -5.2874318   2.084713
+BallWt        -9.4549432   1.482457
+BallDia       62.3224999 318.420536
+```
+
+a. Consider the results from the model of `Dist` as a function
+of `Cond` (first model). Briefly summarize what this model says about the relationship between the wind conditions and the distance travelled by the ball.  Make sure to say something sensible about the strength of evidence that there is any relationship at all.
+
+ <!--begin-answer-->
+The model predicted that the ball would travel an additional 5.87 feet (on average) with a tail wind compared to a head wind.  The 95% confidence interval for the parameter ranges from -0.82 to 12.55, with an associated p-value of 0.08.  We fail to reject the null hypothesis that there is a difference due to tail wind (since zero is contained in the interval).  The $R^2$ value of 0.09 indicates that less than 10% of variability in distance is explained by the model.  
+
+One concern is that other factors may be confounding the relationship (since we're not sure that the conditions were randomized or that randomization was successful).
+  <!--end-answer-->
+
+
+b.  Briefly summarize the model that has `Dist` as the response variable and includes the other variables as explanatory variables (second model) by reporting and interpreting the `CondTail` parameter. This second model suggests a somewhat different result for the relationship between `Dist` and `Cond`.  Summarize the differences and explain in statistical terms why the inclusion of the other explanatory variables has affected the results.
+
+ <!--begin-answer-->
+Conditional on the other factors (velocity, angle, ball weight, ball 
+diameter, we would expect the ball to travel another 7.67 feet farther (95% confidence ranges from 2.63 to 12.71 feet) with a tail wind compared to a head wind (p=0.004).  Nearly 3/5th of the variability of distance is now accounted for by the model (the other predictors have soaked up a considerable amount of variability and accounted for possible confounders).  We conclude that there is a significant improvement in distance with a tail wind.  
+  <!--end-answer-->
+
+

@@ -1,0 +1,93 @@
+---
+chapter: "join"
+author: ""
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [nycflights13, second, third]
+id: fish-blow-dish 
+---
+
+(ref:fish-blow-dish) Exercise in file fish-blow-dish
+
+```{r fish-blow-dish-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r pkg_macro(nycflights13)` package and the `r df_macro(flights)` and `r df_macro(planes)` tables to answer the following questions:
+
+a. How many planes have a missing date of manufacture?
+
+<!--begin-answer-->
+```{r}
+library(nycflights13)
+
+planes2 <- select(planes, tailnum, year, manufacturer)
+flights2 <- select(flights, tailnum)
+nyc_flights <- left_join(planes2, flights2)
+nyc_flights2 <- nyc_flights %>%
+  filter(is.na(year)) %>%
+  distinct(tailnum)
+nrow(nyc_flights2)
+```
+There are 70 airplanes with a missing date of manufacture.
+<!--end-answer-->
+
+b. What are the five most common manufacturers?
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+manufacturers <- nyc_flights %>%
+  select(manufacturer, tailnum, year) %>%
+  unique() %>%
+  group_by(manufacturer) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
+manufacturers
+```
+
+The five most common manufacturers are Boeing,
+Airbus,
+Bombardier,
+Embraer,
+and McDonnell.
+<!--end-answer-->
+
+c. Has the distribution of manufacturer changed over time as reflected by the airplanes flying from NYC in 2013?  (Hint: you may need to use `case_when()` to recode the manufacturer name and collapse rare vendors into a category called `Other`.)
+
+<!--begin-answer-->
+Let's deal with some of the duplicate names.
+
+```{r, message = FALSE, warning = FALSE}
+manufacturers <- nyc_flights %>%
+  mutate(
+    manufacturer =
+      case_when(
+        manufacturer == "AIRBUS INDUSTRIE" ~ "AIRBUS",
+        manufacturer == "MCDONNELL DOUGLAS AIRCRAFT CO" ~ "MCDONNELL DOUGLAS",
+        manufacturer == "MCDONNELL DOUGLAS CORPORATION" ~ "MCDONNELL DOUGLAS",
+        TRUE ~ manufacturer
+      )
+  ) %>%
+  select(manufacturer, tailnum, year) %>%
+  unique() %>%
+  group_by(manufacturer) %>%
+  summarize(count = n()) %>%
+  arrange(desc(count))
+manufacturers
+```
+
+
+We also recode the less common manufacturers.
+```{r, message = FALSE, warning = FALSE}
+nyc_flights2 <- left_join(manufacturers, nyc_flights) %>%
+  mutate(manu = ifelse(count > 100, manufacturer, "Other"))
+
+nyc_flights2 %>%
+  group_by(manu) %>%
+  summarize(avgyear = mean(year, na.rm = TRUE)) %>%
+  arrange(desc(avgyear))
+```
+
+It appears that companies that have sold the highest numbers of planes in use (Boeing, Mcdonnell Douglas, Embraer) are generally the companies that have sold the newest planes used in 2013 while the companies that only had one in use tend to have sold these planes much longer ago. This may show the increasing monopolization of the airplane industry, with fewer companies selling more of the planes as corporations increase in size. It's also reasonable that older companies, possibly ones that are now out of business, are going to have fewer planes in the fleet since the old planes are the ones being phased out.
+<!--end-answer-->

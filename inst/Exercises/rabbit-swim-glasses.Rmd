@@ -1,0 +1,32 @@
+---
+chapter: "data-I"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-07-10 
+version: 0.1
+tags: [first, second, third]
+id: rabbit-swim-glasses
+---
+
+```{r rabbit-swim-glasses-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following pipeline:
+
+```{r error=TRUE, message=FALSE}
+mtcars %>%
+  group_by(cyl) %>%
+  summarize(
+    N = n(),
+    avg_mpg = mean(mpg)
+  )
+```
+
+What is the real-world meaning of the variable `N` in the result set? 
+
+<!--answer-start-->
+`N` is the number of cars associated with each distinct number of cylinders. 
+<!--answer-end-->

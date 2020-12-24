@@ -1,0 +1,59 @@
+---
+chapter: "data-II"
+author: "Ben Baumer"
+date: "First edition" 
+difficulty: "Easy"
+version: 0.1
+tags: [marriage, second, third]
+id: child-find-candy 
+---
+
+(ref:child-find-candy) Exercise in file child-find-candy
+
+```{r child-find-candy-default, include = FALSE}
+mdsr2exercises::setup()
+library(mosaic)
+```
+
+TITLE GOES HERE:  In the `Marriage` data set included in `r pkg_macro(mosaic)`, the `appdate`, `ceremonydate`, and `dob` variables are encoded as factors, even though they are dates. Use `r pkg_macro(lubridate)` to convert those three columns into a date format. 
+
+```{r child-find-candy-1, echo = TRUE}
+library(mosaic)
+Marriage %>%
+  select(appdate, ceremonydate, dob) %>%
+  glimpse(width = 50)
+```
+
+
+<!--begin-answer-->
+```{r child-find-candy-2, echo = TRUE, message = FALSE, warning = FALSE}
+library(lubridate)
+Marriage %>%
+  mutate(
+    app_date = mdy(appdate),
+    ceremony_date = mdy(ceremonydate),
+    date_of_birth = mdy(dob)
+  ) %>%
+  glimpse(width = 50)
+```
+
+Notice that for dates before the UNIX epoch (1970), we get the wrong year!
+
+```{r child-find-candy-3, echo = TRUE, message = FALSE, warning = FALSE}
+library(lubridate)
+Marriage %>%
+  mutate(
+    app_date = mdy(appdate),
+    ceremony_date = mdy(ceremonydate),
+    date_of_birth = mdy(dob),
+    date_of_birth = ifelse(year(date_of_birth) > year(now()),
+      date_of_birth - years(100),
+      date_of_birth
+    ),
+    date_of_birth = as_date(date_of_birth)
+  ) %>%
+  glimpse(width = 50)
+```
+<!--end-answer-->
+
+

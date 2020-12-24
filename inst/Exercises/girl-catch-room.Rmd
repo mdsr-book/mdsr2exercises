@@ -1,0 +1,39 @@
+---
+chapter: data-II
+author: "Daniel Kaplan"
+date: "Ben Baumer"
+difficulty: Medium
+version: 0.1
+tags:
+- baseball
+- second
+- third
+id: girl-catch-room
+---
+
+(ref:girl-catch-room) Exercise in file girl-catch-room
+
+```{r girl-catch-room-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Write a function called `count_seasons` that, when given a teamID, will count the number of seasons the team played in the `Teams` data frame from the `r pkg_macro(Lahman)` package. 
+  
+<!--begin-answer-->
+```{r girl-catch-room-1}
+library(Lahman)
+count_seasons <- function(team, Teams = Lahman::Teams) {
+  seasons <- Teams %>%
+    filter(team == teamID) %>%
+    nrow()
+  return(seasons)
+}
+
+Teams %>%
+  filter(teamID == "BS1") %>%
+  select(teamID, yearID, name)
+count_seasons("BS1")
+```
+<!--end-answer-->
+

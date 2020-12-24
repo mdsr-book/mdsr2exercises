@@ -1,0 +1,104 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-09-08 
+version: 0.1
+tags: [first, second, third]
+id: crow-wake-sheet
+---
+
+```{r crow-wake-sheet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:    Modify the restaurant violations Shiny app so that it displays a table of the number of restaurants within a given type of cuisine along with a count of restaurants (as specified by the `dba` variable.  (Hint: Be sure not to double count.  The dataset should include 842 unique pizza restaurants in all boroughs and 281 Caribbean restaurants in Brooklyn.)
+
+<!--begin-answer-->
+
+```{r eval = FALSE}
+library(tidyverse)
+library(shiny)
+library(shinybusy)
+library(mdsr)
+
+mergedViolations <- Violations %>%
+  left_join(Cuisines)
+
+ui <- fluidPage(
+  titlePanel("Cuisine Explorer"),
+  fluidRow(
+    # some things take time: this lets users know
+    add_busy_spinner(spin = "fading-circle"),
+    column(
+      4,
+      selectInput(inputId = "boro",
+        label = "Borough:",
+        choices = c(
+          "ALL",
+          unique(as.character(mergedViolations$boro))
+        )
+      )
+    ),
+    # display dynamic list of cuisines
+    column(4, uiOutput("cuisinecontrols"))
+  ),
+  fluidRow(
+    DT::dataTableOutput("summary")
+  )
+)
+
+server <- function(input, output) {
+  datasetboro <- reactive({  # Filter data based on selections
+    data <- mergedViolations %>%
+      select(
+        dba, cuisine_code, cuisine_description, street,
+        boro, zipcode, score, violation_code, grade_date
+      ) %>%
+      unique()
+    req(input$boro)  # wait until there's a selection
+    if (input$boro != "ALL") {
+      data <- data[data$boro == input$boro,]
+    }
+    data
+  })
+
+  datasetcuisine <- reactive({  # dynamic list of cuisines
+    req(input$cuisine)   # wait until list is available
+    data <- datasetboro() %>% unique()
+    if (input$cuisine != "ALL") {
+      data <- data[data$cuisine_description == input$cuisine, ]
+    }
+    data
+  })
+
+  output$summary <- DT::renderDataTable(
+    datasetcuisine() %>%
+      select(dba, cuisine_description) %>%
+      unique() %>%
+      group_by(cuisine_description) %>%
+      summarize(restaurants = n(), .groups = "rowwise") %>%
+      arrange(desc(restaurants)) %>%
+      mutate(cuisine = paste0(cuisine_description, " (n=", restaurants, ")", sep = "")) %>%
+      ungroup() %>%
+      select(cuisine) %>%
+      DT::datatable()
+  )
+
+  output$cuisinecontrols <- renderUI({
+    availablelevels <-
+      unique(sort(as.character(datasetboro()$cuisine_description)))
+    selectInput(
+      inputId = "cuisine",
+      label = "Cuisine:",
+      choices = c("ALL", availablelevels)
+    )
+  })
+}
+
+shinyApp(ui = ui, server = server)
+```
+
+<!--end-answer-->
+ 

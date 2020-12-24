@@ -1,0 +1,168 @@
+---
+chapter: "netsci"
+author: "Ben Baumer"
+difficulty: "Medium"
+date: 2020-07-19 
+version: 0.1
+tags: [first, second, third]
+id: maple-sing-car
+---
+
+```{r maple-sing-car-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The following problem considers the U.S. airport network as a graph.
+
+a. What information do you need to compute the PageRank of the U.S. airport network? Write an SQL query to retrieve this information for 2012. 
+(Hint: use the `dbConnect_scidb` function to connect to the `airlines` database.)
+
+
+ <!--begin-answer-->
+```{r message=FALSE, warning=FALSE}
+library(mdsr)
+library(DBI)
+dbAir <- src_scidb("airlines")
+E <- dbGetQuery(dbAir$con, "SELECT origin as src, dest, sum(1) as N
+FROM flights WHERE year = 2012 GROUP BY origin, dest")
+```
+  <!--end-answer-->
+
+b. Use the data you pulled from SQL and build the network as a *weighted* `tidygraph` object, where the weights are proportional to the frequency of flights between each pair of airports.
+
+
+ <!--begin-answer-->
+```{r message=FALSE}
+library(igraph)
+g <- graph.data.frame(E, directed = TRUE) %>%
+  set_edge_attr("weight", value = E(.)$N / sum(E(.)$N))
+summary(g)
+```
+  <!--end-answer-->
+
+
+c. Compute the PageRank of each airport in your network. What are the top-10 "most central" airports? Where does Oakland International Airport `OAK` rank?
+
+  
+ <!--begin-answer-->
+```{r }
+g <- g %>%
+  set_vertex_attr("pagerank", value = page_rank(g)$vector)
+get.data.frame(g, what = "vertices") %>%
+  arrange(desc(pagerank)) %>%
+  head(10)
+```
+  <!--end-answer-->
+
+d. Update the vertex attributes of your network with the geographic coordinates of each airport (available in the `airports` table). 
+
+ <!--begin-answer-->
+```{r warning=FALSE}
+vIds <- unique(c(E$src, E$dest))
+airports <- tbl(dbAir, "airports")
+V <- airports %>%
+  filter(faa %in% vIds) %>%
+  collect()
+```
+
+```{r }
+Vg <- as_data_frame(g, what = "vertices") %>%
+  mutate(vId = 1:nrow(.))
+V <- full_join(x = V, y = Vg, by = c("faa" = "name"))
+
+g <- g %>%
+  set_vertex_attr("lat", index = V$vId, value = V$lat) %>%
+  set_vertex_attr("lon", index = V$vId, value = V$lon) %>%
+  set_vertex_attr("airport", index = V$vId, value = V$name)
+```
+
+  <!--end-answer-->
+
+e. Use `ggraph` to draw the airport network. Make the thickness or transparency of each edge proportional to its weight. 
+
+
+ <!--begin-answer-->
+```{r anothermap3,message=FALSE, warning=FALSE, eval=TRUE}
+Vg <- get.data.frame(g, what = "vertices")
+plot(g,
+  layout = layout.kamada.kawai,
+  edge.width = 500 * E(g)$weight, edge.color = "dodgerblue",
+  edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+  vertex.label = NA, vertex.size = 100 * V(g)$pagerank,
+  vertex.color = "gold"
+)
+```
+  <!--end-answer-->
+
+
+f. Overlay your airport network on a U.S. map (see the spatial data chapter).
+
+ <!--begin-answer-->
+```{r anothermap2,message=FALSE, warning=FALSE}
+maps::map("state")
+plot(g,
+  rescale = FALSE, add = TRUE,
+  layout = as.matrix(Vg[, c("lon", "lat")]),
+  edge.width = 500 * E(g)$weight, edge.color = "dodgerblue",
+  edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+  vertex.label = NA, vertex.size = 1000 * V(g)$pagerank,
+  vertex.color = "gold"
+)
+```
+  <!--end-answer-->
+
+
+g. Project the map and the airport network using the Lambert Conformal Conic projection.
+
+ <!--begin-answer-->
+
+These plots don't look right here, but they look much better in the RStudio plot window.
+
+```{r anothermap,message=FALSE, warning=FALSE, eval=FALSE}
+library(maptools)
+library(sp)
+data(wrld_simpl)
+states <- subset(wrld_simpl, NAME == "United States")
+proj <- CRS("+proj=lcc +lat_1=20 +lat_2=60 +lat_0=40 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs")
+library(rgdal)
+states.proj <- spTransform(states, proj)
+summary(g)
+V0 <- na.omit(Vg)
+coordinates(V0) <- ~ lon + lat
+proj4string(V0) <- CRS("+proj=longlat")
+summary(V0)
+V0.proj <- spTransform(V0, proj)
+g0 <- induced.subgraph(g, vids = (!is.na(Vg$lon)))
+
+plot(states.proj)
+plot(g0,
+  rescale = FALSE, add = TRUE, layout = V0.proj@coords,
+  edge.width = 500 * E(g0)$weight, edge.color = "dodgerblue",
+  edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+  vertex.label = NA, vertex.size = 100000000 * V(g0)$pagerank,
+  vertex.color = "gold"
+)
+```
+  <!--end-answer-->
+
+
+h. Crop the map you created to zoom in on your local airport. 
+
+ <!--begin-answer-->
+```{r east-coast, eval=FALSE}
+plot(states.proj, xlim = c(1000000, 2000000), ylim = c(-600000, 1000000))
+plot(g0,
+  rescale = FALSE, add = TRUE, layout = V0.proj@coords,
+  edge.width = 500 * E(g0)$weight, edge.color = "dodgerblue",
+  edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+  vertex.label = NA, vertex.size = 100000000 * V(g0)$pagerank,
+  vertex.color = "gold"
+)
+```
+
+```{r}
+# needed to clean up namespace
+detach("package:igraph", unload = TRUE)
+```
+  <!--end-answer-->

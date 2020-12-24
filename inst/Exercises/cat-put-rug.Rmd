@@ -1,0 +1,49 @@
+---
+chapter: "regression"
+author: ""
+difficulty: "Medium"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: cat-put-rug
+---
+
+```{r cat-put-rug-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The `r pkg_macro(atus)` package includes data from the American Time Use Survey (ATUS).  Use the `atusresp` dataset to model `hourly_wage` as a function of other predictors in the dataset.
+
+ <!--begin-answer-->
+
+Answers may vary.  See the following for one possibility.
+```{r warning=FALSE}
+library(atus)
+summary(atusresp)
+```
+```{r }
+analysis <- filter(atusresp, !is.na(hourly_wage))
+dim(analysis)
+mod <- lm(hourly_wage ~ ptft + hh_child + ind_code,
+  data = analysis
+)
+```
+```{r }
+anova(mod)
+```
+```{r }
+msummary(mod)
+```
+```{r }
+tally(~ind_code, data = analysis)
+```
+```{r moremplot}
+mplot(mod, which = 2)
+```
+We see that (not surprisingly), part-time workers have significantly lower hourly wages than full time workers, and that not having a child is associated with an expected increase of \$0.16 (controlling for other factors).  Industry is a highly significant predictor (df=12, p$<$0.0001), with hospitality the lowest and public administration the highest.  The model explains 13.5% of the variability in hourly wages and the distribution of the residuals is highly skewed (long right tail since wage is a non-negative variable).  
+
+<!--end-answer-->
+
+
+

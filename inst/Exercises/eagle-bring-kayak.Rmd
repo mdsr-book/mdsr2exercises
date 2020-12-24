@@ -1,0 +1,68 @@
+---
+chapter: "learning-II"
+author: ""
+difficulty: "Hard"
+date: 2020-07-15 
+version: 0.1
+tags: [first, second, third]
+id: eagle-bring-kayak
+---
+
+```{r eagle-bring-kayak-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Baseball players are voted into the Hall of Fame by the members of the Baseball Writers of America Association. Quantitative criteria are used by the voters, but they are also allowed wide discretion. The following code identifies the position players who have been elected to the Hall of Fame and tabulates a few basic statistics, including their number of career hits (`H`), home runs (`HR`}), and stolen bases (`SB`). 
+
+a. Use the `kmeans` function to perform a cluster analysis on these players. Describe the properties that seem common to each cluster. 
+
+```{r message=FALSE}
+library(mdsr)
+library(Lahman)
+hof <- Batting %>%
+  group_by(playerID) %>%
+  inner_join(HallOfFame, by = c("playerID" = "playerID")) %>%
+  filter(inducted == "Y" & votedBy == "BBWAA") %>%
+  summarize(tH = sum(H), tHR = sum(HR), tRBI = sum(RBI), tSB = sum(SB)) %>%
+  filter(tH > 1000)
+```
+<!--begin-answer-->
+```{r ex-hof-cluster, message = FALSE}
+clusts <- hof %>%
+  select(-playerID) %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+hof <- hof %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+ggplot(data = hof, aes(x = tH, y = tHR, size = tSB, color = factor(cluster))) +
+  geom_point()
+```
+
+In the figure, cluster 2 is comprised of players who had many stolen bases but not so many home runs. These are typically smaller, faster players like Tony Gwynn and Rickey Henderson. Clusters 1 and 3 are distinguished mainly by the longevity of their careers. Those with more than 2500 hits are in cluster 1, while those with fewer than 2500 hits are in cluster 3. Cluster 3 contains many catchers (who don't play everyday and are valued for their defense) and players like Jackie Robinson whose brilliant careers were shortened for a variety of reasons. 
+
+<!--end-answer-->
+
+b. Building on the previous exercise, compute new statistics and run the clustering algorithm again. Can you produce clusters that you think are more pure? Justify your choices. 
+
+<!--begin-answer-->
+
+For example, here we compute each player's [power-speed number](https://en.wikipedia.org/wiki/Power%E2%80%93speed_number), which combines their home runs and stolen bases into a single statistic. Adding this variable to our dataset results in clusters that are more clearly separated by total hits. Cluster 2 now consists almost entirely of catchers. 
+
+```{r hof-cluster2-ex-2384, message = FALSE}
+hof <- hof %>%
+  mutate(psn = (2 * tHR * tSB) / (tHR + tSB))
+clusts <- hof %>%
+  select(-playerID) %>%
+  kmeans(centers = 3) %>%
+  fitted("classes")
+hof <- hof %>%
+  mutate(cluster = clusts) %>%
+  arrange(desc(clusts))
+ggplot(data = hof, aes(x = tH, y = tHR, size = psn, color = factor(cluster))) +
+  geom_point()
+```
+<!--end-answer-->
+
+

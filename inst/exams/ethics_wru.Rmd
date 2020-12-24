@@ -1,0 +1,47 @@
+Question
+========
+
+In the following paper, the authors put forth a racial prediction algorithm:
+
+- Imai, K. and Khanna, K. (2016). "[Improving Ecological Inference by Predicting Individual Ethnicity from Voter Registration Record](https://www.cambridge.org/core/journals/political-analysis/article/improving-ecological-inference-by-predicting-individual-ethnicity-from-voter-registration-records/9DC8EBA269C25B1C606040196A3CB779)." Political Analysis, Vol. 24, No. 2 (Spring), pp. 263-272.
+
+The corresponding R package `wru` allows the user to retrieve probabilities that a person is of a given race based only on their last name (surname). 
+
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(wru)
+predict_race(voter.file = voters, surname.only = TRUE) %>% 
+  select(surname, pred.whi, pred.bla, pred.his, pred.asi, pred.oth)
+```
+
+Which of the following statements are true?
+
+Answerlist
+----------
+* This algorithm could be used to discriminate against people based on their race.
+* This algorithm could be used to help people based on their race. 
+* There are no ethical issues with this algorithm.
+* Any ethical issues are moot because very few people use R. 
+* Ben thinks that the authors cannot be blamed, because they are just making an algorithm and they can't control how people use it. 
+* This algorithm is 100% accurate and that makes is OK.
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* True.
+* False. There are plenty of ethical issues!
+* False. Lots of people use R.
+* False. I think they should have thought of this ahead of time. 
+* False. No algorithm like this is 100% accurate, and that wouldn't make it OK.
+
+
+Meta-information
+================
+extitle: race prediction
+exsection: ethics
+exname: ethics-wru
+extype: mchoice
+exsolution: 110000

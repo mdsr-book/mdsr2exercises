@@ -1,0 +1,293 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/reproducible-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+
+\section{Exercises}
+
+\begin{Exercise}
+The following exercises provide practice with \R\ Markdown files and introduce useful features. 
+Consider an \R\ Markdown file that includes the following code chunks.  What will be output when this file is rendered?
+
+\begin{verbatim}
+```{r}
+x <- 1:5
+```
+
+```{r}
+x <- x + 1
+```
+
+```{r}
+x
+```
+\end{verbatim}
+\end{Exercise}
+\begin{Answer}
+
+<<>>=
+x <- 1:5
+@
+
+<<>>=
+x <- x + 1
+@
+
+<<>>=
+x
+@
+\end{Answer}
+
+\begin{Exercise}
+Consider an \R\ Markdown file that includes the following code chunks.  What will be output when this file is rendered?
+
+\begin{verbatim}
+```{r echo=FALSE}
+x <- 1:5
+```
+
+```{r echo=FALSE}
+x <- x + 1
+```
+
+```{r echo=FALSE}
+x
+```
+\end{verbatim}
+\end{Exercise}
+\begin{Answer}
+
+<< echo=FALSE>>=
+x <- 1:5
+@
+
+<< echo=FALSE>>=
+x <- x + 1
+@
+
+<< echo=FALSE>>=
+x
+@
+\end{Answer}
+
+\begin{Exercise}
+Consider an \R\ Markdown file that includes the following code chunks.  What will be output when the file is rendered?
+
+\begin{verbatim}
+```{r echo=FALSE}
+x <- 1:5
+```
+
+```{r echo=FALSE, eval=FALSE}
+x <- x + 1
+```
+
+```{r echo=FALSE}
+x
+```
+\end{verbatim}
+\end{Exercise}
+\begin{Answer}
+
+<<echo=FALSE>>=
+x <- 1:5
+@
+
+<<echo=FALSE, eval=FALSE>>=
+x <- x + 1
+@
+
+<<echo=FALSE>>=
+x
+@
+\end{Answer}
+
+\begin{Exercise}
+Consider an \R\ Markdown file that includes the following code chunks.  What will be output when the file is rendered?
+
+\begin{verbatim}
+```{r echo=FALSE}
+x <- 1:5
+```
+
+```{r echo=FALSE}
+x <- x + 1
+```
+
+```{r include=FALSE}
+x
+```
+\end{verbatim}
+\end{Exercise}
+\begin{Answer}
+
+<<echo=FALSE>>=
+x <- 1:5
+@
+
+<<echo=FALSE>>=
+x <- x + 1
+@
+
+<<include=FALSE>>=
+x
+@
+
+This example yields no output (since the \obj{include=FALSE} chunk option was set).  Note however,
+that the command was run so any side effects would be observed later.
+\end{Answer}
+
+\begin{Exercise}
+Describe in words what the following excerpt from an \R\ Markdown file will display when rendered.
+\begin{verbatim}
+```{r echo=FALSE}
+n <- 679
+```
+
+The data set has n=`r n` observations.
+\end{verbatim}
+
+\end{Exercise}
+\begin{Answer}
+The rendered file will display the following:
+<<echo=FALSE>>=
+n <- 679
+@
+The data set has n=\Sexpr{n} observations.
+\end{Answer}
+
+
+\begin{Exercise}
+Describe in words what the following excerpt from an \R\ Markdown file will display when rendered.
+\begin{verbatim}
+$\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 \cdot x + \epsilon$
+\end{verbatim}
+
+\end{Exercise}
+\begin{Answer}
+The rendered file will display: $\hat{y} = \hat{\beta}_0 + \hat{\beta}_1 \cdot x + \epsilon$.  The implication is that arbitrary \LaTeX\ commands can be included in \R\ Markdown files to format mathematical expressions.
+\end{Answer}
+
+
+\begin{Exercise}
+Describe the implications of changing \obj{warning=TRUE} to \obj{warning=FALSE} in the following code
+chunk.
+
+\begin{verbatim}
+```{r warning=TRUE}
+sqrt(-1)
+```
+\end{verbatim}
+\end{Exercise}
+\begin{Answer}
+When warning is TRUE, \R generates a warning message.
+<<warning=TRUE>>=
+sqrt(-1)
+@
+If set to FALSE, the message is suppressed.
+<<warning=FALSE>>=
+sqrt(-1)
+@
+\end{Answer}
+
+\begin{Exercise}
+Why does the \pkg{mosaic} package plain \R\ Markdown template include the code chunk option \obj{message=FALSE} when the \pkg{mosaic} package is loaded?
+\end{Exercise}
+\begin{Answer}
+By default the \pkg{mosaic} package notes that a number of functions are masked.  Setting the
+chunk option \obj{message=FALSE} suppresses these messages.
+\end{Answer}
+
+\begin{Exercise}
+Describe how the \obj{fig.width} and \obj{fig.height} chunk options can be
+used to control the size of graphical figures.
+\end{Exercise}
+\begin{Answer}
+Adding \obj{fig.width=5} would set the figure size to be five inches.
+\end{Answer}
+
+\begin{Exercise}
+Explain what the following code chunks will display and why this might be useful for technical reports from a data science project.
+\begin{verbatim}
+```{r chunk1, eval=TRUE, include=FALSE}
+x <- 15
+x
+```
+
+```{r chunk2}
+x <- x + 3
+x
+```
+
+```{r chunk1, eval=FALSE, include=TRUE}
+```
+\end{verbatim}
+\end{Exercise}
+\begin{Answer}
+
+The first code chunk is run but not displayed until after the second chunk.
+This might be useful to undertake some data wrangling in a report but defer the detailed results until an appendix.
+
+<<chunk1, eval=TRUE, include=FALSE>>=
+x <- 15
+x
+@
+
+<<chunk2>>=
+x <- x + 3
+x
+@
+
+<<chunk1, eval=FALSE, include=TRUE>>=
+@
+
+\end{Answer}
+
+\begin{Exercise}
+The \pkg{xtable} package allows the analyst to display nicely formatted
+tables and results when outputting to pdf files.  Use the following code
+chunks as an example to create a similar display using your own data.
+\begin{verbatim}
+```{r results="asis"}
+library(xtable)
+library(mdsr)
+options(xtable.comment = FALSE)
+mod <- lm(cesd ~ mcs + sex, data = HELPrct)
+xtable(mod)
+```
+\end{verbatim}
+\end{Exercise}
+
+\begin{Exercise}
+Insert a chunk in your .Rmd document so that it renders even when there are errors. Some errors are easier to diagnose if you can execute specific \R statements during rendering and leave more evidence behind for forensic examination. 
+
+Put this chunk
+near the top of your \R Markdown document if you want to soldier on through errors, i.e., turn \obj{foo.Rmd} into \obj{foo.md} and/or \obj{foo.html} no matter what. 
+\begin{verbatim}
+``{r setup, include = FALSE, cache = FALSE}  
+knitr::opts_chunk$set(error = TRUE)  
+```
+\end{verbatim}
+This is also helpful if you are writing a tutorial and want to demo code that throws an error. 
+%You might want to keep this as an RStudio snippet for easy insertion.
+
+It's also possible to set things so that errors are tolerated in a
+specific chunk.
+
+\begin{verbatim}
+``{r alwaysrun, error = TRUE}  
+## code goes here
+```
+\end{verbatim}
+Use either of these strategies to 
+generate an \R Markdown file that includes an error but compiles nonetheless.  (Kudos to 
+Jenny Bryan for describing this approach.)
+\end{Exercise}
+

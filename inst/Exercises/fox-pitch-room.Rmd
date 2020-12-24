@@ -1,0 +1,33 @@
+---
+chapter: "foundations"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2020-07-16 
+version: 0.1
+tags: [first, second, third]
+id: fox-pitch-room
+---
+
+```{r fox-pitch-room-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Calculate and interpret a 95% confidence interval for the mean age of mothers from the
+`Gestation` data set from the `r pkg_macro(mosaicData)` package.
+
+ <!--begin-answer-->
+
+```{r }
+library(mosaicData)
+Gestation %>%
+  skim(age)
+confint(lm(age ~ 1, data = Gestation))
+```
+We are 95% confident that the mean age of mothers in the population is between 26.9 and 27.6 years.
+
+  <!--end-answer-->
+
+
+
+

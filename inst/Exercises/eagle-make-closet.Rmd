@@ -1,0 +1,51 @@
+---
+chapter: "iteration"
+author: "Ben Baumer"
+date: "Updated for second edition"
+difficulty: "Hard"
+version: 0.1
+tags: [baseball, dplyr--group_modify, function]
+id: eagle-make-closet 
+---
+
+(ref:eagle-make-closet) Exercise in file eagle-make-closet
+
+```{r eagle-make-closet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r mdsr2exercises::func_macro(group_modify)` function and the `r mdsr2exercises::pkg_macro(Lahman)` data to replicate one of the baseball records plots (<http://tinyurl.com/nytimes-records>) from the *The New York Times*.
+
+<!--begin-answer-->
+Here is the home run chart.
+```{r eagle-make-closet-1, echo = TRUE, message= FALSE}
+library(Lahman)
+
+top_hitters <- function(data) {
+  data %>%
+    group_by(playerID) %>%
+    summarize(tHR = sum(HR), .groups = "drop_last") %>%
+    arrange(desc(tHR)) %>%
+    head(30) %>%
+    mutate(rank = row_number())
+}
+
+hrs <- Batting %>%
+  group_by(yearID) %>%
+  group_modify(~ top_hitters(.)) %>%
+  ungroup() %>%
+  mutate(
+    cum_max = cummax(tHR),
+    new_record = ifelse(tHR == cum_max, TRUE, FALSE)
+  )
+ggplot(data = hrs, aes(x = yearID, y = tHR)) +
+  geom_point(alpha = 0.1) +
+  geom_point(
+    data = filter(hrs, new_record == TRUE),
+    aes(color = new_record),
+    size = 2
+  )
+```
+<!--end-answer-->
+

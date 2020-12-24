@@ -1,0 +1,80 @@
+---
+chapter: "dataI"
+author: "Ben Baumer"
+date: 2019-10-23 
+difficulty: "Hard"
+version: 0.1
+tags: [first, second, onlineonly]
+id: monkey-do-mug 
+---
+
+(ref:monkey-do-mug) Exercise in file monkey-do-mug
+
+
+```{r monkey-do-mug-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Download [data on the number of deaths by firearm](http://www.fdle.state.fl.us/cms/FSAC/Documents/Excel/1971_fwd_murder_firearms.aspx) from the Florida Department of Law Enforcement. 
+Wrangle these data and use `r mdsr2exercises::pkg_macro(ggplot2)` to re-create the plot show below.  
+
+```{r, echo=FALSE}
+knitr::include_graphics(system.file("extdata", "fl_murders.png", package = "mdsr2exercises"))
+```
+
+<!--begin-answer-->
+
+```{r florida-murders-ex, echo=TRUE, warning=FALSE}
+url <- "http://www.fdle.state.fl.us/cms/FSAC/Documents/Excel/1971_fwd_murder_firearms.aspx"
+# download the xlsx file manually and save it to your computer
+# saved_file <- "name_of_saved_file"
+saved_file <- system.file("extdata", "1971_fwd_murder_firearms.xlsx", package = "mdsr2exercises")
+
+library(readxl)
+library(readr)
+fl_murders <- read_excel(saved_file, skip = 2) %>%
+  na.omit()
+names(fl_murders) <- make.names(names(fl_murders))
+fl_murders <- fl_murders %>%
+  mutate(
+    Year = parse_number(Year),
+    total_firearm = parse_number(Total.by.Firearm)
+  )
+fl_plot <- fl_murders %>%
+  filter(Year >= 1990) %>%
+  ggplot(aes(x = Year, y = total_firearm)) +
+  geom_area(fill = "#b0272e", alpha = 0.9) +
+  geom_segment(aes(x = 2005, xend = 2005, y = 350, yend = 521),
+    color = "white", size = 0.1
+  ) +
+  geom_line(size = 2) +
+  geom_point(size = 4, shape = 21, fill = "black", color = "white") +
+  annotate("text",
+    x = 2004, y = 250,
+    label = "2005\nFlorida enacted\nits 'Stand Your\nGround' law",
+    color = "white", hjust = "left"
+  ) +
+  annotate("text",
+    x = 1990, y = 980,
+    label = "Source: Florida Department of Law Enforcement",
+    color = "darkgray", hjust = "left"
+  ) +
+  theme_bw() +
+  theme(
+    panel.grid.major.y = element_line(color = "darkgray", size = 0.7),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
+  ) +
+  scale_x_continuous(expand = c(0.02, 0)) +
+  scale_y_reverse("Number of murders committed using firearms",
+    breaks = seq(1000, 0, by = -200), limits = c(1000, 0)
+  )
+fl_plot
+```
+<!--end-answer-->
+
+```{r, include=FALSE, eval=FALSE}
+ggsave(fl_plot, filename = here::here("inst/extdata/fl_murders.png"))
+```
+

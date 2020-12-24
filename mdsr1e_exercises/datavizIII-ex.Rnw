@@ -1,0 +1,201 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+fig.path='figures/datavizIII-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+\section{Exercises}
+
+\begin{Exercise}
+The \pkg{macleish} package contains weather data collected every 10 minutes in 2015 from two weather stations in Whately, Massachusetts. 
+
+<<message=FALSE>>=
+library(macleish)
+head(whately_2015)
+@
+
+Using \pkg{ggplot2}, create a data graphic that displays the average temperature over each 10-minute interal (\var{temperature}) as a function of time (\var{when}). Create annotations to include context about the four seasons: the date of the vernal and autumnal equinoxes, and the summer and winter solstices. 
+\end{Exercise}
+
+\begin{Answer}
+<<weather-ex>>=
+equinoxes <- data_frame(
+  when = as.Date(c("2015-03-21", "2015-06-20", "2015-09-21", "2015-12-20")),
+  season = c("Winter", "Spring", "Summer", "Fall"))
+
+weather_plot <- ggplot(data = whately_2015, 
+  aes(x = as.Date(when), y = temperature)) +
+  geom_vline(data = equinoxes, color = "darkgray", 
+             aes(xintercept = as.numeric(when))) +
+  geom_text(data = equinoxes, aes(y = 33, label = season, hjust = "right")) + 
+  geom_line(size = 0.3, color = "darkgray") + geom_smooth() + 
+  scale_x_date()
+weather_plot
+@
+\end{Answer}
+
+
+\begin{Exercise}
+Repeat the previous question, but include context on major storms listed on the Wikipedia pages: \href{https://en.wikipedia.org/wiki/2014%E2%80%9315_North_American_winter}{2014--2015 North American Winter} and \href{https://en.wikipedia.org/wiki/2015%E2%80%9316_North_American_winter}{2015-2016 North American Winter}.
+\end{Exercise}
+
+\begin{Exercise}
+Create the time series plot of the weather data in the first exercise using \pkg{plotly}.
+\end{Exercise}
+
+\begin{Answer}
+<<eval=FALSE>>=
+library(plotly)
+ggplotly(weather_plot)
+@
+
+\end{Answer}
+
+\begin{Exercise}
+Create the time series plot of the weather data in the first exercise using \pkg{dygraphs}.
+\end{Exercise}
+
+\begin{Answer}
+<<eval=FALSE>>=
+library(mdsr)
+library(macleish)
+library(dygraphs)
+library(xts)
+equinoxes <- data_frame(
+  when = as.Date(c("2015-03-21", "2015-06-20", "2015-09-21", "2015-12-20")),
+  season = c("Winter", "Spring", "Summer", "Fall"))
+whately_2015 %>%
+  select(temperature) %>%
+  as.xts(order.by = whately_2015$when) %>%
+  dygraph(main = "Temperature at MacLeish Field Station") %>%
+  dyRangeSelector() %>%
+  dyEvent(equinoxes$when, label = equinoxes$season, labelLoc = "bottom")
+@
+\end{Answer}
+
+\begin{Exercise}
+Create the time series plot of the weather data in the first exercise using \pkg{ggvis}.
+\end{Exercise}
+
+\begin{Answer}
+<<eval=FALSE>>=
+library(ggvis)
+library(macleish)
+equinoxes <- data_frame(
+  date = as.Date(c("2015-03-21", "2015-06-20", "2015-09-21", "2015-12-20")),
+  label = c("Winter", "Spring", "Summer", "Fall"),
+  temperature = 33)
+
+whately_2015 <- whately_2015 %>%
+  mutate(date = as.Date(when))
+
+ggvis(whately_2015, x = ~date, y = ~temperature) %>%
+  layer_lines() %>%
+  layer_text(data = equinoxes, text:= ~label) %>%  
+  layer_smooths()
+@
+\end{Answer}
+
+\begin{Exercise}
+Create a Shiny app to display an interactive time series plot of the \pkg{macleish} weather data. Include a selection box to alternate between data from the \data{whately\_2015} and \data{orchard\_2015} weather stations. 
+\end{Exercise}
+
+\begin{Answer}
+
+The following code should be saved into a file {\tt app.R} to be run as a standalone app.
+<<eval=FALSE>>=
+library(shiny)
+library(macleish)
+library(ggformula)
+library(mdsr)
+server <- function(input, output) {
+  output$distPlot <- renderPlot({
+    if (input$dataset=="whately_2015") {
+      ds <- whately_2015 
+    } else {
+      ds <- orchard_2015
+    }
+    ds <- mutate(ds, date = as.Date(when))
+    res <- ggplot(filter(ds, date > input$mindate, date < input$maxdate), 
+                  aes(x=date, y=temperature)) + geom_line()
+    print(res)
+  })
+}
+
+ui <- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      radioButtons("dataset", "Which dataset:",
+                   c("Met data" = "whately_2015",
+                     "Orchard data" = "orchard_2015")),
+      dateInput("mindate", "Starting date", value = as.Date("2015-01-01"), 
+                min=as.Date("2015-01-01"), max=as.Date("2015-12-31")),
+      dateInput("maxdate", "Starting date", value = as.Date("2015-12-31"), 
+                min=as.Date("2015-01-01"), max=as.Date("2015-12-31"))
+    ),
+    mainPanel(plotOutput("distPlot"))
+  )
+)
+
+shinyApp(ui = ui, server = server)
+@
+When run the app looks like the following:
+
+\begin{center}
+\includegraphics[width=\textwidth]{gfx/shinymacleish.png}
+\end{center}
+\end{Answer}
+
+\begin{Exercise}
+Using data from the \pkg{fec} package, create a Shiny app similar to the one at \url{https://beta.fec.gov/data/candidates/president/}. 
+\end{Exercise}
+
+\begin{Answer}
+Examples of similar apps can be found at the Shiny gallery (url{https://shiny.rstudio.com/gallery}).
+\end{Answer}
+
+\begin{Exercise}
+Using data from the \pkg{Lahman} package, create a Shiny app that displays career leaderboards similar to the one at \url{http://www.baseball-reference.com/leaders/HR_season.shtml}. Allow the user to select a statistic of their choice, and to choose between \val{Career}, \val{Active}, \val{Progressive}, and \val{Yearly League} leaderboards.  
+\end{Exercise}
+
+\begin{Answer}
+Examples of similar apps can be found at the Shiny gallery (url{https://shiny.rstudio.com/gallery}).
+\end{Answer}
+
+
+
+\begin{Exercise}
+The following code generates a scatterplot with marginal histograms.  
+<<gghistogram,warning=FALSE>>=
+library(ggplot2)
+library(ggExtra)
+p <- ggplot(HELPrct, aes(x = age, y = cesd)) + geom_point() + 
+  theme_classic() + stat_smooth(method = "loess", formula = y ~ x, size = 2)
+ggExtra::ggMarginal(p, type = "histogram", binwidth = 3)
+@
+Find an example where such a display might be useful.
+\end{Exercise}
+\begin{Answer}
+Answer may vary.  But here's one example.
+<<gghistogram2,warning=FALSE>>=
+p <- ggplot(faithful, aes(x = eruptions, y = waiting)) + 
+      geom_point() + theme_classic() +
+      stat_smooth(method = "loess", formula = y ~ x, size = 2)
+ggExtra::ggMarginal(p, type = "histogram", binwidth = 3)
+@
+\end{Answer}
+
+\begin{Exercise}
+Create your own \pkg{ggplot2} theme. Use the material from Chapter 2 to justify the design choices you made.  % XX warning about hardcode ref!
+\end{Exercise}
+
+\begin{Answer}
+Answers will vary, but should include a description of why the particular design choices were made.
+\end{Answer}
+
+

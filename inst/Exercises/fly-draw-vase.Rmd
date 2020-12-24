@@ -1,0 +1,38 @@
+---
+chapter: "sqlI"
+author: ""
+difficulty: "Medium"
+date: 2020-07-20 
+version: 0.1
+tags: [first, second, third]
+id: fly-draw-vase
+---
+
+```{r fly-draw-vase-default, include = FALSE}
+library(etude)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: 
+Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
+How many domestic flights came into or flew out of Bradley Airport (BDL) in 2012?
+
+
+<!--begin-answer-->
+```{r, warning = FALSE, message= FALSE}
+library(RMySQL)
+con <- mdsr::dbConnect_scidb(dbname = "airlines")
+
+myquery <- '
+SELECT * 
+FROM flights 
+WHERE Year = 2012 
+  AND (Dest = "BDL" OR Origin = "BDL")
+LIMIT 0,6;'
+
+dbGetQuery(con, myquery)
+```
+
+<!--end-answer-->
+
+

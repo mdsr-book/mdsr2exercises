@@ -1,0 +1,147 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+options(digits=4)
+fig.path='figures/datavizI-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+library(knitr)
+opts_chunk$set(echo = TRUE)
+@
+
+
+\section{Exercises}
+
+\begin{Exercise}
+  What would a Cartesian plot that used colors to convey categorical values look like?
+\end{Exercise}
+\begin{Answer}
+A heatmap.
+\end{Answer}
+
+\begin{Exercise}
+  Consider the two graphics related to \textit{The New York Times} ``Taxmageddon" article at \url{http://www.nytimes.com/2012/04/15/sunday-review/coming-soon-taxmageddon.html}. The first is \href{http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt.html}{``Whose Tax Rates Rose or Fell"} and the second is \href{http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt2.html}{``Who Gains Most From Tax Breaks."}
+\begin{enumerate}
+  \item Examine the two graphics carefully. Discuss what you think they convey. What story do the graphics tell? 
+  \item Evaluate both graphics in terms of the taxonomy described in this chapter. Are the scales appropriate? Consistent? Clearly labelled? Do variable dimensions exceed data dimensions? 
+  \item What, if anything, is misleading about these graphics?
+\end{enumerate}
+\end{Exercise}
+\begin{Answer}
+\begin{enumerate}
+  \item Answers will vary. The main take-aways are that tax rates on the rich have fallen, while tax rates on the poor have not. Moreover, in terms of the ``cost" to the US Treasury, most tax breaks go to those in the top 20\% in income. 
+  \item Answers will vary. In the first graphic, the $y$-scale is the tax rate, but there is no axis. The labels about the segment of the income distribution are not reflected in any quantity. The color scheme is not immediately helpful. The change in real pre-tax income figures to not have a corresponding quantitative representation. 
+
+In the second graphic, the $y$-scale is very confusing, and possibly misleading. The scale is a percentage, and yet the income amounts on the left are *not* on a linear scale. 
+  \item Answers will vary. Most obviously, the $y$-scales in either data graphic.
+\end{enumerate}
+
+\end{Answer}
+
+\begin{Exercise}
+Choose \emph{one} of the data graphics listed at \url{http://mdsr-book.github.io/exercises.html#exercise_23}
+and answer the following questions. Be sure to indicate which graphical display you picked.
+
+  \begin{enumerate}
+    \item Identify the visual cues, coordinate system, and scale(s). 
+    \item How many variables are depicted in the graphic? Explicitly link each variable to a visual cue that you listed above. 
+    \item Critique this data graphic using the taxonomy described in this chapter. 
+  \end{enumerate}
+
+\end{Exercise}
+\begin{Answer}
+
+We critique the \href{http://www.npr.org/news/graphics/2012/09/pm-incometax/gr-pm-incometax3-462.gif}{this graphic} from the Tax Policy Center. 
+
+%\begin{figure}
+%  \includegraphics[width=0.5\textwidth]{gfx/tax-47-percent.png}
+%\end{figure}
+
+\begin{enumerate}
+  \item Color is a visual cue that is mapped to the categorical variable of taxpayer status. Angle is the visual cue that is mapped to the numeric variable of the percentage of people. This exploding pie chart uses a radial coordinate system, and the scale is percentage. 
+  \item There are two variables: percentage of taxpayers, and reason taxpayer status.
+  \item Aside from the common criticisms of pie charts in general, this pie chart makes two strange choices. First, the exploding nature of the pie chart (having pieces of the pie fall out of it) is pointless and distracting. Second, the use of color is odd. By using multiple shades of red, it implies an ordinal scale to the categorical variable of taxpayer status. But there is no logical ordering of this variable. Thus, a qualitative color scale would have been more appropriate. 
+\end{enumerate}
+
+\end{Answer}
+
+\begin{Exercise}
+Answer the following questions for each of the following collections of data graphics listed at \url{http://mdsr-book.github.io/exercises.html#exercise_24}.
+
+  Briefly (one paragraph) critique the designer's choices. Would you have made different choices? Why or why not? 
+
+Note: Each link contains a collection of many data graphics, and we don't expect (or want) you to write a dissertation on each individual graphic. But each collection shares some common stylistic elements. You should comment on a few things that you notice about the design of the collection.
+
+
+\end{Exercise}
+\begin{Answer}
+In the ``What is a data scientist?" infographic, the designers make many illogical choices. For example, in several places they use angle instead of length to show differentiate between several quantities. They also use area in two places (squares and circles) to illustrate a single numeric variable. But we know that human beings are better at perceiving differences in length than they are either angle or area, so neither choice is a good one. 
+
+The last data graphic is perhaps the worst. Although the labels show a single numeric variable (percentages), the square tiles are equally sized. Moreover, they are colored in seemingly random shades of blue and gray. The tiles do not appear to be in any kind of order (e.g., alphabetical, descending, etc.). It is not at all clear what the designed was trying to convey. 
+\end{Answer}
+
+\begin{Exercise}
+Consider one of the more complicated data graphics listed at \url{http://mdsr-book.github.io/exercises.html#exercise_25}.
+
+  \begin{enumerate}
+    \item What story does the data graphic tell? What is the main message that you take away from it? 
+    \item Can the data graphic be described in terms of the taxonomy presented in this chapter? If so, list the visual cues, coordinate system, and scales(s) as you did in Problem 2(a). If not, describe the feature of this data graphic that lies outside of that taxonomy.  
+    \item Critique and/or praise the visualization choices made by the designer. Do they work? Are they misleading? Thought-provoking? Brilliant? Are there things that you would have done differently? Justify your response. 
+  \end{enumerate}
+  
+\end{Exercise}
+\begin{Answer}
+We discuss the \textit{New York Times} \href{http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?_r=1}{graphic on Obama's budget}. 
+
+\begin{enumerate}
+  \item It seems clear that a large percentage of the federal budget is due to mandatory entitlement programs like Medicare, Social Security, and interest on the national debt. Military spending is by far the largest discretionary area
+  \item This is an interactive graphic comprised of four individual graphics. Each of those can be described in this taxonomy, but the interactive elements of switching between them and mousing-over to see contextual information is outside of the taxonomy. 
+  \item This is a nice data graphic. One could question the mapping of area to a one-dimensional quantity, but in this case it motivates the interactive elements. 
+\end{enumerate}
+\end{Answer}
+
+
+
+
+\begin{Exercise}
+Consider the data graphic 
+(\url{http://tinyurl.com/nytimes-unplanned})
+about birth control methods.
+	\begin{enumerate}
+		\item What quantity is being shown on the $y$-axis of each plot?
+		\item List the variables displayed in the data graphic, along with the units and a few typical values for each. 
+  	\item List the visual cues used in the data graphic and explain how each visual cue is linked to each variable.
+		\item Examine the graphic carefully. Describe, in words, what \emph{information} you think the data graphic conveys. Do not just summarize the \emph{data}---interpret the data in the context of the problem and tell us what it means. 
+%[Note: \emph{information} is meaningful to human beings---it is not the same thing as \emph{data}.]
+	\end{enumerate}
+
+
+\end{Exercise}
+
+\begin{Answer}
+\begin{enumerate}
+  \item The number of women out of 100 who will have an unplanned preganancy. 
+  \item Variables:
+  \begin{itemize}
+    \item \var{years}: units of years: 1, 2, 3, ...
+    \item \var{number\_of\_women}: units of people: 1, 2, 3, ...
+    \item \var{method}: categorical: ``spermicides", etc.
+    \item \var{use\_type}: categorical: ``typical", ``perfect"
+  \end{itemize}
+  \item Mappings:
+  \begin{itemize}
+    \item horizontal position is mapped to \var{year}
+    \item vertical position is mapped to \var{number\_of\_women}
+    \item facets are mapped to \var{method}
+    \item lines/shapes are mapped to \var{use\_type}
+    \item color/shade is mapped to \var{number\_of\_women}
+  \end{itemize}
+  \item Most any birth control methods will likely fail at least once with typical use over a 10 year period. However, Depo-Provera and the pill are the most effective, especially with perfect use. 
+\end{enumerate}
+\end{Answer}
+
+
+

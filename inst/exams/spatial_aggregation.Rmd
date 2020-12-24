@@ -1,0 +1,58 @@
+Question
+========
+
+The following chunk creates an `sf` object called `storms92` that contains data about tropical storms in 1992.
+Data -- including location and atmospheric measurements -- were recorded every 6 hours. 
+Thus, each observation (row) in this data frame represents a particular storm at a particular moment in time.
+Note that the geometry type here is `POINT`. 
+
+```{r, message=FALSE, error=TRUE}
+library(tidyverse)
+library(sf)
+storms92 <- storms %>%
+  filter(year == 1992) %>%
+  st_as_sf(coords = c("long", "lat"))
+
+storms92
+```
+
+You want to aggregate these data by storm. 
+The following output shows an `sf` object in which each row represents a single *storm*, with its geospatial coordinates having been aggregated.
+Note that the geometry type here is `MULTIPOINT`. 
+
+```{r, echo=FALSE, message=FALSE}
+storms92 %>%
+  group_by(name) %>%
+  summarize(num_obs = n(), do_union = FALSE)
+```
+
+This computation was performed in a single chunk with a simple combination of operations. 
+What combination of functions was used in the omitted chunk?  
+
+Answerlist
+----------
+* `group_by() %>% summarize()`
+* `group_by() %>% aggregate()`
+* `group_by() %>% st_union()`
+* `group_by() %>% st_combine()`
+* `group_by() %>% st_intersection()`
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. 
+* False. This would result in a `MULTIPOINT` geometry, but not an `sf` object.  
+* False. This would result in a `MULTIPOINT` geometry, but not an `sf` object.  
+* False. 
+
+Meta-information
+================
+extitle: spatial aggregation
+exsection: spatial
+exname: spatial-aggregation
+extype: schoice
+exsolution: 10000

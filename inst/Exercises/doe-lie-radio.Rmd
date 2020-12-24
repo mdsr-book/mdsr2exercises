@@ -1,0 +1,31 @@
+---
+chapter: "dataviz-I"
+author: "Ben Baumer"
+difficulty: "Easy"
+date: 2020-09-03 
+version: 0.1
+tags: [onlineonly, second, third]
+id: doe-lie-radio
+---
+
+```{r doe-lie-radio-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following data-driven image, available for purchase at [NBA Playoff Rings](http://champsring.com/products/pro-basketball-2013).
+
+![](https://cdn.shopify.com/s/files/1/0144/6552/products/NBA-Basketball-2013-_6_1024x1024.jpg)
+
+a. Identify the visual cues, coordinate system, and scale(s). 
+b. How many variables are depicted in the graphic? Explicitly link each variable to a visual cue that you listed above. 
+c. Critique this data graphic using the taxonomy described in this chapter. 
+
+<!--answer-start-->
+a. Visual cues: Color, angle. Coordinate system: radial. Scale: categorical
+b. There are (at least) three variables: team, playoff round, and number of games won. 
+c. Color evokes the team, as each team's uniform colors are used to distinguish one team from another. Normally, tournaments such this are depicted as binary trees, in which each playoff round would be on its own level. Here, the author has chosen to wrap the tree structure into a circle. I don't see any reason to think that this aids in our understanding. If anything, it probably confuses most readers. 
+Another possible choice would be to decrease the saturation of teams that only won a few games. Note that each team that won a series, by necessity, won 4 games. But some of the losing teams won 3 games, while others won 0. One could argue that fading out the losing teams that won fewer games would help show a more accurate picture. 
+<!--answer-end-->
+
+
+

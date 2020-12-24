@@ -1,0 +1,50 @@
+---
+chapter: "join"
+author: ""
+date: "Second edition"
+difficulty: "Easy"
+version: 0.1
+tags: [first, second, third]
+id: kangaroo-iron-saucer
+---
+
+(ref:fish-blow-dish) Exercise in file fish-blow-dish
+
+```{r kangaroo-iron-saucer-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Consider the following data frames with information about U.S. states from 1977.
+
+```{r}
+statenames <- tibble(names = state.name, twoletter = state.abb)
+glimpse(statenames)
+statedata <- tibble(
+  names = state.name, 
+  income = state.x77[, 2], 
+  illiteracy = state.x77[, 3]
+  )
+glimpse(statedata)
+```
+
+Create a scatterplot of illiteracy (as a percent of population) and per capita income (in U.S. dollars) with points plus labels of the two letter state abbreviations.  Add a smoother.  Use the `r pkg_macro("ggrepel")` package to offset the names that overlap.  What pattern do you observe?  Are there any outlying observations?
+
+<!--begin-answer-->
+```{r message = FALSE}
+library(ggrepel)
+statemerged <- left_join(
+  statenames, 
+  statedata, 
+  by = "names")
+ggplot(statemerged, 
+  aes(x = income, y = illiteracy, label = twoletter)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  geom_text_repel() + 
+  labs(x = "Per capita income in 1970 ($)", y = "Percent illiterate")
+```
+
+For states with lower per capita income in 1977, there seems to be negative relationship between income and illiteracy rates.  Alaska is a notable outlier, likely due to payments provided by the state to all residents through the Alaska Permanent Fund.
+
+<!--end-answer-->
+

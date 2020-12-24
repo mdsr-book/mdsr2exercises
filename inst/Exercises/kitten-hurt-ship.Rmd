@@ -1,0 +1,33 @@
+---
+chapter: "dataviz-I"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, onlineonly]
+id: kitten-hurt-ship
+---
+
+```{r kitten-hurt-ship-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Answer the following questions for each of the following collections of data graphics listed at (http://mdsr-book.github.io/exercises.html#exercise_24).
+
+#. [What is a Data Scientist?](http://tinyurl.com/what-is-datascientist)
+#. [Charts that explain food in America](http://www.vox.com/a/explain-food-america)
+
+Briefly (one paragraph) critique the designer's choices. Would you have made different choices? Why or why not?
+
+> Note: Each link contains a collection of many data graphics, and we don't expect (or want) you to write a full report on each individual graphic.
+> But each collection shares some common stylistic elements.
+> You should comment on a few things that you notice about the design of the collection.
+
+
+  <!--begin-answer-->
+In the *What is a data scientist?* infographic, the designers make many illogical choices. For example, in several places they use angle instead of length to show differentiate between several quantities. They also use area in two places (squares and circles) to illustrate a single numeric variable. But we know that human beings are better at perceiving differences in length than they are either angle or area, so neither choice is a good one. 
+
+The last data graphic is perhaps the worst. Although the labels show a single numeric variable (percentages), the square tiles are equally sized. Moreover, they are colored in seemingly random shades of blue and gray. The tiles do not appear to be in any kind of order (e.g., alphabetical, descending, etc.). It is not at all clear what the designed was trying to convey. 
+  <!--end-answer-->
+
+

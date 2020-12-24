@@ -1,0 +1,37 @@
+Question
+========
+
+The Data Science [Hippocratic Oath](https://en.wikipedia.org/wiki/Hippocratic_Oath) appears on [page 119](https://www.nap.edu/read/25104/chapter/13#119) of the "Data Science for Undergraduates: Opportunities and Options" white paper published by the National Academy of Sciences, Engineering, and Medicine (2018). Part of the oath reads:
+
+> I will remember that my data are not just numbers without meaning or context, but represent real people and situations, and that my work may lead to unintended societal consequences, such as inequality, poverty, and disparities due to algorithmic bias.
+
+Consider the anecdote about [Bradley Cooper](https://en.wikipedia.org/wiki/Bradley_Cooper)'s taxi ride. [Read the Fast Company article](https://www.fastcompany.com/3036573/nyc-taxi-data-blunder-reveals-which-celebs-dont-tip-and-who-frequents-strip-clubs), and consider this incident in the context of the aforementioned part of the data science oath. 
+
+Which of the following statements are true?
+
+Answerlist
+----------
+* Self-described data junkie Chris Whong definitely violated the oath by requesting data on 173 million taxi trips, because he forgot that "data are not just numbers".
+* The New York City Taxi and Limousine Commission definitely violated the oath by complying with Whong's [Freedom of Information Act](https://en.wikipedia.org/wiki/Freedom_of_Information_Act_(United_States)) request, because they forgot that their data "represent real people and situations". 
+* Vijay Pandurangan potentially violated the oath by showing how the data could be de-anonymized, because he forgot that his work "may lead to unintended societal consequences".
+* Neustar privacy researcher Anthony Tockar potentially violated the oath by publicly identifying Bradley Cooper, because he forgot that data "represent real people and situations".
+* This episode illustrates how complex interactions among data practitioners can result in harm being done to real people. 
+
+Solution
+========
+
+Answerlist
+----------
+* False. It is not clear that Whong violated any ethical standard.
+* False. The commission tried to deidentify their data, and were compelled by law to deliver it. 
+* True. It's possible that this action constituted a violation. 
+* True. It's possible that this action constituted a violation. 
+* True. 
+
+Meta-information
+================
+extitle: bradley cooper
+exsection: ethics
+exname: ethics-cooper
+extype: mchoice
+exsolution: 00111

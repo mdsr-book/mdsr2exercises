@@ -1,0 +1,79 @@
+---
+chapter: data-II
+author: "Ben Baumer"
+date: "First edition"
+difficulty: Medium
+version: 0.1
+tags:
+- narrow to wide
+- second
+- third
+id: beech-come-shoe
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+---
+
+(ref:beech-come-shoe) Exercise in file beech-come-shoe
+
+```{r beech-come-shoe-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+```
+
+TITLE GOES HERE: Generate the code to convert the following data frame to wide format.
+
+```{r warning = FALSE, echo = FALSE, message= FALSE}
+library(mdsr)
+library(mosaic)
+library(readr)
+library(tidyr)
+library(xtable)
+df <- tibble(
+  id = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5),
+  sex = c("M", "M", "F", "F", "F", "F", "M", "M", "M", "M"),
+  grp = rep(c("A", "B"), 5),
+  left = c(0.1, 0.2, 0.3, 0.4, 0.15, 0.25, 0.6, 0.65, 0.71, 0.79),
+  right = c(0.1, 0.25, 0.3, 0.35, 0.18, 0.25, 0.6, 0.6, 0.71, 0.79) + 0.1
+)
+sumdf <- df %>%
+  group_by(grp, sex) %>%
+  summarize(
+    meanL = mean(left), sdL = sd(left),
+    meanR = mean(right), sdR = sd(right)
+  ) %>%
+  ungroup()
+```
+
+```{r results = "asis", echo = FALSE}
+knitr::kable(sumdf)
+```
+
+The result should look like the following display.
+```{r ,echo=FALSE, results="asis", message = FALSE}
+options(xtable.comment = FALSE)
+
+
+transformed <- sumdf %>%
+  pivot_longer(names_to = "temp", values_to = "vals", col = c(meanL, meanR, sdL, sdR)) %>%
+  unite(col = "temp1", sex, temp, sep = ".") %>%
+  pivot_wider(names_from = temp1, values_from = vals)
+xtable(data.frame(transformed))
+```
+Hint: use `r mdsr2exercises::func_macro(pivot_longer)` in conjunction with `r mdsr2exercises::func_macro(pivot_wider)`.
+
+<!--begin-answer-->
+```{r beech-come-shoe-1, echo=TRUE}
+transformed <- sumdf %>%
+  pivot_longer(
+    names_to = "temp", 
+    values_to = "vals", 
+    col = c(meanL, meanR, sdL, sdR)
+  ) %>%
+  unite(col = "temp1", sex, temp, sep = ".") %>%
+  pivot_wider(names_from = temp1, values_from = vals)
+data.frame(transformed)
+```
+<!--end-answer-->
+

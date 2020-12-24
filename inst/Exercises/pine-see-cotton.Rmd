@@ -1,0 +1,29 @@
+---
+chapter: "spatial-I"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2020-08-16 
+version: 0.1
+tags: [first, second, third]
+id: pine-see-cotton
+---
+
+```{r pine-see-cotton-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+library(mdsr2exercises)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:	Use the `geocode` function from the `r pkg_macro(tidygeocoder)` package to find the latitude and longitude of the Emily Dickinson Museum in Amherst, Massachusetts. 
+
+<!--begin-answer-->
+ 
+```{r}
+library(tidyverse)
+library(tidygeocoder)
+tibble(address = "Emily Dickinson Museum, Amherst, MA") %>%
+  tidygeocoder::geocode(address, method = "osm")
+```
+ 
+<!--end-answer-->

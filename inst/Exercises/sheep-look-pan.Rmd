@@ -1,0 +1,27 @@
+---
+chapter: "dataviz-II"
+author: ""
+difficulty: "Easy"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, third]
+id: sheep-look-pan
+---
+
+```{r sheep-look-pan-default, include = FALSE}
+library(tidyverse)
+library(mdsr)
+mdsr2exercises::setup()
+```
+
+
+TITLE GOES HERE: Using data from the `r pkg_macro(nasaweather)` package, create a scatterplot between `wind` and `pressure`, with color being used to distinguish the `type` of storm. 
+
+<!--begin-answer-->
+```{r storms-ex,message=FALSE}
+library(nasaweather)
+ggplot(data = storms, aes(x = pressure, y = wind, color = type)) +
+  geom_point(alpha = 0.5)
+```
+<!--end-answer-->
+

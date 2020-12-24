@@ -1,0 +1,72 @@
+---
+chapter: "dataviz-II"
+author: "Ben Baumer"
+difficulty: "Hard"
+date: 2020-07-14 
+version: 0.1
+tags: [first, second, onlineonly]
+id: hamster-win-pen
+---
+
+```{r hamster-win-pen-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Using the `r pkg_macro(babynames)` package, and the name 'Jessie', make a plot that resembles this graphic: [the most unisex names in US history ](https://flowingdata.com/2013/09/25/the-most-unisex-names-in-us-history/).
+
+
+
+<!--begin-answer-->
+```{r, message= FALSE}
+library(tidyverse)
+library(babynames)
+
+jessie <- babynames %>%
+  filter(name == "Jessie", year >= 1930 & year <= 2012) %>%
+  group_by(year) %>%
+  mutate(
+    births = sum(n),
+    percent = n / births
+  )
+
+ggplot(jessie, aes(x = year, y = percent, fill = rev(sex))) +
+  geom_area() +
+  geom_line(data = filter(jessie, sex == "F")) +
+  geom_text(
+    label = "Most\nunisex year", x = 1938, y = 0.40, 
+    size = 6, fontface = "italic", hjust = "left"
+  ) +
+  geom_text(
+    label = "BOYS", x = 2000, y= 0.8, 
+    size = 8, color = "white"
+  ) + 
+  geom_text(
+    label = "GIRLS", x = 2000, y = 0.2, 
+    size = 8, color = "white"
+  ) +
+  geom_line(data = tibble(
+    year = c(1940, 1948), percent = rep(0.5, 2), sex = rep("M", 2))
+  ) + 
+  geom_line(data = tibble(
+    year = rep(1940, 2), percent = c(0.44, 0.50), sex = rep("M", 2))
+  ) +
+  geom_point(data = filter(jessie, year == 1949), aes(size = 10)) +
+  scale_y_continuous(NULL, breaks = 0:2/2, labels = scales::percent, expand = c(0, 0)) + 
+  scale_x_continuous(
+    NULL, breaks = seq(from = 1940, to = 2000, by = 20), 
+    labels = c(1940, "'60", "'80", 2000), expand = c(0, 0)
+  ) + 
+  scale_fill_manual(values = c("#eaac9e", "#92bdd3")) + 
+  theme(
+    panel.background = element_rect(fill = "#92bdd3"), 
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    text = element_text(family = "Century Gothic"), 
+    strip.background = element_blank(),
+    strip.text = element_text(hjust = 0, face = "bold", size = 14)
+  ) + 
+  guides(fill = FALSE, size = FALSE) + 
+  labs(caption = "Source: Social Security Administration | By http://flowingdata.com")
+```
+
+<!--end-answer-->

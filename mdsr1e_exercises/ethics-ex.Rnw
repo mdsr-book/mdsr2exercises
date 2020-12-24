@@ -1,0 +1,164 @@
+<<cache=FALSE, echo=FALSE,include=FALSE>>=
+source('hooks.R', echo=TRUE)
+options(digits=4)
+fig.path='figures/ethics-ex-'
+@
+
+\setkeys{Gin}{width=0.5\textwidth}
+
+<<echo=FALSE,eval=TRUE>>=
+options(continue="  ")
+@
+
+
+\section{Exercises}
+
+\begin{Exercise}
+A researcher is interested in the relationship of weather to sentiment on Twitter.  They want to scrape data from \url{www.wunderground.com} and join that to Tweets in that geographic area at a particular time.  One complication is that Weather Underground limits the number of data points that can be downloaded for free using their API (application program interface).  The researcher sets up six free accounts to allow them to collect the data they want in a shorter time-frame.  What ethical guidelines are violated by this approach to data scraping?
+\end{Exercise}
+\begin{Answer}
+While answers may vary, it should be noted that APIs form an explicit agreement between the service and the users of that service. They cannot ethically be disregarded.
+\end{Answer}
+
+\begin{Exercise}
+A data analyst received permission to post a data set that was scraped from a social media site.  The full data set included name, screen name, email address, geographic location, IP (Internet protocol) address, demographic profiles, and preferences for relationships.  Why might it be problematic to post a deidentified form of this data set where name and email address were removed?
+\end{Exercise}
+\begin{Answer}
+While answers may vary, it should be noted that there may be unintended consequences in terms of user reidentification that arise from posting data sets.  To help minimize possible damage, analysts should remove certain variables (not just username) that would make
+it more straightforward to reidentify the users. 
+\end{Answer}
+
+\begin{Exercise}
+A company uses a machine learning algorithm to determine which job advertisement to display for users searching for technology jobs.  Based on past results, the algorithm tends to display lower paying jobs for women than for men (after controlling for other characteristics than gender).  What ethical considerations might be considered when reviewing this algorithm?
+\end{Exercise}
+\begin{Answer}
+While answers may vary, some discussion of algorithmic bias would be warranted in terms of the review of this algorithm.
+\end{Answer}
+
+\begin{Exercise}
+A reporter carried out a clinical trial of chocolate where a small number of overweight subjects who had received medical clearance were randomized to either eat dark chocolate or not to eat dark chocolate.  They were followed for a period and their change in weight was recorded from baseline until the end of the study.  More than a dozen outcomes were recorded and one proved to be significantly different in the treatment group than the outcome.  This study was publicized and received coverage from a number of magazines and television programs.  Outline the ethical considerations that arise in this situation.
+\end{Exercise}
+\begin{Answer}
+While answers may vary, many ethical issues arise in this example.  These include the lack of filed protocol for the study (which was undertaken by a journalist hoping to shed light on poor conduct and reporting of trials), minimal vetting of the pay-to-publish journal where the results were published, and the inadequate due diligence of the media outlets that reported the results.
+\end{Answer}
+
+\begin{Exercise}
+A data scientist compiled data from several public sources (voter registration, political contributions, tax records) that were used to predict sexual orientation of individuals in a community.  What ethical considerations arise that should guide use of such data sets?
+\end{Exercise}
+\begin{Answer}
+While answers may vary, it should be noted that there may be unintended consequences in terms of user reidentification that arise from posting data sets.  To help minimize possible damage, analysts should remove certain variables (not just username) that would make
+it more straightforward to reidentify the users. 
+\end{Answer}
+
+\begin{Exercise}
+A \emph{Slate} article (\url{http://tinyurl.com/slate-ethics}) discussed whether race/ethnicity should be included in a predictive model for how long a homeless family would stay in 
+homeless services.  Discuss the ethical considerations involved in whether race/ethnicity should be included as a predictor in the model.
+\end{Exercise}
+\begin{Answer}
+While answers may vary, some discussion of algorithmic bias would be warranted in terms of the review of this algorithm.
+\end{Answer}
+
+\begin{Exercise}
+In the United States, most students apply for grants or subsidized loans to finance their college education. Part of this process involves filling in a federal government form called the Free Application for Federal Student Aid (FAFSA). The form asks for information about family income and assets. The form also includes a place for listing the universities to which the information is to be sent. The data collected by FAFSA includes confidential financial information (listing the schools eligible to receive the information is effectively giving permission to share the data with them).
+
+It turns out that the order in which the schools are listed carries important information. Students typically apply to several schools, but can attend only one of them. Until recently, admissions offices at some universities used the information as an important part of their models of whether an admitted student will accept admissions. The earlier in a list a school appears, the more likely the student is to attend that school. 
+
+Here's the catch from the student's point of view. Some institutions use statistical models to allocate grant aid (a scarce resource) where it is most likely to help ensure that a student enrolls.  For these schools, the more likely a student is deemed to accept admissions, the lower the amount of grant aid they are likely to receive.
+
+Is this ethical? Discuss.  
+\end{Exercise}
+
+\begin{Answer}
+Admissions offices and consultants have defended their practice with the argument that the baseline should be the smaller amount of grant aid and that, seen this way, the information is only used to set amounts greater than the baseline, in other words, to help students who are otherwise unlikely to attend the university. This argument might have traction against the argument of whether it's ethical to give different amounts of grant to different students in the same financial situation. From a data-ethics point of view, each student is being tricked into providing information about school preferences that he or she has not been explicitly asked to provide and this information is being used contrary to the student's interest.
+
+Fortunately for students and their families, in 2015 the US government stopped including information about the order of schools.
+\end{Answer}
+
+\begin{Exercise}
+In 2006, AOL released a database of search terms that users had used in the prior month (see \url{http://www.nytimes.com/2006/08/09/technology/09aol.html}).  Research this disclosure and the reaction that ensued.  What ethical issues are involved?  What potential impact has this disclosure had?
+\end{Exercise}
+\begin{Answer}
+While answers may vary, solutions should note there many AOL users were reidentified in this data set, some of which engaged in societally undesirable or illegal practices. The disclosure led to much stricter data releases (or embargoes on such releases) moving forward.
+\end{Answer}
+
+
+\begin{Exercise}
+In the United States, the Confidential Information Protection and Statistical Efficiency Act (CIPSEA) governs the
+confidentiality of data collected by agencies such as the Bureau of Labor Statistics and the Census Bureau.  What are the penalties for willful and knowing disclosure of protected information to 
+unauthorized persons?
+\end{Exercise}
+\begin{Answer}
+The Bureau of Labor Statistics states that its employees, agents, and partner statistical agencies will use the information provided by its respondents for statistical purposes only and will hold the information in confidence to the full extent permitted by law. 
+Willful and knowing disclosure of protected data to unauthorized persons is a felony punishable by up to five years imprisonment and up to a \$250,000 fine.
+\end{Answer}
+
+
+\begin{Exercise}
+A statistical analyst carried out an investigation of the association of gender and teaching evaluations at a university.  They undertook exploratory analysis of the data and carried out a number of bivariate comparisons.  The multiple items on the teaching evaluation were consolidated to a single measure based on these exploratory analyses.  They used this information to construct a multivariable regression model that found evidence for biases.  What issues might arise based on such an analytic approach?
+\end{Exercise}
+\begin{Answer}
+The use of the observed data to select the predictors included in the multivariable model will tend to inflate Type-I error rates.  Use of a holdout sample (or other cross-validation approach) would be necessary to avoid anti-conservative inferences.  
+\end{Answer}
+
+\begin{Exercise}
+An investigative team wants to winnow the set of variables to include in their final multiple regression model.  They have 100 variables and one outcome measured for $n=250$ observations).  They use the following procedure:
+\begin{enumerate}
+\item Fit each of the 100 bivariate models for the outcome as a function of a single predictor, then
+\item Include all of the significant predictors in the overall model.
+\end{enumerate}
+What does the distribution of the p-value for the overall test look like, assuming that there are no associations between any of the predictors and the outcome (all are assumed to be multivariate normal and independent).  
+Carry out a simulation to check your answer.
+\end{Exercise}
+\begin{Answer}
+<<>>=
+numsim <- 250; set.seed(1998)
+genmodel <- function(p=100, n=250, alpha=0.05, twostage=TRUE) {
+  X <- matrix(rnorm(p*n), nrow=n)
+  y <- rnorm(n)
+  keep <- logical(p)
+  for (i in 1:p) {
+    mod <- lm(y ~ X[,i])
+    testpval <- coef(summary(mod))[2,4]
+    keep[i] <- testpval < alpha
+  }
+  if (twostage==TRUE) {
+    keep <- logical(p)
+    for (i in 1:p) {
+      mod <- lm(y ~ X[,i])
+      testpval <- coef(summary(mod))[2,4]
+      keep[i] <- testpval < alpha
+    }
+    smallX <- data.frame(y, X[,keep])
+  } else {   # include all predictors
+    smallX <- data.frame(y, X)
+  }
+  overall <- lm(y ~ ., data=smallX)
+  return(overallp = broom::glance(overall)$p.value)
+}
+res <- do(numsim)*genmodel(twostage=FALSE)  # should be uniform
+binom.test(~ (genmodel < 0.05), data=res)
+@
+
+When all predictors are included in the model, the resulting overall p-value is uniform over the interval from zero to one, with only about 5\% between 0 and 0.05.
+<<freedman1>>=
+ggplot(data = res, aes(x = genmodel)) + 
+  geom_histogram(binwidth = 0.05) +
+  xlab("distribution of overall p-value")
+@
+
+
+<<>>=
+res <- do(numsim)*genmodel(twostage=TRUE)  # no longer uniform
+binom.test(~ (genmodel < 0.05), data=res)
+@
+Note that sometimes that model doesn't converge (if none of the predictors are statistically significant).  
+
+<<freedman2>>=
+ggplot(data = res, aes(x = genmodel)) + 
+  geom_histogram(binwidth = 0.005) + 
+  xlab("distribution of overall p-value")
+@
+When only the significant predictors are included, the resulting overall p-values are much more likely to be significant (this procedure leads to a dramatically inflated Type-I error rate).
+\end{Answer}
+
+

@@ -1,0 +1,24 @@
+---
+chapter: "ethics"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: monkey-ride-bottle
+---
+
+```{r monkey-ride-bottle-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A data analyst received permission to post a data set that was scraped from a social media site.  The full data set included name, screen name, email address, geographic location, IP (internet protocol) address, demographic profiles, and preferences for relationships.  Why might it be problematic to post a deidentified form of this data set where name and email address were removed?
+
+
+  <!--begin-answer-->
+While answers may vary, it should be noted that there may be unintended consequences in terms of user reidentification that arise from posting data sets.  To help minimize possible damage, analysts should remove certain variables (not just username) that would make
+it more straightforward to reidentify the users. 
+  <!--end-answer-->
+
+
+

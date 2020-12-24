@@ -1,0 +1,48 @@
+Question
+========
+
+The following chunk creates a time series graph of median yearly income among states, as captured by the 2017 American Community Survey. 
+
+```{r, message=FALSE, warning=FALSE, fig.width=8}
+library(tidyverse)
+
+large <- population %>%
+  filter(population > 200000000)
+
+ggplot(large, aes(x = year, y = population / 1000000, color = country)) + 
+  geom_point() + 
+  geom_line() + 
+  scale_y_continuous("Population (millions of people)") +
+  scale_x_continuous("Year")
+```
+
+What does each dot represent? 
+
+Answerlist
+----------
+* A country
+* A country in a specific year
+* A year
+* A person
+* One million people
+
+
+
+Solution
+========
+
+Answerlist
+----------
+* False. There are many dots for each country.
+* True.
+* False. There are many dots for each year. 
+* False. A person is represented by a tiny increment on the $y$-axis. 
+* False. One million people are represented by a small increment on the $y$-axis.
+
+Meta-information
+================
+extitle: unit of observation
+exsection: context
+exname: context-obs
+extype: schoice
+exsolution: 01000

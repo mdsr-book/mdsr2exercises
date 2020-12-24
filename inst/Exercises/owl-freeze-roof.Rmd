@@ -1,0 +1,45 @@
+---
+chapter: "data-I"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [baseball, second, third]
+id: owl-freeze-roof 
+---
+
+(ref:owl-freeze-roof) Exercise in file owl-freeze-roof
+
+```{r owl-freeze-roof-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: The Major League Baseball Angels have at times been called the California Angels (`r mdsr2exercises::val_macro(CAL)`), the Anaheim Angels (`r mdsr2exercises::val_macro(ANA)`), and the Los Angeles Angels of Anaheim (`r mdsr2exercises::val_macro(LAA)`). Using the `r df_macro(Teams)` data frame in the `r pkg_macro(Lahman)` package: 
+
+a. Find the 10 most successful seasons in Angels history, defining "successful" as the fraction of regular-season games won in the year. In the table you create, include the `yearID`, `teamID`, `lgID`, `W`, `L`, and `WSWin`. See the documentation for `Teams` for the definition of these variables.
+
+<!--begin-answer-->
+```{r}
+library(Lahman)
+Teams %>%
+  filter(teamID %in% c("CAL", "ANA", "LAA")) %>%
+  dplyr::select(yearID, teamID, lgID, W, L, WSWin) %>%
+  mutate(WPct = W / (W + L)) %>%
+  arrange(desc(WPct)) %>%
+  head(10)
+```
+<!--end-answer-->
+
+b. Have the Angels ever won the World Series?
+
+<!--begin-answer-->
+```{r}
+Teams %>%
+  filter(teamID %in% c("CAL", "ANA", "LAA")) %>%
+  dplyr::select(yearID, teamID, lgID, W, L, WSWin) %>%
+  filter(WSWin == "Y")
+```
+They won the World Series in 2002 as the Anaheim Angels, in their second most successful season in terms of regular-season winning percentage.
+
+<!--end-answer-->
+

@@ -1,0 +1,47 @@
+Question
+========
+
+The following output shows the error message that occurs when you try to push your changes to GitHub. 
+
+[Note that the command `git push` is the same thing as clicking the Push up-arrow in RStudio.]
+
+```{bash, eval=FALSE}
+$ git push
+To https://github.com/YOU/REPO.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/YOU/REPO.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.        
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
+
+What should you do next to solve the problem? 
+
+Answerlist
+----------
+* Pull: `git pull`
+* Push: `git push`
+* Commit: `git commit -m "merge conflict"`
+* Revert the changes from one of the files
+* Check remotes: `git remote -v`
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. This is what you just tried and it didn't work.
+* False. You've already committed. 
+* False. 
+* False. This might help, but it won't solve the problem. 
+
+Meta-information
+================
+extitle: push rejection
+exsection: github
+exname: github-push-rejection
+extype: schoice
+exsolution: 10000

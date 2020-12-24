@@ -1,0 +1,21 @@
+---
+chapter: "ethics"
+author: ""
+difficulty: "Medium"
+date: 2020-07-13 
+version: 0.1
+tags: [first, second, third]
+id: bird-feel-room
+---
+
+```{r bird-feel-room-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: A statistical analyst carried out an investigation of the association of gender and teaching evaluations at a university. They undertook exploratory analysis of the data and carried out a number of bivariate comparisons.  The multiple items on the teaching evaluation were consolidated to a single measure based on these exploratory analyses.  They used this information to construct a multivariable regression model that found evidence for biases.  What issues might arise based on such an analytic approach?
+
+  <!--begin-answer-->
+The use of the observed data to select the predictors included in the multivariable model will tend to inflate Type-I error rates.  Use of a holdout sample (or other cross-validation approach) would be necessary to avoid anti-conservative inferences.  
+  <!--end-answer-->
+
+

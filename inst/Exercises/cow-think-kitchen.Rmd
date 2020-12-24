@@ -1,0 +1,43 @@
+---
+chapter: "text"
+author: ""
+difficulty: "Medium"
+date: 2020-06-25 
+version: 0.1
+tags: [first, second, third]
+id: cow-think-kitchen
+---
+
+```{r cow-think-kitchen-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+library(DickinsonPoems)
+```
+
+TITLE GOES HERE: 
+
+
+Classify Emily Dickinson's poem *The Lonely House* as either positive or negative using the `AFINN` lexicon. Does this match with your own interpretation of the poem? Use the `r pkg_macro(DickinsonPoems)` package.
+
+
+```{r}
+library(DickinsonPoems)
+poem <- get_poem("gutenberg1.txt014")
+```
+
+
+  <!--begin-answer-->
+```{r}
+library(tidytext)
+
+poem_sentiments <- data.frame(poem) %>%
+  unnest_tokens(word, poem) %>%
+  inner_join(get_sentiments("afinn"))
+
+sum(poem_sentiments$value) # negative value
+```
+  
+  <!--end-answer-->
+
+

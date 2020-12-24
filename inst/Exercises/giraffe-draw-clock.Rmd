@@ -1,0 +1,90 @@
+---
+chapter: "join"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Hard"
+version: 0.1
+tags: [fec, campaign spending, third]
+id: giraffe-draw-clock 
+---
+
+(ref:giraffe-draw-clock) Exercise in file giraffe-draw-clock
+
+```{r giraffe-draw-clock-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Use the `r mdsr2exercises::pkg_macro(fec12)` package to download the Federal Election Commission data for 2012. Re-create Figures 2.1 and 2.2 from the text using `r mdsr2exercises::pkg_macro(ggplot2)`. 
+
+<!--begin-answer-->
+```{r giraffe-draw-clock-1, echo = TRUE, warning = FALSE}
+library(fec12)
+
+spent <- contributions %>%
+  filter(transaction_pgi == "G") %>%
+  group_by(cand_id) %>%
+  left_join(candidates, by = c("cand_id")) %>%
+  summarize(
+    name = first(cand_name), party = first(cand_pty_affiliation),
+    state = first(state), district = first(cand_office_district),
+    phase = first(transaction_pgi), office = first(cand_office),
+    N = n(), total = sum(transaction_amt),
+    avg = mean(transaction_amt)
+  ) %>%
+  arrange(desc(total))
+```
+
+```{r giraffe-draw-clock-2, echo = TRUE}
+spent %>%
+  filter(total > 400000) %>%
+  mutate(spent = total / 1000000) %>%
+  ggplot(aes(x = name, y = spent)) +
+  geom_bar(stat = "identity") +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(
+    name = "Money Spent (millions of USD)",
+    labels = scales::dollar
+  ) +
+  #  theme(axis.text = element_text(size = 11)) +
+  coord_flip()
+```
+
+```{r giraffe-draw-clock-3, echo = FALSE}
+spent2 <- contributions %>%
+  filter(transaction_pgi == "G") %>%
+  mutate(
+    spent_against = ifelse(transaction_tp %in% c("24A", "24N"),
+      transaction_amt, 0
+    ),
+    spent_for = ifelse(!transaction_tp %in% c("24A", "24N"),
+      transaction_amt, 0
+    )
+  ) %>%
+  group_by(cand_id) %>%
+  left_join(candidates, by = c("cand_id")) %>%
+  summarize(
+    name = first(cand_name), party = first(cand_pty_affiliation),
+    state = first(cand_st), district = first(cand_office_district),
+    phase = first(transaction_pgi), office = first(cand_office),
+    N = n(), total = sum(transaction_amt), avg = mean(transaction_amt),
+    supporting = sum(spent_for), against = sum(spent_against)
+  ) %>%
+  mutate(attack_pct = against / total) %>%
+  arrange(desc(total))
+spent2 %>%
+  filter(total > 400000) %>%
+  mutate(spent = total / 1000000) %>%
+  select(cand_id, name, supporting, against) %>%
+  pivot_longer(cols = c(-cand_id, -name), names_to = "type", values_to = "spent") %>%
+  ggplot(aes(x = name, y = spent, fill = type)) +
+  geom_col() +
+  scale_x_discrete(name = NULL) +
+  scale_y_continuous(
+    name = "Money Spent (millions of USD)",
+    labels = scales::dollar
+  ) +
+  #  theme(axis.text = element_text(size = 11)) +
+  coord_flip()
+```
+<!--end-answer-->

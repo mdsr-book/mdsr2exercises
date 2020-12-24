@@ -1,0 +1,64 @@
+---
+chapter: "data-I"
+author: "Daniel Kaplan"
+difficulty: "Hard"
+date: 2019-10-24 
+version: 0.1
+tags: [first, second, onlineonly]
+id: rat-win-sheet 
+---
+
+(ref:rat-win-sheet) Exercise in file rat-win-sheet
+
+```{r rat-win-sheet-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: Replicate the wrangling to create the `house_elections` table in the `r pkg_macro(fec)` package from the original Excel source file.
+
+
+<!--begin-answer-->
+See, for example, <http://classic.fec.gov/pubrec/fe2012/federalelections2012.xls> for the Excel workbook. The most up-to-date data wrangling code can be found in the `r mdsr2exercises::pkg_macro(fec)` GitHub repository (<https://github.com/beanumber/fec/blob/master/R/etl_extract.R>). Here we have pasted the code as of this writing.
+
+```{r rat-win-sheet-1, echo = TRUE, eval=FALSE}
+sheets <- readxl::excel_sheets(src)
+house_sheet <- grep("House Results", x = sheets)
+elections <- readxl::read_excel(src, sheet = house_sheet)
+names(elections) <- names(elections) %>%
+  tolower() %>%
+  gsub(" ", "_", x = .) %>%
+  gsub("#", "", x = .) %>%
+  gsub("%", "pct", x = .)
+house_elections <- elections %>%
+  dplyr::filter_(~ fec_id != "n/a", ~ d != "S") %>%
+  dplyr::rename_(
+    district = ~d, incumbent = ~`(i)`,
+    general_votes = ~general_votes_
+  ) %>%
+  dplyr::select_(
+    ~state_abbreviation, ~district, ~fec_id, ~incumbent,
+    ~candidate_name, ~party, ~primary_votes, ~runoff_votes,
+    ~general_votes, ~ge_winner_indicator
+  ) %>%
+  dplyr::mutate_(
+    primary_votes = ~ readr::parse_number(primary_votes),
+    district = ~ trimws(district),
+    is_incumbent = ~ incumbent == "(I)"
+  ) %>%
+  dplyr::group_by_(~fec_id) %>%
+  dplyr::summarize_(
+    state = ~ max(state_abbreviation),
+    district = ~ max(district),
+    incumbent = ~ sum(is_incumbent, na.rm = TRUE) > 0,
+    name = ~ max(candidate_name),
+    party = ~ ifelse("R" %in% party, "R",
+      ifelse("D" %in% party, "D", max(party))
+    ),
+    primary_votes = ~ sum(primary_votes, na.rm = TRUE),
+    runoff_votes = ~ sum(runoff_votes, na.rm = TRUE),
+    general_votes = ~ sum(general_votes, na.rm = TRUE),
+    ge_winner = ~ max(ge_winner_indicator, na.rm = TRUE)
+  )
+```
+<!--end-answer-->

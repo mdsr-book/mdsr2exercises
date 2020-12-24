@@ -1,0 +1,25 @@
+---
+chapter: "iteration"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2020-10-02 
+version: 0.1
+tags: [first, second, third]
+id: octopus-throw-scarf
+---
+
+```{r octopus-throw-scarf-default, include = FALSE}
+mdsr2exercises::setup()
+library(mdsr)
+library(tidyverse)
+```
+
+TITLE GOES HERE: Use data from the `r pkg_macro(NHANES)` package to create a set of scatterplots of `Pulse` as a function of `Age`, `BMI`, `TVHrsDay`, and `BPSysAve` to create a figure like the last one in the chapter.
+Be sure to create appropriate annotations (source, survey name, variables being displayed).
+What do you conclude?
+
+ <!--begin-answer-->
+
+XX
+
+ <!--end-answer-->

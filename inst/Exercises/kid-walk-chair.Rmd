@@ -1,0 +1,59 @@
+---
+chapter: "data-I"
+author: ""
+date: "First edition"
+difficulty: "Easy"
+version: 0.1
+tags: [baseball, second, third]
+id: kid-walk-chair 
+---
+
+(ref:kid-walk-chair) Exercise in file kid-walk-chair
+
+```{r kid-walk-chair-default, include = FALSE}
+library(tidyverse)
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE:   Define two new variables in the `r mdsr2exercises::df_macro(Teams)` data frame in the `r mdsr2exercises::pkg_macro(Lahman)` package. 
+
+a. batting average ($BA$). Batting average is the ratio of hits (`r mdsr2exercises::var_macro(H)`) to at-bats (`r mdsr2exercises::var_macro(AB)`).
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+library(Lahman)
+Teams <- mutate(Teams, BA = H / AB)
+```
+<!--end-answer-->
+
+b. slugging percentage ($SLG$). Slugging percentage is total bases divided by at-bats. To compute total bases, you get 1 for a single, 2 for a double, 3 for a triple, and 4 for a home run.
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+Teams <- mutate(Teams,
+  SLG = (H + X2B + 2 * X3B + 3 * HR) / AB
+)
+```
+<!--end-answer-->
+
+c. Plot out the $SLG$ versus `yearID`, showing the individual teams and a smooth curve.
+
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+ggplot(Teams, aes(x = yearID, y = SLG)) +
+  geom_point() +
+  geom_smooth()
+```
+<!--end-answer-->
+
+d. Same as (c), but plot $BA$ versus year.
+<!--begin-answer-->
+```{r, message = FALSE, warning = FALSE}
+ggplot(Teams, aes(x = yearID, y = BA)) +
+  geom_point() +
+  geom_smooth()
+```
+<!--end-answer-->
+
+
+

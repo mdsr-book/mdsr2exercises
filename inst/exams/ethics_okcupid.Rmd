@@ -1,0 +1,35 @@
+Question
+========
+
+In the following paper, the authors [published a data set of online profiles of nearly 70,000 OkCupid users](https://fortune.com/2016/05/18/okcupid-data-research/):
+
+- Kirkegaard, Emil OW, and Julius D Bjerrekær. 2016. “The OKCupid Dataset: A Very Large Public Dataset of Dating Site Users.” Open Differential Psychology 46.
+
+One purported purpose of the paper was to investigate the relationship between each person's [astrological sign](https://en.wikipedia.org/wiki/Astrological_sign) (see link for explanation) and their personality. The study was later retracted. 
+
+Which of the following statements are true?
+
+Answerlist
+----------
+* The authors did not obtain [informed consent](https://en.wikipedia.org/wiki/Informed_consent) from the OkCupid users before publishing their data online.
+* There is no potential harm in published dating profiles that people have already willingly put online.
+* This study was justified because most scientists would agree that the research question has significant scientific merit. 
+* Because the study was later retracted, it's not possible that any harm was done. 
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. There is significant potential harm. Some users may express preferences for same-sex relationships but live in countries where that behavior is illegal.
+* False. Astrology is generally considered a pseudoscience. 
+* False. It's possible that others could have copied the data before it was taken down.  
+
+Meta-information
+================
+extitle: okcupid
+exsection: ethics
+exname: ethics-okcupid
+extype: mchoice
+exsolution: 1000

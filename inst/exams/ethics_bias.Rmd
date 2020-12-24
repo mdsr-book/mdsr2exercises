@@ -1,0 +1,36 @@
+Question
+========
+
+According to the Wikipedia:
+
+> [Algorithmic bias](https://en.wikipedia.org/wiki/Algorithmic_bias) describes systematic and repeatable errors in a computer system that create unfair outcomes, such as privileging one arbitrary group of users over others. 
+
+Which of the following statements are true:
+
+Answerlist
+----------
+* Algorithms reflect the biases of their creators (both people and data).
+* Algorithmic bias only occurs when the programmer explicitly and intentionally codes the algorithm to discriminate against certain kinds of people. 
+* Algorithms are inherently unbiased---it's only the data that is biased. 
+* Algorithms should never take variables like race into account in order to maintain neutrality. 
+* Algorithms should always take variables like race into account because it is important.
+
+
+Solution
+========
+
+Answerlist
+----------
+* True. 
+* False. Biased data can lead to algorithmic bias.
+* False. Algorithms reflect the biases of their creators. 
+* False. Neutrality is a myth. 
+* False. In many cases this would be problematic.
+
+Meta-information
+================
+extitle: algorithmic bias
+exsection: ethics
+exname: ethics-bias
+extype: mchoice
+exsolution: 10000

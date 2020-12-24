@@ -1,0 +1,66 @@
+---
+chapter: "join"
+author: "Ben Baumer"
+date: "First edition"
+difficulty: "Medium"
+version: 0.1
+tags: [baseball, second, third]
+id: pine-tug-dish 
+---
+
+(ref:pine-tug-dish) Exercise in file pine-tug-dish
+
+```{r pine-tug-dish-default, include = FALSE}
+mdsr2exercises::setup()
+library(tidyverse)
+library(mosaicData)
+```
+
+TITLE GOES HERE: The [Relative Age Effect](https://en.wikipedia.org/wiki/Relative_age_effect}) is an attempt to explain anomalies in the distribution of birth month among athletes. Briefly, the idea is that children born just after the age cut-off to enroll in school will be as much as 11 months older than their fellow athletes, which is enough of a disparity to give them an advantage. That advantage will then be compounded over the years, resulting in notably more professional athletes born in these months. 
+
+a. Display the distribution of birth months of baseball players who batted during the decade of the 2000s.  
+
+
+<!--begin-answer-->
+
+First we will form the histogram of the birth month for all players who batted during the decade of the 2000s.
+
+```{r, message = FALSE, warning = FALSE}
+library(Lahman)
+birth_months <- Batting %>%
+  filter(yearID >= 2000 & yearID < 2010) %>%
+  inner_join(Master, by = c("playerID" = "playerID")) %>%
+  select(birthMonth)
+bb_players <- ggplot(data = birth_months, aes(x = birthMonth)) +
+  geom_bar(aes(y = ..prop..)) +
+  scale_x_continuous(breaks = 1:12)
+bb_players
+```
+
+The peak in August and dip in July are suggestive of the relative age effect, since most schools use August 31st or September 1st as their age cut-off. This means that children born in August would be the oldest in their grade.
+
+<!--end-answer-->
+
+b. How are they distributed over the calendar year? Does this support the notion of a relative age effect? Use the `r mdsr2exercises::df_macro(Births78)` data set from the `r mdsr2exercises::pkg_macro(mosaicData)` package as a reference.
+
+
+<!--begin-answer-->
+But how do we know that August isn't a popular birth month for people generally, not just for professional baseball players?
+The `r mdsr2exercises::df_macro(Births78)` data set provides us with a reference distribution for birth month from the year 1978. Here, we over plot this distribution as a red line.
+
+```{r, message = FALSE, warning = FALSE}
+library(lubridate)
+all_people <- Births78 %>%
+  mutate(month = month(ymd(date))) %>%
+  group_by(month) %>%
+  summarize(N = sum(births)) %>%
+  mutate(pct = N / sum(Births78$births))
+bb_players +
+  geom_line(data = all_people, aes(x = month, y = pct), color = "red")
+```
+
+It appears that baseball players are more likely to be born in August and less likely to be born in July, relative to all people. Some care is called for here, since we haven't yet done the inferential statistics which can guide us about whether the August/July difference we see is large enough to dispell the notion that the different might be due to chance.
+
+The blog posting at <http://www.exegetic.biz/blog/2016/07/most-probable-birth-month> considers similar questions.
+
+<!--end-answer-->
