@@ -20,7 +20,7 @@ TITLE GOES HERE: Use the `babynames` data table from the `r pkg_macro(babynames)
 
 a. Boys' names ending in a vowel.
 
-b. Names ending with "joe," "jo," "Joe," or "Jo" (e.g., *Billyjoe*).
+b. Names ending with "joe", "jo", "Joe", or "Jo" (e.g., *Billyjoe*).
 
 
  <!--begin-answer-->
