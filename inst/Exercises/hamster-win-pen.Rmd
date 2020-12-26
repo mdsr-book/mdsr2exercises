@@ -28,7 +28,9 @@ jessie <- babynames %>%
     births = sum(n),
     percent = n / births
   )
+```
 
+```{r}
 ggplot(jessie, aes(x = year, y = percent, fill = rev(sex))) +
   geom_area() +
   geom_line(data = filter(jessie, sex == "F")) +
@@ -61,7 +63,6 @@ ggplot(jessie, aes(x = year, y = percent, fill = rev(sex))) +
     panel.background = element_rect(fill = "#92bdd3"), 
     panel.grid.major = element_blank(),
     panel.grid.minor = element_blank(),
-    text = element_text(family = "Century Gothic"), 
     strip.background = element_blank(),
     strip.text = element_text(hjust = 0, face = "bold", size = 14)
   ) + 
