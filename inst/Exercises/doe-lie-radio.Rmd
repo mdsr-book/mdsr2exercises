@@ -12,9 +12,7 @@ id: doe-lie-radio
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Consider the following data-driven image, available for purchase at [NBA Playoff Rings](http://champsring.com/products/pro-basketball-2013).
-
-![](https://cdn.shopify.com/s/files/1/0144/6552/products/NBA-Basketball-2013-_6_1024x1024.jpg)
+TITLE GOES HERE: Consider the following data-driven image, available for purchase at [NBA Playoff Rings](http://champsring.com/products/pro-basketball-2013): https://cdn.shopify.com/s/files/1/0144/6552/products/NBA-Basketball-2013-_6_1024x1024.jpg
 
 a. Identify the visual cues, coordinate system, and scale(s). 
 b. How many variables are depicted in the graphic? Explicitly link each variable to a visual cue that you listed above. 
