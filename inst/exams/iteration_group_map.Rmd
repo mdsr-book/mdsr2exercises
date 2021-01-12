@@ -40,6 +40,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: group-map
+exsection: iteration
 exname: iteration-group-map
 extype: schoice
 exsolution: 00001

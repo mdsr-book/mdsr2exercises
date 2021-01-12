@@ -42,6 +42,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: masking
+exsection: function
 exname: function-masking
 extype: mchoice
 exsolution: 1100

@@ -25,6 +25,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: full join
+exsection: relational
 exname: relational-full-join
 extype: schoice
 exsolution: 1000

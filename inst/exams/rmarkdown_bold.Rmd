@@ -28,6 +28,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: bold
+exsection: rmarkdown
 exname: rmarkdown-bold
 extype: schoice
 exsolution: 10000

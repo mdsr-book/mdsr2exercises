@@ -55,6 +55,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: map-dfr
+exsection: iteration
 exname: iteration-map-dfr
 extype: schoice
 exsolution: 10000

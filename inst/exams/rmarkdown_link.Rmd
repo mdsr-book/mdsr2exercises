@@ -28,6 +28,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: link
+exsection: rmarkdown
 exname: rmarkdown-link
 extype: schoice
 exsolution: 10000

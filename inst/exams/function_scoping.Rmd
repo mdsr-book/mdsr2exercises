@@ -40,6 +40,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: scoping
+exsection: function
 exname: function-scoping
 extype: schoice
 exsolution: 1000

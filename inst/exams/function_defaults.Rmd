@@ -41,6 +41,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: defaults
+exsection: function
 exname: function-defaults
 extype: mchoice
 exsolution: 11100

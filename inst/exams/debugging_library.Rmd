@@ -30,6 +30,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: library
+exsection: rmarkdown
 exname: debugging-library
 extype: schoice
 exsolution: 1000

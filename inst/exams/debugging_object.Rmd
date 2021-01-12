@@ -31,6 +31,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: missing object
+exsection: wrangling
 exname: debugging-object
 extype: schoice
 exsolution: 1000

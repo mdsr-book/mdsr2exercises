@@ -52,6 +52,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: argument matching
+exsection: function
 exname: function-arg-matching
 extype: schoice
 exsolution: 10000

@@ -48,6 +48,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: reshape ggplot
+exsection: reshape
 exname: reshape-ggplot
 extype: schoice
 exsolution: 1000

@@ -39,6 +39,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: arguments
+exsection: function
 exname: function-arguments
 extype: schoice
 exsolution: 1000

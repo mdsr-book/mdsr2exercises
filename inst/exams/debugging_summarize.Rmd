@@ -33,6 +33,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: summarize
+exsection: wrangling
 exname: debugging-summarize
 extype: schoice
 exsolution: 1000

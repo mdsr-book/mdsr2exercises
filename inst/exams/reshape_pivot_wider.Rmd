@@ -26,6 +26,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: pivot-wider
+exsection: reshape
 exname: reshape-pivot-wider
 extype: schoice
 exsolution: 10000

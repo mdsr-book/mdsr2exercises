@@ -50,6 +50,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: omitted
+exsection: reshape
 exname: reshape-omitted
 extype: schoice
 exsolution: 100000

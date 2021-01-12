@@ -55,6 +55,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: map
+exsection: iteration
 exname: iteration-map
 extype: schoice
 exsolution: 10000

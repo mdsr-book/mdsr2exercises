@@ -44,6 +44,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: multiplicity
+exsection: relational
 exname: relational-multiplicity
 extype: schoice
 exsolution: 0010

@@ -26,6 +26,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: summarize
+exsection: wrangling
 exname: wrangling-summarize
 extype: schoice
 exsolution: 10000

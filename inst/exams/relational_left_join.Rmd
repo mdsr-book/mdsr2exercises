@@ -25,6 +25,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: left join
+exsection: relational
 exname: relational-left-join
 extype: schoice
 exsolution: 1000

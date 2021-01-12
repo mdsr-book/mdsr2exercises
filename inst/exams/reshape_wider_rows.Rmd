@@ -46,6 +46,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: wider rows
+exsection: reshape
 exname: reshape-wider-rows
 extype: schoice
 exsolution: 1000000

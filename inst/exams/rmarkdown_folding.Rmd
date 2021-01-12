@@ -24,6 +24,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: folding
+exsection: rmarkdown
 exname: rmarkdown-folding
 extype: schoice
 exsolution: 10000

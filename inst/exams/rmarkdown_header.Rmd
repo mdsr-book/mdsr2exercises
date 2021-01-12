@@ -32,6 +32,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: header
+exsection: rmarkdown
 exname: rmarkdown-header
 extype: schoice
 exsolution: 1000

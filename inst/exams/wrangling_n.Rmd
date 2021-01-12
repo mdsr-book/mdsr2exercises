@@ -34,6 +34,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: n function
+exsection: wrangling
 exname: wrangling-n
 extype: schoice
 exsolution: 1000

@@ -35,6 +35,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: messages
+exsection: rmarkdown
 exname: rmarkdown-messages
 extype: schoice
 exsolution: 100000

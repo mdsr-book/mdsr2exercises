@@ -28,6 +28,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: console
+exsection: rmarkdown
 exname: rmarkdown-console
 extype: mchoice
 exsolution: 1001

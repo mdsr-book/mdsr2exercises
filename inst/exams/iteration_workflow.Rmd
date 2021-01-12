@@ -25,6 +25,8 @@ Answerlist
 
 Meta-information
 ================
+extitle: workflow
+exsection: iteration
 exname: iteration-workflow
 extype: schoice
 exsolution: 1000
