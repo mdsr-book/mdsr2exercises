@@ -2,6 +2,17 @@ Question
 ========
 Consider the following R Markdown chunk:
 
+```{r, error=TRUE, include=FALSE}
+if ("package:tidyverse" %in% search()) {
+  pkgs <- c(
+    "package:tidyverse", "package:forcats", "package:stringr", 
+    "package:dplyr", "package:purrr", "package:readr", 
+    "package:tidyr", "package:tibble",  "package:ggplot2"
+  )
+  lapply(pkgs, detach, character.only = TRUE, unload = TRUE)
+}
+```
+
 ```{r}
 library(tidyverse)
 ```
