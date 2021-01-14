@@ -16,9 +16,10 @@ Answerlist
 ----------
 * map the color aesthetic to the `am` variable in `ggplot()`
 * map the color aesthetic to the `am` variable in `geom_point()`
+* map the shape aesthetic to the `am` variable in `geom_point()`
+* map the geom aesthetic to the `am` variable in `ggplot()`
 * add a `facet_wrap()` on the `am` variable
-* any of these
-* none of these
+
 
 Solution
 ========
@@ -26,10 +27,10 @@ Solution
 Answerlist
 ----------
 * True.
-* True
-* True
 * True.
-* False.
+* True.
+* False. There is no `geom` aesthetic in `ggplot()`
+* True.
 
 Meta-information
 ================
@@ -37,4 +38,4 @@ extitle: facetting
 exsection: aesthetics
 exname: aesthetics-facet
 extype: mchoice
-exsolution: 11110
+exsolution: 11101
