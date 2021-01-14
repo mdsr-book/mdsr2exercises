@@ -3,6 +3,13 @@ Question
 
 The following code chunk throws an error. 
 
+```{r, error=TRUE, include=FALSE}
+if ("package:dplyr" %in% search()) {
+  detach("package:dplyr", unload = TRUE)
+}
+```
+
+
 ```{r error=TRUE}
 mtcars %>%
   select(mpg, cyl)

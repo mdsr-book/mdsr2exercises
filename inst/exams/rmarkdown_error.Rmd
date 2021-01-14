@@ -2,6 +2,14 @@ Question
 ========
 Consider the following R Markdown document:
 
+```{r, error=TRUE, include=FALSE}
+if ("package:tidyverse" %in% search()) {
+  detach("package:tidyverse", unload = TRUE)
+}
+to_unload <- find("%>%")
+lapply(to_unload, detach, unload = TRUE)
+```
+
 ```{r, message=FALSE, error=TRUE}
 library(ggplot2)
 
@@ -9,12 +17,14 @@ humans <- starwars %>%
   filter(species == "Human")
 ```
 
-```{r, message=FALSE, error=TRUE}
+
+```{r, message=FALSE, error=TRUE, warning=FALSE}
 library(tidyverse)
 
 ggplot(humans, aes(x = mass, y = height)) + 
   geom_point()
 ```
+
 
 What single change would fix both errors? 
 
