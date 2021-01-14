@@ -1,0 +1,40 @@
+Question
+========
+Consider the following R Markdown chunk:
+
+```{r, message=FALSE}
+library(tidyverse)
+ggplot(starwars, aes(x = mass, y = height)) +
+  geom_point()
+```
+
+Adding which chunk option would result in the same graphic being shown, but without the line of text mentioning "rows containing missing values"?
+
+Answerlist
+----------
+* `message = FALSE`
+* `echo = FALSE`
+* `warning = FALSE`
+* `include = FALSE`
+* `error = FALSE`
+* `eval = FALSE`
+
+Solution
+========
+
+Answerlist
+----------
+* False. This only suppresses messages, not warnings. 
+* False. This suppresses the code in the chunk.
+* True
+* False. This suppresses the graphic output and the code.
+* False. This allows knitting to continue even if there is an error in the chunk.
+* False. This suppresses the evaluation of the code.
+
+Meta-information
+================
+extitle: warnings
+exsection: rmarkdown
+exname: rmarkdown-warnings
+extype: schoice
+exsolution: 001000

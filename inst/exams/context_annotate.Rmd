@@ -1,0 +1,36 @@
+Question
+========
+
+Consider the following data graphic from the FiveThirtyEight article ["Biden Is Polling Better Than Clinton At Her Peak"](https://fivethirtyeight.com/features/biden-is-polling-better-than-clinton-at-her-peak/).
+
+![](https://fivethirtyeight.com/wp-content/uploads/2020/08/skelley-CLINTON-BIDEN-STATES.0805-0804-1.png)
+
+Which of the following statements are true?
+
+Answerlist
+----------
+* The text and arrow draw attention to the moment when Clinton's lead over Trump was largest during the 2016 race, and the magnitude of her lead at that time. 
+* The solid horizontal black line at $y=0$ draws attention to when a candidate is leading or trailing in the polls. 
+* The solid vertical black line at $x=0$ draws attention to the day of the election. 
+* The dotted vertical line at $x=103$ draws attention to the timing of the 2016 Democratic convention and Clinton's polling lead at that time. 
+* The contextual elements do not provide meaningful information and the plot would be just as understandable without them. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* True.
+* True.
+* True.
+* False. The context elements are very helpful. 
+
+Meta-information
+================
+extitle: annotations
+exsection: context
+exname: context-annotate
+extype: mchoice
+exsolution: 11110

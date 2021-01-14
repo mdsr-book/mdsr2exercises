@@ -1,0 +1,35 @@
+Question
+========
+
+According to the [Data Values and Principles](https://datapractices.org/manifesto/) Manifesto, which of the following is **not** a principle?
+
+Answerlist
+----------
+* Build teams with diverse ideas, backgrounds, and strengths.
+* Create reproducible and extensible work.
+* Consider carefully the ethical implications of choices we make when using data, and the impacts of our work on individuals and society.
+* Protect the privacy and security of individuals represented in our data.
+* Respect and invite fair criticism while promoting the identification and open discussion of errors, risks, and unintended consequences of our work.
+* Don't be evil. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* False.
+* False.
+* False.
+* False.
+* False.
+* True.
+
+
+Meta-information
+================
+extitle: manifesto principles
+exsection: ethics
+exname: ethics-principles
+extype: schoice
+exsolution: 000001
