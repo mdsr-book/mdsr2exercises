@@ -17,7 +17,7 @@ How can the code be changed to show two lines, one peach-colored line illustrati
 Answerlist
 ----------
 * Move the mapping of `am` to the color aesthetic to the `ggplot()` function.
-* Move the mapping to `am` to the color aesthetic to the `geom_smooth()` function.
+* Move the mapping of `am` to the color aesthetic to the `geom_smooth()` function.
 * Copy the mapping of `am` to the color aesthetic to the `ggplot()` function.
 * Copy the mapping of `am` to the color aesthetic to the `geom_smooth()` function.
 * Remove the call to `aes()` inside `geom_point()`.
