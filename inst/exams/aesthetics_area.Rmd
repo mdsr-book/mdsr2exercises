@@ -14,8 +14,8 @@ storms_summary
 ```
 
 The two plots shown below show the same data. 
-In the plot on the left, the area of the dots is proportional to the number of storms. 
-In the plot on the right, the radius of the dots is proportional to the number of storms. 
+In the plot on the left, the **area** of the dots is proportional to the number of storms. 
+In the plot on the right, the **radius** of the dots is proportional to the number of storms. 
 
 ```{r, fig.show='hold', out.width="50%"}
 storm_plot <- ggplot(storms_summary, aes(x = status, y = category)) + 

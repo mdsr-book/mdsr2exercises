@@ -1,0 +1,53 @@
+Question
+========
+
+Consider the following list of names of countries. 
+
+```{r, message=FALSE}
+library(tidyverse)
+
+my_countries <- c("Germany", "Ghana", "Russian Federation", "United States of America")
+```
+
+The `str_sub()` function returns a substring of a character vector, by starting at one location and continuing until some other location. 
+
+For example, here we grab the first four characters of "We the people". 
+
+```{r}
+str_sub("We the people", start = 1, end = 4)
+```
+
+The following chunk attempts to extract the first three characters of each entry in the list of countries. 
+
+```{r, error=TRUE}
+map_int(my_countries, str_sub, start = 1, end = 3)
+```
+
+Why doesn't this work? 
+
+Answerlist
+----------
+* Because `str_sub()` returns a `character` vector, but `map_int()` wants an `integer` vector. 
+* Because `str_sub()` is not vectorized. 
+* Because you need parentheses after `str_sub`. 
+* Because you forgot to load the `tidyverse`.
+* Because you forgot to load `purrr`. 
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. `str_sub()` is vectorized.
+* False. You don't need parentheses after `str_sub`
+* False. You did load the `tidyverse`.
+* False. `purrr` is part of the `tidyverse`. 
+
+Meta-information
+================
+extitle: map-error
+exsection: iteration
+exname: iteration-error
+extype: schoice
+exsolution: 10000

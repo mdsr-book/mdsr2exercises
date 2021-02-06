@@ -1,0 +1,53 @@
+Question
+========
+
+The following SQL query attempts to retrieve the birthdates of people in the [IMDb](https://en.wikipedia.org/wiki/IMDb) named "Michael Jordan". 
+Note that this includes both [NBA legend Michael Jordan](https://en.wikipedia.org/wiki/Michael_Jordan) and [Black Panther](https://en.wikipedia.org/wiki/Black_Panther_(film)) superstar [Michael B. Jordan](https://en.wikipedia.org/wiki/Michael_B._Jordan). 
+
+```{sql connection=mdsr::dbConnect_scidb("imdb"), error=TRUE, eval=FALSE}
+SELECT n.id, name, info AS birthdate
+WHERE n.name LIKE 'Jordan, Michael%'
+  AND pi.info_type_id = 21
+FROM name AS n
+LEFT JOIN person_info 
+  ON n.id = pi.person_id;
+```
+
+However, this query returns the following error message:
+
+```
+Error in .local(conn, statement, ...) : 
+  You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE n.name LIKE 'Jordan, Michael%'   AND pi.info_type_id = 21 FROM name AS n L' at line 2
+Calls: <Anonymous> ... engine -> <Anonymous> -> <Anonymous> -> .local -> .Call
+Execution halted
+```
+
+What is the problem? 
+
+Answerlist
+----------
+* The `WHERE` clause must come *after* the `FROM` clause, not before. 
+* The `LEFT JOIN` clause must come *before* the `FROM` clause, not after. 
+* The `FROM` clause should come first. 
+* The `HAVING` clause is missing, and it's required. 
+* The `ORDER BY` clause is missing, and it's required. 
+
+
+Solution
+========
+
+Answerlist
+----------
+* True.
+* False. The `JOIN` clause is technically part of the `FROM` clause, but must come after the word `FROM`
+* False. The `SELECT` clause must come first.
+* False. The `HAVING` clause is optional.
+* False. The `ORDER BY` clause is optional. 
+
+Meta-information
+================
+extitle: order of clauses
+exsection: sql
+exname: sql-clause
+extype: mchoice
+exsolution: 10000
