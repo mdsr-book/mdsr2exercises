@@ -19,7 +19,7 @@ TITLE GOES HERE: Find all titles of Emily Dickinson's poems (not including the R
 (Hint: the titles are all caps.)
 
   <!--begin-answer-->
-```{r}
+```{r eval = FALSE}
 library(DickinsonPoems)
 all_poems <- map(DickinsonPoems::list_poems()[1:10], get_poem)
 
