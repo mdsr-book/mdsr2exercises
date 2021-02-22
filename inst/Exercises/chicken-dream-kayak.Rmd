@@ -1,10 +1,10 @@
 ---
-chapter: "none yet"
+chapter: "algorithmic"
 author: "Nicholas Horton"
-difficulty: "XX"
+difficulty: "Medium"
 date: 2021-02-22 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [baseball, second, onlineonly]
 id: chicken-dream-kayak
 ---
 

@@ -1,0 +1,88 @@
+---
+chapter: "dataviz-III"
+author: "Nicholas Horton"
+difficulty: "Medium"
+date: 2021-02-22 
+version: 0.1
+tags: [shiny, second, onlineonly]
+id: lamb-forget-jacket
+---
+
+```{r lamb-forget-jacket-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: 
+
+Write a Shiny app that allows the user to pick variables from the `HELPrct` data in the `mosaicData` package and to generate a scatterplot.
+Include a checkbox to add a smoother and a choice of transformations for the y axis variable. 
+
+ 
+<!--begin-answer-->
+
+```{r eval = FALSE}
+library(tidyverse)
+library(mosaicData)
+library(shiny)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Scatterplot app"),
+
+    # Sidebar with a slider input for number of bins
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("x", label = h3("X variable"),
+                         choices = names(HELPrct), selected = "cesd"),
+            selectInput("y", label = h3("Y variable"),
+                        choices = names(HELPrct), selected = "i1"),
+            selectInput("xform", label = h3("transformation"),
+                        choices = c("identity", "log", "sqrt"), selected = "identity"),
+            checkboxInput("smoother",
+                        label = "Add a smoother?",
+                        value = FALSE)
+        ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("distPlot")
+        )
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+    dataset <- reactive({
+      xform_fun <-
+        switch(
+          input$xform,
+          identity = function(x) {x},
+          log = function(x) {log(1 + x)},
+          sqrt = function(x) {sqrt(x)}
+        )
+      HELPrct %>%
+        mutate(
+          y = xform_fun(.data[[input$y]])
+        )
+    })
+
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        p <- ggplot(dataset(),
+               aes_string(x = input$x, y = "y")) +
+            geom_point() +
+            labs(y = paste0(input$y, " (", input$xform, ")"))
+        if (input$smoother) {
+            p <- p + geom_smooth(se = FALSE)
+        }
+        p
+})
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+<!--end-answer-->
