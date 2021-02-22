@@ -17,6 +17,8 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: Use the `r mdsr2exercises::pkg_macro(fec12)` package to download the Federal Election Commission data for 2012. Re-create Figures 2.1 and 2.2 from the text using `r mdsr2exercises::pkg_macro(ggplot2)`. 
 
+XX NEEDS TO BE REVIEWED
+
 <!--begin-answer-->
 ```{r giraffe-draw-clock-1, echo = TRUE, warning = FALSE}
 library(fec12)
