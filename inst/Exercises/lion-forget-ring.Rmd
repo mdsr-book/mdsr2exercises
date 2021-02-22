@@ -10,8 +10,6 @@ id: lion-forget-ring
 
 ```{r lion-forget-ring-default, include = FALSE}
 mdsr2exercises::setup()
-library(mdsr)
-library(tidyverse)
 library(DickinsonPoems)
 ```
 

@@ -26,7 +26,7 @@ What do you observe about the association of bill depth and bill length?
 library(palmerpenguins)
 ```
 
-```{r ggyaGalton2-ex, warning = FALSE}
+```{r ggyaGalton2-ex, message = FALSE, warning = FALSE}
 ggplot(data = penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
   labs(x = "Bill depth (mm)", y = "Bill length (mm)") +
   geom_point() +
@@ -44,7 +44,10 @@ How would you summarize the association between bill depth and bill length.
 <!--begin-answer-->
 
 ```{r ggyaGalton3-ex, warning = FALSE, message = FALSE}
-ggplot(data = penguins, aes(x = bill_depth_mm, y = bill_length_mm, colour = sex)) +
+ggplot(
+  data = penguins, 
+  aes(x = bill_depth_mm, y = bill_length_mm, colour = sex)
+) +
   labs(x = "Bill depth (mm)", y = "Bill length (mm)") +
   geom_point() +
   facet_grid(~species) +

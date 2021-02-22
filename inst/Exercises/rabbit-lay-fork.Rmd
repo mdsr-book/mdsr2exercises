@@ -13,9 +13,9 @@ library(tidyverse)
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: LEDECKY: Consider the following data graphic about world-class swimmers. Emphasis is on [Katie Ledecky](https://en.wikipedia.org/wiki/Katie\_Ledecky), a five-time Olympic gold medalist. It may be helpful to peruse the original article, entitled "[Katie Ledecky Is The Present And The Future Of Swimming](https://fivethirtyeight.com/features/katie-ledecky-is-the-present-and-the-future-of-swimming/)".
+TITLE GOES HERE: Consider the following data graphic about world-class swimmers. Emphasis is on [Katie Ledecky](https://en.wikipedia.org/wiki/Katie\_Ledecky), a five-time Olympic gold medalist. It may be helpful to peruse the original article, entitled "[Katie Ledecky Is The Present And The Future Of Swimming](https://fivethirtyeight.com/features/katie-ledecky-is-the-present-and-the-future-of-swimming/)".
 
-```{r echo=FALSE}
+```{r echo=FALSE, fig.width = 6}
 knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/ledecky.png", sep = ""))
 ```
 
@@ -37,9 +37,13 @@ Note: Recall that [*standard deviation*](https://en.wikipedia.org/wiki/Standard_
 1. What variable is mapped to the position aesthetic in the vertical direction?
 
 <!--answer-start-->
+
 1. `distance`
-1. `time_in_sd`
-1. `gender`
+
+2. `time_in_sd`
+
+3. `gender`
+
 <!--answer-end-->
 
 

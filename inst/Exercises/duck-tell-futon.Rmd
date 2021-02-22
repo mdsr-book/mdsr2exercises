@@ -34,7 +34,10 @@ whately_2015 <- whately_2015 %>%
   mutate(Date = as.Date(when))
 ggplot(data = whately_2015, aes(x = Date, y = temperature)) +
   geom_line(size = 0.3, color = "darkgray") +
-  labs(y = "Temperature (degrees C)", title = "Temperature measurements at Macleigh Field Station") +
+  labs(
+    y = "Temperature (degrees C)", 
+    title = "Temperature measurements at Macleish Field Station"
+  ) +
   geom_smooth() +
   scale_x_date()
 ```
