@@ -18,3 +18,8 @@ a. Identify a graphical display that you find compelling. What aspects of the di
 
 b. Identify a graphical display that you find less than compelling. What aspects of the display don't work well?  Are there ways that the display might be improved? Include a screen shot of the display along with your solution.
 
+<!--begin-answer-->
+
+Answers will vary.
+
+<!--end-answer-->

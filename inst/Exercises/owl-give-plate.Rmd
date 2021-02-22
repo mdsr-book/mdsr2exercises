@@ -14,8 +14,6 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: Consider one of the more complicated data graphics listed at (http://mdsr-book.github.io/exercises.html#exercise_25): 
 
-XX check URL
-
 a. What story does the data graphic tell? What is the main message that you take away from it? 
 b. Can the data graphic be described in terms of the taxonomy presented in this chapter? If so, list the visual cues, coordinate system, and scales(s) as you did in Problem 2(a). If not, describe the feature of this data graphic that lies outside of that taxonomy.  
 c. Critique and/or praise the visualization choices made by the designer. Do they work? Are they misleading? Thought-provoking? Brilliant? Are there things that you would have done differently? Justify your response. 
@@ -23,7 +21,7 @@ c. Critique and/or praise the visualization choices made by the designer. Do the
   
 
   <!--begin-answer-->
-We discuss the *New York Times* [graphic on Obama's budget](http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?_r=1). 
+We discuss the *New York Times* graphic on Obama's budget([link](http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html?_r=1)).
 
   -  It seems clear that a large percentage of the federal budget is due to mandatory entitlement programs like Medicare, Social Security, and interest on the national debt. Military spending is by far the largest discretionary area
   -  This is an interactive graphic comprised of four individual graphics. Each of those can be described in this taxonomy, but the interactive elements of switching between them and mousing-over to see contextual information is outside of the taxonomy. 

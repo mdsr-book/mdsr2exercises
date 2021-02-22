@@ -14,3 +14,10 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: Pick one of the Science Notebook entries at https://www.edwardtufte.com/tufte (e.g., "Making better inferences from statistical graphics").
 Write a brief reflection on the graphical principles that are illustrated by this entry.
+
+
+<!--begin-answer-->
+
+Answers will vary.
+
+<!--end-answer-->
