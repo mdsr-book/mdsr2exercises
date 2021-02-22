@@ -1,0 +1,64 @@
+---
+chapter: "none yet"
+author: "Nicholas Horton"
+difficulty: "XX"
+date: 2021-02-22 
+version: 0.1
+tags: [first, second, onlineonly]
+id: chicken-dream-kayak
+---
+
+```{r chicken-dream-kayak-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: 
+
+a. Write a function called `group_consecutive()` that takes a vector of integers as input and returns a character string where the integers are sorted and consecutive values are listed with a `-` and other values separated by commas.
+ 
+<!--begin-answer-->
+```{r message=FALSE, warning = FALSE}
+group_consecutive <- function(x) {
+  # group consecutive values into a range, separate others by commas
+  diffs <- diff(x)
+  result <- as.character(x[1])
+  pending <- FALSE
+  for (i in 1:length(diffs)) {
+    if (diffs[i] == 1) {
+      pending <- TRUE   # move to the next one
+    } else {
+      if (pending) {   # process consecutive then new
+        result <- paste0(result, "-", x[i], ", ", x[i+1])
+        pending <- FALSE
+      } else {  # pending was FALSE
+        result <- paste0(result, ", ", x[i+1])
+      }
+    }
+  }
+  if (pending) {   # added this to solve issue with edge case
+    result <- paste0(result, "-", x[length(x)])
+  }
+  return(result)
+}
+group_consecutive(c(1, 4, 5, 6, 7)) 
+```
+<!--end-answer-->
+
+b. Use the function and the `Lahman` package to concisely list which seasons where Jim Bouton (author of *Ball Four*) played major league baseball.
+
+<!--begin-answer-->
+```{r}
+library(Lahman)
+bouton_years <-
+  filter(Pitching, playerID == "boutoji01") %>%
+  arrange(yearID) %>%
+  select(yearID) %>%
+  unique() %>%
+  pull(yearID)
+bouton_years
+group_consecutive(bouton_years)
+```
+
+<!--end-answer-->
+
+
