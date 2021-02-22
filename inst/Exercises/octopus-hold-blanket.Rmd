@@ -37,7 +37,8 @@ The distribution of temperature in July 2013 follows a rough zigzag pattern, wit
 ```{r, message = FALSE, warning = FALSE}
 ggplot(data = july_temp, aes(x = day, y = wind_speed)) +
   geom_point() +
-  labs(title = "Wind Speeds in July", y = "wind speed (mph)")
+  labs(title = "Wind Speeds in July", y = "wind speed (mph)") + 
+  geom_smooth()
 ```
 
 There were a couple of days that the wind speed rose to around 25 mph, whereas the rest of the month did not generally have wind speeds much past 20 mph.
