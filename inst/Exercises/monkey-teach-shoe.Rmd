@@ -16,6 +16,7 @@ TITLE GOES HERE: Which `dplyr` operation is depicted below?
 ```{r  out.width = "50%", echo = FALSE}
 knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/dplyr-filter.png", sep = ""))
 ```
+
 <!--answer-start-->
 `filter`
 <!--answer-end-->
