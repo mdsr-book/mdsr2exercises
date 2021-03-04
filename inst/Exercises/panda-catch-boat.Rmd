@@ -15,7 +15,7 @@ mdsr2exercises::setup()
 ```
 
 
-TITLE GOES HERE: Use the `r pkg("nycflights13")` package and the `r pkg_macro(flights)` and `r pkg_macro(planes)` tables to answer the following questions: 
+TITLE GOES HERE: Use the `r pkg_macro("nycflights13")` package and the `r pkg_macro(flights)` and `r pkg_macro(planes)` tables to answer the following questions: 
 
 a. What is the oldest plane (specified by the `tailnum` variable) that flew from New York City airports in 2013?
 

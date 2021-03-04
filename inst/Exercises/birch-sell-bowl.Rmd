@@ -12,7 +12,7 @@ id: birch-sell-bowl
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: The `HELPfull` data within the `r pkg("mosaicData")` package contains information about the Health Evaluation and Linkage to Primary Care (HELP) randomized trial in *tall* format. 
+TITLE GOES HERE: The `HELPfull` data within the `r pkg_macro("mosaicData")` package contains information about the Health Evaluation and Linkage to Primary Care (HELP) randomized trial in *tall* format. 
 
 a) Generate a table of the data for subjects (`ID`) 1, 2, and 3 that includes the `ID` variable, the `TIME` variable, and the `DRUGRISK` and `SEXRISK` variables (measures of drug and sex risk-taking behaviors, respectively).
 
@@ -35,7 +35,7 @@ b) The HELP trial was designed to collect information at 0, 6, 12, 18, and 24 mo
 The subject was observed at baseline, six months, and 24 months.
 <!--answer-end-->
 
-c) Let's restrict our attention to the data from the baseline (`TIME = 0`) and 6-month data.  Use the `pivot_wider()` function from the `r pkg("dplyr")` package to create a table that looks like the following:
+c) Let's restrict our attention to the data from the baseline (`TIME = 0`) and 6-month data.  Use the `pivot_wider()` function from the `r pkg_macro("dplyr")` package to create a table that looks like the following:
 
 ```{r echo = FALSE}
 HELPfull %>%

@@ -22,7 +22,7 @@ b. What is the accuracy of your decision tree?
 
  <!--begin-answer-->
 
-```{r}
+```{r message = FALSE}
 library(tidymodels)
 library(mosaicData)
 form <- formula("homeless ~ age + sex + cesd + substance")
@@ -32,8 +32,21 @@ mod_tree <- decision_tree(mode = "classification") %>%
 mod_tree
 ```
 
-XX accuracy
- 
+```{r message = FALSE}
+HELPrct <- HELPrct %>%
+   mutate(predicted = 
+             predict(mod_tree, new_data = HELPrct) %>%
+             pull(.pred_class)
+   )
+mosaic::tally(~ homeless, format = "prop", data = HELPrct)
+mosaic::tally(~ predicted + homeless, data = HELPrct)
+```
+
+The accuracy is poor: only 67% of the observations were correctly classified.
+
+```{r}
+(121 + 182) / (121 + 62 + 88 + 182)
+```
  
 <!--end-answer-->
 

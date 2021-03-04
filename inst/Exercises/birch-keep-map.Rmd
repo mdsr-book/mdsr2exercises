@@ -19,6 +19,98 @@ TITLE GOES HERE:	Create a Shiny app that demonstrates the use of at least five w
 
 <!--begin-answer-->
  
-XX answer needed
+```{r eval = FALSE}
+library(shiny)
+library(ggplot2)
+
+# Define UI ----
+ui <- fluidPage(
+  titlePanel("Exploring widgets"),
+  
+  fluidRow(
+    
+    column(3,
+           h3("Single checkbox"),
+           checkboxInput("checkbox", "Happy?", value = TRUE)),
+    
+    column(3, 
+           checkboxGroupInput("checkGroup", 
+                              h3("Checkbox group"), 
+                              choices = list("Apples" = 1, 
+                                             "Peaches" = 2, 
+                                             "Pears" = 3),
+                              selected = 1)),
+    
+    column(3, 
+           dateInput("date", 
+                     h3("Date input"), 
+                     value = "2021-01-01"))   
+  ),
+
+  fluidRow(
+    
+    column(3,
+           dateRangeInput("dates", h3("Date range"))),
+    
+    column(3,
+           fileInput("file", h3("File input"))),
+    
+    column(3, 
+           h3("Help text"),
+           helpText("Note: help text isn't a true widget,", 
+                    "but it provides an easy way to add text to",
+                    "accompany other widgets.")),
+    
+    column(3, 
+           numericInput("num", 
+                        h3("Numeric input"), 
+                        value = 1))   
+  ),
+  
+  fluidRow(
+    
+    column(3,
+           radioButtons("radio", h3("Radio buttons"),
+                        choices = list("sally" = 1, "fred" = 2),
+                          selected = 1)),
+    
+    column(3,
+           selectInput('x', 'Diamonds variables', names(diamonds))),
+    
+    column(3, 
+           sliderInput("slider1", h3("Sliders"),
+                       min = 0, max = 100, value = 50),
+           sliderInput("slider2", "",
+                       min = 0, max = 100, value = c(25, 75))
+    ),
+    
+    column(3, 
+           textInput("text", h3("Text input"), 
+                     value = "Enter text..."))  
+  ),
+  fluidRow(
+    column(3,
+           h3("Output"),
+           textOutput("output1"),
+           textOutput("output2"),
+           textOutput("output3")),
+    column(3,
+           plotOutput("plot")),
+    column(3,
+           h3("Add another display here..."))
+  )
+)
+
+# Define server logic ----
+server <- function(input, output) {
+    output$output1 <- renderText({ ifelse(input$checkbox, "Happy!", "Not Happy...")})
+    output$output2 <- renderText({ as.character(input$slider1) })
+    output$output3 <- renderText({ as.character(input$text) })
+    output$plot <- renderPlot({ ggplot(diamonds, aes_string(x = input$x)) + geom_histogram()})
+}
+
+# Run the app ----
+shinyApp(ui = ui, server = server)
+```
  
 <!--end-answer-->

@@ -17,6 +17,7 @@ TITLE GOES HERE: What type of join operation is depicted below?
 ```{r  out.width = "50%", echo = FALSE}
 knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/dplyr-left-join.png", sep = ""))
 ```
+
 <!--answer-start-->
 `left_join`
 <!--answer-end-->
