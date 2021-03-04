@@ -10,7 +10,6 @@ Which of the following statements are true?
 Answerlist
 ----------
 * This algorithm could be used to discriminate against people based on their sexual orientation.
-* This algorithm could be used to help people based on their sexual orientation. 
 * There are no ethical issues with this algorithm.
 * This algorithm is faulty because it was trained on a set of faces that were overwhelming white. 
 * Ben thinks that the authors cannot be blamed, because they are just making an algorithm and they can't control how people use it. 
@@ -21,7 +20,6 @@ Solution
 
 Answerlist
 ----------
-* True. 
 * True.
 * False. There are plenty of ethical issues!
 * True. 
@@ -34,4 +32,4 @@ extitle: gaydar
 exsection: ethics
 exname: ethics-gaydar
 extype: mchoice
-exsolution: 110100
+exsolution: 10100
