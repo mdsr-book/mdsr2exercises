@@ -1,5 +1,5 @@
 ---
-chapter: "sql-I"
+chapter: "sqlI"
 author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2021-03-06 
