@@ -1,0 +1,26 @@
+---
+chapter: "sql-I"
+author: "Nicholas Horton"
+difficulty: "Easy"
+date: 2021-03-06 
+version: 0.1
+tags: [first, second, onlineonly]
+id: rat-mean-futon
+---
+
+```{r rat-mean-futon-default, include = FALSE}
+mdsr2exercises::setup()
+```
+
+TITLE GOES HERE: What years of data are available in the `r pkg_macro(mdsr)` package `imdb` database `title` table?
+(Hint: create a connection with a call to `dbConnect_scidb("imdb")`.)
+
+<!--begin-answer-->
+
+```{r}
+db <- dbConnect_scidb("imdb")
+DBI::dbGetQuery(db, "SELECT production_year, COUNT(*) as num_movies FROM title GROUP BY production_year ORDER BY production_year DESC;")
+```
+
+<!--end-answer-->
+
