@@ -22,18 +22,26 @@ The empirical probability that she has to wait is 0.6065.
 
 ```{r }
 numsim <- 10000
-samp1 <- rexp(numsim, rate = 2) # E[X] = 1/2
-samp2 <- rexp(numsim, rate = 2)
-actual1 <- ifelse(samp1 < 0.25, 0.25, samp1)
-actual2 <- actual1 + samp2
-favstats(~actual2)
-count <- tally(~ (samp1 >= 0.25))
+sims <- tibble(
+  samp1 = rexp(numsim, rate = 2), # E[X] = 1/2
+  samp2 = rexp(numsim, rate = 2),
+  actual1 = ifelse(samp1 < 0.25, 0.25, samp1),
+  actual2 = actual1 + samp2,
 # Counting number of times the simulation goes over 15 min
-cat(
-  "Estimated chance that the applicant with an 8:15 appointment has to wait is",
-  count[1] / numsim
+  over_15 = samp1 >= 0.25
 )
+sims %>%
+  skimr::skim(actual2)
+
+sims %>%
+  group_by(over_15) %>%
+  count()
 ```
+
+
+
+The estimated chance that the applicant with an 8:15 appointment has to wait is `r sum(sims$over_15)/nrow(sims)`.
+
 <!--end-answer-->
 
 

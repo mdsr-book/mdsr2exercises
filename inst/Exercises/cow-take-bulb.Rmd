@@ -115,7 +115,7 @@ ds <- dest1993 %>%
 
 ```{r eval = FALSE }
 ds %>%
-  skimsr::skim(change1, change2)
+  skimr::skim(change1, change2)
 ```
 
 ```{r eval = FALSE}
