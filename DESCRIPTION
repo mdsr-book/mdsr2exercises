@@ -1,7 +1,7 @@
 Package: mdsr2exercises
 Type: Package
 Title: Exercises for the 2nd edition of MDSR
-Version: 0.7.2
+Version: 0.7.2.9000
 Authors@R: c(
     person("Benjamin S.", "Baumer", email = "ben.baumer@gmail.com",
       role = c("aut"), 
