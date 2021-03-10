@@ -42,10 +42,9 @@ length(questions$items)
 substr(questions$items[[1]]$title, 1, 68)
 substr(questions$items[[2]]$title, 1, 68)
 substr(questions$items[[3]]$title, 1, 68)
-questions
 ```
-  
-  How many questions were returned? Without using jargon, describe in words what is being displayed and how it might be used.
+
+How many questions were returned? Without using jargon, describe in words what is being displayed and how it might be used.
 
   <!--begin-answer-->
 
