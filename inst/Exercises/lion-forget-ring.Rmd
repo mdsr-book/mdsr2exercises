@@ -1,6 +1,6 @@
 ---
 chapter: "text"
-author: ""
+author: "Nicholas J. Horton"
 difficulty: "Hard"
 date: 2020-06-25 
 version: 0.1
@@ -41,9 +41,16 @@ poems_df %>%
 poems_df %>%
   inner_join(get_sentiments("afinn")) %>%
   summarize(afinn = sum(value))
+```
 
+```{r}
+# need to run this once to install the NRC lexicon
+sentiments <- get_sentiments("nrc")
+```
+
+```{r}
 poems_df %>%
-  inner_join(get_sentiments("nrc")) %>%
+  inner_join(sentiments) %>%
   group_by(sentiment) %>%
   count(sentiment) %>%
   arrange(desc(n)) %>%
