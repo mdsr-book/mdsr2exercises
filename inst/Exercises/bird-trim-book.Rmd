@@ -31,7 +31,7 @@ sims <- tibble(
   over_15 = samp1 >= 0.25
 )
 sims %>%
-  skimr::skim(actual2)
+  mdsr::skim(actual2)
 
 sims %>%
   group_by(over_15) %>%
