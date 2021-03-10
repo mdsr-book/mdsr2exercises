@@ -14,7 +14,7 @@ mdsr2exercises::setup()
 library(mdsr)
 ```
 
-TITLE GOES HERE: Consider the $k$-means clustering algorithm applied to the BigCities data.
+TITLE GOES HERE: Consider the $k$-means clustering algorithm applied to the `BigCities` data.
 Would you expect to obtain different results if the location coordinates were *projected* (see the "Working with spatial data" chapter)?  
 
 
@@ -26,30 +26,28 @@ BigCities <- world_cities %>%
   arrange(desc(population)) %>%
   head(4000) %>%
   select(longitude, latitude)
-
 ```
 
 ```{r message=FALSE}
-library(sp)
-coordinates(BigCities) <- ~ longitude + latitude
-proj4string(BigCities) <- CRS("+proj=longlat")
+library(sf)
 BigCities_proj <- BigCities %>%
-  spTransform(CRS("+proj=cass +lon_0=12.4521272222222 +lat_0=41.9244030555555 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs"))
+  st_as_sf(coords = c("longitude", "latitude")) %>%
+  st_set_crs(4326) %>%
+  st_transform("+proj=cass +lon_0=12.4521272222222 +lat_0=41.9244030555555 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
 ```
 
 ```{r cluster-cities-projected, message=FALSE}
 set.seed(15)
 library(mclust)
 city_clusts <- BigCities_proj %>%
-  coordinates() %>%
+  st_coordinates() %>%
   kmeans(centers = 6) %>%
   fitted("classes") %>%
   as.character()
 big_clusters <- BigCities_proj %>%
-  as_tibble() %>%
   mutate(cluster = city_clusts)
-ggplot(data = big_clusters, aes(x = longitude, y = latitude)) +
-  geom_point(aes(color = cluster), alpha = 0.5)
+ggplot(data = big_clusters) +
+  geom_sf(aes(color = cluster), alpha = 0.5)
 ```
 <!--end-answer-->
 

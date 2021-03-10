@@ -28,8 +28,10 @@ city_clusts <- BigCities %>%
   kmeans(centers = 8) %>%
   fitted("classes") %>%
   as.character()
-BigCities <- BigCities %>% mutate(cluster = city_clusts)
-BigCities %>% ggplot(aes(x = longitude, y = latitude)) +
+BigCities <- BigCities %>% 
+  mutate(cluster = city_clusts)
+BigCities %>% 
+  ggplot(aes(x = longitude, y = latitude)) +
   geom_point(aes(color = cluster), alpha = 0.5)
 ```
 <!--end-answer-->
