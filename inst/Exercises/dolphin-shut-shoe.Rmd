@@ -18,7 +18,41 @@ mdsr2exercises::setup()
 TITLE GOES HERE:	Create your own `r pkg_macro(ggplot2)` theme.  Describe the choices you made and justify why you made them using the principles introduced earlier.
 
 <!--begin-answer-->
- 
-XX ANSWER NEEDED
+
+For example, here is the theme show in the book:
+
+```{r}
+mdsr::theme_mdsr
+```
+
+Many examples of other themes are found in various packages, most notably `r pkg_macro("ggthemes")`. 
+
+```{r}
+ggthemes::theme_economist
+```
+
+A custom theme can be created by writing a function that calls an existing theme, and simply makes some modifications to it. 
+
+For example, the following function produces a theme that uses [Smith College's colors](https://www.smith.edu/about-smith/college-relations/brand-guidelines/fonts-colors) as facet labels. 
+
+```{r}
+theme_smith <- function() {
+  ggplot2::theme_grey() %+replace%
+    ggplot2::theme(
+      strip.background = ggplot2::element_rect(
+        fill = "#002855"
+      ),
+      strip.text = ggplot2::element_text(
+        color = "#F2A900"
+      )
+    )
+}
+
+ggplot(mtcars, aes(x = disp, y = mpg)) + 
+  geom_point() + 
+  facet_wrap(~cyl) + 
+  theme_smith()
+```
+
 
 <!--end-answer-->
