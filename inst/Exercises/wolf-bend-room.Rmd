@@ -22,6 +22,7 @@ TITLE GOES HERE: Use the `r pkg_macro(tigris)` package to make the congressional
 library(fec12)
 library(tigris)
 library(leaflet)
+options(tigris_use_cache = TRUE)
 
 district_elections <- results_house %>%
   mutate(district = parse_number(district_id)) %>%
