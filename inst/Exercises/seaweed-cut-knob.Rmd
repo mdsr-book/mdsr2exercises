@@ -6,6 +6,8 @@ date: 2020-07-20
 version: 0.1
 tags: [first, second, third]
 id: seaweed-cut-knob
+editor_options: 
+  chunk_output_type: inline
 ---
 
 ```{r seaweed-cut-knob-default, include = FALSE}
@@ -28,20 +30,16 @@ library(RMySQL)
 con <- mdsr::dbConnect_scidb(dbname = "lahman")
 ```
 
-```{r}
-library(RMySQL)
-
-myquery <- "SELECT concat(namelast, ',', namefirst) as name, 
-            sum(hr) as tHR, sum(sb) as tSB, 
-            sum(h) / sum(ab) as BAvg
-          FROM Batting b
-          LEFT JOIN Master m ON b.playerid = m.playerid
-          GROUP BY b.playerid
-          HAVING tHR >= 300 AND tSB >= 300
-          ORDER BY BAvg desc LIMIT 0,6;"
-
-
-dbGetQuery(con, myquery)
+```{sql, connection=con}
+SELECT concat(namelast, ', ', namefirst) AS name, 
+   SUM(hr) AS tHR, SUM(sb) AS tSB, 
+   SUM(h) / SUM(ab) AS BAvg
+FROM Batting b
+LEFT JOIN Master m ON b.playerid = m.playerid
+GROUP BY b.playerid
+HAVING tHR >= 300 AND tSB >= 300
+ORDER BY BAvg DESC 
+LIMIT 0,6
 ```
   
 <!--end-answer-->
@@ -52,22 +50,16 @@ b. List the names of all pitchers who have at least 300 wins (W) and 3,000 strik
 
 <!--begin-answer-->
   
-```{r }
-library(RMySQL)
-
-
-myquery <- "
-SELECT concat(namelast, ', ', namefirst) as name, 
-  sum(w) as tW, sum(so) as tSO, 
-  sum(w) / sum(w+l) as WPct
+```{sql, connection=con}
+SELECT concat(namelast, ', ', namefirst) AS name, 
+  SUM(w) AS tW, SUM(so) AS tSO, 
+  SUM(w) / SUM(w+l) AS WPct
 FROM Pitching p
 LEFT JOIN Master m ON p.playerid = m.playerid
 GROUP BY p.playerid
 HAVING tW >= 300 AND tSO >= 3000
 ORDER BY WPct desc
-LIMIT 0,6;"
-
-dbGetQuery(con, myquery)
+LIMIT 0,6
 ```
 <!--end-answer-->
 
@@ -76,28 +68,23 @@ c. The attainment of either 500 home runs (HR) or 3,000 hits (H) in a career is 
 
 
 <!--begin-answer-->
-```{r}
-library(RMySQL)
-
-myquery <- "
+```{sql, connection=con}
 SELECT Name, tHR, tH, is_inducted 
 FROM
   (SELECT m.playerID, 
-          concat(namelast, ' ', namefirst) as Name,
-          sum(hr) as tHR, sum(h) as tH
+          concat(namelast, ' ', namefirst) AS Name,
+          SUM(hr) AS tHR, SUM(h) AS tH
    FROM Batting b
    JOIN Master m ON m.playerID = b.playerID
    GROUP BY b.playerID
-   HAVING tHR >= 500 OR tH >= 3000) as bg
+   HAVING tHR >= 500 OR tH >= 3000) AS bg
 LEFT JOIN 
   (SELECT h.playerID,
-          sum(if(inducted = 'Y', 1, 0)) as is_inducted
+          SUM(if(inducted = 'Y', 1, 0)) AS is_inducted
    FROM HallOfFame h
-   GROUP BY h.playerID) as hof 
+   GROUP BY h.playerID) AS hof 
 ON hof.playerID = bg.playerID
-WHERE is_inducted < 1;"
-
-dbGetQuery(con, myquery)
+WHERE is_inducted < 1
 ```
 
 Craig Biggio was inducted into the Hall of Fame in 2015. Pete Rose was banned from baseball in 1989, and the candidacies of the other four players are compromised by their alleged (or confirmed) steroid use. 
