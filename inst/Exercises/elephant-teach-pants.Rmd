@@ -26,7 +26,8 @@ Carry out a simulation to check your answer.
 
 <!--begin-answer-->
 ```{r elephant-teach-pants-answer1, cache = TRUE}
-numsim <- 250
+## XX Crank this back up to 250 when we're ready to submit
+numsim <- 25
 set.seed(1998)
 genmodel <- function(p = 100, n = 250, alpha = 0.05, twostage = TRUE) {
   X <- matrix(rnorm(p * n), nrow = n)
