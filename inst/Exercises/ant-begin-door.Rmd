@@ -33,7 +33,7 @@ knitr::kable(
 ```
 
 <!--begin-answer-->
-```{r eval = FALSE}
+```{r eval = TRUE}
 library(palmerpenguins)
 mod <- broom::tidy(lm(body_mass_g ~ flipper_length_mm + sex, data = penguins))
 knitr::kable(mod, digits = c(0, 1, 1, 1, 4), longtable = TRUE)
