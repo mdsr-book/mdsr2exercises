@@ -12,6 +12,9 @@ id: bear-bid-drawer
 mdsr2exercises::setup()
 library(tidyverse)
 library(mdsr)
+if ("package:recipes" %in% search()) {
+  detach("package:recipes")
+}
 detach("package:dplyr")
 ```
 
