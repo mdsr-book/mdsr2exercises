@@ -10,12 +10,15 @@ id: bear-bid-drawer
 
 ```{r bear-bid-drawer-default, include = FALSE}
 mdsr2exercises::setup()
-library(tidyverse)
-library(mdsr)
 if ("package:recipes" %in% search()) {
   detach("package:recipes")
 }
-detach("package:dplyr")
+if ("package:fec12" %in% search()) {
+  detach("package:fec12", force = TRUE)
+}
+if ("package:dplyr" %in% search()) {
+  detach("package:dplyr", force = TRUE)
+}
 ```
 
 TITLE GOES HERE: The following code chunk throws an error. 
