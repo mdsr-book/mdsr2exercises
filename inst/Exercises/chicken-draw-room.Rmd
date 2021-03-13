@@ -25,7 +25,8 @@ coef(mod)
 confint(mod)
 ```
 
-```{r eval=TRUE, message=FALSE, error=TRUE}
+```{r chicken-draw-room-resample, eval=TRUE, message=FALSE, error=TRUE}
+search()
 library(rsample)
 Gestation %>%
   bootstraps(times = 2000) %>%

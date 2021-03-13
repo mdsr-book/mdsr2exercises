@@ -10,14 +10,8 @@ id: bear-bid-drawer
 
 ```{r bear-bid-drawer-default, include = FALSE}
 mdsr2exercises::setup()
-if ("package:recipes" %in% search()) {
-  detach("package:recipes")
-}
-if ("package:fec12" %in% search()) {
-  detach("package:fec12", force = TRUE)
-}
-if ("package:dplyr" %in% search()) {
-  detach("package:dplyr", force = TRUE)
+if (isNamespaceLoaded("dplyr")) {
+  unloadNamespace("package:dplyr")
 }
 ```
 
@@ -34,4 +28,8 @@ What is the problem?
 You need to load the `tidyverse`.
 <!--answer-end-->
 
+```{r, include=FALSE}
+# re-attached dplyr
+library(dplyr)
+```
 

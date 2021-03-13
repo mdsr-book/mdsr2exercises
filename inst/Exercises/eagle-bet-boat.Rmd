@@ -1,6 +1,6 @@
 ---
 chapter: "not working"
-author: ""
+author: "Nicholas J. Horton"
 difficulty: "Medium"
 date: 2020-06-29 
 version: 0.1

@@ -9,7 +9,6 @@ id: bird-chew-dress
 ---
 
 ```{r bird-chew-dress-default, include = FALSE}
-library(mdsr)
 mdsr2exercises::setup()
 ```
 
@@ -20,6 +19,7 @@ Count the number of missing values in the `SEXRISK` variable in the `HELPfull` d
 
  <!--begin-answer-->
 ```{r }
+library(tidyverse)
 library(mosaicData)
 count_na <- function(x) {
   return(sum(is.na(x)))
@@ -29,7 +29,9 @@ HELPfull %>%
   pull(SEXRISK) %>%
   count_na()
 
-summary(HELPfull$SEXRISK)
+HELPfull %>%
+  pull(SEXRISK) %>%
+  summary()
 ```
   <!--end-answer-->
 

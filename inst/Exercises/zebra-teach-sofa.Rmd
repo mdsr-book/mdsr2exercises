@@ -9,7 +9,6 @@ id: zebra-teach-sofa
 ---
 
 ```{r zebra-teach-sofa-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
