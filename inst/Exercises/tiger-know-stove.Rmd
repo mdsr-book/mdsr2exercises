@@ -1,6 +1,6 @@
 ---
 chapter: "algorithmic"
-author: ""
+author: "Nicholas J. Horton"
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
@@ -49,7 +49,7 @@ grabfirstdigit(c("3097.24", "-123.48", "99.8", "0.97", "5043"))
 data(corporate.payment)
 class(corporate.payment$Amount)
 corpdigits <- grabfirstdigit(as.character(corporate.payment$Amount))
-tally(~corpdigits, format = "proportion")
+mosaic::tally(~corpdigits, format = "proportion")
 
 plot(benford(corporate.payment$Amount, number.of.digits = 1))
 ```
