@@ -19,6 +19,7 @@ TITLE GOES HERE: The `r pkg_macro(atus)` package includes data from the American
 
 Answers may vary.  See the following for one possibility.
 ```{r warning=FALSE}
+library(mosaic)
 library(atus)
 summary(atusresp)
 ```
