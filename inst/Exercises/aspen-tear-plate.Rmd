@@ -27,7 +27,8 @@ TITLE GOES HERE: Create a DTM (document term matrix) for the collection of Emily
 library(tm)
 library(DickinsonPoems)
 
-all_poems <- purrr::map(DickinsonPoems::list_poems(), get_poem)
+all_poems <- DickinsonPoems::list_poems() %>%
+  purrr::map(get_poem)
 poemCorpus <- Corpus(VectorSource(all_poems))
 poemCorpus <- poemCorpus %>%
   tm_map(stripWhitespace) %>%
