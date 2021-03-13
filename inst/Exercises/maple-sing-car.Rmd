@@ -161,7 +161,7 @@ plot(g0,
 )
 ```
 
-```{r}
+```{r, include=FALSE}
 # needed to clean up namespace
 detach("package:igraph", unload = TRUE)
 ```
