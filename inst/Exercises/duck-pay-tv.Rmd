@@ -1,6 +1,6 @@
 ---
 chapter: "sqlII"
-author: ""
+author: "Benjamin S. Baumer"
 difficulty: "Easy"
 date: 2020-07-19 
 version: 0.1
@@ -12,11 +12,15 @@ id: duck-pay-tv
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Consider the following queries:
+TITLE GOES HERE: The `flights` table in the `airlines` database contains the following indexes:
 
-XX BB ?? how should they know what is indexed?
+```{sql, connection=mdsr::dbConnect_scidb("airlines")}
+SHOW INDEXES FROM flights;
+```
 
-```{r eval=FALSE, engine="mysql"}
+Consider the following queries:
+
+```{sql, eval=FALSE}
 SELECT * FROM flights WHERE cancelled = 1;
 SELECT * FROM flights WHERE carrier = "DL";
 ```
@@ -24,9 +28,9 @@ SELECT * FROM flights WHERE carrier = "DL";
 Which query will execute faster? Justify your answer.
 
 
- <!--begin-answer-->
+<!--begin-answer-->
 The latter is faster because there is an index built on `carrier`.
-
- <!--end-answer-->
+Conversely, there is no index built on `cancelled`. 
+<!--end-answer-->
 
 
