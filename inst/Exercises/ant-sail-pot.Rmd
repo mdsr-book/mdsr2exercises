@@ -18,7 +18,7 @@ TITLE GOES HERE: Write a function called `count_name` that, when given a name as
 Run the function once with the argument `Ezekiel` and once with `Ezze`.
 
 
- <!--begin-answer-->
+<!--begin-answer-->
 ```{r , message=FALSE, warning=FALSE}
 library(babynames)
 count_name <- function(x) {
@@ -37,10 +37,10 @@ count_name("Ezekiel") %>%
   head()
 ```
 
-```{r, eval = FALSE}
+```{r, eval = FALSE, error=TRUE}
 count_name("Ezze") # will throw error message
 ```
 
-  <!--end-answer-->
+<!--end-answer-->
 
 
