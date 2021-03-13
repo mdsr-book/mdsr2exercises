@@ -1,6 +1,6 @@
 ---
 chapter: "sqlII"
-author: ""
+author: "Benjamin S. Baumer"
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
@@ -18,20 +18,20 @@ TITLE GOES HERE: Write a full table schema for the two tables in the `r pkg_macr
  <!--begin-answer-->
 You may find this idiom useful to find the maximum length of each variable.
 
-```{r , message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(fueleconomy)
 common %>%
   map(nchar) %>%
-  map(max)
+  map_int(max)
 
 vehicles %>%
   map(nchar) %>%
-  map(max)
+  map_int(max)
 ```
 
 Then write your schema accordingly. 
 
-```{r mysql, eval=FALSE}
+```{sql, eval=FALSE}
 DROP TABLE IF EXISTS `common`;
 
 CREATE TABLE `common` (

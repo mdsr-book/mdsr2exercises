@@ -9,9 +9,7 @@ id: shark-make-fork
 ---
 
 ```{r shark-make-fork-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
-library(mdsr)
 ```
 
 TITLE GOES HERE: Consider the $k$-means clustering algorithm applied to the `BigCities` data.
@@ -38,7 +36,6 @@ BigCities_proj <- BigCities %>%
 
 ```{r cluster-cities-projected, message=FALSE}
 set.seed(15)
-library(mclust)
 city_clusts <- BigCities_proj %>%
   st_coordinates() %>%
   kmeans(centers = 6) %>%

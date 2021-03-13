@@ -9,9 +9,6 @@ id: goldfish-teach-blanket
 ---
 
 ```{r goldfish-teach-blanket-default, include = FALSE}
-library(tidyverse)
-library(mclust)
-library(mdsr)
 mdsr2exercises::setup()
 ```
 
@@ -23,7 +20,7 @@ BigCities <- world_cities %>%
   arrange(desc(population)) %>%
   head(4000) %>%
   select(longitude, latitude)
-library(mclust)
+
 city_clusts <- BigCities %>%
   kmeans(centers = 8) %>%
   fitted("classes") %>%
