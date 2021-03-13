@@ -22,7 +22,7 @@ library(mdsr)
 library(faraway)
 mod <- lm(Foster ~ Biological, data = twins)
 coef(mod)
-rsquared(mod)
+mosaic::rsquared(mod)
 ```
 Which of the following is **FALSE**? Justify your answers.
 
