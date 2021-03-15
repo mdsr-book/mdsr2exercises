@@ -21,12 +21,12 @@ You may find this idiom useful to find the maximum length of each variable.
 ```{r, message=FALSE, warning=FALSE}
 library(fueleconomy)
 common %>%
-  map(nchar) %>%
-  map_int(max)
+  purrr::map(nchar) %>%
+  purrr::map_int(max)
 
 vehicles %>%
-  map(nchar) %>%
-  map_int(max)
+  purrr::map(nchar) %>%
+  purrr::map_int(max)
 ```
 
 Then write your schema accordingly. 
