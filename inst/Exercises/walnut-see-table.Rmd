@@ -20,13 +20,21 @@ TITLE GOES HERE:
 a. Use regular expressions to determine the number of speaking lines [The Complete Works of William Shakespeare](http://www.gutenberg.org/cache/epub/100/pg100.txt). Here, we care only about how many times a character speaks---not what they say or for how long they speak. 
 
 <!--
-% XX NH need to fix this by making the data available.
+% XX BB need to fix this by making the data available.
 -->
  
 <!--begin-answer-->
-```{r,message=FALSE, warning = FALSE}
-shakespeare <- readRDS(paste(system.file("extdata", package = "mdsr2exercises"), "/Shakespeare.Rds", sep = ""))
+```{r eval = FALSE}
+# XX BB this isn't working...
+shakespeare_url <- "https://www.gutenberg.org/cache/epub/100/pg100.txt"
+shakespeare <- RCurl::getURL(shakespeare_url)
+```
 
+```{r,message=FALSE, warning = FALSE, echo = FALSE}
+shakespeare <- readRDS(paste(system.file("extdata", package = "mdsr2exercises"), "/Shakespeare.Rds", sep = ""))
+```
+
+```{r,message=FALSE, warning = FALSE}
 length(shakespeare)
 speaker_lines <- grep("^  [A-Z ]+\\.", shakespeare)
 length(speaker_lines)
