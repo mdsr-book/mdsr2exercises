@@ -20,7 +20,8 @@ a. Repeat the Census logistic regression model that controlled only for capital 
 b. Repeat the process using a random number seed of 366.  What do you conclude?
 
  <!--begin-answer-->
-Answers may vary.  Consider the following. XX
+Answers may vary.
+But the results are anticipated to be very similar.
 
 ```{r }
 library(mdsr)
