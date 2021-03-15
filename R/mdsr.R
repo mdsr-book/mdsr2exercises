@@ -60,7 +60,9 @@ knit_mdsr_exercises <- function(x, show_answers = FALSE) {
       name = paste0("**Problem ", dplyr::row_number(), " (", difficulty, ")**:"),
       answers = show_answers,
       documentation  = FALSE,
-      package = "mdsr2exercises"
+      package = "mdsr2exercises",
+      latex_solution_start = "**SOLUTION:** \n",
+      latex_solution_end = "\n---"
     )
   if (nrow(ex) < 1) {
     return(I("No exercises found"))

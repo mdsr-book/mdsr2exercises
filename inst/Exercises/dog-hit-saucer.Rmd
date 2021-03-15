@@ -28,13 +28,16 @@ a. `babynames %>% select(n > 100)`
 
 <!--begin-answer-->
 `select()` takes variable names as arguments. `n > 100` is not a variable name. Probably, `filter()` was intended.
+
 <!--end-answer-->
 
 b. `babynames %>% select(- year)` 
 
-<!--begin-answer--> Nothing's wrong.
-c. `babynames %>% mutate(name_length == nchar(name))` 
+<!--begin-answer-->
+Nothing's wrong. 
 <!--end-answer-->
+
+c. `babynames %>% mutate(name_length == nchar(name))` 
 
 <!--begin-answer-->
 The expression is correct except for one "little" thing: it uses `==` after the named argument rather than `=`. Remember, `==` tests for equality while `=` is used to distinguish the name of an argument from its value.
