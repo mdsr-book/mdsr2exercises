@@ -15,9 +15,9 @@ mdsr2exercises::setup()
 library(tidyverse)
 ```
 
-TITLE GOES HERE: Using the same FEC data as the previous exercise, re-create Figure 2.8 XX CHECK XX from the text.  
+TITLE GOES HERE: Use the FEC data to re-create Figure 2.8.
 
-<!--% XX hardcoded ref.-->
+<!--% XX BB solution doesn't match Figure 2.8 -->
 
 
 <!--begin-answer-->
