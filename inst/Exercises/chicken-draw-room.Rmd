@@ -31,9 +31,9 @@ library(rsample)
 Gestation %>%
   bootstraps(times = 2000) %>%
   mutate(
-    mod = map(splits, ~lm(wt ~ age, data = as_tibble(.x))),
-    coefs = map(mod, coef),
-    age = map_dbl(coefs, pluck, 2)
+    mod = purrr::map(splits, ~lm(wt ~ age, data = as_tibble(.x))),
+    coefs = purrr::map(mod, coef),
+    age = purrr::map_dbl(coefs, pluck, 2)
   ) %>%
   pull(age) %>%
   quantile(c(0.025, 0.5, 0.975))
