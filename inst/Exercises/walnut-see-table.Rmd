@@ -19,15 +19,12 @@ TITLE GOES HERE:
 
 a. Use regular expressions to determine the number of speaking lines [The Complete Works of William Shakespeare](http://www.gutenberg.org/cache/epub/100/pg100.txt). Here, we care only about how many times a character speaks---not what they say or for how long they speak. 
 
-<!--
-% XX BB need to fix this by making the data available.
--->
- 
 <!--begin-answer-->
 ```{r eval = FALSE}
-# XX BB this isn't working...
-shakespeare_url <- "https://www.gutenberg.org/cache/epub/100/pg100.txt"
-shakespeare <- RCurl::getURL(shakespeare_url)
+shakespeare_url <- "http://www.gutenberg.org/files/100/100-0.txt"
+shakespeare <- RCurl::getURL(shakespeare_url) %>%
+  str_split("\r\n") %>%
+  pluck(1)
 ```
 
 ```{r,message=FALSE, warning = FALSE, echo = FALSE}
