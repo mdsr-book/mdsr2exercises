@@ -19,13 +19,14 @@ Of all the destinations from Chicago O'Hare (ORD), which were the most common in
 
  
 <!--begin-answer-->
-  
+ Connection to database: 
 ```{r, warning = FALSE, message= FALSE}
 library(RMySQL)
 con <- mdsr::dbConnect_scidb(dbname = "airlines")
+```
 
-myquery <-
-  'SELECT 
+```{sql, connection=con}
+SELECT 
   dest, 
   sum(1) as numFlights
 FROM flights 
@@ -33,9 +34,7 @@ WHERE year = 2010
   AND origin = "ORD"
 GROUP BY dest
 ORDER BY numFlights desc
-LIMIT 0,6;'
-
-dbGetQuery(con, myquery)
+LIMIT 0,6
 ```  
   
 <!--end-answer-->
