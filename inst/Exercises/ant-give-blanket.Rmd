@@ -19,7 +19,7 @@ a. Generate a confusion matrix for the null model and interpret the result.
 
  <!--begin-answer-->
 
-XX
+XX NH
 ```{r }
 library(mdsr)
 ```

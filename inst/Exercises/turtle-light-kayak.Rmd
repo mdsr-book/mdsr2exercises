@@ -17,8 +17,7 @@ library(tidyverse)
 library(mdsr)
 ```
 
-TITLE GOES HERE: Using the approach described in Section 5.5.4 of the text, find another table in Wikipedia that can be scraped and visualized.  Be sure to interpret your graphical display.
-<!-- % XX hardcoded ref -->
+TITLE GOES HERE: Using the approach described in Section 6.4.1.2 of the text, find another table in Wikipedia that can be scraped and visualized.  Be sure to interpret your graphical display.
 
 
 <!--begin-answer-->
