@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Easy"
 date: 2020-08-09 
 version: 0.1
-tags: [first, second, third]
+tags: [first, second, third, functions, exceptions]
 id: ash-lose-tv
 ---
 
