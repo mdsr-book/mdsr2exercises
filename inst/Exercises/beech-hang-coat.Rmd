@@ -4,7 +4,7 @@ author: ""
 difficulty: "Hard"
 date: 2020-06-29 
 version: 0.1
-tags: [first, second, third]
+tags: [trees, dplyr, tidytext]
 id: beech-hang-coat
 ---
 

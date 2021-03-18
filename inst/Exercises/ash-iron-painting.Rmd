@@ -4,7 +4,7 @@ author: "mdsr1"
 difficulty: "Medium"
 date: 2020-06-24 
 version: 0.1
-tags: [first, second, third, Violations, mapping]
+tags: [violations, mapping]
 id: ash-iron-painting
 ---
 

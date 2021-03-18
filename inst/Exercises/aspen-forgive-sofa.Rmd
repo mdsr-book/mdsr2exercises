@@ -5,10 +5,8 @@ difficulty: Hard
 date: '2020-07-15'
 version: 0.1
 tags:
-- first
-- second
-- third
-- CollegeScorecard
+- college
+- scores
 - dplyr
 - ggplot
 id: aspen-forgive-sofa

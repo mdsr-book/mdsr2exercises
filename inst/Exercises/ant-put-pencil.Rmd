@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-14 
 version: 0.1
-tags: [first, second, third, flights]
+tags: [flights, prediction, delays]
 id: ant-put-pencil
 ---
 

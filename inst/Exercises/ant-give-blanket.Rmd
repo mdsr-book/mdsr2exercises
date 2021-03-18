@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-09-30 
 version: 0.1
-tags: [first, second, third]
+tags: [homeless, logistic-regression]
 id: ant-give-blanket
 ---
 

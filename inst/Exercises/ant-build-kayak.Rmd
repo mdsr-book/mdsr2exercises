@@ -4,7 +4,7 @@ author: "Ben Baumer"
 date: "First edition"
 difficulty: "Hard"
 version: 0.1
-tags: [fec, second, onlineonly]
+tags: [fec, dplyr, ggplot, onlineonly]
 id: ant-build-kayak 
 ---
 
