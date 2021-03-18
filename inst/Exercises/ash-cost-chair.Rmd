@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-08-25 
 version: 0.1
-tags: [first, second, third]
+tags: [measurements, count-rows]
 id: ash-cost-chair
 ---
 

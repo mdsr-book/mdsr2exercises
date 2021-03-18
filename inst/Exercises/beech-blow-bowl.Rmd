@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-06-14 
 version: 0.1
-tags: [first, second, third]
+tags: [wikipedia, scraping, visualization, ggplot, dplyr]
 id: beech-blow-bowl
 ---
 

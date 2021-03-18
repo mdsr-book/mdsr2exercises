@@ -4,7 +4,7 @@ author: "Nicholas J. Horton"
 difficulty: "Medium"
 date: 2020-06-29 
 version: 0.1
-tags: [first, second, third]
+tags: [first, second, third, clickbait, text]
 id: eagle-bet-boat
 ---
 ##Text
