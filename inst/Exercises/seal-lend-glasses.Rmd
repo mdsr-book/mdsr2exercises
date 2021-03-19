@@ -4,7 +4,7 @@ author: ""
 difficulty: "Hard"
 date: 2020-07-20 
 version: 0.1
-tags: [first, second, third]
+tags: [airlines, sql, tables, querying]
 id: seal-lend-glasses
 ---
 
@@ -22,8 +22,10 @@ An extremely simplistic solution would just compare the average flight delays an
 ```{r, warning = FALSE, message= FALSE}
 library(RMySQL)
 con <- mdsr::dbConnect_scidb(dbname = "airlines")
+```
 
-myquery <- 'SELECT 
+```{sql, connection=con}
+SELECT 
   MAX(origin) as airport,
   sum(1) as numFlights, 
   sum(cancelled) as numCancelled,
@@ -33,9 +35,7 @@ FROM flights o
 WHERE year = 2012 
   AND origin IN ("JFK", "LGA", "EWR")
 GROUP BY origin
-ORDER BY pctCancelled;'
-
-dbGetQuery(con, myquery)
+ORDER BY pctCancelled
 ```
 
 A more sophisticated analysis (left to the reader) would be to account for differences in carriers and destinations (since the airports have very different patterns of flights).  
