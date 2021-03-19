@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-20 
 version: 0.1
-tags: [first, second, third]
+tags: [airlines, sql, tables, querying]
 id: wolf-pitch-tv
 ---
 
@@ -22,17 +22,17 @@ Find all flights between `JFK` and `SFO` in 1994. How many were canceled? What p
 ```{r, warning = FALSE, message= FALSE}
 library(RMySQL)
 con <- mdsr::dbConnect_scidb(dbname = "airlines")
+```
 
-myquery <- "SELECT 
+```{sql, connection=con}
+SELECT 
   sum(1) as numFlights, 
   sum(cancelled) as numCancelled,
   avg(cancelled) as pctCancelled
 FROM flights o
 WHERE year = 1994 
   AND dest IN ('JFK', 'SFO') AND origin IN ('JFK', 'SFO')
-LIMIT 0,6;"
-
-dbGetQuery(con, myquery)
+LIMIT 0,6
 ```
 <!--end-answer-->
 

@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-20 
 version: 0.1
-tags: [first, second, third]
+tags: [airlines, sql, tables, querying]
 id: cow-drink-pan
 ---
 
@@ -22,8 +22,9 @@ Which airport had the highest average arrival delay time in 2010?
 ```{r, warning = FALSE, message= FALSE}
 library(RMySQL)
 con <- mdsr::dbConnect_scidb(dbname = "airlines")
+```
 
-myquery <- "
+```{sql, connection=con}
 SELECT 
   dest, 
   sum(1) as numFlights,
@@ -32,9 +33,7 @@ FROM flights o
 WHERE year = 2010
 GROUP BY dest
 ORDER BY avg_arr_delay desc
-LIMIT 0,6;"
-
-dbGetQuery(con, myquery)
+LIMIT 0,6
 ```  
 
 <!--end-answer-->
