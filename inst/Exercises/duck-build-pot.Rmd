@@ -4,12 +4,11 @@ author: ""
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
-tags: [first, second, third, macleish]
+tags: [macleish, sql]
 id: duck-build-pot
 ---
 
 ```{r duck-build-pot-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

@@ -10,7 +10,6 @@ id: seal-lend-glasses
 
 ```{r seal-lend-glasses-default, include = FALSE}
 mdsr2exercises::setup()
-library(tidyverse)
 ```
 
 TITLE GOES HERE: The following open-ended question may require more than one query and a thoughtful response.
@@ -19,12 +18,8 @@ Use the `dbConnect_scidb` function to connect to the `airlines` database.
 
 <!--begin-answer-->
 An extremely simplistic solution would just compare the average flight delays and proportion of flights that were canceled.
-```{r, warning = FALSE, message= FALSE}
-library(RMySQL)
-con <- mdsr::dbConnect_scidb(dbname = "airlines")
-```
 
-```{sql, connection=con}
+```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT 
   MAX(origin) as airport,
   sum(1) as numFlights, 

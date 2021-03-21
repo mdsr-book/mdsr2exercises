@@ -17,9 +17,11 @@ TITLE GOES HERE: What years of data are available in the `r pkg_macro(mdsr)` pac
 
 <!--begin-answer-->
 
-```{r}
-db <- dbConnect_scidb("imdb")
-DBI::dbGetQuery(db, "SELECT production_year, COUNT(*) as num_movies FROM title GROUP BY production_year ORDER BY production_year DESC;")
+```{sql, connection= mdsr::dbConnect_scidb("imdb")}
+SELECT production_year, COUNT(*) as num_movies 
+FROM title 
+GROUP BY production_year 
+ORDER BY production_year DESC
 ```
 
 <!--end-answer-->

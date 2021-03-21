@@ -13,11 +13,11 @@ options(continue="  ")
 
 \begin{Exercise}
 \label{ex:cross-join}
-In the \cmd{CROSS JOIN} query in the movies example, how could we have modified the SQL query to include the actor's and actresses' names in the original query? Why would this have been less efficient from a computational and data storage point of view? 
+In the \cmd{CROSS JOIN} query in the movies example, how could we have modified the SQL query to include the actor's and actresses' names in the original query? Why would this have been less efficient from a computational and data storage point of view?
 \end{Exercise}
 
 \begin{Answer}
-We could have joined onto the \data{names} table twice---once for the \var{src} actors and again for the \var{dest} actors. This would have been far less efficient, since \cmd{JOIN}s are big operations, and this would have resulting in the actors names being repeated in the data for each \emph{edge}, as opposed to each \emph{vertex}. 
+We could have joined onto the \data{names} table twice---once for the \var{src} actors and again for the \var{dest} actors. This would have been far less efficient, since \cmd{JOIN}s are big operations, and this would have resulting in the actors names being repeated in the data for each \emph{edge}, as opposed to each \emph{vertex}.
 \end{Answer}
 
 \begin{Exercise}
@@ -26,17 +26,17 @@ Expand the Hollywood network by going further back in time. If you go back to 20
 
 \begin{Answer}
 
-The following code should generate the graph, but we have suppressed the results here due to the time it takes to compile. 
+The following code should generate the graph, but we have suppressed the results here due to the time it takes to compile.
 
   <<eval=FALSE,message=FALSE>>=
 library(mdsr)
 db <- src_scidb("imdb")
-sql <- 
-  "SELECT a.person_id as src, b.person_id as dest, 
-    a.movie_id, 
-    a.nr_order * b.nr_order as weight, 
+sql <-
+  "SELECT a.person_id as src, b.person_id as dest,
+    a.movie_id,
+    a.nr_order * b.nr_order as weight,
     t.title, idx.info as ratings
-  FROM imdb.cast_info a 
+  FROM imdb.cast_info a
     CROSS JOIN imdb.cast_info b USING (movie_id)
     LEFT JOIN imdb.title t ON a.movie_id = t.id
     LEFT JOIN imdb.movie_info_idx idx ON idx.movie_id = a.movie_id
@@ -75,7 +75,7 @@ get.data.frame(g, what = "vertices") %>%
 \end{Answer}
 
 \begin{Exercise}
-For a while, \href{https://en.wikipedia.org/wiki/Edward_Snowden}{Edward Snowden} was trapped in a Moscow airport. Suppose that you were trapped not in \emph{one} airport, but in \emph{all} airports. If you were forced to randomly fly around the United States, where would you be most likely to end up? 
+For a while, \href{https://en.wikipedia.org/wiki/Edward_Snowden}{Edward Snowden} was trapped in a Moscow airport. Suppose that you were trapped not in \emph{one} airport, but in \emph{all} airports. If you were forced to randomly fly around the United States, where would you be most likely to end up?
 \end{Exercise}
 \begin{Answer}
 
@@ -102,7 +102,7 @@ get.data.frame(g, what = "vertices") %>%
 \end{Answer}
 
 \begin{Exercise}
-What information do you need to compute the PageRank of the U.S. airport network? Write an SQL query to retrieve this information for 2012. 
+What information do you need to compute the PageRank of the U.S. airport network? Write an SQL query to retrieve this information for 2012.
 \end{Exercise}
 
 \begin{Answer}
@@ -131,7 +131,7 @@ summary(g)
 \begin{Exercise}
 Compute the PageRank of each airport in your network from the previous exercise. What are the top 10 ``most central" airports? Where does Oakland International Airport (\val{OAK}) rank?
 \end{Exercise}
-  
+
 \begin{Answer}
 <<>>=
 g <- g %>%
@@ -143,7 +143,7 @@ get.data.frame(g, what = "vertices") %>%
 \end{Answer}
 
 \begin{Exercise}
-Update the vertex attributes of your network from the previous exercise with the geographic coordinates of each airport (available in the \data{airports} table). 
+Update the vertex attributes of your network from the previous exercise with the geographic coordinates of each airport (available in the \data{airports} table).
 \end{Exercise}
 
 \begin{Answer}
@@ -169,16 +169,16 @@ g <- g %>%
 \end{Answer}
 
 \begin{Exercise}
-Use \pkg{ggnetwork} to draw the airport network from the previous exercise. Make the thickness or transparency of each edge proportional to its weight. 
+Use \pkg{ggnetwork} to draw the airport network from the previous exercise. Make the thickness or transparency of each edge proportional to its weight.
 \end{Exercise}
 
 \begin{Answer}
 <<anothermap3,message=FALSE, warning=FALSE, eval=TRUE>>=
 Vg <- get.data.frame(g, what = "vertices")
-plot(g, layout = layout.kamada.kawai, 
-     edge.width = 500*E(g)$weight, edge.color = "dodgerblue", 
-     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
-     vertex.label = NA, vertex.size = 100*V(g)$pagerank, 
+plot(g, layout = layout.kamada.kawai,
+     edge.width = 500*E(g)$weight, edge.color = "dodgerblue",
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+     vertex.label = NA, vertex.size = 100*V(g)$pagerank,
      vertex.color = "gold")
 @
 \end{Answer}
@@ -191,11 +191,11 @@ Overlay your airport network from the previous exercise on a U.S. map (see Chapt
 <<anothermap2,message=FALSE, warning=FALSE>>=
 library(maps)
 map('state')
-plot(g, rescale = FALSE, add = TRUE, 
-     layout = as.matrix(Vg[, c("lon", "lat")]), 
-     edge.width = 500*E(g)$weight, edge.color = "dodgerblue", 
-     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
-     vertex.label = NA, vertex.size = 1000*V(g)$pagerank, 
+plot(g, rescale = FALSE, add = TRUE,
+     layout = as.matrix(Vg[, c("lon", "lat")]),
+     edge.width = 500*E(g)$weight, edge.color = "dodgerblue",
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+     vertex.label = NA, vertex.size = 1000*V(g)$pagerank,
      vertex.color = "gold")
 @
 \end{Answer}
@@ -226,25 +226,25 @@ V0.proj <- spTransform(V0, proj)
 g0 <- induced.subgraph(g, vids = (!is.na(Vg$lon)))
 
 plot(states.proj)
-plot(g0, rescale = FALSE, add = TRUE, layout = V0.proj@coords, 
-     edge.width = 500*E(g0)$weight, edge.color = "dodgerblue", 
-     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
-     vertex.label = NA, vertex.size = 100000000*V(g0)$pagerank, 
+plot(g0, rescale = FALSE, add = TRUE, layout = V0.proj@coords,
+     edge.width = 500*E(g0)$weight, edge.color = "dodgerblue",
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+     vertex.label = NA, vertex.size = 100000000*V(g0)$pagerank,
      vertex.color = "gold")
 @
 \end{Answer}
 
 \begin{Exercise}
-Crop the map you created in the previous exercise to zoom in on your local airport. 
+Crop the map you created in the previous exercise to zoom in on your local airport.
 \end{Exercise}
 
 \begin{Answer}
 <<east-coast, eval=FALSE>>=
 plot(states.proj, xlim = c(1000000, 2000000), ylim = c(-600000, 1000000))
-plot(g0, rescale = FALSE, add = TRUE, layout = V0.proj@coords, 
-     edge.width = 500*E(g0)$weight, edge.color = "dodgerblue", 
-     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3, 
-     vertex.label = NA, vertex.size = 100000000*V(g0)$pagerank, 
+plot(g0, rescale = FALSE, add = TRUE, layout = V0.proj@coords,
+     edge.width = 500*E(g0)$weight, edge.color = "dodgerblue",
+     edge.curved = TRUE, edge.arrow.size = 0.2, edge.arrow.width = 0.3,
+     vertex.label = NA, vertex.size = 100000000*V(g0)$pagerank,
      vertex.color = "gold")
 @
 \end{Answer}

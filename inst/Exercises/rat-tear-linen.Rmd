@@ -4,7 +4,7 @@ author: ""
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [fec12, table schema, onlineonly]
 id: rat-tear-linen
 ---
 

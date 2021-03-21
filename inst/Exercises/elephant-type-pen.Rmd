@@ -4,14 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-08-25 
 version: 0.1
-tags: [first, second, third]
+tags: [airlines, flights, sql, tables]
 id: elephant-type-pen
 ---
 
 ```{r elephant-type-pen-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
-library(mdsr2exercises)
 mdsr2exercises::setup()
 ```
 

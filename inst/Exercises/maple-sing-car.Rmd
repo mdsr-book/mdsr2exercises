@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Medium"
 date: 2020-07-19 
 version: 0.1
-tags: [first, second, third]
+tags: [airlines, sql, igraph, ggraph, maps, airports]
 id: maple-sing-car
 ---
 
@@ -20,12 +20,10 @@ a. What information do you need to compute the PageRank of the U.S. airport netw
 
 
  <!--begin-answer-->
-```{r message=FALSE, warning=FALSE}
-library(mdsr)
-library(DBI)
-dbAir <- src_scidb("airlines")
-E <- dbGetQuery(dbAir$con, "SELECT origin as src, dest, sum(1) as N
-FROM flights WHERE year = 2012 GROUP BY origin, dest")
+```{sql, connection=mdsr::dbConnect_scidb("airlines"), output.var = "E"}
+SELECT origin as src, dest, sum(1) as N
+FROM flights WHERE year = 2012 
+GROUP BY origin, dest
 ```
   <!--end-answer-->
 
@@ -60,7 +58,7 @@ d. Update the vertex attributes of your network with the geographic coordinates 
  <!--begin-answer-->
 ```{r warning=FALSE}
 vIds <- unique(c(E$src, E$dest))
-airports <- tbl(dbAir, "airports")
+airports <- tbl(mdsr::dbConnect_scidb("airlines"), "airports")
 V <- airports %>%
   filter(faa %in% vIds) %>%
   collect()
