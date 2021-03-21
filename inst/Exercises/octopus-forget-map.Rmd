@@ -30,7 +30,7 @@ c. Critique this data graphic using the taxonomy described in this chapter.
 
   <!--begin-answer-->
 
-We critique the [this graphic](http://www.npr.org/news/graphics/2012/09/pm-incometax/gr-pm-incometax3-462.gif) from the Tax Policy Center. 
+We critique [this graphic](http://www.npr.org/news/graphics/2012/09/pm-incometax/gr-pm-incometax3-462.gif) from the Tax Policy Center. 
 
 
   -  Color is a visual cue that is mapped to the categorical variable of taxpayer status. Angle is the visual cue that is mapped to the numeric variable of the percentage of people. This exploding pie chart uses a radial coordinate system, and the scale is percentage. 

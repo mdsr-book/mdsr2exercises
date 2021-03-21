@@ -1,2 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+_cache
+^README\.Rmd$
+rosm.cache
+mdsr1e_exercises

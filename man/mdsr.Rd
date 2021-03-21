@@ -21,9 +21,9 @@ knit_mdsr_exercises(x, show_answers = FALSE)
 
 knit_mdsr_exercises_filter(..., show_answers = FALSE)
 
-knit_mdsr_exercises_print(...)
+knit_mdsr_exercises_print(..., show_answers = FALSE)
 
-knit_mdsr_exercises_onlineonly(...)
+knit_mdsr_exercises_onlineonly(..., show_answers = FALSE)
 
 knit_mdsr_exercises_solutions(...)
 }

@@ -83,19 +83,19 @@ knit_mdsr_exercises_filter <- function(..., show_answers = FALSE) {
 #' @rdname mdsr
 #' @export
 
-knit_mdsr_exercises_print <- function(...) {
+knit_mdsr_exercises_print <- function(..., show_answers = FALSE) {
   mdsr_exercise_ls(...) %>%
     dplyr::filter(!grepl("onlineonly", tags)) %>%
-    knit_mdsr_exercises(show_answers = FALSE)
+    knit_mdsr_exercises(show_answers = show_answers)
 }
 
 #' @rdname mdsr
 #' @export
 
-knit_mdsr_exercises_onlineonly <- function(...) {
+knit_mdsr_exercises_onlineonly <- function(..., show_answers = FALSE) {
   mdsr_exercise_ls(...) %>%
     dplyr::filter(grepl("onlineonly", tags)) %>%
-    knit_mdsr_exercises(show_answers = FALSE)
+    knit_mdsr_exercises(show_answers = show_answers)
 }
 
 #' @rdname mdsr
