@@ -21,12 +21,13 @@ a. Calculate and interpret the coefficient of determination ($R^2$) for this mod
 
  <!--begin-answer-->
 
-XX
-
 ```{r message = FALSE}
 library(mosaic)
+cesd_mod <- lm(cesd ~ age + sex + homeless, data = HELPrct)
 rsquared(cesd_mod)
 ```
+
+The $R^2$ value is 0.04: only a small fraction of the variability in CESD scores is accounted for by the model.
 
  <!--end-answer-->
  
@@ -34,7 +35,16 @@ b. Calculate and interpret the root mean squared error for this model and for th
 
  <!--begin-answer-->
 
-XX
+```{r}
+cesd_null <- lm(cesd ~ 1, data = HELPrct)
+broom::glance(cesd_mod)
+broom::glance(cesd_null)
+```
+
+The root mean squared error for the regression model is 12.3: this is interpreted loosely as the "average" deviation of the observed from the predicted.
+The root mean squared error for the null model is 12.5.
+This is not much larger (not surprising since the $R^2$ is so low).
+
 
 
  <!--end-answer-->
@@ -43,7 +53,16 @@ c. Calculate and interpret the mean absolute error (MAE) for this model and the 
 
  <!--begin-answer-->
 
-XX
+```{r}
+broom::augment(cesd_mod) %>%
+  mutate(ae = abs(cesd - .fitted)) %>%
+  summarize(mae = mean(ae))
+broom::augment(cesd_null) %>%
+  mutate(ae = abs(cesd - .fitted)) %>%
+  summarize(mae = mean(ae))
+```
+
+The mean absolute error is 9.8 for the regression model: this increases to 10.1 for the null model.
 
  <!--end-answer-->
   

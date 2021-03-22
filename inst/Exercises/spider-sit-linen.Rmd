@@ -19,6 +19,6 @@ TITLE GOES HERE:	Using data from the `r pkg_macro(Lahman)` package, create a Shi
 
  <!--begin-answer-->
  
-XX answer needed
+Solution welcomed!
  
 <!--end-answer-->

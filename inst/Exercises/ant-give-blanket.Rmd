@@ -19,21 +19,13 @@ a. Generate a confusion matrix for the null model and interpret the result.
 
  <!--begin-answer-->
 
-XX NH
-```{r }
-library(mdsr)
-```
+Solution welcomed!
 
  <!--end-answer-->
   
 b. Fit and interpret logistic regression model for the probability of being `homeless` as a function of age. 
 
  <!--begin-answer-->
-
-XX
-```{r }
-library(mdsr)
-```
 
  <!--end-answer-->
   
@@ -42,22 +34,12 @@ c. What is the predicted probability of being homeless for a 20 year old?  For a
 
  <!--begin-answer-->
 
-XX
-```{r }
-library(mdsr)
-```
-
  <!--end-answer-->
  
  d. Generate a confusion matrix for the second model and interpret the result.
 
 
  <!--begin-answer-->
-
-XX
-```{r }
-library(mdsr)
-```
 
  <!--end-answer-->
   
