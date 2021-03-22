@@ -18,8 +18,6 @@ TITLE GOES HERE: Use the `r pkg_macro(fec12)` package to download and unzip the 
  <!--begin-answer-->
 Here is a sample schema for MySQL:
 
-XX BB to update?
-
 ```{r cat-mysql-table-schema-fec, echo=FALSE, message=FALSE, warning=FALSE}
 if (!require(fec)) {
   remotes::install_github("beanumber/fec")

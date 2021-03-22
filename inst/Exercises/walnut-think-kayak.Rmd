@@ -18,10 +18,6 @@ Generate your own map that improves upon the aesthetics and information content.
 
  <!--begin-answer-->
 
-XX Answers will vary.
-
-```{r }
-library(mdsr)
-```
+Answers will vary.
 
  <!--end-answer-->
