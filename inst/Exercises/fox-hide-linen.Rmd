@@ -17,8 +17,64 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE:	Using data from the `r pkg_macro(palmerpenguins)` package, create a Shiny app that displays measurements from the `penguins` dataframe. Allow the user to select a species or a gender, and to choose between various attributes on a scatterplot. (Hint: examples of similar apps can be found at the [Shiny gallery](https://shiny.rstudio.com/gallery)).
 
- <!--begin-answer-->
- 
-XX answer needed
+<!--begin-answer-->
+
+```{r eval = FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(shiny)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Scatterplot app"),
+
+    # Sidebar with a slider input for number of bins
+    sidebarLayout(
+        sidebarPanel(
+            selectInput("x", label = h3("X variable"),
+                         choices = names(penguins), selected = "bill_length_mm"),
+            selectInput("y", label = h3("Y variable"),
+                        choices = names(penguins), selected = "body_mass_g"),
+            checkboxGroupInput("species", label = h3("species"),
+                        choices = unique(penguins$species), selected = unique(penguins$species)[1]),
+            checkboxInput("smoother",
+                        label = "Add a smoother?",
+                        value = FALSE)
+        ),
+
+        # Show a plot of the generated distribution
+        mainPanel(
+           plotOutput("distPlot")
+        )
+    )
+)
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+    dataset <- reactive({
+      penguins %>%
+        filter(species %in% input$species)
+    })
+
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        p <- ggplot(dataset(),
+               aes_string(x = input$x, y = input$y)) +
+            geom_point() +
+            labs(y = input$y)
+        if (input$smoother) {
+            p <- p + geom_smooth(se = FALSE)
+        }
+        p
+})
+}
+
+# Run the application
+shinyApp(ui = ui, server = server)
+```
+
  
 <!--end-answer-->

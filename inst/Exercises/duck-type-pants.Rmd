@@ -31,8 +31,8 @@ We write two helper functions. In one, Monty opens a door, choosing at random
 among the nonchosen doors if the initial choice was correct, or choosing the 
 one nonselected nonprize door if the initial choice was wrong. The other 
 function returns the door chosen by swapping. We use the `sample()` function 
-to randomly pick one value. We then use these functions on 
-each trial with the apply() statement (section 5.4.2).  % XX watch out for hardcoded label!
+to randomly pick one value. We then repeatedly these new functions on 
+each trial using the `apply()` function.
 
 ```{r }
 numsim <- 10000
@@ -71,6 +71,7 @@ The `swapdoor()` function works in a similar fashion.  Once these parts are in p
 simulation is straightforward.
 
 ```{r }
+# should migrate to purrr:: functions...
 winner <- sample(doors, numsim, replace = TRUE)
 choice <- sample(doors, numsim, replace = TRUE)
 open <- apply(cbind(winner, choice), 1, opendoor)
