@@ -46,8 +46,7 @@ ds %>%
 ```
 
 Here it is much clearer what each operation within the "pipe-stream" is doing.  
-It is straightforward to debug expressions in this manner by just leaving off the
-"{\tt \%>\%}" at each line: this will only evaluate the set of functions called
+It is straightforward to debug expressions in this manner by just leaving off the pipe operator at each line: this will only evaluate the set of functions called
 to that point and display the intermediate output.
 
 <!--end-answer-->
