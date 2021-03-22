@@ -19,6 +19,6 @@ TITLE GOES HERE:	Repeat the earlier question using the weather data from the Mac
 
  <!--begin-answer-->
  
- XX answer needed!
+Solution welcomed!
  
 <!--end-answer-->

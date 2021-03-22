@@ -22,11 +22,7 @@ mosaic::tally(~ SmokeNow + Smoke100, data = filter(NHANES, Age >= 20))
 ```
 
  <!--begin-answer-->
-Answers may vary.  XX
-
-```{r }
-library(mdsr)
-```
+Solution welcomed.
 
  <!--end-answer-->
   
