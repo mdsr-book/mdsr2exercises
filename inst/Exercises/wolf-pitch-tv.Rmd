@@ -9,8 +9,6 @@ id: wolf-pitch-tv
 ---
 
 ```{r wolf-pitch-tv-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
 mdsr2exercises::setup()
 ```
 
@@ -18,13 +16,8 @@ TITLE GOES HERE:  Use the `dbConnect_scidb` function to connect to the `airlines
 Find all flights between `JFK` and `SFO` in 1994. How many were canceled? What percentage of the total number of flights were canceled? 
  
 <!--begin-answer-->
-  
-```{r, warning = FALSE, message= FALSE}
-library(RMySQL)
-con <- mdsr::dbConnect_scidb(dbname = "airlines")
-```
 
-```{sql, connection=con}
+```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT 
   sum(1) as numFlights, 
   sum(cancelled) as numCancelled,

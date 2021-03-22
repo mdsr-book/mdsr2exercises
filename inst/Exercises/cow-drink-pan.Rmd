@@ -9,7 +9,6 @@ id: cow-drink-pan
 ---
 
 ```{r cow-drink-pan-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
@@ -17,14 +16,8 @@ TITLE GOES HERE:  Use the `dbConnect_scidb` function to connect to the `airlines
 Which airport had the highest average arrival delay time in 2010? 
 
 <!--begin-answer-->
- 
-  
-```{r, warning = FALSE, message= FALSE}
-library(RMySQL)
-con <- mdsr::dbConnect_scidb(dbname = "airlines")
-```
 
-```{sql, connection=con}
+```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT 
   dest, 
   sum(1) as numFlights,

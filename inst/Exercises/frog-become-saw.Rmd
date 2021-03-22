@@ -4,7 +4,7 @@ author: "Benjamin S. Baumer"
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
-tags: [first, second, third]
+tags: [fueleconomy, sql, table schema]
 id: frog-become-saw
 ---
 

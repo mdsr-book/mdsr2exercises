@@ -9,21 +9,15 @@ id: puppy-ride-ship
 ---
 
 ```{r puppy-ride-ship-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
 TITLE GOES HERE:   Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
 List the airline and flight number for all flights between LAX and JFK on September 26th, 1990.
 
-
 <!--begin-answer-->
-```{r, warning = FALSE, message= FALSE}
-library(RMySQL)
-con <- mdsr::dbConnect_scidb(dbname = "airlines")
-```
 
-```{sql, connection=con}
+```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT carrier, flight 
 FROM flights 
 WHERE Year = 2012 AND Month = 9 AND day = 26 

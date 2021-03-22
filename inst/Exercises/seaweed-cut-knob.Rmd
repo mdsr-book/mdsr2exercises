@@ -4,15 +4,13 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-20 
 version: 0.1
-tags: [first, second, third, lahman]
+tags: [lahman, sql, querying, tables]
 id: seaweed-cut-knob
 editor_options: 
   chunk_output_type: inline
 ---
 
 ```{r seaweed-cut-knob-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
 mdsr2exercises::setup()
 ```
 
@@ -26,7 +24,6 @@ a. List the names of all batters who have at least 300 home runs (HR) and 300 st
 
 Connection to database:
 ```{r}
-library(RMySQL)
 con <- mdsr::dbConnect_scidb(dbname = "lahman")
 ```
 

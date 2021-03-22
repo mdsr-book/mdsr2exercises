@@ -9,8 +9,6 @@ id: cheetah-dive-boat
 ---
 
 ```{r cheetah-dive-boat-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
 mdsr2exercises::setup()
 ```
 
@@ -29,28 +27,29 @@ b. Expand the Hollywood network by going further back in time. If you go back to
 
 The following code should generate the graph, but we have suppressed the results here due to the time it takes to compile. 
 
-```{r eval=FALSE,message=FALSE}
-library(mdsr)
-db <- src_scidb("imdb")
-sql <-
-  "SELECT a.person_id as src, b.person_id as dest, 
-    a.movie_id, 
-    a.nr_order * b.nr_order as weight, 
-    t.title, idx.info as ratings
+```{sql, connection=mdsr::dbConnect_scidb("imdb"), output.var = "E"}
+
+SELECT a.person_id as src, b.person_id as dest, 
+  a.movie_id, 
+  a.nr_order * b.nr_order as weight, 
+  t.title, idx.info as ratings
   FROM imdb.cast_info a 
-    CROSS JOIN imdb.cast_info b USING (movie_id)
-    LEFT JOIN imdb.title t ON a.movie_id = t.id
-    LEFT JOIN imdb.movie_info_idx idx ON idx.movie_id = a.movie_id
+  CROSS JOIN imdb.cast_info b USING (movie_id)
+  LEFT JOIN imdb.title t ON a.movie_id = t.id
+  LEFT JOIN imdb.movie_info_idx idx ON idx.movie_id = a.movie_id
   WHERE t.production_year >= 2000 AND t.kind_id = 1
-    AND info_type_id = 100 AND idx.info > 125000
-    AND a.nr_order <= 20 AND b.nr_order <= 20
-    AND a.role_id IN (1,2) AND b.role_id IN (1,2)
-    AND a.person_id < b.person_id
-  GROUP BY src, dest, movie_id"
-E <- DBI::dbGetQuery(db$con, sql) %>%
-  mutate(ratings = as.numeric(ratings))
+  AND info_type_id = 100 AND idx.info > 125000
+  AND a.nr_order <= 20 AND b.nr_order <= 20
+  AND a.role_id IN (1,2) AND b.role_id IN (1,2)
+  AND a.person_id < b.person_id
+  GROUP BY src, dest, movie_id
+```
+
+```{r}
+E <- E %>%
+mutate(ratings = as.numeric(ratings))
 actor_ids <- unique(c(E$src, E$dest))
-V <- db %>%
+V <- mdsr::dbConnect_scidb("imdb") %>%
   tbl("name") %>%
   filter(id %in% actor_ids) %>%
   select(id, name) %>%

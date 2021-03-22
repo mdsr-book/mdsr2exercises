@@ -19,12 +19,8 @@ How many domestic flights came into or flew out of Bradley Airport (BDL) in 2012
 
 
 <!--begin-answer-->
-```{r, warning = FALSE, message= FALSE}
-library(RMySQL)
-con <- mdsr::dbConnect_scidb(dbname = "airlines")
-```
 
-```{sql, connection=con}
+```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT * 
 FROM flights 
 WHERE Year = 2012 

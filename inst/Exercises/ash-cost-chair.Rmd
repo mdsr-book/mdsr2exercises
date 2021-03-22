@@ -4,21 +4,17 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-08-25 
 version: 0.1
-tags: [measurements, count-rows]
+tags: [measurements, count rows]
 id: ash-cost-chair
 ---
 
 ```{r ash-cost-chair-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
 mdsr2exercises::setup()
 ```
 
 TITLE GOES HERE: How many rows are available in the `Measurements` table of the Smith College Wideband Auditory Immittance database?
 
 ```{r, message=FALSE}
-library(tidyverse)
-library(mdsr)
 library(RMySQL)
 con <- dbConnect(
   MySQL(), host = "scidb.smith.edu",

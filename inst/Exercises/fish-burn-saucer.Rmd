@@ -10,8 +10,6 @@ id: fish-burn-saucer
 
 ```{r fish-burn-saucer-default, include = FALSE}
 library(etude)
-library(mdsr)
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
@@ -20,12 +18,8 @@ How many domestic flights flew into Dallas-Fort Worth (DFW) on May 14, 2010?
 
   
 <!--begin-answer-->
-```{r, warning = FALSE, message= FALSE}
-library(RMySQL)
-con <- mdsr::dbConnect_scidb(dbname = "airlines")
-```
 
-```{sql, connection=con}
+```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT sum(1) as N
 FROM flights o
 WHERE year = 2010 AND Month = 5 AND day = 14

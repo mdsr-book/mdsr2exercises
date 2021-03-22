@@ -4,7 +4,7 @@ author: ""
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
-tags: [first, second, third]
+tags: [airlines, sql, igraph]
 id: fir-hold-clock
 ---
 
@@ -19,13 +19,13 @@ TITLE GOES HERE: Use the `dbConnect_scidb` function to connect to the `airlines`
 
 You'd be most likely to end up in Atlanta.
 
-```{r message=FALSE, warning=FALSE}
-library(mdsr)
-library(DBI)
-dbAir <- src_scidb("airlines")
-E <- dbGetQuery(dbAir$con, "SELECT origin as src, dest, sum(1) as N
-FROM flights WHERE year = 2012 GROUP BY origin, dest")
+```{sql, connection=mdsr::dbConnect_scidb("airlines"), output.var = "E"}
+SELECT origin as src, dest, sum(1) as N
+FROM flights WHERE year = 2012 
+GROUP BY origin, dest
+```
 
+```{r message=FALSE, warning=FALSE}
 library(igraph)
 g <- graph.data.frame(E, directed = TRUE)
 E(g)$weight <- E(g)$N / sum(E(g)$N)
