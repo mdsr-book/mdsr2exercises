@@ -11,7 +11,6 @@ id: giraffe-draw-clock
 (ref:giraffe-draw-clock) Exercise in file giraffe-draw-clock
 
 ```{r giraffe-draw-clock-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
@@ -20,35 +19,45 @@ TITLE GOES HERE: Use the `r mdsr2exercises::pkg_macro(fec12)` package to downloa
 XX BB SOLUTION NEEDS TO BE UPDATED TO MATCH NEW FIGURES (which changes from first to second edition).
 
 <!--begin-answer-->
-```{r giraffe-draw-clock-1, echo = TRUE, warning = FALSE}
+```{r giraffe-draw-clock-1, echo = TRUE, warning = FALSE, message=FALSE}
 library(fec12)
+
+contributions <- read_all_contributions()
+
+candidate_lkup <- candidates %>%
+  select(
+    cand_id,
+    name = cand_name, 
+    party = cand_pty_affiliation, 
+    state = cand_office_st, 
+    district = cand_office_district,
+    office = cand_office,
+  )
 
 spent <- contributions %>%
   filter(transaction_pgi == "G") %>%
-  group_by(cand_id) %>%
-  left_join(candidates, by = c("cand_id")) %>%
+  group_by(cand_id, phase = transaction_pgi) %>%
   summarize(
-    name = first(cand_name), party = first(cand_pty_affiliation),
-    state = first(state), district = first(cand_office_district),
-    phase = first(transaction_pgi), office = first(cand_office),
-    N = n(), total = sum(transaction_amt),
+    N = n(), 
+    total = sum(transaction_amt), 
     avg = mean(transaction_amt)
-  ) %>%
+  ) %>% 
+  left_join(candidate_lkup, by = c("cand_id")) %>%
   arrange(desc(total))
 ```
 
 ```{r giraffe-draw-clock-2, echo = TRUE}
 spent %>%
-  filter(total > 400000) %>%
+  filter(total > 4000000) %>%
   mutate(spent = total / 1000000) %>%
-  ggplot(aes(x = name, y = spent)) +
-  geom_bar(stat = "identity") +
-  scale_x_discrete(name = NULL) +
+ggplot(aes(x = name, y = spent)) + 
+  geom_col() + 
+  scale_x_discrete(name = NULL) + 
   scale_y_continuous(
-    name = "Money Spent (millions of USD)",
+    name = "Money Spent (millions of USD)", 
     labels = scales::dollar
-  ) +
-  #  theme(axis.text = element_text(size = 11)) +
+  ) + 
+  theme(axis.text = element_text(size = rel(0.7))) +
   coord_flip()
 ```
 
@@ -56,37 +65,35 @@ spent %>%
 spent2 <- contributions %>%
   filter(transaction_pgi == "G") %>%
   mutate(
-    spent_against = ifelse(transaction_tp %in% c("24A", "24N"),
-      transaction_amt, 0
-    ),
-    spent_for = ifelse(!transaction_tp %in% c("24A", "24N"),
-      transaction_amt, 0
-    )
+    spent_against = ifelse(transaction_tp %in% c('24A', '24N'), transaction_amt, 0), 
+    spent_for = ifelse(!transaction_tp %in% c('24A', '24N'), transaction_amt, 0)
   ) %>%
-  group_by(cand_id) %>%
-  left_join(candidates, by = c("cand_id")) %>%
+  group_by(cand_id, phase = transaction_pgi) %>%
   summarize(
-    name = first(cand_name), party = first(cand_pty_affiliation),
-    state = first(cand_st), district = first(cand_office_district),
-    phase = first(transaction_pgi), office = first(cand_office),
-    N = n(), total = sum(transaction_amt), avg = mean(transaction_amt),
-    supporting = sum(spent_for), against = sum(spent_against)
+    N = n(), 
+    total = sum(transaction_amt), 
+    avg = mean(transaction_amt),
+    supporting = sum(spent_for), 
+    against = sum(spent_against)
   ) %>%
+  left_join(candidate_lkup, by = c("cand_id")) %>%
   mutate(attack_pct = against / total) %>%
   arrange(desc(total))
+
+
 spent2 %>%
-  filter(total > 400000) %>%
-  mutate(spent = total / 1000000) %>%
+  filter(total > 4000000) %>%
   select(cand_id, name, supporting, against) %>%
-  pivot_longer(cols = c(-cand_id, -name), names_to = "type", values_to = "spent") %>%
-  ggplot(aes(x = name, y = spent, fill = type)) +
-  geom_col() +
-  scale_x_discrete(name = NULL) +
+  pivot_longer(-c(cand_id, name), names_to = "type", values_to = "spent") %>%
+  mutate(spent = spent / 1000000) %>%
+ggplot(aes(x = name, y = spent, fill = type)) + 
+  geom_col() + 
+  scale_x_discrete(name = NULL) + 
   scale_y_continuous(
-    name = "Money Spent (millions of USD)",
+    name = "Money Spent (millions of USD)", 
     labels = scales::dollar
-  ) +
-  #  theme(axis.text = element_text(size = 11)) +
+  ) + 
+  theme(axis.text = element_text(size = rel(0.6))) +
   coord_flip()
 ```
 <!--end-answer-->
