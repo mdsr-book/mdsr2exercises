@@ -41,6 +41,11 @@ GROUP BY year
 ORDER BY year;
 ```
 
+```{r, include=FALSE}
+DBI::dbDisconnect(con)
+```
+
+
 <!--end-answer-->
 
 

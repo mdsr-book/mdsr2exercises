@@ -59,6 +59,10 @@ WHERE absorbance < 0;
 ```
 <!--end-answer-->
 
+```{r, include=FALSE}
+DBI::dbDisconnect(db)
+```
+
 
 
 

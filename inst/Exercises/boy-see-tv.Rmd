@@ -26,7 +26,7 @@ a. To make an informative map, we will need two pieces of information: a list of
 `index_entry("R", "library(airlines)")`
 `index_entry("R", "tbl()")`
 ```{r eval=TRUE, warning=FALSE}
-db <- src_scidb("airlines")
+db <- dbConnect_scidb("airlines")
 airports <- tbl(db, "airports")
 flights <- tbl(db, "flights")
 ```
@@ -158,6 +158,10 @@ l_map <- leaflet() %>%
   setView(lng = -80, lat = 38, zoom = 6)
 
 l_map
+```
+
+```{r, include=FALSE}
+DBI::dbDisconnect(db)
 ```
 
 

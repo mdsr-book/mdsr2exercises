@@ -40,6 +40,10 @@ Measurements %>%
   nrow()
 ```
 
+```{r, include=FALSE}
+DBI::dbDisconnect(con)
+```
+
 
 <!--end-answer-->
 

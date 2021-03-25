@@ -90,4 +90,8 @@ Craig Biggio was inducted into the Hall of Fame in 2015. Pete Rose was banned fr
 <!--end-answer-->
 
 
+```{r, include=FALSE}
+DBI::dbDisconnect(con)
+```
+
 
