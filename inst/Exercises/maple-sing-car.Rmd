@@ -9,7 +9,6 @@ id: maple-sing-car
 ---
 
 ```{r maple-sing-car-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

@@ -1,6 +1,6 @@
 ---
 chapter: "netsci"
-author: ""
+author: "Ben Baumer"
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
@@ -28,7 +28,6 @@ b. Expand the Hollywood network by going further back in time. If you go back to
 The following code should generate the graph, but we have suppressed the results here due to the time it takes to compile. 
 
 ```{sql, connection=mdsr::dbConnect_scidb("imdb"), output.var = "E"}
-
 SELECT a.person_id as src, b.person_id as dest, 
   a.movie_id, 
   a.nr_order * b.nr_order as weight, 
