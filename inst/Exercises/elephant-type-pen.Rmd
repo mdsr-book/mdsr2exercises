@@ -14,7 +14,7 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: Identify what years of data are available in the `flights` table of the `airlines` database.
 
-```{r eval = FALSE}
+```{r, eval=TRUE, message=FALSE}
 library(tidyverse)
 library(mdsr)
 library(RMySQL)
@@ -23,16 +23,22 @@ con <- dbConnect_scidb("airlines")
 
 <!--begin-answer-->
 
-```{r}
-library(tidyverse)
-library(mdsr)
-library(RMySQL)
-con <- dbConnect_scidb("airlines")
-dbGetQuery(con, "SHOW TABLES")
+We can retrieve the results using `r pkg_macro("dplyr")`:
+
+```{r flights-via-dplyr}
 flights <- tbl(con, "flights")
 flights %>% 
   group_by(year) %>%
   summarize(n = n())
+```
+
+Or using SQL:
+
+```{sql flights-via-sql, connection=con}
+SELECT year, COUNT(*) AS num_flights
+FROM flights
+GROUP BY year
+ORDER BY year;
 ```
 
 <!--end-answer-->

@@ -1,6 +1,6 @@
 ---
 chapter: "sqlI"
-author: ""
+author: "Nicholas J. Horton"
 difficulty: "Easy"
 date: 2020-07-09 
 version: 0.1
@@ -31,8 +31,8 @@ db <- dbConnect(
 a. How many female subjects are there in total across all studies?
 
 <!--begin-answer-->
-```{r}
-dbGetQuery(db, "SELECT COUNT(*) from Subjects WHERE Sex = 'Female';")
+```{sql, connection=db}
+SELECT COUNT(*) AS num_female FROM Subjects WHERE Sex = 'Female';
 ```
 <!--end-answer-->
 
@@ -40,10 +40,11 @@ dbGetQuery(db, "SELECT COUNT(*) from Subjects WHERE Sex = 'Female';")
 b. Find the average absorbance for participants for each study, ordered by highest to lowest value.
 
 <!--begin-answer-->
-```{r}
-dbGetQuery(db, "SELECT AVG(absorbance), Identifier from Measurements
-                           GROUP BY Identifier
-                         ORDER BY AVG(absorbance) ;")
+```{sql, connection=db}
+SELECT AVG(absorbance), Identifier 
+FROM Measurements
+GROUP BY Identifier
+ORDER BY AVG(absorbance);
 ```
 <!--end-answer-->
 
@@ -51,9 +52,10 @@ dbGetQuery(db, "SELECT AVG(absorbance), Identifier from Measurements
 c. Write a query to count all the measurements with a calculated absorbance of less than 0. 
 
 <!--begin-answer-->
-```{r}
-dbGetQuery(db, "SELECT COUNT(*) from Measurements
-                           WHERE absorbance < 0;")
+```{sql, connection=db}
+SELECT COUNT(*) AS num_below_0
+FROM Measurements
+WHERE absorbance < 0;
 ```
 <!--end-answer-->
 
