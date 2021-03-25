@@ -12,69 +12,76 @@ id: ant-build-kayak
 
 ```{r ant-build-kayak-default, include = FALSE}
 mdsr2exercises::setup()
-library(tidyverse)
 ```
 
 TITLE GOES HERE: Use the FEC data to re-create Figure 2.8.
 
-<!--% XX BB solution doesn't match Figure 2.8 -->
-
-
 <!--begin-answer-->
 ```{r ant-build-kayak-1, echo = TRUE, message= FALSE, warning = FALSE}
 library(fec12)
+
+contributions <- read_all_contributions()
+candidate_lkup <- candidates %>%
+  select(
+    cand_id,
+    name = cand_name, 
+    party = cand_pty_affiliation, 
+    state = cand_office_st, 
+    district = cand_office_district,
+    office = cand_office,
+  )
+
 spent2 <- contributions %>%
   filter(transaction_pgi == "G") %>%
   mutate(
-    spent_against = ifelse(transaction_tp %in% c("24A", "24N"), transaction_amt, 0),
-    spent_for = ifelse(!transaction_tp %in% c("24A", "24N"), transaction_amt, 0)
+    spent_against = ifelse(transaction_tp %in% c('24A', '24N'), transaction_amt, 0), 
+    spent_for = ifelse(!transaction_tp %in% c('24A', '24N'), transaction_amt, 0)
   ) %>%
   group_by(cand_id, phase = transaction_pgi) %>%
   summarize(
-    N = n(),
-    total = sum(transaction_amt),
+    N = n(), 
+    total = sum(transaction_amt), 
     avg = mean(transaction_amt),
-    supporting = sum(spent_for),
+    supporting = sum(spent_for), 
     against = sum(spent_against)
   ) %>%
-  left_join(candidates, by = c("cand_id")) %>%
+  left_join(candidate_lkup, by = c("cand_id")) %>%
   mutate(attack_pct = against / total) %>%
   arrange(desc(total))
 
 district_money <- spent2 %>%
-  filter(cand_office == "H") %>%
-  group_by(
-    state = cand_st,
-    district = cand_office_district
-  ) %>%
+  filter(office == "H") %>%
+  group_by(state, district) %>%
   summarize(
-    num_PACs = n(),
-    total_spent = sum(total),
-    dem_support = sum(ifelse(cand_pty_affiliation == "DEM", supporting, 0)) +
-      sum(ifelse(cand_pty_affiliation != "DEM", against, 0))
+    num_PACs = n(), 
+    total_spent = sum(total), 
+    dem_support = sum(ifelse(party == "DEM", supporting, 0)) + sum(ifelse(party != "DEM", against, 0))
   ) %>%
   mutate(dem_money_pct = dem_support / total_spent)
-
-district_results <- results_house %>%
+district_results <- fec12::results_house %>%
+#  mutate(district = readr::parse_number(district)) %>%
   filter(!state %in% c("PR", "VI", "GU", "AS", "MP")) %>%
   group_by(state, district = district_id) %>%
   summarize(
-    num_candidates = n(),
+    num_candidates = n(), 
     total_votes = sum(general_votes, na.rm = TRUE),
-    dem_votes = sum(ifelse(party == "D", general_votes, 0))
+    dem_votes = sum(ifelse(party == "D", general_votes, 0), na.rm = TRUE)
   ) %>%
   mutate(dem_vote_pct = dem_votes / total_votes)
-
 money_results <- district_results %>%
   left_join(district_money, by = c("state", "district"))
-ggplot(data = money_results, aes(x = dem_money_pct, y = dem_vote_pct)) +
-  geom_hline(yintercept = c(0.45, 0.55), lty = 3) +
+```
+```{r votes-better, warning=FALSE, message=FALSE, fig.cap="Scatterplot illustrating the relationship between proportion of dollars spent supporting and proportion of votes earned by Democrats in the 2012 House of Representatives elections. Each dot represents one district. The size of each dot is proportional to the total spending in that election, and the alpha transparency of each dot is proportional to the total number of votes in that district."}
+ggplot(data = money_results, aes(x = dem_money_pct, y = dem_vote_pct)) + 
+  geom_hline(yintercept = c(0.45, 0.55), lty = 3) + 
   geom_point(aes(size = total_spent, alpha = total_votes)) +
-  geom_smooth() +
-  scale_x_continuous(name = "Percentage of Money supporting Democratic candidate") +
-  scale_y_continuous(name = "Percentage of Votes Earned by Democratic candidate") +
-  scale_size(labels = scales::dollar) +
+  geom_smooth() + 
+  scale_x_continuous(name = "Proportion of Money supporting Democratic candidate") +
+  scale_y_continuous(name = "Proportion of Votes by Democratic candidate") + 
+  scale_size(labels = scales::dollar) + 
   scale_alpha(labels = scales::comma)
 ```
+
+
 <!--end-answer-->
 
