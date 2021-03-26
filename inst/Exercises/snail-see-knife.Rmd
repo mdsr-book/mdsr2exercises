@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-14 
 version: 0.1
-tags: [first, second, third]
+tags: [nasaweather, ggplot, geom_path, maps]
 id: snail-see-knife
 ---
 

@@ -5,9 +5,9 @@ difficulty: Medium
 date: '2020-07-14'
 version: 0.1
 tags:
-- first
-- second
-- third
+- macleish
+- ggplot
+- visualization
 id: duck-tell-futon
 output: pdf_document
 ---

@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Easy"
 date: 2020-08-11 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [aesthetic mapping, swimmers, onlineonly]
 id: rabbit-lay-fork
 ---
 
