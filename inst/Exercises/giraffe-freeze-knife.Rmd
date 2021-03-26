@@ -5,9 +5,11 @@ difficulty: Medium
 date: '2020-07-14'
 version: 0.1
 tags:
-- first
-- second
-- third
+- teams
+- ggplot
+- aesthetics
+- mapping
+- visualization
 id: giraffe-freeze-knife
 output: pdf_document
 ---

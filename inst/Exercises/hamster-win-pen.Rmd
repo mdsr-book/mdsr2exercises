@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Hard"
 date: 2020-07-14 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [babynames, ggplot, dplyr, visualization, onlineonly]
 id: hamster-win-pen
 ---
 
