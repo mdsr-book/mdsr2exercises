@@ -4,7 +4,7 @@ author: ""
 date: "first edition"
 difficulty: "Medium"
 version: 0.1
-tags: [nycflights13, second, third]
+tags: [nycflights13, dplyr, ggplot, visualization]
 id: fish-hit-dress 
 ---
 

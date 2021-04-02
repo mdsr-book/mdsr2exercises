@@ -4,7 +4,7 @@ author: "Daniel Kaplan"
 date: 2019-10-23 
 difficulty: "Medium"
 version: 0.1
-tags: [nycflights13, second, third]
+tags: [nycflights13, dplyr, lubridate, ggplot, visualization]
 id: panda-take-bulb 
 ---
 

@@ -4,7 +4,7 @@ author: ""
 date: "First edition"
 version: 0.1
 difficulty: "Medium"
-tags: [baseball, second, third]
+tags: [baseball, lahman, dplyr, ggplot, visualization]
 id: fir-pitch-fridge 
 depends: kid-walk-chair
 ---
