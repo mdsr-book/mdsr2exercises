@@ -4,7 +4,7 @@ author: ""
 difficulty: "Easy"
 date: 2020-08-11 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [dplyr, onlineonly]
 id: pig-lie-plant
 ---
 

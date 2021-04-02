@@ -4,7 +4,7 @@ author: ""
 date: "First edition"
 difficulty: "Medium"
 version: 0.1
-tags: [restaurants, second, third]
+tags: [restaurants, violations, dplyr, ggplot, visualization]
 id: hamster-speak-book 
 ---
 

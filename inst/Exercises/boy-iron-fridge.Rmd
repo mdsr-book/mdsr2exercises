@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-06-25 
 version: 0.1
-tags: [first, second, third]
+tags: [dickinson-poems, text, titles, strings]
 id: boy-iron-fridge
 ---
 

@@ -4,7 +4,7 @@ author: ""
 date: "First edition"
 difficulty: "Easy"
 version: 0.1
-tags: [baseball, second, third]
+tags: [baseball, lahman, dplyr, mutate, ggplot, visualization]
 id: kid-walk-chair 
 ---
 

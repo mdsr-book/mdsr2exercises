@@ -4,7 +4,7 @@ author: ""
 date: "First edition"
 difficulty: "Medium"
 version: 0.1
-tags: [nycflights13, second, third]
+tags: [nycflights13, weather, outliers, dplyr, ggplot, visualization]
 id: octopus-hold-blanket 
 ---
 
