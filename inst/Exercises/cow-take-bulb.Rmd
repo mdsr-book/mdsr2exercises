@@ -4,7 +4,7 @@ author: ""
 difficulty: "Hard"
 date: 2020-06-24 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [maps, airlines, dplyr, sf, ggspatial, onlineonly]
 id: cow-take-bulb
 ---
 

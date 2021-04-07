@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-09-26 
 version: 0.1
-tags: [first, second, third]
+tags: [graphical principles]
 id: crocodile-wear-oven
 ---
 

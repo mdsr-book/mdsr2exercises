@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Easy"
 date: 2020-09-03 
 version: 0.1
-tags: [onlineonly, second, third]
+tags: [onlineonly, visualization, taxonomy, visual cues, coordinate systems, scales]
 id: doe-lie-radio
 ---
 

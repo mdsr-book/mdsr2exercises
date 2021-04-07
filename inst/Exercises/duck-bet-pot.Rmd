@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-16 
 version: 0.1
-tags: [first, second, third]
+tags: [mosaic, gestation, linear regression, counfounding, residuals, missing values]
 id: duck-bet-pot
 ---
 

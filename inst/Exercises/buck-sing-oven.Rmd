@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Easy"
 date: 2020-06-30 
 version: 0.1
-tags: [first, second, third]
+tags: [ggplot, aesthetic mapping, visualization]
 id: buck-sing-oven
 ---
 
