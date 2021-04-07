@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Hard"
 date: 2020-08-16 
 version: 0.1
-tags: [first, second, third]
+tags: [macleish, wikipedia]
 id: cheetah-see-pen
 ---
 

@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-08-16 
 version: 0.1
-tags: [first, second, third]
+tags: [weather, macleish, ggplot, visualization]
 id: chicken-hurt-mug
 ---
 

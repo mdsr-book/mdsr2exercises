@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
-tags: [first, second, third]
+tags: [sql, imdb, igraph]
 id: cheetah-dive-boat
 ---
 
