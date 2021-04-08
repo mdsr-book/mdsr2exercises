@@ -4,7 +4,7 @@ author: ""
 difficulty: "Hard"
 date: 2020-06-24 
 version: 0.1
-tags: [first, second, third]
+tags: [gerrymandering, shapefiles, maps]
 id: fox-mean-socks
 ---
 
