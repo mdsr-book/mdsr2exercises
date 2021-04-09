@@ -4,12 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-07-16 
 version: 0.1
-tags: [first, second, third]
+tags: [gestation, mosaic, confidence intervals]
 id: fox-pitch-room
 ---
 
 ```{r fox-pitch-room-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
