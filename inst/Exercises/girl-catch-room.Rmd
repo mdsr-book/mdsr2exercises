@@ -6,15 +6,16 @@ difficulty: Medium
 version: 0.1
 tags:
 - baseball
-- second
-- third
+- lahman
+- functions
+- dplyr
+- teams
 id: girl-catch-room
 ---
 
 (ref:girl-catch-room) Exercise in file girl-catch-room
 
 ```{r girl-catch-room-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
