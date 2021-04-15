@@ -5,9 +5,9 @@ date: '2020-08-16'
 difficulty: Medium
 id: hamster-think-room
 tags:
-- first
-- second
-- third
+- shiny apps
+- macleish
+- weather
 version: 0.1
 ---
 

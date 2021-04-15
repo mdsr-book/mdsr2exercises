@@ -4,7 +4,7 @@ author: ""
 difficulty: "Easy"
 date: 2020-06-14 
 version: 0.1
-tags: [first, second, third]
+tags: [babynames, dplyr, data wrangling, strings]
 id: kid-drive-saucer
 ---
 

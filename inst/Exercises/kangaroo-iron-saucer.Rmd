@@ -4,7 +4,7 @@ author: ""
 date: "Second edition"
 difficulty: "Easy"
 version: 0.1
-tags: [first, second, third]
+tags: [visualization, ggplot, ggrepel, dplyr, states, illiteracy]
 id: kangaroo-iron-saucer
 ---
 

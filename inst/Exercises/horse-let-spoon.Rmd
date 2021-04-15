@@ -4,12 +4,11 @@ author: ""
 difficulty: "Easy"
 date: 2020-08-09 
 version: 0.1
-tags: [first, second, third]
+tags: [errors, variables]
 id: horse-let-spoon
 ---
 
 ```{r horse-let-spoon-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
