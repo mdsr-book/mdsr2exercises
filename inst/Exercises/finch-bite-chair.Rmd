@@ -9,9 +9,7 @@ id: finch-bite-chair
 ---
 
 ```{r finch-bite-chair-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
-library(mdsr2exercises)
+library(mosaicData)
 mdsr2exercises::setup()
 ```
 
