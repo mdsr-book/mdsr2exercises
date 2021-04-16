@@ -4,12 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Hard"
 date: 2020-09-30 
 version: 0.1
-tags: [first, second, third]
+tags: [logistic regression, public health, smoking]
 id: maple-sleep-sofa
 ---
 
 ```{r maple-sleep-sofa-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

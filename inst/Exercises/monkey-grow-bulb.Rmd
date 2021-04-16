@@ -6,8 +6,11 @@ difficulty: "Medium"
 version: 0.1
 tags:
 - baseball
-- second
-- third
+- lahman
+- pivoting
+- dplyr
+- ggplot
+- visualization
 id: monkey-grow-bulb
 output: pdf_document
 ---
@@ -15,7 +18,6 @@ output: pdf_document
 (ref:monkey-grow-bulb) Exercise in file monkey-grow-bulb
 
 ```{r monkey-grow-bulb-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

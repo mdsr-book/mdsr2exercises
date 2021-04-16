@@ -4,7 +4,7 @@ author: "Ben Baumer"
 date: 2019-10-23 
 difficulty: "Hard"
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [data wrangling, importing, visualization, ggplot, onlineonly]
 id: monkey-do-mug 
 ---
 
@@ -12,7 +12,6 @@ id: monkey-do-mug
 
 
 ```{r monkey-do-mug-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
