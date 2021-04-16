@@ -4,7 +4,7 @@ author: "Nicholas J. Horton"
 difficulty: "Hard"
 date: 2020-06-25 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [dickinsonpoems, text, poetry, sentiment analysis, onlineonly]
 id: lion-forget-ring
 ---
 
