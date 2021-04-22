@@ -4,7 +4,7 @@ author: "Ben Baumer"
 date: "First edition"
 difficulty: "Medium"
 version: 0.1
-tags: [baseball, second, third]
+tags: [baseball, lahman, dplyr, functions]
 id: octopus-choose-table 
 depends: girl-catch-room
 ---

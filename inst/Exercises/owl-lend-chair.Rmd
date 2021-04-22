@@ -4,12 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-09-30 
 version: 0.1
-tags: [first, second, third]
+tags: [explanation, machine learning, predictive analytics]
 id: owl-lend-chair
 ---
 
 ```{r owl-lend-chair-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
