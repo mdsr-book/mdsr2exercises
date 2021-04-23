@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Easy"
 date: 2020-07-14 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [tidyr, pivoting, onlineonly]
 id: octopus-wear-kitchen
 ---
 ```{r octopus-wear-kitchen-default, include = FALSE}
