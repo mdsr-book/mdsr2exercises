@@ -4,14 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-08-16 
 version: 0.1
-tags: [first, second, third]
+tags: [tidygeocoder, location]
 id: pine-see-cotton
 ---
 
 ```{r pine-see-cotton-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
-library(mdsr2exercises)
 mdsr2exercises::setup()
 ```
 

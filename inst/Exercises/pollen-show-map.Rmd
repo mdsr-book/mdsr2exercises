@@ -4,12 +4,11 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-14 
 version: 0.1
-tags: [first, second, third]
+tags: [nasaweather, storms, decision trees, classifiers]
 id: pollen-show-map
 ---
 
 ```{r pollen-show-map-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

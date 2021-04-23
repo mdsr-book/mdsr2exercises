@@ -4,14 +4,12 @@ author: ""
 difficulty: "Hard"
 date: 2020-06-24 
 version: 0.1
-tags: [first, second, third]
+tags: [tidycensus, maps, leaflet]
 id: pine-shut-knob
 ---
 
 ```{r pine-shut-knob-default, include = FALSE}
 mdsr2exercises::setup()
-library(mdsr)
-library(tidyverse)
 ```
 
 TITLE GOES HERE: Use the `r pkg_macro(tidycensus)` package to conduct a spatial analysis of the Census data it contains for your home state. Can you illustrate how the demography of your state varies spatially? 

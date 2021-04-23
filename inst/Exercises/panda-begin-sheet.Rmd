@@ -4,12 +4,11 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-15 
 version: 0.1
-tags: [first, second, third]
+tags: [commands, terminology, syntax]
 id: panda-begin-sheet
 ---
 
 ```{r panda-begin-sheet-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
