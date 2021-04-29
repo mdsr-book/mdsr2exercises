@@ -23,5 +23,16 @@ mosaic::tally(~ SmokeNow + Smoke100, data = filter(NHANES, Age >= 20))
  <!--begin-answer-->
 Solution welcomed.
 
+```{r}
+data <- NHANES %>% 
+  mutate(SmokeNow2 = ifelse(SmokeNow == "Yes", 1, 0)) %>% 
+  filter(Age >= 20) %>% 
+  filter(Poverty != "NA") %>% 
+  select(SmokeNow2, Poverty, Age, HomeOwn, Gender)
+View(data)
+
+```
+
+
  <!--end-answer-->
   

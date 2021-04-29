@@ -4,12 +4,11 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-20 
 version: 0.1
-tags: [first, second, third]
+tags: [simulation, probability, distributions]
 id: snake-send-linen
 ---
 
 ```{r snake-send-linen-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

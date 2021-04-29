@@ -9,16 +9,13 @@ id: chicken-hurt-mug
 ---
 
 ```{r chicken-hurt-mug-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
-library(mdsr2exercises)
 mdsr2exercises::setup()
 ```
 
 TITLE GOES HERE:	The `r pkg_macro(macleish)` package contains weather data collected every 10 minutes in 2015 from two weather stations in Whately, Massachusetts.
 
 
-Using the `r pkg_macro(ggplot2)` package, create a data graphic that displays the average temperature over each 10-minute interal (`temperature`) as a function of time (`when`) from the `whately_2015` dataframe. Create annotations to include context about the four seasons: the date of the vernal and autumnal equinoxes, and the summer and winter solstices.
+Using the `r pkg_macro(ggplot2)` package, create a data graphic that displays the average temperature over each 10-minute interval (`temperature`) as a function of time (`when`) from the `whately_2015` dataframe. Create annotations to include context about the four seasons: the date of the vernal and autumnal equinoxes, and the summer and winter solstices.
 
 
 <!--begin-answer-->

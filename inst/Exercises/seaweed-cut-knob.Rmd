@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-20 
 version: 0.1
-tags: [lahman, sql, querying, tables]
+tags: [baseball, lahman, sql, querying, tables]
 id: seaweed-cut-knob
 editor_options: 
   chunk_output_type: inline

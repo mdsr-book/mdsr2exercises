@@ -4,12 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-07-20 
 version: 0.1
-tags: [first, second, third]
+tags: [simulation, linear regression, model assumptions, equal variance]
 id: squirrel-cost-mug
 ---
 
 ```{r squirrel-cost-mug-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

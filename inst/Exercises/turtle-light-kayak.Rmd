@@ -4,7 +4,7 @@ author: "Ben Baumer"
 date: "First edition" 
 difficulty: "Medium"
 version: 0.1
-tags: [scraping, second, third]
+tags: [scraping, wikipedia, visualization, ggplot]
 id: turtle-light-kayak 
 ---
 
@@ -13,8 +13,6 @@ id: turtle-light-kayak
 ```{r turtle-light-kayak-default, include = FALSE}
 mdsr2exercises::setup()
 library(rvest)
-library(tidyverse)
-library(mdsr)
 ```
 
 TITLE GOES HERE: Using the approach described in Section 6.4.1.2 of the text, find another table in Wikipedia that can be scraped and visualized.  Be sure to interpret your graphical display.

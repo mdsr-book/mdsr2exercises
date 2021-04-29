@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-09-22 
 version: 0.1
-tags: [first, second, third]
+tags: [decision trees, nhanes, pregnancy]
 id: tiger-toss-canoe
 ---
 

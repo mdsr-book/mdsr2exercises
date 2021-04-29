@@ -4,12 +4,11 @@ author: "Nicholas J. Horton"
 difficulty: "Hard"
 date: 2020-07-19 
 version: 0.1
-tags: [first, second, third]
+tags: [benford.analysis, functions]
 id: tiger-know-stove
 ---
 
 ```{r tiger-know-stove-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 
