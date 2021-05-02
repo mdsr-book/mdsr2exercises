@@ -21,7 +21,18 @@ mosaic::tally(~ SmokeNow + Smoke100, data = filter(NHANES, Age >= 20))
 ```
 
  <!--begin-answer-->
-Solution welcomed.
+Answers may vary. Here is an example: 
 
+```{r}
+data <- NHANES %>% 
+  replace_na(list(SmokeNow = "No")) %>% 
+  mutate(SmokeNow2 = ifelse(SmokeNow == "Yes", 1, 0)) %>% 
+  filter(Age >= 20) %>% 
+  filter(Poverty != "NA") %>% 
+  select(SmokeNow2, SmokeNow, Poverty, Age, HomeOwn, Gender)
+model <- glm(formula = SmokeNow2 ~ Gender + Age + Poverty + HomeOwn, data = data, family = "binomial")
+summary(model)
+```
+We can see from the model summary that gender, age, poverty, and homeownership are all significant predictors of whether or not an individual over 20 smokes now. 
  <!--end-answer-->
   

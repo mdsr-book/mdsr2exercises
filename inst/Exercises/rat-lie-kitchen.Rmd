@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Easy"
 date: 2020-07-14 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [tidyr, onlineonly]
 id: rat-lie-kitchen
 ---
 ```{r rat-lie-kitchen-default, include = FALSE}

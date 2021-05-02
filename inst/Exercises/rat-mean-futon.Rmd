@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2021-03-06 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [sql, imdb, onlineonly]
 id: rat-mean-futon
 ---
 

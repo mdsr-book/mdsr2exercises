@@ -4,14 +4,12 @@ author: "Nicholas J. Horton"
 difficulty: "Hard"
 date: 2020-06-24 
 version: 0.1
-tags: [first, second, third]
+tags: [tigris, maps, gerrymandering, leaflet]
 id: wolf-bend-room
 ---
 
 ```{r wolf-bend-room-default, include = FALSE}
 mdsr2exercises::setup()
-library(mdsr)
-library(tidyverse)
 ```
 
 TITLE GOES HERE: Use the `r pkg_macro(tigris)` package to make the congressional election district map for your home state. Do you see evidence of gerrymandering? Why or why not?

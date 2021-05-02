@@ -4,14 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Hard"
 date: 2020-08-16 
 version: 0.1
-tags: [first, second, third]
+tags: [shiny, shiny apps, baseball, lahman]
 id: spider-sit-linen
 ---
 
 ```{r spider-sit-linen-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
-library(mdsr2exercises)
 mdsr2exercises::setup()
 ```
 

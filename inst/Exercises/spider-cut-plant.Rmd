@@ -4,12 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-07-20 
 version: 0.1
-tags: [first, second, third]
+tags: [residuals, linear regression, simulation]
 id: spider-cut-plant
 ---
 
 ```{r spider-cut-plant-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

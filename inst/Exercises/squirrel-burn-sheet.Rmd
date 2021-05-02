@@ -4,13 +4,11 @@ author: "Daniel Kaplan"
 date: 2020-07-15 
 version: 0.1
 difficulty: "Hard"
-tags: [first, second, third]
+tags: [kmeans, clustering, cities]
 id: squirrel-burn-sheet
 ---
 
 ```{r squirrel-burn-sheet-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
 mdsr2exercises::setup()
 ```
 

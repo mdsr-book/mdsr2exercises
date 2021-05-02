@@ -4,14 +4,12 @@ author: ""
 difficulty: "Medium"
 date: 2020-06-24 
 version: 0.1
-tags: [first, second, third]
+tags: [macleish, ggspatial, leaflet, maps]
 id: shark-pitch-linen
 ---
 
 ```{r shark-pitch-linen-default, include = FALSE}
 mdsr2exercises::setup()
-library(mdsr)
-library(tidyverse)
 ```
 
 TITLE GOES HERE: 
