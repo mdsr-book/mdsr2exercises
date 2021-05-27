@@ -9,10 +9,6 @@ tags:
 - pivot
 - dplyr
 id: beech-come-shoe
-output:
-  html_document:
-    df_print: paged
-  pdf_document: default
 ---
 
 (ref:beech-come-shoe) Exercise in file beech-come-shoe
@@ -24,11 +20,8 @@ mdsr2exercises::setup()
 TITLE GOES HERE: Generate the code to convert the following data frame to wide format.
 
 ```{r warning = FALSE, echo = FALSE, message= FALSE}
-library(mdsr)
-library(mosaic)
-library(readr)
-library(tidyr)
-library(xtable)
+library(tidyverse)
+
 df <- tibble(
   id = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5),
   sex = c("M", "M", "F", "F", "F", "F", "M", "M", "M", "M"),
