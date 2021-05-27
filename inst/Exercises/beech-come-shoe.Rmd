@@ -10,9 +10,9 @@ tags:
 - dplyr
 id: beech-come-shoe
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 (ref:beech-come-shoe) Exercise in file beech-come-shoe
