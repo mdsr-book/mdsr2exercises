@@ -4,7 +4,7 @@ author: "Ben Baumer"
 difficulty: "Hard"
 date: 2020-07-10 
 version: 0.1
-tags: [first, second, third]
+tags: [naos, gis, shapefiles, leaflet, bike_trails, dplyr]
 id: buck-see-plant
 ---
 

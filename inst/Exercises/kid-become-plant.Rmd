@@ -4,13 +4,11 @@ author: "Ben Baumer"
 difficulty: "Easy"
 date: 2020-07-14 
 version: 0.1
-tags: [first, second, third]
+tags: [pipes, dplyr, nesting]
 id: kid-become-plant
 ---
 
 ```{r kid-become-plant-default, include = FALSE}
-library(mdsr)
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

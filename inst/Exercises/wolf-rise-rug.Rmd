@@ -4,12 +4,11 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-16 
 version: 0.1
-tags: [first, second, third]
+tags: [homeless, modeling, logistic regression]
 id: wolf-rise-rug
 ---
 
 ```{r wolf-rise-rug-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

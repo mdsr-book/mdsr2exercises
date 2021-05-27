@@ -4,14 +4,12 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-08-16 
 version: 0.1
-tags: [first, second, third]
+tags: [visualization, ggplot, marginal histograms]
 id: finch-bite-chair
 ---
 
 ```{r finch-bite-chair-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
-library(mdsr2exercises)
+library(mosaicData)
 mdsr2exercises::setup()
 ```
 

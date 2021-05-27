@@ -4,7 +4,7 @@ author: "Ben Baumer"
 date: "First edition"
 difficulty: "Medium"
 version: 0.1
-tags: [babynames, second, third]
+tags: [babynames, data wrangling]
 id: girl-iron-pen 
 ---
 

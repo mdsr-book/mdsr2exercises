@@ -4,7 +4,7 @@ author: ''
 difficulty: Hard
 date: '2020-07-01'
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [dplyr, ggplot,visualization, maps, airlines, onlineonly]
 id: boy-see-tv
 output: pdf_document
 ---

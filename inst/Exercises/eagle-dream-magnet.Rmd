@@ -5,9 +5,9 @@ date: "First edition"
 difficulty: Medium
 version: 0.1
 tags:
-- first
-- second
-- third
+- dplyr
+- pivot
+- mistakes
 id: eagle-dream-magnet
 output: pdf_document
 ---

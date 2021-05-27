@@ -4,12 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Hard"
 date: 2020-10-01 
 version: 0.1
-tags: [first, second, third]
+tags: [macleish, maps]
 id: walnut-think-kayak
 ---
 
 ```{r walnut-think-kayak-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

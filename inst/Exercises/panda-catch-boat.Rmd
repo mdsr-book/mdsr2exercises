@@ -4,13 +4,12 @@ author: ""
 date: "First edition"
 difficulty: "Medium"
 version: 0.1
-tags: [nycflights13, second, third]
+tags: [nycflights13, dplyr, data wrangling]
 id: panda-catch-boat 
 ---
 
 
 ```{r panda-catch-boat-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

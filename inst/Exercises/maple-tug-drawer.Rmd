@@ -4,12 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-09-08 
 version: 0.1
-tags: [first, second, third]
+tags: [shiny, shiny apps, ggthemes, visualization]
 id: maple-tug-drawer
 ---
 
 ```{r maple-tug-drawer-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

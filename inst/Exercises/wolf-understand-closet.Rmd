@@ -4,7 +4,7 @@ author: ""
 difficulty: "Easy"
 date: 2020-07-02 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [dplyr, onlineonly]
 id: wolf-understand-closet
 ---
 ```{r wolf-understand-closet-default, include = FALSE}

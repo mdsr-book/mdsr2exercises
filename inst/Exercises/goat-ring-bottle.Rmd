@@ -5,9 +5,10 @@ difficulty: Medium
 date: '2020-06-25'
 version: 0.1
 tags:
-- first
-- second
-- third
+- trees
+- maps
+- leaflet
+- pdxtrees
 id: goat-ring-bottle
 output: pdf_document
 ---

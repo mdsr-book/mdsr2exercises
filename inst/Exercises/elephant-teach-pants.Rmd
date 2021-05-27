@@ -4,7 +4,7 @@ author: "Nicholas Horton"
 difficulty: "Hard"
 date: 2020-07-13 
 version: 0.1
-tags: [first, second, third]
+tags: [simulation, p-values, regression modeling]
 id: elephant-teach-pants
 ---
 

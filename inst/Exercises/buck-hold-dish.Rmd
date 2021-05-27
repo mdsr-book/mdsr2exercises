@@ -4,7 +4,7 @@ author: ""
 difficulty: "Medium"
 date: 2020-07-13 
 version: 0.1
-tags: [first, second, third]
+tags: [ethics, data privacy]
 id: buck-hold-dish
 ---
 

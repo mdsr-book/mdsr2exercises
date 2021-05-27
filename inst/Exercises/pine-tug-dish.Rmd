@@ -4,7 +4,7 @@ author: "Ben Baumer"
 date: "First edition"
 difficulty: "Medium"
 version: 0.1
-tags: [baseball, second, third]
+tags: [baseball, distributions, birth month, data wrangling, dplyr, visualization, ggplot]
 id: pine-tug-dish 
 ---
 
@@ -12,7 +12,6 @@ id: pine-tug-dish
 
 ```{r pine-tug-dish-default, include = FALSE}
 mdsr2exercises::setup()
-library(tidyverse)
 library(mosaicData)
 ```
 

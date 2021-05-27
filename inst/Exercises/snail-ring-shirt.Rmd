@@ -4,14 +4,12 @@ author: "Nicholas Horton"
 difficulty: "Easy"
 date: 2020-10-02 
 version: 0.1
-tags: [first, second, third]
+tags: [mosaic, decision trees]
 id: snail-ring-shirt
 ---
 
 ```{r snail-ring-shirt-default, include = FALSE}
 mdsr2exercises::setup()
-library(mdsr)
-library(tidyverse)
 ```
 
 TITLE GOES HERE: Use the `HELPrct` data from the `r pkg_macro(mosaicData)` to fit a tree model to the following predictors: `age`, `sex`, `cesd`, and `substance`.

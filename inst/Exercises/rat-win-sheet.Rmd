@@ -4,7 +4,7 @@ author: "Daniel Kaplan"
 difficulty: "Hard"
 date: 2019-10-24 
 version: 0.1
-tags: [first, second, onlineonly]
+tags: [fec, dplyr, wrangling, elections]
 id: rat-win-sheet 
 ---
 

@@ -4,14 +4,11 @@ author: "Nicholas Horton"
 difficulty: "Medium"
 date: 2020-08-16 
 version: 0.1
-tags: [first, second, third]
+tags: [palmerpenguins, shiny apps]
 id: fox-hide-linen
 ---
 
 ```{r fox-hide-linen-default, include = FALSE}
-library(tidyverse)
-library(mdsr)
-library(mdsr2exercises)
 mdsr2exercises::setup()
 ```
 

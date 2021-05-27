@@ -4,12 +4,11 @@ author: ""
 difficulty: "Easy"
 date: 2020-07-16 
 version: 0.1
-tags: [first, second, third]
+tags: [twins, linear regression, interpretation]
 id: spider-keep-bottle
 ---
 
 ```{r spider-keep-bottle-default, include = FALSE}
-library(tidyverse)
 mdsr2exercises::setup()
 ```
 

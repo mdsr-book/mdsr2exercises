@@ -6,8 +6,10 @@ date: '2020-07-14'
 version: 0.1
 tags:
 - babynames
-- second
-- third
+- fivethirtyeight
+- dplyr
+- ggplot
+- visualization
 id: dolphin-drink-linen
 output:
   pdf_document: default

@@ -5,17 +5,16 @@ difficulty: "Medium"
 date: '2020-07-14'
 version: 0.1
 tags:
-- first
-- second
-- third
+- collegescorecard
+- student debt
+- modeling
+- decision trees
 id: pollen-ring-scarf
 output: pdf_document
 ---
 
 ```{r pollen-ring-scarf-default, include = FALSE}
 mdsr2exercises::setup()
-library(tidyverse)
-library(mdsr)
 ```
 
 TITLE GOES HERE: Use the College Scorecard Data from the `CollegeScorecard` package to model student debt as a function of institutional characteristics using the techniques described in this chapter.  Compare and contrast results from at least three methods.  
