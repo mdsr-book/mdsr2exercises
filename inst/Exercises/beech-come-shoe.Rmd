@@ -19,7 +19,6 @@ output:
 
 ```{r beech-come-shoe-default, include = FALSE}
 mdsr2exercises::setup()
-library(tidyverse)
 ```
 
 TITLE GOES HERE: Generate the code to convert the following data frame to wide format.
@@ -46,26 +45,14 @@ sumdf <- df %>%
   ungroup()
 ```
 
-```{r results = "asis", echo = FALSE}
-knitr::kable(sumdf)
+```{r, echo = FALSE}
+sumdf
 ```
 
 The result should look like the following display.
-```{r ,echo=FALSE, results="asis", message = FALSE}
-options(xtable.comment = FALSE)
 
-
-transformed <- sumdf %>%
-  pivot_longer(names_to = "temp", values_to = "vals", col = c(meanL, meanR, sdL, sdR)) %>%
-  unite(col = "temp1", sex, temp, sep = ".") %>%
-  pivot_wider(names_from = temp1, values_from = vals)
-xtable(data.frame(transformed))
-```
-Hint: use `r mdsr2exercises::func_macro(pivot_longer)` in conjunction with `r mdsr2exercises::func_macro(pivot_wider)`.
-
-<!--begin-answer-->
-```{r beech-come-shoe-1, echo=TRUE}
-transformed <- sumdf %>%
+```{r beech-come-shoe-1, echo=FALSE, message = FALSE}
+sumdf %>%
   pivot_longer(
     names_to = "temp", 
     values_to = "vals", 
@@ -73,7 +60,12 @@ transformed <- sumdf %>%
   ) %>%
   unite(col = "temp1", sex, temp, sep = ".") %>%
   pivot_wider(names_from = temp1, values_from = vals)
-data.frame(transformed)
+```
+
+Hint: use `r mdsr2exercises::func_macro(pivot_longer)` in conjunction with `r mdsr2exercises::func_macro(pivot_wider)`.
+
+<!--begin-answer-->
+```{r beech-come-shoe-1, echo=TRUE}
 ```
 <!--end-answer-->
 
