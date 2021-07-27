@@ -16,10 +16,10 @@ TITLE GOES HERE: Carry out and interpret a clustering of vehicles from another m
 approach outlined in the first section of the chapter.
 
 <!--begin-answer-->
-```{r eval= TRUE, warning= FALSE, message = FALSE}
+```{r eval= TRUE, warning= FALSE, message = FALSE, results='hide'}
 library(readxl)
 
-tmp_dir <- usethis::use_zip("https://www.fueleconomy.gov/feg/epadata/16data.zip")
+tmp_dir <- usethis::use_zip("https://www.fueleconomy.gov/feg/epadata/16data.zip", cleanup = TRUE)
 file <- fs::dir_ls(tmp_dir) %>%
   head(1)
 cars <- read_excel(file)
