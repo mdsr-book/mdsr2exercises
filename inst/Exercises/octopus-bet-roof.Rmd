@@ -19,7 +19,10 @@ approach outlined in the first section of the chapter.
 ```{r eval= TRUE, warning= FALSE, message = FALSE, results='hide'}
 library(readxl)
 
-tmp_dir <- usethis::use_zip("https://www.fueleconomy.gov/feg/epadata/16data.zip", cleanup = TRUE)
+tmp_dir <- usethis::use_zip(
+  "https://www.fueleconomy.gov/feg/epadata/16data.zip", 
+  destdir = tempdir(), 
+  cleanup = TRUE)
 file <- fs::dir_ls(tmp_dir) %>%
   head(1)
 cars <- read_excel(file)
