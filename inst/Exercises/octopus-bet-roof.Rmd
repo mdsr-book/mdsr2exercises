@@ -19,25 +19,20 @@ approach outlined in the first section of the chapter.
 ```{r eval= TRUE, warning= FALSE, message = FALSE}
 library(readxl)
 
-if (!file.exists("./fueleconomy/2016 FEGuide for DOE-OK to release-no-sales-5-8-2019McLarenforpublic.xlsx")) {
-  download.file("https://www.fueleconomy.gov/feg/epadata/16data.zip",
-    destfile = "./fueleconomy.zip"
-  )
-  unzip("./fueleconomy.zip", exdir = "./fueleconomy/")
-}
-
-filename <- list.files("./fueleconomy/", pattern = "public\\.xlsx")[1]
-fullfilename <- paste0("./fueleconomy/", filename)
-cars <- read_excel(fullfilename) %>% data.frame()
+tmp_dir <- usethis::use_zip("https://www.fueleconomy.gov/feg/epadata/16data.zip")
+file <- fs::dir_ls(tmp_dir) %>%
+  head(1)
+cars <- read_excel(file)
 ```
 
 ```{r, message= FALSE, warning = FALSE }
 library(mdsr)
 cars <- cars %>%
+  janitor::clean_names() %>%
   rename(
-    make = Mfr.Name, model = Carline, displacement = Eng.Displ,
-    cylinders = X..Cyl, city_mpg = City.FE..Guide....Conventional.Fuel,
-    hwy_mpg = Hwy.FE..Guide....Conventional.Fuel, gears = X..Gears
+    make = mfr_name, model = carline, displacement = eng_displ,
+    cylinders = number_cyl, city_mpg = city_fe_guide_conventional_fuel,
+    hwy_mpg = hwy_fe_guide_conventional_fuel, gears = number_gears
   ) %>%
   select(make, model, displacement, cylinders, gears, city_mpg, hwy_mpg) %>%
   distinct(model, .keep_all = TRUE) %>%
