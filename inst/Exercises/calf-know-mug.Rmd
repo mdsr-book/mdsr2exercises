@@ -17,7 +17,7 @@ library(tidyverse)
 TITLE GOES HERE: 
 
 
-a. Find all of the adjectives in *Macbeth* that end in *more* or *less* using `Machbeth_raw` in `r pkg_macro(mdsr)`.
+a. Find all of the adjectives in *Macbeth* that end in *more* or *less* using `Macbeth_raw` in `r pkg_macro(mdsr)`.
  
 
 <!--begin-answer-->
