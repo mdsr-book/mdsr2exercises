@@ -36,4 +36,4 @@ extitle: subsetting null
 exsection: advr_subsetting
 exname: advr_subsetting_null
 extype: schoice
-exsolution: 01000
+exsolution: 1000
