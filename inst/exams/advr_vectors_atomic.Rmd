@@ -1,0 +1,33 @@
+Question
+========
+
+Which of the following is **NOT** a type of atomic vector?
+
+Answerlist
+----------
+
+* `logical`
+* `integer`
+* `character`
+* `double`
+* `factor`
+
+Solution
+========
+
+Answerlist
+----------
+
+* `logical` is an atomic vector type
+* `integer` is an atomic vector type
+* `character` is an atomic vector type
+* `double` is an atomic vector type
+* Correct, `factor` is not an atomic vector type. 
+
+Meta-information
+================
+extitle: atomic vectors
+exsection: advr_vectors
+exname: advr_vectors_atomic
+extype: schoice
+exsolution: 00001

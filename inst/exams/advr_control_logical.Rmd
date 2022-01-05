@@ -1,0 +1,36 @@
+Question
+========
+
+Generally (unless you customize your error reporting), what is the result of `if (c(TRUE, FALSE)) TRUE`?
+
+Answerlist
+----------
+
+* `TRUE`, plus a warning about condition length
+* `FALSE`, plus a warning about condition length
+* Error: the condition has length > 1
+* `TRUE`, with no warning or error.
+
+Solution
+========
+
+```{r, eval=FALSE, include=FALSE}
+if (c(TRUE, FALSE)) TRUE
+```
+
+
+Answerlist
+----------
+
+* Correct.
+* No, it's `TRUE`, plus a warning.
+* No, it returns `TRUE` and offers a warning, not an error
+* No, it throws a warning
+
+Meta-information
+================
+extitle: logical
+exsection: advr_control
+exname: advr_control_logical
+extype: schoice
+exsolution: 1000

@@ -1,0 +1,26 @@
+Question
+========
+
+It is always necessary to run `gc()` to collect garbage every time you end an R session. 
+
+Answerlist
+----------
+* True
+* False
+
+
+Solution
+========
+
+Answerlist
+----------
+* There is rarely a need to run `gc()` manually. 
+* Correct
+
+Meta-information
+================
+extitle: garbage collection
+exsection: advr_names
+exname: advr_names_gc
+extype: schoice
+exsolution: 01

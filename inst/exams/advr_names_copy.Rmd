@@ -1,0 +1,43 @@
+Question
+========
+
+Suppose that `my_var` and `your_var` are both lists with three items that are bound to the same memory address. 
+
+```{r}
+my_var <- list("alpha", "beta", "delta")
+your_var <- my_var
+
+library(lobstr)
+ref(my_var)
+ref(your_var)
+```
+
+If I modify the second value in `my_var`, then R has to create a ________, since now `my_var` and `your_var` are different and thus cannot occupy the same location in memory.
+
+Choose the correct word to fill in the blank. 
+
+Answerlist
+----------
+* copy
+* modification
+* dummy variable
+* name
+
+
+Solution
+========
+
+Answerlist
+----------
+* Correct
+* No, "modification" is not a technical term
+* No, a "dummy variable" is often used in regression
+* No, R does not have to create a new "name"
+
+Meta-information
+================
+extitle: copy on modify
+exsection: advr_names
+exname: advr_names_copy
+extype: schoice
+exsolution: 1000

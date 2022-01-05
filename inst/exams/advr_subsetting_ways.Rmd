@@ -1,0 +1,31 @@
+Question
+========
+
+Which of the following vector types is **NOT** listed as one of the six ways to subset a vector described in [Section 4.2.1](https://adv-r.hadley.nz/subsetting.html#atomic-vectors-1) of *Advanced R*?
+
+Answerlist
+----------
+
+* `integer`
+* `character`
+* `logical`
+* `POSIXct`
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, `integer` is one way to subset a vector
+* No, `character` is one way to subset a vector
+* No, `logical` is one way to subset a vector
+* Correct, `POSIXct` is not listed as a way to subset a vector
+
+Meta-information
+================
+extitle: ways to subset
+exsection: advr_subsetting
+exname: advr_subsetting_ways
+extype: schoice
+exsolution: 0001

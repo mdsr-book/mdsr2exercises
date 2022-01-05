@@ -1,0 +1,41 @@
+Question
+========
+
+Consider the following block of code:
+
+```{r}
+random_values <- rnorm(10)
+my_values <- random_values
+```
+
+Which of the following statements are true?
+
+Answerlist
+----------
+
+* `my_values` and `random_values` are two distinct objects, so they occupy different locations in memory.
+* `my_values` occupies the same location in memory as `random_values`.
+* Whether `my_values` and `random_values` occupy the same location in memory depends on which random values were chosen by the random number generator.
+
+Solution
+========
+
+```{r, eval=FALSE, include=FALSE}
+lobstr::ref(random_values)
+lobstr::ref(my_values)
+```
+
+Answerlist
+----------
+
+* False, they are not "distinct" objects in that sense.
+* True.
+* False, it doesn't matter what random values were drawn.
+
+Meta-information
+================
+extitle: object locations
+exsection: advr_names
+exname: advr_names_locations
+extype: schoice
+exsolution: 010

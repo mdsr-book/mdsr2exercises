@@ -1,0 +1,39 @@
+Question
+========
+
+Suppose that `my_list` is a list of length 5. 
+What is the result of `my_list[[3]] <- NULL`?
+
+Answerlist
+----------
+
+* The third element is removed from the list
+* The third element is set to `NULL`
+* The third element is set to "NULL"
+* The third element is set to `NA`
+
+Solution
+========
+
+```{r, include=FALSE, eval=FALSE}
+my_list <- as.list(letters[1:5])
+my_list[[3]] <- NULL
+my_list
+```
+
+
+Answerlist
+----------
+
+* Correct.
+* False, the third element is removed, not set to `NULL`
+* False, the third element is removed, not set to "NULL"
+* False, the third element is removed, not set to `NA`
+
+Meta-information
+================
+extitle: subsetting null
+exsection: advr_subsetting
+exname: advr_subsetting_null
+extype: schoice
+exsolution: 01000

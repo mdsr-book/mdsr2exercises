@@ -1,0 +1,33 @@
+Question
+========
+
+Which of the following *IS* an atomic vector type? 
+
+Answerlist
+----------
+
+* `matrix`
+* `double`
+* `POSIXct`
+* `date`
+* `factor`
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, `matrix` is a vector with a dimension attribute
+* Correct, `double` is an atomic vector type
+* No, `POSIXct` is not an atomic vector type
+* No, `date` is not an atomic vector type
+* No, `factor` is not an atomic vector type. 
+
+Meta-information
+================
+extitle: special vectors
+exsection: advr_vectors
+exname: advr_vectors_special
+extype: schoice
+exsolution: 01000
