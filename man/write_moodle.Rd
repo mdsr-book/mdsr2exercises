@@ -2,18 +2,22 @@
 % Please edit documentation in R/integration.R
 \name{write_moodle}
 \alias{write_moodle}
+\alias{filter_exam_questions}
 \title{R/exams integration}
 \usage{
 write_moodle(pattern = "*.Rmd", quiz_name = "mdsr_quiz", dir = ".", ...)
+
+filter_exam_questions(...)
 }
 \arguments{
-\item{pattern}{Regular expression passed to \code{\link[fs]{dir_ls}}}
+\item{pattern}{Regular expression passed to \code{\link[fs]{dir_ls}}.
+The expression is matched to the file names in the \code{exams} directory}
 
 \item{quiz_name}{Character giving the name of the quiz}
 
 \item{dir}{Directory where you want the quiz file to go}
 
-\item{...}{arguments passed to \code{\link[exams]{exams2moodle}}}
+\item{...}{arguments passed to \code{\link[dplyr]{filter}}}
 }
 \description{
 R/exams integration
@@ -22,4 +26,9 @@ R/exams integration
 \dontrun{
 write_moodle(pattern = "ethics", "mdsr_ethics", dir = tempdir())
 }
+filter_exam_questions(grepl("sql_", path))
+filter_exam_questions(as.Date(modification_time) > Sys.Date() - 1)
+}
+\seealso{
+\code{\link[exams]{exams2moodle}}
 }

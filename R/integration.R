@@ -1,3 +1,5 @@
+globalVariables(c("modification_time", "path"))
+
 #' Capture HTML output to clipboard
 #' @description Copy the HTML output from a particular question to the clipboard
 #' @param file path to an exercise file
@@ -17,11 +19,13 @@ render_html <- function(file) {
 
 
 #' R/exams integration
-#' @param pattern Regular expression passed to \code{\link[fs]{dir_ls}}
+#' @param pattern Regular expression passed to \code{\link[fs]{dir_ls}}.
+#' The expression is matched to the file names in the \code{exams} directory
 #' @param quiz_name Character giving the name of the quiz
 #' @param dir Directory where you want the quiz file to go
 #' @param ... arguments passed to \code{\link[exams]{exams2moodle}}
 #' @export
+#' @seealso \code{\link[exams]{exams2moodle}}
 #' @examples
 #' \dontrun{
 #' write_moodle(pattern = "ethics", "mdsr_ethics", dir = tempdir())
@@ -47,4 +51,19 @@ write_moodle <- function(pattern = "*.Rmd", quiz_name = "mdsr_quiz", dir = ".", 
   } else {
     stop(paste("Output file", out_path, "not created"))
   }
+}
+
+#' @rdname write_moodle
+#' @export
+#' @param ... arguments passed to \code{\link[dplyr]{filter}}
+#' @examples
+#' filter_exam_questions(grepl("sql_", path))
+#' filter_exam_questions(as.Date(modification_time) > Sys.Date() - 1)
+
+filter_exam_questions <- function(...) {
+  system.file("exams", package = "mdsr2exercises") %>%
+    fs::dir_info() %>%
+    dplyr::mutate(mod_date = as.Date(modification_time)) %>%
+    dplyr::filter(...) %>%
+    dplyr::pull(path)
 }
