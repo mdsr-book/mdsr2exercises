@@ -1,0 +1,33 @@
+Question
+========
+
+Which of the following statements about environments (relative to lists) is **NOT** true?
+
+Answerlist
+----------
+
+* Every name in an environment must be unique
+* The names in an environment are not ordered
+* An environment has a parent
+* Environments are not copied when modified
+* An environment cannot contain itself
+
+Solution
+========
+
+Answerlist
+----------
+
+* They must be unique
+* They are not ordered
+* Every environment has a parent
+* They are not copied.
+* Correct, an environment can contain itself. 
+
+Meta-information
+================
+extitle: environments and lists
+exsection: advr_environments
+exname: advr_environments_lists
+extype: schoice
+exsolution: 00001

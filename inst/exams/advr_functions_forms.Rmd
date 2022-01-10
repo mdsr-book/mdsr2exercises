@@ -1,0 +1,31 @@
+Question
+========
+
+In which of the four forms of functions can every function be written? 
+
+Answerlist
+----------
+
+* prefix
+* infix
+* replacement
+* special
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct.
+* No, some functions are infix, but not all.
+* No, not all functions are replacement.
+* No, not all functions are special.
+
+Meta-information
+================
+extitle: function forms
+exsection: advr_functions
+exname: advr_functions_forms
+extype: schoice
+exsolution: 1000

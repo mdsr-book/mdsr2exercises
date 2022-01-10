@@ -1,0 +1,27 @@
+Question
+========
+
+The current environment is always identical to the global environment. 
+
+Answerlist
+----------
+
+* True
+* False
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, it's not.
+* Correct.
+
+Meta-information
+================
+extitle: current vs. global
+exsection: advr_environments
+exname: advr_environments__lists_current
+extype: schoice
+exsolution: 01

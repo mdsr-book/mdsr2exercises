@@ -1,0 +1,31 @@
+Question
+========
+
+The primary purpose of including `...` as an argument to your function is:
+
+Answerlist
+----------
+
+* to pass the arguments captured by `...` to other functions
+* to save typing
+* to confuse the user
+* because you aren't sure what the type of each argument is
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct.
+* While it might save typing, that's not a great reason to use the `...`.
+* No, we don't want to confuse the user, although that can be a side-effect.
+* No, the type of the arguments is not important. 
+
+Meta-information
+================
+extitle: passing the dots
+exsection: advr_functions
+exname: advr_functions_dots
+extype: schoice
+exsolution: 1000

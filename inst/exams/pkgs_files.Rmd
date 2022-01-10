@@ -1,0 +1,31 @@
+Question
+========
+
+Files in the `R/` directory of a package should be organized such that: 
+
+Answerlist
+----------
+
+* each function is in its own file
+* all functions are in the same file
+* each file contains one or more related functions
+* functions are distributed randomly into arbitrarily-named files
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct
+* No, Hadley never gets bored.
+* While they are arbitrary, there is a rationale. 
+* No, that's not a feature of C.
+
+Meta-information
+================
+extitle: files in R folder
+exsection: pkgs_files
+exname: pkgs_files
+extype: schoice
+exsolution: 0010

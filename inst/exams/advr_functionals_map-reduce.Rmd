@@ -1,0 +1,27 @@
+Question
+========
+
+The `map()` and `reduce()` computing paradigm described in [Section 9.5.5](https://adv-r.hadley.nz/functionals.html#map-reduce) of *Advanced R* bears no relation whatsoever to the [MapReduce computing paradigm](https://en.wikipedia.org/wiki/MapReduce) that powers technologies like [Apache Hadoop](https://en.wikipedia.org/wiki/Apache_Hadoop). 
+
+Answerlist
+----------
+
+* True
+* False
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, it does have some relation. 
+* Correct.
+
+Meta-information
+================
+extitle: map-reduce
+exsection: advr_functionals
+exname: advr_functionals_map-reduce
+extype: schoice
+exsolution: 01

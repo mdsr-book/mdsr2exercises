@@ -1,0 +1,46 @@
+Question
+========
+
+Suppose that you just started a new R session and the search path consists of the following 9 items: 
+
+```{r}
+search()
+```
+
+
+You then run `library(readr)`. Where does `readr` go in the search path? 
+
+Answerlist
+----------
+
+```{r, eval=FALSE, include=FALSE}
+library(readr)
+search()
+```
+
+
+* before `.GlobalEnv`
+* after `.GlobalEnv`
+* after `package:stats`
+* before `package:base`
+* after `package:base`
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, nothing come before the global environment
+* Correct
+* No, it goes after the global environment
+* No, `Autoloads` come before `package:base`
+* No, `package:base` is always last
+
+Meta-information
+================
+extitle: library
+exsection: advr_environments
+exname: advr_environments_library
+extype: schoice
+exsolution: 01000

@@ -1,0 +1,31 @@
+Question
+========
+
+Which of the following is NOT a condition you can signal in R?
+
+Answerlist
+----------
+
+* error
+* message
+* warning
+* problem
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, errors are conditions
+* No, messages are conditions
+* No, warnings are conditions
+* Correct. Problems are not conditions
+
+Meta-information
+================
+extitle: types of conditions
+exsection: advr_conditions
+exname: advr_conditions_types
+extype: schoice
+exsolution: 0001

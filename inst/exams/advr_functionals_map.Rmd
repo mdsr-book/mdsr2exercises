@@ -1,0 +1,28 @@
+Question
+========
+
+There are 23 primary variants of `map()`. 
+In order to be a competent functional programmer, I need to memorize the names of all 23 of these functions and their arguments. 
+
+Answerlist
+----------
+
+* True
+* False
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, you don't.
+* Correct.
+
+Meta-information
+================
+extitle: map variants
+exsection: advr_functionals
+exname: advr_functionals_map
+extype: schoice
+exsolution: 01

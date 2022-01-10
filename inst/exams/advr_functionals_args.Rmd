@@ -1,0 +1,31 @@
+Question
+========
+
+The main rationale for naming the first two arguments to map `.x` and `.f` is that:
+
+Answerlist
+----------
+
+* it helps to avoid name collisions with other functions that have arguments named `x` and/or `f`
+* Hadley got bored with `x` and `f`
+* there is no rationale -- they're just arbitrary
+* `purrr:map()` was written in C, so you have to use dotted arguments
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct
+* No, Hadley never gets bored.
+* While they are arbitrary, there is a rationale. 
+* No, that's not a feature of C.
+
+Meta-information
+================
+extitle: .x and .f
+exsection: advr_functionals
+exname: advr_functionals_args
+extype: schoice
+exsolution: 1000

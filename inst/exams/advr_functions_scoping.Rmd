@@ -1,0 +1,31 @@
+Question
+========
+
+Which of the following is a description of lexical scoping?
+
+Answerlist
+----------
+
+* value of names are looked up based on how the function is called
+* relating to words in a dictionary
+* the scoping rules use a run-time structure
+* value of names are looked up based on how the function is defined
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, the value names are based on how the function is defined.
+* No, that's not about programming.
+* No, it's not based on run-time.
+* Correct.
+
+Meta-information
+================
+extitle: lexical scoping
+exsection: advr_functions
+exname: advr_functions_scoping
+extype: schoice
+exsolution: 0001

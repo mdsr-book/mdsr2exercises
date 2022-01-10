@@ -1,0 +1,33 @@
+Question
+========
+
+Which of the following functions are good to use in package code? 
+
+Answerlist
+----------
+
+* `setwd()`
+* `library()`
+* `require()`
+* `source()`
+* none of these
+
+Solution
+========
+
+Answerlist
+----------
+
+* No, you shouldn't use `setwd()` in package code
+* No, you shouldn't use `library()` in package code
+* No, you shouldn't use `require()` in package code
+* No, you shouldn't use `source()` in package code
+* Correct.
+
+Meta-information
+================
+extitle: avoid use in package
+exsection: pkgs_code
+exname: pkgs_code
+extype: schoice
+exsolution: 00001

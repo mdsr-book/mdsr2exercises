@@ -1,0 +1,27 @@
+Question
+========
+
+All packages listed in "Imports:" must be installed in order to install your package. 
+
+Answerlist
+----------
+
+* True
+* False
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct
+* No, they must be. 
+
+Meta-information
+================
+extitle: imports
+exsection: pkgs_imports
+exname: pkgs_imports
+extype: schoice
+exsolution: 10
