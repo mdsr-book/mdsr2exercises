@@ -1,0 +1,33 @@
+Question
+========
+
+In the S3 system, a generic function works by examining the [[1]] of its first argument, and then dispatching the corresponding [[2]].
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+* class, method
+* method, class
+* argument, function
+* function, method
+* function, class
+
+Solution
+========
+
+Answerlist
+----------
+* Correct
+* No, arguments don't have methods.
+* No, arguments don't have arguments.
+* No, arguments don't have functions.
+* No, arguments don't have functions.
+
+Meta-information
+================
+extitle: generic functions
+exsection: advr_s3
+exname: advr_s3_generic
+extype: schoice
+exsolution: 10000

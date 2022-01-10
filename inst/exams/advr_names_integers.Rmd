@@ -1,0 +1,41 @@
+Question
+========
+
+The difference between `5L` and `5` is that `5L` results in an atomic vector of type [[1]] while `5` results in an atomic vector of type [[2]].
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+* `integer`, `double`
+* `double`, `integer`
+* `integer`, `character`
+* `character`, `double`
+* `double`, `character`
+
+
+Solution
+========
+
+```{r, eval=FALSE, include=FALSE}
+class(5)
+typeof(5)
+class(5L)
+typeof(5L)
+```
+
+Answerlist
+----------
+* Correct
+* No, it's the opposite.
+* No, `5` is a `double`.
+* No, `5L` is an `integer`.
+* No, `5L` is an `integer`.
+
+Meta-information
+================
+extitle: integers
+exsection: advr_names
+exname: advr_names_integers
+extype: schoice
+exsolution: 10000

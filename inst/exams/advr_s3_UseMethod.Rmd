@@ -1,0 +1,29 @@
+Question
+========
+
+To create a new S3 generic function, simply define the function and call ______.
+
+Answerlist
+----------
+* `UseMethod()`
+* `generic()`
+* `S3::generic()`
+* `base::generic()`
+
+Solution
+========
+
+Answerlist
+----------
+* Correct
+* No, there is no `generic()` function.
+* No, there is no `S3::generic()` function.
+* No, there is no `base::generic()` function.
+
+Meta-information
+================
+extitle: UseMethod
+exsection: advr_s3
+exname: advr_s3_UseMethod
+extype: schoice
+exsolution: 10000
