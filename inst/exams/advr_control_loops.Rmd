@@ -25,7 +25,6 @@ Answerlist
 * No, `while` is more flexible than `for`
 * No, `repeat` is most flexible.
 * No, `repeat` is most flexible.
-* No, `repeat` is most flexible.
 * No, `while` is more flexible than `for`
 * No, `repeat` is most flexible.
 
