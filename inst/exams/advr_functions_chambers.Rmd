@@ -1,0 +1,35 @@
+Question
+========
+
+According to John Chambers, in R, everything that exists is an [[1]], and everything that happens is a [[2]].
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+
+* object, function call
+* thing, object
+* object, method call
+* function, object
+* matrix, function call
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct.
+* No, "thing" is not a technical term.
+* No, not all functions are methods. 
+* No, not all things that exist are functions. 
+* No, not all things that exist are matrices.
+
+Meta-information
+================
+extitle: Chambers
+exsection: advr_functions
+exname: advr_functions_chambers
+extype: schoice
+exsolution: 10000

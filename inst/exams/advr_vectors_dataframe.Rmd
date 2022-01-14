@@ -1,0 +1,36 @@
+Question
+========
+
+A `data.frame` is a [[1]] of [[2]] that all have the same length.
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+
+* `list`, vectors
+* `matrix`, vectors
+* `tibble`, vectors
+* `matrix`, lists
+* `tibble`, lists
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct. 
+* No, a `data.frame` is not a `matrix`.
+* No, a `data.frame` is not necessarily a `tibble`.
+* No, a `data.frame` is not a `matrix`.
+* No, a `data.frame` is not necessarily a `tibble`.
+
+
+Meta-information
+================
+extitle: data frames
+exsection: advr_vectors
+exname: advr_vectors_dataframe
+extype: schoice
+exsolution: 10000

@@ -1,0 +1,33 @@
+Question
+========
+
+A function that doesn't have a name is called _________.
+
+Answerlist
+----------
+
+* anonymous
+* nameless
+* method
+* undefined
+* void
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct.
+* No, it's not called nameless
+* No, it may or may not be a method.
+* No, if it exists then it is defined.
+* No, a void function is a function that doesn't return anything.
+
+Meta-information
+================
+extitle: anonymous functions
+exsection: advr_functions
+exname: advr_functions_anonymous
+extype: schoice
+exsolution: 10000

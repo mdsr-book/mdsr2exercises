@@ -1,0 +1,38 @@
+Question
+========
+
+In R, a [[1]] loop is more flexible than a [[2]] loop, and a [[3]] loop is more flexible than both of the aforementioned loops.
+
+Which ordered pair of words replaces [[1]] and [[2]] and [[3]] to best complete the sentence?
+
+Answerlist
+----------
+
+* `while`, `for`, `repeat`
+* `for`, `repeat`, `while`
+* `repeat`, `for`, `while`
+* `while`, `repeat`, `for`
+* `for`, `while`, `repeat`
+* `repeat`, `while`, `for`
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct.
+* No, `while` is more flexible than `for`
+* No, `repeat` is most flexible.
+* No, `repeat` is most flexible.
+* No, `repeat` is most flexible.
+* No, `while` is more flexible than `for`
+* No, `repeat` is most flexible.
+
+Meta-information
+================
+extitle: loops
+exsection: advr_control
+exname: advr_control_loops
+extype: schoice
+exsolution: 100000

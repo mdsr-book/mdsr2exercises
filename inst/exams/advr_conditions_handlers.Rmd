@@ -1,0 +1,35 @@
+Question
+========
+
+`tryCatch()` defines [[1]] handlers, whereas `withCallingHandlers()` defines [[2]] handlers.
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+
+* exiting, calling
+* calling, exiting
+* exiting, printing
+* calling, printing
+* printing, exiting
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct.
+* No, it's the other way.
+* No, there are no "printing" handlers.
+* No, there are no "printing" handlers.
+* No, there are no "printing" handlers.
+
+Meta-information
+================
+extitle: handlers
+exsection: advr_conditions
+exname: advr_conditions_handlers
+extype: schoice
+exsolution: 10000

@@ -1,0 +1,35 @@
+Question
+========
+
+[[1]] assignment never creates a variable in the current environment, while [[2]] assignment always creates a variable in the current environment.
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+
+* `<<-`, `<-`
+* `<-`, `<<-`
+* `<<-`, `%>%`
+* `%>%`, `<-`
+* `<-`, `%>%`
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct
+* No, it's the other way
+* No, `%>%` is not an assignment operator.
+* No, `%>%` is not an assignment operator.
+* No, `%>%` is not an assignment operator.
+
+Meta-information
+================
+extitle: super-assignment
+exsection: advr_environments
+exname: advr_environments_superassignment
+extype: schoice
+exsolution: 10000

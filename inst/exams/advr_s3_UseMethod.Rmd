@@ -26,4 +26,4 @@ extitle: UseMethod
 exsection: advr_s3
 exname: advr_s3_UseMethod
 extype: schoice
-exsolution: 10000
+exsolution: 1000

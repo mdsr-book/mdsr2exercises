@@ -1,0 +1,33 @@
+Question
+========
+
+The difference between the package environment and the namespace environment is that the [[1]] environment is how an R user finds a function in an attached package, whereas the [[2]] environment is how a function finds its variables.
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+
+* `package`, `namespace`
+* `namespace`, `package`
+* `package`, `tidyverse`
+* `namespace`, `tidyverse`
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct
+* No, it's the other way
+* No, the `tidyverse` environment is irrelevant here.
+* No, the `tidyverse` environment is irrelevant here.
+
+Meta-information
+================
+extitle: namespace vs. package
+exsection: advr_environments
+exname: advr_environments_namespace
+extype: schoice
+exsolution: 1000

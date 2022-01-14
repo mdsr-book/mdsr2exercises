@@ -1,0 +1,39 @@
+Question
+========
+
+According to Hadley, a "concise, and fun, way to summarise the main differences [between tibbles and data.frames] is that tibbles are [[1]] and [[2]]: they do less and complain more."
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+
+* lazy, surly
+* chunky, lazy
+* surly, handsome
+* compact, efficient
+* poor, nasty
+* brutish, short
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct. 
+* No, they're not "chunky".
+* No, they're not "handsome".
+* No, they're not really compact or efficient.
+* No, that was the first part of Hobbes' description of the [life of mankind](https://yalebooksblog.co.uk/2013/04/05/thomas-hobbes-solitary-poor-nasty-brutish-and-short/)
+* No, that was the second part of Hobbes' description of the [life of mankind](https://yalebooksblog.co.uk/2013/04/05/thomas-hobbes-solitary-poor-nasty-brutish-and-short/)
+
+
+
+Meta-information
+================
+extitle: tibbles
+exsection: advr_vectors
+exname: advr_vectors_tibble
+extype: schoice
+exsolution: 100000

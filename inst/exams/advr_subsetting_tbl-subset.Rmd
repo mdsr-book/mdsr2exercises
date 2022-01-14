@@ -1,0 +1,39 @@
+Question
+========
+
+One difference between a `data.frame` and a `tbl_df` is that when `df` is a `tbl_df`, `df[, "col"]` always returns a ________, whereas if `df` is a `data.frame`, `df[, "col"]` returns whatever the data type of `df$col` is.
+
+Answerlist
+----------
+
+* `matrix`
+* `numeric` 
+* `character`
+* `logical`
+* `tbl_df`
+
+Solution
+========
+
+```{r, eval=FALSE, include=FALSE}
+class(mtcars[, "mpg"])
+class(tibble::as_tibble(mtcars[, "mpg"]))
+```
+
+
+Answerlist
+----------
+
+* No, it won't return a `matrix`.
+* No, it won't return a `numeric`.
+* No, it won't return a `character`.
+* No, it won't return a `logical`.
+* Correct.
+
+Meta-information
+================
+extitle: tibble subset
+exsection: advr_subsetting
+exname: advr_subsetting_tbl-subset
+extype: schoice
+exsolution: 00001
