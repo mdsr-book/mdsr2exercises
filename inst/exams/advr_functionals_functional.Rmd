@@ -1,0 +1,35 @@
+Question
+========
+
+A functional is a function that takes a [[1]] as an input and returns a [[2]] as output.
+
+Which ordered pair of words replaces [[1]] and [[2]] to best complete the sentence?
+
+Answerlist
+----------
+
+* function, vector
+* vector, function
+* value, function
+* matrix, vector
+* vector, data.frame
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct
+* No, it's the other way
+* No, it returns a vector
+* No, it takes a function
+* No, it takes a function and returns a vector
+
+Meta-information
+================
+extitle: functional
+exsection: advr_functionals
+exname: advr_functionals_functional
+extype: schoice
+exsolution: 10000

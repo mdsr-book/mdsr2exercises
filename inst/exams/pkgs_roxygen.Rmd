@@ -1,0 +1,33 @@
+Question
+========
+
+The package that makes documenting an R package easier is called _______.
+
+Answerlist
+----------
+
+* `roxygen2`
+* `ggplot2`
+* `tidyverse`
+* `rdoc`
+* `docr`
+
+Solution
+========
+
+Answerlist
+----------
+
+* Correct.
+* No, it's called `roxygen2`.
+* No, it's called `roxygen2`.
+* No, it's called `roxygen2`.
+* No, it's called `roxygen2`.
+
+Meta-information
+================
+extitle: roxygen
+exsection: pkgs_roxygen
+exname: pkgs_roxygen
+extype: schoice
+exsolution: 10000
