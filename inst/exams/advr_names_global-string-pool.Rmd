@@ -1,0 +1,50 @@
+Question
+========
+
+Consider the following block of code:
+
+```{r}
+x <- letters[1:5]
+lobstr::ref(x, character = TRUE)
+
+x[3] <- "I love R!"
+```
+
+Because `x` has been modified, it's memory location has changed. 
+
+```{r}
+lobstr::ref(x)
+```
+
+Aside from that, how many of five memory locations for the **five values** in `x` (shown in lines 2--6 of the output above) have changed? 
+
+Answerlist
+----------
+
+* 1
+* 4
+* 0
+* 5
+
+Solution
+========
+
+```{r, eval=FALSE, include=FALSE}
+lobstr::ref(x, character = TRUE)
+```
+
+Answerlist
+----------
+
+* Correct, only the third value has changed.
+* No, only the third value has changed.
+* No, only the third value has changed.
+* No, only the third value has changed.
+
+Meta-information
+================
+extitle: global string pool
+exsection: advr_names
+exname: advr_names_global-string-pool
+extype: schoice
+exsolution: 1000
