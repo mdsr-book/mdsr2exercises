@@ -35,7 +35,7 @@ Answerlist
 Meta-information
 ================
 extitle: integers
-exsection: advr_names
-exname: advr_names_integers
+exsection: advr_vectors
+exname: advr_vectors_integers
 extype: schoice
 exsolution: 10000
