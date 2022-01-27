@@ -1,7 +1,7 @@
 Question
 ========
 
-Which of the following is not a valid name in R?
+Which of the following are **NOT** valid names in R?
 
 Answerlist
 ----------
@@ -15,15 +15,15 @@ Solution
 
 Answerlist
 ----------
-* This is valid, underscores can be used in names
-* Names wrapped in "`" can contain arbitrary characters
-* This is not valid. Names cannot *begin* with underscores
-* This is valid
+* `my_var` is valid, underscores can be used in names
+* Valid, names wrapped in "`" can contain arbitrary characters
+* `_my_var` is not valid. Names cannot *begin* with underscores
+* `76ers` is not valid. Names cannot begin with numbers
 
 Meta-information
 ================
 extitle: non-syntactic names
 exsection: advr_names
 exname: advr_names_nonsyntactic
-extype: schoice
-exsolution: 0010
+extype: mchoice
+exsolution: 0011
