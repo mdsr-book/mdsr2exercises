@@ -26,4 +26,4 @@ extitle: non-syntactic names
 exsection: advr_names
 exname: advr_names_nonsyntactic
 extype: schoice
-exsolution: 1000
+exsolution: 0010
