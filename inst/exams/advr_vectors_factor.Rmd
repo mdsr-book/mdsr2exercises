@@ -1,0 +1,45 @@
+Question
+========
+
+Consider the following command:
+
+```{r, eval=FALSE}
+as.numeric(factor(c("1", "10", "3", "2")))
+```
+
+What is the result?
+
+Answerlist
+----------
+
+* the `double` vector `1 2 4 3`
+* the `double` vector `1 2 3 4`
+* the `character` vector `1 2 4 3`
+* the `double` vector `1 2 3 10`
+* the `double` vector `1 10 3 2`
+
+Solution
+========
+
+```{r, include=FALSE, eval=FALSE}
+typeof(as.numeric(factor(c("1", "10", "3", "2"))))
+```
+
+Answerlist
+----------
+
+* Correct. 
+* No, because the factor levels are ordered alphabetically.
+* No, it's not a `character`.
+* No, because `10` is a factor **label** but is not part of the underlying representation, the factor levels are ordered alphabetically.
+* No, because `10` is a factor **label** but is not part of the underlying representation.
+
+
+
+Meta-information
+================
+extitle: factors
+exsection: advr_vectors
+exname: advr_vectors_factor
+extype: schoice
+exsolution: 10000
