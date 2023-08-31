@@ -18,10 +18,12 @@ TITLE GOES HERE: Consider the following data graphic about [Denzel Washington](h
 original <- "https://fivethirtyeight.com/wp-content/uploads/2016/09/hickey-denzel-1.png"
 backup <- system.file("extdata", "hickey-denzel-1.png", package = "mdsr2exercises")
 
-is_present <- tryCatch(
+x <- tryCatch(
   download.file(original, destfile = tempfile()), 
-  error = function(e) FALSE
+  error = function(e) 1
 )
+
+is_present <- x == 0
 
 if (is_present) {
   knitr::include_graphics(original)
