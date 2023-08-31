@@ -16,8 +16,7 @@ mdsr2exercises::setup()
 TITLE GOES HERE: Consider the following data graphic about world-class swimmers. Emphasis is on [Katie Ledecky](https://en.wikipedia.org/wiki/Katie\_Ledecky), a five-time Olympic gold medalist. It may be helpful to peruse the original article, entitled "[Katie Ledecky Is The Present And The Future Of Swimming](https://fivethirtyeight.com/features/katie-ledecky-is-the-present-and-the-future-of-swimming/)".
 
 ```{r echo=FALSE, warning=FALSE}
-original <- "https://fivethirtyeight.com/wp-content/uploads/2016/08/morris-ledecky-2.png"
-include_mdsr_img(original)
+include_mdsr_img("morris-ledecky-2.png")
 ```
 
 Suppose that the graphic was generated from a data frame like the one shown below (it wasn't---these are fake data). 

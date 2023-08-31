@@ -15,8 +15,7 @@ mdsr2exercises::setup()
 TITLE GOES HERE: Consider the following data graphic about [Denzel Washington](https://en.wikipedia.org/wiki/Denzel_Washington), a two-time Academy Award-winning actor. It may be helpful to read the original article, entitled "[The Four Types of Denzel Washington Movies](https://fivethirtyeight.com/features/the-four-types-of-denzel-washington-movies/)".
 
 ```{r, echo = FALSE, warning=FALSE}
-original <- "https://fivethirtyeight.com/wp-content/uploads/2016/09/hickey-denzel-1.png"
-include_mdsr_img(original)
+include_mdsr_img("hickey-denzel-1.png")
 ```
 
 What variable is mapped to the color aesthetic? 
