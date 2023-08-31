@@ -12,7 +12,8 @@ id: frog-write-pants
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Consider the two graphics related to *The New York Times* "Taxmageddon" article at http://www.nytimes.com/2012/04/15/sunday-review/coming-soon-taxmageddon.html. The first is ["Whose Tax Rates Rose or Fell"](http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt.html) and the second is ["Who Gains Most From Tax Breaks."](http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt2.html)
+TITLE GOES HERE: Consider the two graphics related to *The New York Times* "Taxmageddon" article at <http://www.nytimes.com/2012/04/15/sunday-review/coming-soon-taxmageddon.html>. 
+The first is ["Whose Tax Rates Rose or Fell"](http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt.html) and the second is ["Who Gains Most From Tax Breaks."](http://www.nytimes.com/imagepages/2012/04/13/opinion/sunday/0415web-leonhardt2.html)
 
 a. Examine the two graphics carefully. Discuss what you think they convey. What story do the graphics tell? 
 b. Evaluate both graphics in terms of the taxonomy described in this chapter. Are the scales appropriate? Consistent? Clearly labeled? Do variable dimensions exceed data dimensions? 

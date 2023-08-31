@@ -12,7 +12,7 @@ id: seaweed-buy-plant
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Consider the data graphic http://tinyurl.com/nytimes-unplanned about birth control methods.
+TITLE GOES HERE: Consider the data graphic <http://tinyurl.com/nytimes-unplanned> about birth control methods.
 
 a. What quantity is being shown on the $y$-axis of each plot?
 b. List the variables displayed in the data graphic, along with the units and a few typical values for each. 

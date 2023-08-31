@@ -19,7 +19,7 @@ TITLE GOES HERE: Without using jargon, describe what a receiver operating charac
 A ROC curve can be used to describe the performance of a binary classifier.
 This is important in predictive analytics and machine learning because there are various thresholds that can be set for the classifier.
 
-For more information see https://en.wikipedia.org/wiki/Receiver_operating_characteristic
+For more information see <https://en.wikipedia.org/wiki/Receiver_operating_characteristic>
 
  <!--end-answer-->
   
