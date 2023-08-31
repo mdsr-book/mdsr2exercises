@@ -14,8 +14,8 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: Which `dplyr` operation is depicted below? 
 
-```{r  out.width = "50%", echo = FALSE}
-knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/dplyr-summarise.png", sep = ""))
+```{r echo = FALSE}
+include_mdsr_img("dplyr-summarise.png")
 ```
 
 <!--answer-start-->

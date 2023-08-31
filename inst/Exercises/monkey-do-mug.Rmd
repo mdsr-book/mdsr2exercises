@@ -19,7 +19,7 @@ TITLE GOES HERE: Download [data on the number of deaths by firearm](http://www.f
 Wrangle these data and use `r mdsr2exercises::pkg_macro(ggplot2)` to re-create the plot show below.  
 
 ```{r, echo=FALSE}
-knitr::include_graphics(system.file("extdata", "fl_murders.png", package = "mdsr2exercises"))
+include_mdsr_img("fl_murders.png")
 ```
 
 <!--begin-answer-->
