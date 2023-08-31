@@ -28,7 +28,7 @@ knit_mdsr_exercises_onlineonly(..., show_answers = FALSE)
 
 knit_mdsr_exercises_solutions(...)
 
-include_mdsr_img(url)
+include_mdsr_img(img)
 }
 \arguments{
 \item{directory}{Path to the directory where the files go}
@@ -52,7 +52,8 @@ List, filter, and show MDSR2e exercises
 mdsr_exercise_new()
 }
 mdsr_exercise_ls()
-include_mdsr_img("https://fivethirtyeight.com/wp-content/uploads/2016/09/hickey-denzel-1.png")
+include_mdsr_img("hickey-denzel-1.png")
+include_mdsr_img("dplyr-arrange.png")
 
 }
 \seealso{
