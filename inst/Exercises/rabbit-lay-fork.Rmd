@@ -15,8 +15,20 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: Consider the following data graphic about world-class swimmers. Emphasis is on [Katie Ledecky](https://en.wikipedia.org/wiki/Katie\_Ledecky), a five-time Olympic gold medalist. It may be helpful to peruse the original article, entitled "[Katie Ledecky Is The Present And The Future Of Swimming](https://fivethirtyeight.com/features/katie-ledecky-is-the-present-and-the-future-of-swimming/)".
 
-```{r echo=FALSE, out.width = "90%"}
-knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/ledecky.png", sep = ""))
+```{r echo=FALSE, warning=FALSE}
+original <- "https://fivethirtyeight.com/wp-content/uploads/2016/08/morris-ledecky-2.png"
+backup <- system.file("extdata", "ledecky.png", package = "mdsr2exercises")
+
+is_present <- tryCatch(
+  download.file(original, destfile = tempfile()), 
+  error = function(e) FALSE
+)
+
+if (is_present) {
+  knitr::include_graphics(original)
+} else {
+  knitr::include_graphics(backup)
+}
 ```
 
 Suppose that the graphic was generated from a data frame like the one shown below (it wasn't---these are fake data). 
