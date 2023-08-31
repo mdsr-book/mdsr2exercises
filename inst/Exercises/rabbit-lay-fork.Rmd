@@ -17,18 +17,7 @@ TITLE GOES HERE: Consider the following data graphic about world-class swimmers.
 
 ```{r echo=FALSE, warning=FALSE}
 original <- "https://fivethirtyeight.com/wp-content/uploads/2016/08/morris-ledecky-2.png"
-backup <- system.file("extdata", "ledecky.png", package = "mdsr2exercises")
-
-is_present <- tryCatch(
-  download.file(original, destfile = tempfile()), 
-  error = function(e) FALSE
-)
-
-if (is_present) {
-  knitr::include_graphics(original)
-} else {
-  knitr::include_graphics(backup)
-}
+include_mdsr_img(original)
 ```
 
 Suppose that the graphic was generated from a data frame like the one shown below (it wasn't---these are fake data). 

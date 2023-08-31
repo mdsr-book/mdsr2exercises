@@ -3,6 +3,7 @@
 export(df_macro)
 export(filter_exam_questions)
 export(func_macro)
+export(include_mdsr_img)
 export(knit_mdsr_exercises)
 export(knit_mdsr_exercises_filter)
 export(knit_mdsr_exercises_onlineonly)

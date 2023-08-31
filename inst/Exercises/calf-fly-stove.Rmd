@@ -16,20 +16,7 @@ TITLE GOES HERE: Consider the following data graphic about [Denzel Washington](h
 
 ```{r, echo = FALSE, warning=FALSE}
 original <- "https://fivethirtyeight.com/wp-content/uploads/2016/09/hickey-denzel-1.png"
-backup <- system.file("extdata", "hickey-denzel-1.png", package = "mdsr2exercises")
-
-x <- tryCatch(
-  download.file(original, destfile = tempfile()), 
-  error = function(e) 1
-)
-
-is_present <- x == 0
-
-if (is_present) {
-  knitr::include_graphics(original)
-} else {
-  knitr::include_graphics(backup)
-}
+include_mdsr_img(original)
 ```
 
 What variable is mapped to the color aesthetic? 

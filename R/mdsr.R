@@ -105,3 +105,24 @@ knit_mdsr_exercises_solutions <- function(...) {
   mdsr_exercise_ls(...) %>%
     knit_mdsr_exercises(show_answers = TRUE)
 }
+
+#' @rdname mdsr
+#' @param url URL of an image from the Internet
+#' @export
+#' @examples
+#' include_mdsr_img("https://fivethirtyeight.com/wp-content/uploads/2016/09/hickey-denzel-1.png")
+#'
+
+include_mdsr_img <- function(url) {
+  local_path <- system.file(
+    "extdata",
+    basename(url),
+    package = "mdsr2exercises"
+  )
+
+  if (knitr::is_latex_output() && file.exists(local_path)) {
+    knitr::include_graphics(local_path)
+  } else {
+    knitr::include_graphics(url)
+  }
+}
