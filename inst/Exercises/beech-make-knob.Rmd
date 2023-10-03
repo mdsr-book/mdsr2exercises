@@ -13,7 +13,7 @@ library(tidyverse)
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: A researcher is interested in the relationship of weather to sentiment (positivity or negativity of posts) on Twitter.  They want to scrape data from https://www.wunderground.com and join that to Tweets in that geographic area at a particular time.  One complication is that Weather Underground limits the number of data points that can be downloaded for free using their API (application program interface).  The researcher sets up six free accounts to allow them to collect the data they want in a shorter time-frame.  What ethical guidelines are violated by this approach to data scraping?
+TITLE GOES HERE: A researcher is interested in the relationship of weather to sentiment (positivity or negativity of posts) on Twitter.  They want to scrape data from <https://www.wunderground.com> and join that to Tweets in that geographic area at a particular time.  One complication is that Weather Underground limits the number of data points that can be downloaded for free using their API (application program interface).  The researcher sets up six free accounts to allow them to collect the data they want in a shorter time-frame.  What ethical guidelines are violated by this approach to data scraping?
 
 <!--begin-answer-->
 While answers may vary, it should be noted that APIs form an explicit agreement between the service and the users of that service. They cannot ethically be disregarded.

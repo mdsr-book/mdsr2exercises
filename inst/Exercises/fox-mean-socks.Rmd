@@ -13,7 +13,7 @@ mdsr2exercises::setup()
 
 ```
 
-TITLE GOES HERE:	Researchers at UCLA maintain historical congressional district shapefiles (see http://cdmaps.polisci.ucla.edu).
+TITLE GOES HERE:	Researchers at UCLA maintain historical congressional district shapefiles (see <http://cdmaps.polisci.ucla.edu>).
 Use these data to discuss the history of gerrymandering in the United States.
 Is the problem better or worse today? 
 

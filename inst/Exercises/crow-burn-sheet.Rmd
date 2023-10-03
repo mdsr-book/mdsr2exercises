@@ -37,6 +37,7 @@ Random_subset
 For each of the following tables wrangled from `Random_subset`, figure out what `r pkg_macro(dplyr)` wrangling statement will produce the result.
 
 a. Hint: Both rows and variables are missing from the original 
+
 ```{r echo = FALSE}
 Random_subset %>%
   filter(n > 40, n < 100) %>%

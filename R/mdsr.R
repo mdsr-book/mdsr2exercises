@@ -105,3 +105,27 @@ knit_mdsr_exercises_solutions <- function(...) {
   mdsr_exercise_ls(...) %>%
     knit_mdsr_exercises(show_answers = TRUE)
 }
+
+#' @rdname mdsr
+#' @param url URL of an image from the Internet
+#' @export
+#' @examples
+#' include_mdsr_img("hickey-denzel-1.png")
+#' include_mdsr_img("dplyr-arrange.png")
+#'
+
+include_mdsr_img <- function(img) {
+  file_name <- basename(img)
+  pkg_img <- system.file(
+    "extdata", file_name, package = "mdsr2exercises"
+  )
+  gh_img <- paste0(
+    "https://raw.githubusercontent.com/mdsr-book/mdsr2exercises/main/inst/extdata/",
+    file_name
+  )
+  if (knitr::is_latex_output() && file.exists(pkg_img)) {
+    knitr::include_graphics(pkg_img)
+  } else {
+    knitr::include_graphics(gh_img)
+  }
+}

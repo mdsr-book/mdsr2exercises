@@ -15,7 +15,7 @@ library(mdsr)
 library(RMySQL)
 ```
 
-TITLE GOES HERE: Wideband acoustic immittance (WAI) is an area of biomedical research that strives to develop WAI measurements as noninvasive auditory diagnostic tools. WAI measurements are reported in many related formats, including absorbance, admittance, impedance, power reflectance, and pressure reflectance. More information can be found about this public facing WAI database at http://www.science.smith.edu/wai-database/home/about.
+TITLE GOES HERE: Wideband acoustic immittance (WAI) is an area of biomedical research that strives to develop WAI measurements as noninvasive auditory diagnostic tools. WAI measurements are reported in many related formats, including absorbance, admittance, impedance, power reflectance, and pressure reflectance. More information can be found about this public facing WAI database at <http://www.science.smith.edu/wai-database/home/about>.
 
 ```{r}
 library(RMySQL)

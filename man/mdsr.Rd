@@ -9,6 +9,7 @@
 \alias{knit_mdsr_exercises_print}
 \alias{knit_mdsr_exercises_onlineonly}
 \alias{knit_mdsr_exercises_solutions}
+\alias{include_mdsr_img}
 \title{List, filter, and show MDSR2e exercises}
 \usage{
 mdsr_exercise_new(directory = here::here("inst", "Exercises"), learnr = FALSE)
@@ -26,6 +27,8 @@ knit_mdsr_exercises_print(..., show_answers = FALSE)
 knit_mdsr_exercises_onlineonly(..., show_answers = FALSE)
 
 knit_mdsr_exercises_solutions(...)
+
+include_mdsr_img(img)
 }
 \arguments{
 \item{directory}{Path to the directory where the files go}
@@ -38,6 +41,8 @@ a learnr compatible document for the exercise.}
 \item{x}{data frame of exercises}
 
 \item{show_answers}{Should the answers be shown?}
+
+\item{url}{URL of an image from the Internet}
 }
 \description{
 List, filter, and show MDSR2e exercises
@@ -47,6 +52,9 @@ List, filter, and show MDSR2e exercises
 mdsr_exercise_new()
 }
 mdsr_exercise_ls()
+include_mdsr_img("hickey-denzel-1.png")
+include_mdsr_img("dplyr-arrange.png")
+
 }
 \seealso{
 \code{\link[etude]{new_etude}}

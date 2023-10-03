@@ -15,8 +15,8 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: What type of join operation is depicted below? 
 
-```{r  out.width = "50%", echo = FALSE, warning = FALSE}
-knitr::include_graphics(paste(system.file("extdata", package = "mdsr2exercises"), "/dplyr-full-join.png", sep = ""))
+```{r echo = FALSE, warning = FALSE}
+include_mdsr_img("dplyr-full-join.png")
 ```
 
 

@@ -14,7 +14,7 @@ editor_options:
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: The following questions require use of the `r pkg_macro(Lahman)` package and reference basic baseball terminology. (See https://en.wikipedia.org/wiki/Baseball_statistics for explanations of any acronyms.) 
+TITLE GOES HERE: The following questions require use of the `r pkg_macro(Lahman)` package and reference basic baseball terminology. (See <https://en.wikipedia.org/wiki/Baseball_statistics> for explanations of any acronyms.) 
 
 
 a. List the names of all batters who have at least 300 home runs (HR) and 300 stolen bases (SB) in their careers and rank them by career batting average ($H/AB$). 
