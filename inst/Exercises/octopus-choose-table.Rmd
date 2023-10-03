@@ -24,12 +24,16 @@ bk_teams <- c("BR1", "BR2", "BR3", "BR4", "BRO", "BRP", "BRF")
 <!--begin-answer-->
 ```{r octopus-choose-table-2, echo = TRUE}
 count_seasons <- function(team) {
-  seasons <- Lahman::Teams %>%
-    filter(team == teamID) %>%
+  seasons <- Lahman::Teams |>
+    filter(team == teamID) |>
     nrow()
   return(seasons)
 }
 
-map_int(bk_teams, count_seasons)
+tibble(teams = bk_teams, count = map_int(bk_teams, count_seasons))
 ```
+The team has had a lot of names.
+The team was longest considered `BRO`, which corresponded to 68 years as the Brooklyn Gladiators, Bridegrooms, Grooms, Superbras, Robins, and the Dodgers.
+The shortest duration (one season each) was for the Brooklyn Eckfords, the Brooklyn Gladiators, and the Brooklyn Ward's Wonders.
+
 <!--end-answer-->

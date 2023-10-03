@@ -21,22 +21,22 @@ library(tidyverse)
 library(mosaicData)
 ```
 
-TITLE GOES HERE: Use the `purrr::map()` function and the `r mdsr2exercises::df_macro(HELPrct)` data frame from the `r mdsr2exercises::pkg_macro(mosaicData)` package to fit a regression model predicting `cesd` as a function of `age` separately for each of the levels of the `substance` variable.  Generate a table of results (estimates and confidence intervals) for the slope parameter for each level of the grouping variable.
+TITLE GOES HERE: Use routines from the `purrr` package and the `r mdsr2exercises::df_macro(HELPrct)` data frame from the `r mdsr2exercises::pkg_macro(mosaicData)` package to fit a regression model predicting `cesd` as a function of `age` separately for each of the levels of the `substance` variable.  Generate a formatted table (with suitable caption) of results (estimates and confidence intervals) for the slope parameter for each level of the grouping variable.
+
+(Hint: Use `group_by()` and `group_modify()` to fit the regression model on each part. Note that `broom::tidy()` is useful in having the output of the model be a data frame.)
 
 <!--begin-answer-->
 
-Use `group_by()` and `group_modify()` to fit the regression model on each part. Note that `broom::tidy()` is useful in having the output of the model be a data frame. 
 
 ```{r buck-lead-dish-1, echo = TRUE}
-HELPrct %>%
-  group_by(substance) %>%
+HELPrct |>
+  group_by(substance) |>
   group_modify(
     ~broom::tidy(
       lm(cesd ~ age, data = .x), 
       conf.int = TRUE
     )
-  ) %>%
+  ) |>
   filter(term == "age")
-
 ```
 <!--end-answer-->
