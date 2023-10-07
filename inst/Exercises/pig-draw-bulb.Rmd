@@ -12,12 +12,12 @@ id: pig-draw-bulb
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: The `Master` table of the `r pkg_macro(Lahman)` database contains biographical information about baseball players. The primary key is the `playerID` variable. There are also variables for `retroID` and `bbrefID`, which correspond to the player's identifier in other baseball databases. Discuss the ramifications of placing a primary, unique, or foreign key on `retroID`.
+TITLE GOES HERE: The `People` table of the `r pkg_macro(Lahman)` database contains biographical information about baseball players. The primary key is the `playerID` variable. There are also variables for `retroID` and `bbrefID`, which correspond to the player's identifier in other baseball databases. Discuss the ramifications of placing a primary, unique, or foreign key on `retroID`.
 
  <!--begin-answer-->
 ```{r }
 library(Lahman)
-glimpse(Master)
+glimpse(People)
 ```
 You can't place a primary key on `retroID`, since a table may only have one primary key. You can (and should) place a unique key on `retroID`, since the values should be unique. You could place a foreign key on `retroID`, but only if there was another table (e.g., the player bio table at (http://www.retrosheet.org)) in which `retroID` corresponded to a primary key.
  <!--end-answer-->

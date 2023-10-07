@@ -28,7 +28,7 @@ First we will form the histogram of the birth month for all players who batted d
 library(Lahman)
 birth_months <- Batting %>%
   filter(yearID >= 2000 & yearID < 2010) %>%
-  inner_join(Master, by = c("playerID" = "playerID")) %>%
+  inner_join(People, by = c("playerID" = "playerID")) %>%
   select(birthMonth)
 bb_players <- ggplot(data = birth_months, aes(x = birthMonth)) +
   geom_bar(aes(y = ..prop..)) +
