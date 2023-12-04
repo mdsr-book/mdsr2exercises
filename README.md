@@ -22,7 +22,7 @@ Install from [GitHub](https://github.com):
 ``` r
 #install.packages("remotes")
 remotes::install_github("beanumber/etude")
-remotes::install_github("beanumber/mdsr2exercises")
+remotes::install_github("mdsr-book/mdsr2exercises")
 ```
 
 ## Summary
@@ -50,8 +50,8 @@ knitr::kable(summary_table)
 ```
 
 | chapter      | Easy | Medium | Hard |   N |
-| :----------- | ---: | -----: | ---: | --: |
-| data-I       |    6 |      8 |   NA |  14 |
+|:-------------|-----:|-------:|-----:|----:|
+| data-I       |    6 |      8 |    1 |  15 |
 | appR         |   11 |      2 |   NA |  13 |
 | reproducible |   10 |      2 |   NA |  12 |
 | text         |    6 |      5 |    1 |  12 |
@@ -75,7 +75,7 @@ knitr::kable(summary_table)
 | spatial-II   |   NA |      2 |    2 |   4 |
 | netsci       |   NA |      1 |    2 |   3 |
 | not working  |   NA |      1 |   NA |   1 |
-| Total        |   57 |    107 |   26 | 190 |
+| Total        |   57 |    107 |   27 | 191 |
 
 Here is the summary of the online only exercises:
 
@@ -93,26 +93,26 @@ summary_table <- mdsr_exercise_all() %>%
 knitr::kable(summary_table)
 ```
 
-| chapter     | Easy | Medium | Hard |  N |
-| :---------- | ---: | -----: | ---: | -: |
-| data-I      |    6 |     NA |    1 |  7 |
-| dataviz-I   |    3 |      2 |   NA |  5 |
-| dataviz-II  |    4 |     NA |    1 |  5 |
-| join        |    3 |     NA |    1 |  4 |
-| algorithmic |    2 |      1 |   NA |  3 |
-| data-II     |    3 |     NA |   NA |  3 |
-| text        |   NA |      2 |    1 |  3 |
-| dataI       |    1 |     NA |    1 |  2 |
-| foundations |   NA |      2 |   NA |  2 |
-| simulation  |   NA |      1 |    1 |  2 |
-| sqlII       |    1 |     NA |    1 |  2 |
-| dataviz-III |   NA |      1 |   NA |  1 |
-| ethics      |   NA |      1 |   NA |  1 |
-| not-working |   NA |     NA |    1 |  1 |
-| regression  |   NA |      1 |   NA |  1 |
-| spatial     |   NA |     NA |    1 |  1 |
-| sqlI        |    1 |     NA |   NA |  1 |
-| Total       |   24 |     11 |    9 | 44 |
+| chapter     | Easy | Medium | Hard |   N |
+|:------------|-----:|-------:|-----:|----:|
+| data-I      |    6 |     NA |   NA |   6 |
+| dataviz-I   |    3 |      2 |   NA |   5 |
+| dataviz-II  |    4 |     NA |    1 |   5 |
+| join        |    3 |     NA |    1 |   4 |
+| algorithmic |    2 |      1 |   NA |   3 |
+| data-II     |    3 |     NA |   NA |   3 |
+| text        |   NA |      2 |    1 |   3 |
+| dataI       |    1 |     NA |    1 |   2 |
+| foundations |   NA |      2 |   NA |   2 |
+| simulation  |   NA |      1 |    1 |   2 |
+| sqlII       |    1 |     NA |    1 |   2 |
+| dataviz-III |   NA |      1 |   NA |   1 |
+| ethics      |   NA |      1 |   NA |   1 |
+| not-working |   NA |     NA |    1 |   1 |
+| regression  |   NA |      1 |   NA |   1 |
+| spatial     |   NA |     NA |    1 |   1 |
+| sqlI        |    1 |     NA |   NA |   1 |
+| Total       |   24 |     11 |    8 |  43 |
 
 ## Example
 
@@ -127,10 +127,10 @@ exercises <- mdsr_exercise_ls(chapter == "data-I") %>%
 knitr::kable(exercises)
 ```
 
-| chapter | difficulty | version | tags                        | id              | status | file                                                                                                        | output | depends |
-| :------ | :--------- | :------ | :-------------------------- | :-------------- | :----- | :---------------------------------------------------------------------------------------------------------- | :----- | :------ |
-| data-I  | Easy       | 0.1     | first:::second:::onlineonly | cow-make-vase   | OK     | /Library/Frameworks/R.framework/Versions/4.0/Resources/library/mdsr2exercises/Exercises/cow-make-vase.Rmd   | NA     | NA      |
-| data-I  | Easy       | 0.1     | babynames:::join:::third    | crow-burn-sheet | OK     | /Library/Frameworks/R.framework/Versions/4.0/Resources/library/mdsr2exercises/Exercises/crow-burn-sheet.Rmd | NA     | NA      |
+| chapter | difficulty | version | tags                     | id              | status | file                                                                                                              | output | depends | editor_options |
+|:--------|:-----------|:--------|:-------------------------|:----------------|:-------|:------------------------------------------------------------------------------------------------------------------|:-------|:--------|:---------------|
+| data-I  | Easy       | 0.1     | onlineonly:::dplyr       | cow-make-vase   | OK     | /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/mdsr2exercises/Exercises/cow-make-vase.Rmd   | NA     | NA      | NA             |
+| data-I  | Easy       | 0.1     | babynames:::join:::dplyr | crow-burn-sheet | OK     | /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/library/mdsr2exercises/Exercises/crow-burn-sheet.Rmd | NA     | NA      | NA             |
 
 Second, give the in-line command `knit_mdsr_exercises(exercises)`:
 
@@ -138,14 +138,14 @@ Second, give the in-line command `knit_mdsr_exercises(exercises)`:
 
 **Problem 1 (Easy)**: Which `dplyr` operation is depicted below?
 
-<img src="/Library/Frameworks/R.framework/Versions/4.0/Resources/library/mdsr2exercises/extdata/dplyr-arrange.png" width="50%" />
+<img src="https://raw.githubusercontent.com/mdsr-book/mdsr2exercises/main/inst/extdata/dplyr-arrange.png" width="100%" />
 
 **Problem 2 (Easy)**: Here is a random subset of the `babynames` data
 frame in the `babynames` package:
 
 ``` r
 Random_subset
-#> # A tibble: 10 x 5
+#> # A tibble: 10 × 5
 #>     year sex   name           n      prop
 #>    <dbl> <chr> <chr>      <int>     <dbl>
 #>  1  2003 M     Bilal        146 0.0000695
@@ -165,9 +165,9 @@ out what `dplyr` wrangling statement will produce the result.
 
 1.  Hint: Both rows and variables are missing from the original
 
-<!-- end list -->
+<!-- -->
 
-    #> # A tibble: 4 x 4
+    #> # A tibble: 4 × 4
     #>    year sex   name        n
     #>   <dbl> <chr> <chr>   <int>
     #> 1  2010 F     Naziyah    45
@@ -177,9 +177,9 @@ out what `dplyr` wrangling statement will produce the result.
 
 2.  Hint: the `nchar()` function is used in the statement.
 
-<!-- end list -->
+<!-- -->
 
-    #> # A tibble: 2 x 5
+    #> # A tibble: 2 × 5
     #>    year sex   name       n      prop
     #>   <dbl> <chr> <chr>  <int>     <dbl>
     #> 1  1999 F     Terria    23 0.0000118
@@ -187,9 +187,9 @@ out what `dplyr` wrangling statement will produce the result.
 
 3.  Hint: Note the new column, which is constructed from `n` and `prop`.
 
-<!-- end list -->
+<!-- -->
 
-    #> # A tibble: 2 x 6
+    #> # A tibble: 2 × 6
     #>    year sex   name        n      prop    total
     #>   <dbl> <chr> <chr>   <int>     <dbl>    <dbl>
     #> 1  1989 F     Shawana    41 0.0000206 1992225.
@@ -198,11 +198,11 @@ out what `dplyr` wrangling statement will produce the result.
 4.  Hint: All the years are still there, but there are only 8 rows as
     opposed to the original 10 rows.
 
-<!-- end list -->
+<!-- -->
 
-    #> # A tibble: 8 x 2
+    #> # A tibble: 8 × 2
     #>    year total
-    #> * <dbl> <int>
+    #>   <dbl> <int>
     #> 1  1920    26
     #> 2  1928    43
     #> 3  1941    24
@@ -244,20 +244,19 @@ write_moodle(
 
 ``` r
 citation(package = "mdsr2exercises")
-#> 
 #> To cite package 'mdsr2exercises' in publications use:
 #> 
-#>   Benjamin S. Baumer, Nicholas Horton, Jessica Yu and Daniel Kaplan
-#>   (NA). mdsr2exercises: Exercises for the 2nd edition of MDSR. R
-#>   package version 0.7.2.
+#>   Baumer B, Horton N, Kaplan D (2023). _mdsr2exercises: Exercises for
+#>   the 2nd edition of MDSR_. R package version 0.7.3.9018.
 #> 
 #> A BibTeX entry for LaTeX users is
 #> 
 #>   @Manual{,
 #>     title = {mdsr2exercises: Exercises for the 2nd edition of MDSR},
-#>     author = {Benjamin S. Baumer and Nicholas Horton and Jessica Yu and Daniel Kaplan},
-#>     note = {R package version 0.7.2},
+#>     author = {Benjamin S. Baumer and Nicholas Horton and Daniel Kaplan},
+#>     year = {2023},
+#>     note = {R package version 0.7.3.9018},
 #>   }
 ```
 
-The file was last updated Sat Mar 6 13:43:31 2021 GMT.
+The file was last updated Mon Dec 4 08:35:13 2023 GMT.

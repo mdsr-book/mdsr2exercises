@@ -31,7 +31,7 @@ Install from [GitHub](https://github.com):
 ```{r install, eval=FALSE}
 #install.packages("remotes")
 remotes::install_github("beanumber/etude")
-remotes::install_github("beanumber/mdsr2exercises")
+remotes::install_github("mdsr-book/mdsr2exercises")
 ```
 
 ## Summary
