@@ -14,7 +14,7 @@ id: fish-hit-dress
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Use the `r pkg_macro(nycflights13)` package and the `r df_macro(flights)` data frame to answer the following questions: What month had the highest proportion of cancelled flights?  What month had the lowest?  Interpret any seasonal patterns.
+TITLE GOES HERE: Use the `r pkg_macro(nycflights13)` package and the `r df_macro(flights)` data frame to answer the following questions: What month had the highest proportion of canceled flights?  What month had the lowest?  Interpret any seasonal patterns. (Hint: Beware that canceled flights may have `NA` for some variables.)
 
 <!--begin-answer-->
 ```{r fish-hit-dress-1, message = FALSE, warning = FALSE}
@@ -22,15 +22,15 @@ library(nycflights13)
 flights2 <- flights %>%
   group_by(month) %>%
   summarize(
-    cancelled = sum(is.na(arr_delay)),
+    canceled = sum(is.na(arr_delay)),
     total = n(),
-    prop_cancelled = cancelled / total
+    prop_canceled = canceled / total
   )
-ggplot(data = flights2, aes(x = month, y = prop_cancelled)) +
+ggplot(data = flights2, aes(x = month, y = prop_canceled)) +
   geom_point() +
   labs(
-    title = "Proportion of Cancelled Flights Each Month",
-    y = "proportion cancelled"
+    title = "Proportion of Canceled Flights Each Month",
+    y = "proportion canceled"
   )
 ```
 
