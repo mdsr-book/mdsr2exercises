@@ -15,7 +15,7 @@ mdsr2exercises::setup()
 ```
 
 
-TITLE GOES HERE: Using data from the `r pkg_macro(nasaweather)` package, create a scatterplot between `wind` and `pressure`, with color being used to distinguish the `type` of storm. 
+TITLE GOES HERE: Using the `storms` data frame from the `r pkg_macro(nasaweather)` package, create a scatterplot between `wind` and `pressure`, with color being used to distinguish the `type` of storm. 
 
 <!--begin-answer-->
 ```{r storms-ex,message=FALSE}

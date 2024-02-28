@@ -15,6 +15,7 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: The `RailTrail` data set from the `r pkg_macro(mosaicData)` package describes the usage of a rail trail in Western Massachusetts.
 Use these data to answer the following questions.
+(Hint: For information on how to use faceting and add regression lines, see [*MDSR*, Ch 3.2.2](https://mdsr-book.github.io/mdsr3e/03-datavizII.html#multivariate-displays))
 
 a. Create a scatterplot of the number of crossings per day `volume` against the high temperature that day
 b. Separate your plot into facets by `weekday` (an indicator of weekend/holiday vs. weekday)

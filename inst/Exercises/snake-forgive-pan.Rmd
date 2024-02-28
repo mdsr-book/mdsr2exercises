@@ -16,7 +16,7 @@ mdsr2exercises::setup()
 TITLE GOES HERE: Using the `penguins` data set from the `r pkg_macro(palmerpenguins)` package:
 
 
-a. Create a scatterplot of `bill_length_mm` against `bill_depth_mm` where individual species are colored and a regression line is added to each species. Add regression lines to all of your facets.
+a. Create a scatterplot of `bill_length_mm` against `bill_depth_mm` where individual species are colored and a regression line is added to each species. 
 What do you observe about the association of bill depth and bill length?
 
 <!--begin-answer-->
@@ -38,6 +38,7 @@ ggplot(data = penguins, aes(x = bill_depth_mm, y = bill_length_mm)) +
 <!--end-answer-->
 
 b. Repeat the same scatterplot but now separate your plot into facets by `species`.
+Add regression lines to all of your facets.
 How would you summarize the association between bill depth and bill length.
 
 <!--begin-answer-->
