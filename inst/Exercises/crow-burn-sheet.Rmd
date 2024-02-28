@@ -49,6 +49,7 @@ The `prop` column has been dropped, so we know there is a `select(-prop)` comman
 <!--end-answer-->
 
 b. Hint: the `nchar()` function is used in the statement.
+
 ```{r echo = FALSE, message=FALSE}
 Random_subset %>% filter(nchar(name) == 6)
 ```
@@ -58,6 +59,7 @@ Random_subset %>% filter(nchar(name) == 6)
 <!--end-answer-->
 
 c. Hint: Note the new column, which is constructed from `n` and `prop`.
+
 ```{r echo=FALSE, message=FALSE}
 Random_subset %>%
   filter(year == 1989) %>%
