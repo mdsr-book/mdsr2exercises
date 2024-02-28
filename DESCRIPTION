@@ -1,7 +1,7 @@
 Package: mdsr2exercises
 Type: Package
 Title: Exercises for the 2nd edition of MDSR
-Version: 0.7.3.9018
+Version: 0.7.3.9019
 Authors@R: c(
     person("Benjamin S.", "Baumer", email = "ben.baumer@gmail.com",
       role = c("aut"), 
@@ -33,4 +33,4 @@ License: CC0
 Remotes: beanumber/etude
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
