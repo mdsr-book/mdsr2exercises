@@ -12,7 +12,6 @@ tags:
 - visualization
 id: dolphin-drink-linen
 output:
-  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -22,7 +21,7 @@ library(etude)
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Use the `r mdsr2exercises::func_macro(make_babynames_dist)` function in the `r pkg_macro(mdsr)` package to recreate the "Deadest Names" graphic from FiveThirtyEight (https://fivethirtyeight.com/features/how-to-tell-someones-age-when-all-you-know-is-her-name).
+TITLE GOES HERE: Use the `r mdsr2exercises::func_macro(make_babynames_dist)` function in the `r pkg_macro(mdsr)` package to recreate [the "Deadest Names" graphic from FiveThirtyEight](https://fivethirtyeight.com/features/how-to-tell-someones-age-when-all-you-know-is-her-name).
 
 ```{r, message=FALSE, warning = FALSE}
 library(tidyverse)
