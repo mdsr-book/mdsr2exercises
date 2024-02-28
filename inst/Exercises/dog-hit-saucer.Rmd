@@ -19,38 +19,38 @@ TITLE GOES HERE: We'll be working with the `r df_macro(babynames)` data frame in
 
 ```{r echo=FALSE}
 set.seed(102)
-babynames %>% sample_n(3)
+babynames |> sample_n(3)
 ```
 
 Say what's wrong (if anything) with each of the following wrangling commands. 
 
-a. `babynames %>% select(n > 100)` 
+a. `babynames |> select(n > 100)` 
 
 <!--begin-answer-->
 `select()` takes variable names as arguments. `n > 100` is not a variable name. Probably, `filter()` was intended.
 
 <!--end-answer-->
 
-b. `babynames %>% select(- year)` 
+b. `babynames |> select(- year)` 
 
 <!--begin-answer-->
 Nothing's wrong. 
 <!--end-answer-->
 
-c. `babynames %>% mutate(name_length == nchar(name))` 
+c. `babynames |> mutate(name_length == nchar(name))` 
 
 <!--begin-answer-->
 The expression is correct except for one "little" thing: it uses `==` after the named argument rather than `=`. Remember, `==` tests for equality while `=` is used to distinguish the name of an argument from its value.
 <!--end-answer-->
 
-d. `babynames %>% sex == M %>% select(-prop)`
+d. `babynames |> sex == M |> select(-prop)`
 
 <!--begin-answer-->
 The middle of the statement has `sex == M`, but it is not placed inside a data verb. 
 
 <!--end-answer-->
 
-e. `babynames %>% select(year, year, sex)`
+e. `babynames |> select(year, year, sex)`
 
 <!--begin-answer--> 
 
@@ -58,7 +58,7 @@ The statement will work, but there's no point in duplicating `year`. The output 
 
 <!--end-answer-->
 
-f. `babynames %>% group_by(n) %>% summarize(ave = mean(n))` 
+f. `babynames |> group_by(n) |> summarize(ave = mean(n))` 
 
 <!--begin-answer-->
 
@@ -66,7 +66,7 @@ Here, too, the statement is technically correct, but it is silly. First, the poi
 
 <!--end-answer-->
 
-g. `babynames %>% group_by(n > 100) %>% summarize(total = sum(n))` 
+g. `babynames |> group_by(n > 100) |> summarize(total = sum(n))` 
 
 <!--begin-answer-->
 
