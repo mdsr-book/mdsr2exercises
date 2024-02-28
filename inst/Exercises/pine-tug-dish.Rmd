@@ -15,7 +15,7 @@ mdsr2exercises::setup()
 library(mosaicData)
 ```
 
-TITLE GOES HERE: The [Relative Age Effect](https://en.wikipedia.org/wiki/Relative_age_effect}) is an attempt to explain anomalies in the distribution of birth month among athletes. Briefly, the idea is that children born just after the age cut-off to enroll in school will be as much as 11 months older than their fellow athletes, which is enough of a disparity to give them an advantage. That advantage will then be compounded over the years, resulting in notably more professional athletes born in these months. 
+TITLE GOES HERE: The [Relative Age Effect](https://en.wikipedia.org/wiki/Relative_age_effect) is an attempt to explain anomalies in the distribution of birth month among athletes. Briefly, the idea is that children born just after the age cut-off to enroll in school will be as much as 11 months older than their fellow athletes, which is enough of a disparity to give them an advantage. That advantage will then be compounded over the years, resulting in notably more professional athletes born in these months. 
 
 a. Display the distribution of birth months of baseball players who batted during the decade of the 2000s.  
 
@@ -26,9 +26,9 @@ First we will form the histogram of the birth month for all players who batted d
 
 ```{r, message = FALSE, warning = FALSE}
 library(Lahman)
-birth_months <- Batting %>%
-  filter(yearID >= 2000 & yearID < 2010) %>%
-  inner_join(People, by = c("playerID" = "playerID")) %>%
+birth_months <- Batting |>
+  filter(yearID >= 2000 & yearID < 2010) |>
+  inner_join(People, by = c("playerID" = "playerID")) |>
   select(birthMonth)
 bb_players <- ggplot(data = birth_months, aes(x = birthMonth)) +
   geom_bar(aes(y = ..prop..)) +
@@ -49,10 +49,10 @@ The `r mdsr2exercises::df_macro(Births78)` data set provides us with a reference
 
 ```{r, message = FALSE, warning = FALSE}
 library(lubridate)
-all_people <- Births78 %>%
-  mutate(month = month(ymd(date))) %>%
-  group_by(month) %>%
-  summarize(N = sum(births)) %>%
+all_people <- Births78 |>
+  mutate(month = month(ymd(date))) |>
+  group_by(month) |>
+  summarize(N = sum(births)) |>
   mutate(pct = N / sum(Births78$births))
 bb_players +
   geom_line(data = all_people, aes(x = month, y = pct), color = "red")
