@@ -13,7 +13,9 @@ library(tidyverse)
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Using the `storms` data frame from the `r pkg_macro(nasaweather)` package, use the `geom_path()` function to plot the path of each tropical storm in the `storms` data table. Use color to distinguish the storms from one another, and use faceting to plot each `year` in its own panel. Use the `guides()` function to suppress the legend for the `color` aesthetic. 
+TITLE GOES HERE: Using the `storms` data frame from the `r pkg_macro(nasaweather)` package, use the `geom_path()` function to plot the path of each tropical storm (ignore the `status` variable) in the `storms` data table. 
+Use color to distinguish the storms from one another, and use faceting to plot each `year` in its own panel. 
+Use the `guides()` function to suppress the legend for the `color` aesthetic. 
 
 
 <!--begin-answer-->
