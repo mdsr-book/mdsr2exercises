@@ -31,12 +31,12 @@ airports <- tbl(db, "airports")
 flights <- tbl(db, "flights")
 ```
 
-Working with Delta Airlines (before their merger with Northwest Airlines) in 2016, find the airports that the airline services. Hint: query the `mdsr_data("flights")` table, but join on the `mdsr_data("airports")` table to retrieve the name and location of the airport
+Working with Delta Airlines (before their merger with Northwest Airlines) in 2015, find the airports that the airline services. Hint: query the `mdsr_data("flights")` table, but join on the `mdsr_data("airports")` table to retrieve the name and location of the airport
 
 <!--begin-answer-->
 ```{r, warning = FALSE}
 my_carrier <- "DL"
-my_year <- 2016
+my_year <- 2015
 
 destinations <- flights |>
   filter(year == my_year, carrier == my_carrier) |>

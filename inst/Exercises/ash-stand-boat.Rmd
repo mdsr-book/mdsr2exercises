@@ -13,7 +13,7 @@ mdsr2exercises::setup()
 ```
 
 TITLE GOES HERE: Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
-Of all the destinations from Chicago O'Hare (ORD), which were the most common in 2016? 
+Of all the destinations from Chicago O'Hare (ORD), which were the most common in 2015? 
 
  
 <!--begin-answer-->
@@ -23,7 +23,7 @@ SELECT
   dest, 
   sum(1) as numFlights
 FROM flights 
-WHERE year = 2016 
+WHERE year = 2015
   AND origin = "ORD"
 GROUP BY dest
 ORDER BY numFlights desc

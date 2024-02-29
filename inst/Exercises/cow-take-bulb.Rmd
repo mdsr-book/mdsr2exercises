@@ -66,7 +66,7 @@ route_map
  <!--end-answer-->
 
 
-b. Compare the airline route map for Delta Airlines in 2016 to the same map for Delta in 2013. Discuss the history of Delta's use of hub airports. Quantify changes over time.  Reflect on the more general westward expansion of air travel in the United States. 
+b. Compare the airline route map for Delta Airlines in 2015 to the same map for Delta in 2013. Discuss the history of Delta's use of hub airports. Quantify changes over time.  Reflect on the more general westward expansion of air travel in the United States. 
 
 <!--begin-answer-->
 
@@ -74,7 +74,7 @@ We will use the tables and the `grabairline()` function from the previous
 problem.
 
 ```{r delta-years, warning=FALSE}
-delta <- c(2013, 2016) |>
+delta <- c(2013, 2015) |>
   set_names() |>
   map_dfr(grabairline, .id = "year") |>
   arrange(year) |>
@@ -103,7 +103,7 @@ changes |>
   arrange(desc(diff))
 ```
 
-From 2013 to 2016, the proportion of Delta flights involving the Atlanta airport decreased by 1.1\%, while the proportion involving Los Angeles International airport increased by 1.0\%.
+From 2013 to 2015, the proportion of Delta flights involving the Atlanta airport decreased by 1.1\%, while the proportion involving Los Angeles International airport increased by 1.0\%.
 
 The following figure displays the changes from 2013 to 2016.
 

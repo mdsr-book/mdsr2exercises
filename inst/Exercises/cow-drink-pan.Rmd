@@ -13,7 +13,7 @@ mdsr2exercises::setup()
 ```
 
 TITLE GOES HERE:  Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
-Which airport had the highest average arrival delay time in 2016? 
+Which airport had the highest average arrival delay time in 2015? 
 
 <!--begin-answer-->
 
@@ -23,7 +23,7 @@ SELECT
   sum(1) as numFlights,
   avg(arr_delay) as avg_arr_delay
 FROM flights o
-WHERE year = 2016
+WHERE year = 2015
 GROUP BY dest
 ORDER BY avg_arr_delay desc
 LIMIT 0,6
