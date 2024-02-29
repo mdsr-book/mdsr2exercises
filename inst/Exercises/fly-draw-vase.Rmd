@@ -15,7 +15,7 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: 
 Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
-How many domestic flights came into or flew out of Bradley Airport (BDL) in 2012?
+How many domestic flights came into or flew out of Bradley Airport (BDL) in 2015?
 
 
 <!--begin-answer-->
@@ -23,7 +23,7 @@ How many domestic flights came into or flew out of Bradley Airport (BDL) in 2012
 ```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT * 
 FROM flights 
-WHERE Year = 2012 
+WHERE Year = 2015 
   AND (Dest = "BDL" OR Origin = "BDL")
 LIMIT 0,6
 ```

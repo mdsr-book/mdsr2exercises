@@ -14,7 +14,7 @@ mdsr2exercises::setup()
 ```
 
 TITLE GOES HERE:  Use the `dbConnect_scidb` function to connect to the `airlines` database to answer the following problem.
-How many domestic flights flew into Dallas-Fort Worth (DFW) on May 14, 2010?
+How many domestic flights flew into Dallas-Fort Worth (DFW) on May 14, 2015?
 
   
 <!--begin-answer-->
@@ -22,7 +22,7 @@ How many domestic flights flew into Dallas-Fort Worth (DFW) on May 14, 2010?
 ```{sql, connection=mdsr::dbConnect_scidb(dbname = "airlines")}
 SELECT sum(1) as N
 FROM flights o
-WHERE year = 2010 AND Month = 5 AND day = 14
+WHERE year = 2015 AND Month = 5 AND day = 14
   AND dest = 'DFW'
 ```
 <!--end-answer-->

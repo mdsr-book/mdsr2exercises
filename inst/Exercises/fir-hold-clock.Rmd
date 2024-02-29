@@ -13,7 +13,8 @@ library(etude)
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: Use the `dbConnect_scidb` function to connect to the `airlines` database using the data from 2013 to answer the following problem.  For a while, [Edward Snowden](https://en.wikipedia.org/wiki/Edward_Snowden) was trapped in a Moscow airport. Suppose that you were trapped not in *one* airport, but in *all* airports. If you were forced to randomly fly around the United States, where would you be most likely to end up? 
+TITLE GOES HERE: Use the `dbConnect_scidb` function to connect to the `airlines` database using the data from 2013 to answer the following problem. 
+For a while, [Edward Snowden](https://en.wikipedia.org/wiki/Edward_Snowden) was trapped in a Moscow airport. Suppose that you were trapped not in *one* airport, but in *all* airports. If you were forced to randomly fly around the United States, where would you be most likely to end up? 
 
 <!--begin-answer-->
 
@@ -21,7 +22,7 @@ You'd be most likely to end up in Atlanta.
 
 ```{sql, connection=mdsr::dbConnect_scidb("airlines"), output.var = "E"}
 SELECT origin as src, dest, sum(1) as N
-FROM flights WHERE year = 2012 
+FROM flights WHERE year = 2013 
 GROUP BY origin, dest
 ```
 

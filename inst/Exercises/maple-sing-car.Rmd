@@ -14,14 +14,14 @@ mdsr2exercises::setup()
 
 TITLE GOES HERE: The following problem considers the U.S. airport network as a graph.
 
-a. What information do you need to compute the PageRank of the U.S. airport network? Write an SQL query to retrieve this information for 2012. 
+a. What information do you need to compute the PageRank of the U.S. airport network? Write an SQL query to retrieve this information for 2016. 
 (Hint: use the `dbConnect_scidb` function to connect to the `airlines` database.)
 
 
  <!--begin-answer-->
 ```{sql, connection=mdsr::dbConnect_scidb("airlines"), output.var = "E"}
 SELECT origin as src, dest, sum(1) as N
-FROM flights WHERE year = 2012 
+FROM flights WHERE year = 2016 
 GROUP BY origin, dest
 ```
   <!--end-answer-->
