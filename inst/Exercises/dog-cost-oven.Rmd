@@ -42,24 +42,24 @@ First we do some data cleaning. In this case, 22.3% of the responses for `SleepT
 library(mdsr)
 library(NHANES)
 library(rpart)
-NHANES %>%
-  group_by(SleepTrouble) %>%
+NHANES |>
+  group_by(SleepTrouble) |>
   summarize(N = n())
 
-NHANES_good <- NHANES %>%
+NHANES_good <- NHANES |>
   filter(!is.na(SleepTrouble))
 ```
 
 Among those that did respond, about one quarter reported having troubling sleeping. 
 
 ```{r, warning=FALSE}
-NHANES_good %>%
-  summarize(N = n(), sleep_trouble = sum(SleepTrouble == "Yes")) %>%
+NHANES_good |>
+  summarize(N = n(), sleep_trouble = sum(SleepTrouble == "Yes")) |>
   mutate(sleep_pct = sleep_trouble / N)
 
-confusion_null <- NHANES_good %>%
-  select(SleepTrouble) %>%
-  mutate(sleep_trouble_hat = 0) %>%
+confusion_null <- NHANES_good |>
+  select(SleepTrouble) |>
+  mutate(sleep_trouble_hat = 0) |>
   table()
 
 confusion_null
@@ -74,9 +74,9 @@ We next fit a decision tree to the explanatory variables except for `SleepHrsNig
 ```{r, warning=FALSE}
 tree <- rpart(SleepTrouble ~ . - SleepHrsNight, data = NHANES_good)
 
-confusion_tree <- NHANES_good %>%
-  mutate(sleep_trouble_hat = predict(tree, type = "class")) %>%
-  select(SleepTrouble, sleep_trouble_hat) %>%
+confusion_tree <- NHANES_good |>
+  mutate(sleep_trouble_hat = predict(tree, type = "class")) |>
+  select(SleepTrouble, sleep_trouble_hat) |>
   table()
 
 sum(diag(confusion_tree)) / sum(confusion_tree)
@@ -97,10 +97,10 @@ tree2 <- rpart(SleepTrouble ~ DaysMentHlthBad + DaysPhysHlthBad,
   data = NHANES_good
 )
 library(modelr)
-grid <- NHANES %>%
+grid <- NHANES |>
   data_grid(DaysMentHlthBad,
     DaysPhysHlthBad = seq_range(DaysPhysHlthBad, by = 1)
-  ) %>%
+  ) |>
   mutate(sleep_trouble_hat = predict(tree2, newdata = ., type = "class"))
 
 ggplot(grid, aes(
@@ -143,8 +143,8 @@ data = NHANES, na.action = na.exclude,
 ntree = 201, mtry = 3
 )
 tree_reg
-importance(tree_reg) %>% 
-  as_tibble(rownames = "variable") %>%
+importance(tree_reg) |> 
+  as_tibble(rownames = "variable") |>
   arrange(desc(IncNodePurity))
 ```
 <!--end-answer-->
@@ -159,13 +159,13 @@ The `modelr` package makes this easier. First we generate the training and testi
 ```{r, , warning=FALSE}
 library(tidymodels)
 set.seed(364)
-NHANES_split <- NHANES_good %>%
+NHANES_split <- NHANES_good |>
   initial_split(prop = 0.75)
 
-NHANES_train <- NHANES_split  %>%
+NHANES_train <- NHANES_split  |>
   training()
 
-NHANES_test <- NHANES_split  %>%
+NHANES_test <- NHANES_split  |>
   testing()
 ```
 
@@ -182,9 +182,9 @@ tree_train
 Then we evaluate that model on the testing set. 
 
 ```{r, warning=FALSE}
-confusion_test <- NHANES_test %>%
-  mutate(sleep_trouble_hat = predict(tree_train, newdata = ., type = "class")) %>%
-  select(SleepTrouble, sleep_trouble_hat) %>%
+confusion_test <- NHANES_test |>
+  mutate(sleep_trouble_hat = predict(tree_train, newdata = ., type = "class")) |>
+  select(SleepTrouble, sleep_trouble_hat) |>
   table()
 
 sum(diag(confusion_test)) / sum(confusion_test)
@@ -198,15 +198,15 @@ d. Repeat the first exercise in part (a), but for the variable `PregnantNow`. Wh
 
 <!--begin-answer-->
 ```{r, message = FALSE, warning=FALSE}
-NHANES %>%
-  group_by(PregnantNow) %>%
+NHANES |>
+  group_by(PregnantNow) |>
   summarize(N = n())
 
-NHANES_good <- NHANES %>%
+NHANES_good <- NHANES |>
   filter(!is.na(PregnantNow))
 
-NHANES_good %>%
-  select(PregnantNow, Gender) %>%
+NHANES_good |>
+  select(PregnantNow, Gender) |>
   table()
 ```
 

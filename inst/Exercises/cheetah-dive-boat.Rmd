@@ -45,15 +45,15 @@ SELECT a.person_id as src, b.person_id as dest,
 ```
 
 ```{r}
-E <- E %>%
+E <- E |>
 mutate(ratings = as.numeric(ratings))
 actor_ids <- unique(c(E$src, E$dest))
-V <- mdsr::dbConnect_scidb("imdb") %>%
-  tbl("name") %>%
-  filter(id %in% actor_ids) %>%
-  select(id, name) %>%
-  rename(actor_name = name) %>%
-  collect() %>%
+V <- mdsr::dbConnect_scidb("imdb") |>
+  tbl("name") |>
+  filter(id %in% actor_ids) |>
+  select(id, name) |>
+  rename(actor_name = name) |>
+  collect() |>
   arrange(id)
 ```
 
@@ -61,13 +61,13 @@ V <- mdsr::dbConnect_scidb("imdb") %>%
 library(igraph)
 g <- graph_from_data_frame(E, directed = FALSE, vertices = V)
 
-g <- g %>%
-  set_vertex_attr("degree", value = degree(g)) %>%
-  set_vertex_attr("eigen", value = eigen_centrality(g)$vector) %>%
-  set_vertex_attr("pagerank", value = page_rank(g)$vector) %>%
+g <- g |>
+  set_vertex_attr("degree", value = degree(g)) |>
+  set_vertex_attr("eigen", value = eigen_centrality(g)$vector) |>
+  set_vertex_attr("pagerank", value = page_rank(g)$vector) |>
   set_vertex_attr("btw", value = igraph::betweenness(g, normalized = TRUE))
-get.data.frame(g, what = "vertices") %>%
-  arrange(desc(btw)) %>%
+get.data.frame(g, what = "vertices") |>
+  arrange(desc(btw)) |>
   head()
 ```
 

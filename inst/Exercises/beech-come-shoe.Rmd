@@ -29,12 +29,12 @@ df <- tibble(
   left = c(0.1, 0.2, 0.3, 0.4, 0.15, 0.25, 0.6, 0.65, 0.71, 0.79),
   right = c(0.1, 0.25, 0.3, 0.35, 0.18, 0.25, 0.6, 0.6, 0.71, 0.79) + 0.1
 )
-sumdf <- df %>%
-  group_by(grp, sex) %>%
+sumdf <- df |>
+  group_by(grp, sex) |>
   summarize(
     meanL = mean(left), sdL = sd(left),
     meanR = mean(right), sdR = sd(right)
-  ) %>%
+  ) |>
   ungroup()
 ```
 
@@ -45,13 +45,13 @@ sumdf
 The result should look like the following display.
 
 ```{r beech-come-shoe-1, echo=FALSE, message = FALSE}
-sumdf %>%
+sumdf |>
   pivot_longer(
     names_to = "temp", 
     values_to = "vals", 
     col = c(meanL, meanR, sdL, sdR)
-  ) %>%
-  unite(col = "temp1", sex, temp, sep = ".") %>%
+  ) |>
+  unite(col = "temp1", sex, temp, sep = ".") |>
   pivot_wider(names_from = temp1, values_from = vals)
 ```
 

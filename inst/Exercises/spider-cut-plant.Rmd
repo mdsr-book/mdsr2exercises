@@ -49,10 +49,10 @@ dosim <- function() {
   result <- coef(mod)[2]
   return(result) # coefficient for X1
 }
-res <- map_dbl(1:1000, ~dosim()) %>%
+res <- map_dbl(1:1000, ~dosim()) |>
   enframe(value = "x1")
 
-res %>%
+res |>
   skim(x1)
 
 ggplot(data = res, aes(x = x1)) +

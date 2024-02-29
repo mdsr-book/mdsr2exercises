@@ -20,28 +20,28 @@ library(tidyverse)
 # remotes::install_github("Amherst-Statistics/DickinsonPoems")
 library(DickinsonPoems)
 library(tidytext)
-poems_df <- list_poems() %>%
-  purrr::map(get_poem) %>%
-  unlist() %>%
-  enframe(value = "words") %>%
+poems_df <- list_poems() |>
+  purrr::map(get_poem) |>
+  unlist() |>
+  enframe(value = "words") |>
   unnest_tokens(word, words)
 ```
 
 <!--begin-answer-->
 
 ```{r ling-forget-ring-begin-ans, message=FALSE}
-poems_df %>%
-  filter(!word %in% stop_words$word) %>%
-  count(word, sort = TRUE) %>%
+poems_df |>
+  filter(!word %in% stop_words$word) |>
+  count(word, sort = TRUE) |>
   head(15)
 
-poems_df %>%
-  inner_join(get_sentiments("bing")) %>%
-  count(word, sentiment, sort = TRUE) %>%
+poems_df |>
+  inner_join(get_sentiments("bing")) |>
+  count(word, sentiment, sort = TRUE) |>
   head(10)
 
-poems_df %>%
-  inner_join(get_sentiments("afinn")) %>%
+poems_df |>
+  inner_join(get_sentiments("afinn")) |>
   summarize(afinn = sum(value))
 ```
 
@@ -51,12 +51,12 @@ sentiments <- get_sentiments("nrc")
 ```
 
 ```{r top-word}
-poems_df %>%
-  inner_join(sentiments) %>%
-  group_by(sentiment) %>%
-  count(sentiment) %>%
-  arrange(desc(n)) %>%
-  ungroup() %>%
+poems_df |>
+  inner_join(sentiments) |>
+  group_by(sentiment) |>
+  count(sentiment) |>
+  arrange(desc(n)) |>
+  ungroup() |>
   top_n(1)
 ```
 

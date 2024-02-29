@@ -37,23 +37,23 @@ filename <- paste(system.file("extdata", package = "CollegeScorecard"),
 )
 colleges <- readr::read_csv(filename)
 
-colleges <- colleges %>%
-  select(ADM_RATE, PREDDEG, DEBT_N) %>%
+colleges <- colleges |>
+  select(ADM_RATE, PREDDEG, DEBT_N) |>
   filter(
     ADM_RATE != "NULL", PREDDEG != "NULL", DEBT_N != "NULL",
     DEBT_N != "PrivacySuppressed"
-  ) %>%
+  ) |>
   mutate(
     ADM_RATE = as.numeric(ADM_RATE),
     DEBT_N = as.numeric(DEBT_N)
   )
 
-clusts <- colleges %>%
-  kmeans(centers = 3) %>%
+clusts <- colleges |>
+  kmeans(centers = 3) |>
   fitted("classes")
 
-colleges <- colleges %>%
-  mutate(cluster = clusts) %>%
+colleges <- colleges |>
+  mutate(cluster = clusts) |>
   arrange(desc(clusts))
 
 ggplot(data = colleges, aes(x = ADM_RATE, y = DEBT_N, color = factor(cluster))) +

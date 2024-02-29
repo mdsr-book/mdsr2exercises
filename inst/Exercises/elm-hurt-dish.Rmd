@@ -17,9 +17,9 @@ TITLE GOES HERE: Consider the following pipeline:
 
 ```{r eval = FALSE, error=TRUE, message=FALSE}
 library(tidyverse)
-mtcars %>%
-  group_by(cyl) %>%
-  summarize(avg_mpg = mean(mpg)) %>%
+mtcars |>
+  group_by(cyl) |>
+  summarize(avg_mpg = mean(mpg)) |>
   filter(am == 1)
 ```
 

@@ -21,11 +21,11 @@ a. Find the 10 most successful seasons in Angels history, defining "successful" 
 <!--begin-answer-->
 ```{r}
 library(Lahman)
-Teams %>%
-  filter(teamID %in% c("CAL", "ANA", "LAA")) %>%
-  dplyr::select(yearID, teamID, lgID, W, L, WSWin) %>%
-  mutate(WPct = W / (W + L)) %>%
-  arrange(desc(WPct)) %>%
+Teams |>
+  filter(teamID %in% c("CAL", "ANA", "LAA")) |>
+  dplyr::select(yearID, teamID, lgID, W, L, WSWin) |>
+  mutate(WPct = W / (W + L)) |>
+  arrange(desc(WPct)) |>
   head(10)
 ```
 <!--end-answer-->
@@ -34,9 +34,9 @@ b. Have the Angels ever won the World Series?
 
 <!--begin-answer-->
 ```{r}
-Teams %>%
-  filter(teamID %in% c("CAL", "ANA", "LAA")) %>%
-  dplyr::select(yearID, teamID, lgID, W, L, WSWin) %>%
+Teams |>
+  filter(teamID %in% c("CAL", "ANA", "LAA")) |>
+  dplyr::select(yearID, teamID, lgID, W, L, WSWin) |>
   filter(WSWin == "Y")
 ```
 They won the World Series in 2002 as the Anaheim Angels, in their second most successful season in terms of regular-season winning percentage.

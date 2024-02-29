@@ -49,8 +49,8 @@ b. What is the longest individual bike trail segment?
 
  <!--begin-answer-->
 ```{r}
-bike_trails %>%
-  arrange(desc(SHAPE_LEN)) %>%
+bike_trails |>
+  arrange(desc(SHAPE_LEN)) |>
   head(1)
 ```
 
@@ -61,7 +61,7 @@ c. How many segments are associated with the Norwottuck Rail Trail?
 
  <!--begin-answer-->
 ```{r}
-bike_trails %>%
+bike_trails |>
   filter(grepl("Norwottuck Rail Trail", TRAILNAME))
 ```
 
@@ -71,12 +71,12 @@ d. Among all of the named trails (which may have multiple features), which one h
 
  <!--begin-answer-->
 ```{r, message = FALSE}
-bike_trails %>%
-  group_by(TRAILNAME) %>%
+bike_trails |>
+  group_by(TRAILNAME) |>
   summarize(
     num_segments = n(),
     total_length = sum(SHAPE_LEN)
-  ) %>%
+  ) |>
   arrange(desc(total_length))
 ```
 
@@ -91,10 +91,10 @@ library(leaflet)
 library(sf)
 dsn <- path.expand("./biketrails/biketrails_arc")
 bike_trails <- read_sf(dsn)
-bike_trails_4326 <- bike_trails %>%
+bike_trails_4326 <- bike_trails |>
   st_transform(4326)
-leaflet() %>%
-  addTiles() %>%
+leaflet() |>
+  addTiles() |>
   addPolylines(data = bike_trails_4326)
 ```
 
@@ -111,9 +111,9 @@ pal <- colorNumeric(
   domain = bike_trails_4326$SHAPE_LEN
 )
 
-leaflet(data = bike_trails_4326) %>%
-  addTiles() %>%
-  addPolylines(color = ~ pal(SHAPE_LEN)) %>%
+leaflet(data = bike_trails_4326) |>
+  addTiles() |>
+  addPolylines(color = ~ pal(SHAPE_LEN)) |>
   addLegend("bottomright", pal = pal, values = ~SHAPE_LEN)
 ```
 

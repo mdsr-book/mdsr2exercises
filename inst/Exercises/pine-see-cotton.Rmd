@@ -19,7 +19,7 @@ TITLE GOES HERE:	Use the `geocode` function from the `r pkg_macro(tidygeocoder)`
 ```{r}
 library(tidyverse)
 library(tidygeocoder)
-tibble(address = "Emily Dickinson Museum, Amherst, MA") %>%
+tibble(address = "Emily Dickinson Museum, Amherst, MA") |>
   tidygeocoder::geocode(address, method = "osm")
 ```
  

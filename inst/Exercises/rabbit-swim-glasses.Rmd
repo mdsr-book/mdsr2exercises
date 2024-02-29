@@ -17,8 +17,8 @@ mdsr2exercises::setup()
 TITLE GOES HERE: Consider the following pipeline:
 
 ```{r error=TRUE, message=FALSE}
-mtcars %>%
-  group_by(cyl) %>%
+mtcars |>
+  group_by(cyl) |>
   summarize(
     N = n(),
     avg_mpg = mean(mpg)

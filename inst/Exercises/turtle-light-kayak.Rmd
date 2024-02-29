@@ -26,16 +26,16 @@ library(mdsr)
 
 options(scipen = 999)
 url <- "https://en.wikipedia.org/wiki/List_of_highest-grossing_animated_films"
-tables <- url %>%
-  read_html() %>%
+tables <- url |>
+  read_html() |>
   html_nodes("table")
 
-computer_animated <- html_table(tables[[1]]) %>%
+computer_animated <- html_table(tables[[1]]) |>
   mutate(
     Worldwide_gross = (gsub("\\$", "", `Worldwide gross`)),
     Worldwide_gross = (gsub(",", "", Worldwide_gross)),
     Worldwide_gross = as.numeric(Worldwide_gross)
-  ) %>%
+  ) |>
   head(10)
 
 ggplot(data = computer_animated, aes(x = Title, y = Worldwide_gross)) +

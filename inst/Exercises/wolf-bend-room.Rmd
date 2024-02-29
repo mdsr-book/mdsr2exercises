@@ -22,39 +22,39 @@ library(tigris)
 library(leaflet)
 options(tigris_use_cache = TRUE)
 
-district_elections <- results_house %>%
-  mutate(district = parse_number(district_id)) %>%
-  group_by(state, district) %>%
+district_elections <- results_house |>
+  mutate(district = parse_number(district_id)) |>
+  group_by(state, district) |>
   summarize(
     N = n(),
     total_votes = sum(general_votes, na.rm = TRUE),
     d_votes = sum(ifelse(party == "D", general_votes, 0), na.rm = TRUE),
     r_votes = sum(ifelse(party == "R", general_votes, 0), na.rm = TRUE)
-  ) %>%
+  ) |>
   mutate(
     other_votes = total_votes - d_votes - r_votes,
     r_pct = r_votes / total_votes,
     r_win = r_votes > d_votes
   )
 
-OR_results <- district_elections %>%
+OR_results <- district_elections |>
   filter(state == "OR")
 
-OR_shp <- congressional_districts(class = "sf", progress_bar = FALSE) %>%
-  filter(STATEFP == "41") %>%
+OR_shp <- congressional_districts(class = "sf", progress_bar = FALSE) |>
+  filter(STATEFP == "41") |>
   mutate(
     CD116FP = sub("^0+", "", CD116FP),
     CD116FP = as.double(CD116FP)
   )
 
-OR_merged <- OR_shp %>%
+OR_merged <- OR_shp |>
   inner_join(OR_results, by = c("CD116FP" = "district"))
 
 
 pal <- colorNumeric(palette = "RdBu", domain = c(0, 1))
 
-leaflet(OR_merged) %>%
-  addTiles() %>%
+leaflet(OR_merged) |>
+  addTiles() |>
   addPolygons(
     weight = 1, fillOpacity = 0.7,
     color = ~ pal(1 - r_pct),

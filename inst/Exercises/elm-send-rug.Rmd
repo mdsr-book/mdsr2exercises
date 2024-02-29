@@ -27,7 +27,7 @@ sims <- tibble(
   part1 = map_dbl(1:n, ~mosaic::nflip(4)),
   part2 = map_dbl(1:n, ~mosaic::nflip(4)),
   success = part1 == part2
-) %>%
+) |>
   summarize(
     successes = sum(success),
     success_rate = sum(success) / n

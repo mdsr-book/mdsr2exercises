@@ -19,8 +19,8 @@ a. Use regular expressions to determine the number of speaking lines [The Comple
 <!--begin-answer-->
 ```{r eval = FALSE}
 shakespeare_url <- "http://www.gutenberg.org/files/100/100-0.txt"
-shakespeare <- RCurl::getURL(shakespeare_url) %>%
-  str_split("\r\n") %>%
+shakespeare <- RCurl::getURL(shakespeare_url) |>
+  str_split("\r\n") |>
   pluck(1)
 ```
 
@@ -47,12 +47,12 @@ speakers <- str_extract(shakespeare, "^  [A-Z ]+\\.")
 words <- unlist(strsplit(shakespeare, "\\. "))
 speakers <- words[grep("^  [A-Z ]+$", words)]
 
-speaker_df <- speakers %>%
-  data.frame(speaker = .) %>%
-  filter(!is.na(speaker)) %>%
-  group_by(speaker) %>%
-  summarize(N = n()) %>%
-  arrange(desc(N)) %>%
+speaker_df <- speakers |>
+  data.frame(speaker = .) |>
+  filter(!is.na(speaker)) |>
+  group_by(speaker) |>
+  summarize(N = n()) |>
+  arrange(desc(N)) |>
   head(100)
 ggplot(data = speaker_df, aes(x = reorder(speaker, N), y = N)) +
   geom_bar(stat = "identity") +

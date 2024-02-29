@@ -17,8 +17,8 @@ TITLE GOES HERE: Consider the following function definition, and subsequent call
 ```{r, eval=FALSE, message=FALSE}
 library(tidyverse)
 summarize_species <- function(data, pattern = "Human") {
-  data %>%
-    filter(species == pattern) %>%
+  data |>
+    filter(species == pattern) |>
     summarize(
       num_people = n(),
       avg_height = mean(height, na.rm = TRUE)

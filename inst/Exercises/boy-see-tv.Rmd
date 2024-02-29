@@ -38,10 +38,10 @@ Working with Delta Airlines (before their merger with Northwest Airlines) in 201
 my_carrier <- "DL"
 my_year <- 2016
 
-destinations <- flights %>%
-  filter(year == my_year, carrier == my_carrier) %>%
-  left_join(airports, by = c("dest" = "faa")) %>%
-  group_by(dest) %>%
+destinations <- flights |>
+  filter(year == my_year, carrier == my_carrier) |>
+  left_join(airports, by = c("dest" = "faa")) |>
+  group_by(dest) |>
   summarize(
     N = n(), lon = max(lon), lat = max(lat),
     # note use of MySQL syntax instead of dplyr
@@ -49,10 +49,10 @@ destinations <- flights %>%
       "(", dest, ") ",
       REPLACE(name, " Airport", "")
     ))
-  ) %>%
-  collect() %>%
-  na.omit() %>%
-  st_as_sf(coords = c("lon", "lat")) %>%
+  ) |>
+  collect() |>
+  na.omit() |>
+  st_as_sf(coords = c("lon", "lat")) |>
   st_set_crs(4326)
 ```
 
@@ -63,13 +63,13 @@ b. Next, we need to know about the flights between each airport that will make u
 
 <!--begin-answer-->
 ```{r segments, warning=FALSE}
-segments <- flights %>%
-  filter(year == my_year, carrier == my_carrier) %>%
-  group_by(origin, dest) %>%
-  summarize(N = n()) %>%
-  left_join(airports, by = c("origin" = "faa")) %>%
-  left_join(airports, by = c("dest" = "faa")) %>%
-  collect() %>%
+segments <- flights |>
+  filter(year == my_year, carrier == my_carrier) |>
+  group_by(origin, dest) |>
+  summarize(N = n()) |>
+  left_join(airports, by = c("origin" = "faa")) |>
+  left_join(airports, by = c("dest" = "faa")) |>
+  collect() |>
   na.omit()
 dim(segments)
 ```
@@ -81,14 +81,14 @@ c. To plot our segments correctly, first convert them to a `sf` object. Create s
 <!--begin-answer-->
 
 ```{r segments-sf}
-origins <- segments %>%
-  select(origin, dest, lat.x, lon.x) %>%
-  st_as_sf(coords = c("lon.x", "lat.x")) %>%
+origins <- segments |>
+  select(origin, dest, lat.x, lon.x) |>
+  st_as_sf(coords = c("lon.x", "lat.x")) |>
   ungroup()
 
-dests <- segments %>%
-  select(origin, dest, lat.y, lon.y) %>%
-  st_as_sf(coords = c("lon.y", "lat.y")) %>%
+dests <- segments |>
+  select(origin, dest, lat.y, lon.y) |>
+  st_as_sf(coords = c("lon.y", "lat.y")) |>
   ungroup()
 ```
 
@@ -97,10 +97,10 @@ dests <- segments %>%
 We will combine these two data frames, and then aggregate them using `group_by`. Now, each segment will be matched with the location information for both airports. Those two `POINT` geometries will by combined by `summarize` into a `MULTIPOINT` geometry. We then convert that `MULTIPOINT` geometry into a `LINESTRING` geometry using `st_cast`. 
 
 ```{r, message= FALSE}
-segments_sf <- rbind(origins, dests) %>%
-  group_by(origin, dest) %>%
-  summarize(num_points = n()) %>%
-  st_cast("LINESTRING") %>%
+segments_sf <- rbind(origins, dests) |>
+  group_by(origin, dest) |>
+  summarize(num_points = n()) |>
+  st_cast("LINESTRING") |>
   st_set_crs(4326)
 
 head(segments_sf, 5)
@@ -148,13 +148,13 @@ f. Recreate the same map in exercise 5 using the `leaflet` package.
 library(leaflet)
 
 
-l_map <- leaflet() %>%
-  addTiles() %>%
+l_map <- leaflet() |>
+  addTiles() |>
   addCircles(
     data = destinations, weight = 1,
     radius = ~ sqrt(N) * 500, popup = ~name
-  ) %>%
-  addPolylines(data = segments_sf$geometry, weight = 0.4) %>%
+  ) |>
+  addPolylines(data = segments_sf$geometry, weight = 0.4) |>
   setView(lng = -80, lat = 38, zoom = 6)
 
 l_map

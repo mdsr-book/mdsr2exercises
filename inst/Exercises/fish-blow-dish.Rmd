@@ -25,8 +25,8 @@ library(nycflights13)
 planes2 <- select(planes, tailnum, year, manufacturer)
 flights2 <- select(flights, tailnum)
 nyc_flights <- left_join(planes2, flights2)
-nyc_flights2 <- nyc_flights %>%
-  filter(is.na(year)) %>%
+nyc_flights2 <- nyc_flights |>
+  filter(is.na(year)) |>
   distinct(tailnum)
 nrow(nyc_flights2)
 ```
@@ -37,11 +37,11 @@ b. What are the five most common manufacturers?
 
 <!--begin-answer-->
 ```{r, message = FALSE, warning = FALSE}
-manufacturers <- nyc_flights %>%
-  select(manufacturer, tailnum, year) %>%
-  unique() %>%
-  group_by(manufacturer) %>%
-  summarize(count = n()) %>%
+manufacturers <- nyc_flights |>
+  select(manufacturer, tailnum, year) |>
+  unique() |>
+  group_by(manufacturer) |>
+  summarize(count = n()) |>
   arrange(desc(count))
 manufacturers
 ```
@@ -59,7 +59,7 @@ c. Has the distribution of manufacturer changed over time as reflected by the ai
 Let's deal with some of the duplicate names.
 
 ```{r, message = FALSE, warning = FALSE}
-manufacturers <- nyc_flights %>%
+manufacturers <- nyc_flights |>
   mutate(
     manufacturer =
       case_when(
@@ -68,11 +68,11 @@ manufacturers <- nyc_flights %>%
         manufacturer == "MCDONNELL DOUGLAS CORPORATION" ~ "MCDONNELL DOUGLAS",
         TRUE ~ manufacturer
       )
-  ) %>%
-  select(manufacturer, tailnum, year) %>%
-  unique() %>%
-  group_by(manufacturer) %>%
-  summarize(count = n()) %>%
+  ) |>
+  select(manufacturer, tailnum, year) |>
+  unique() |>
+  group_by(manufacturer) |>
+  summarize(count = n()) |>
   arrange(desc(count))
 manufacturers
 ```
@@ -80,12 +80,12 @@ manufacturers
 
 We also recode the less common manufacturers.
 ```{r, message = FALSE, warning = FALSE}
-nyc_flights2 <- left_join(manufacturers, nyc_flights) %>%
+nyc_flights2 <- left_join(manufacturers, nyc_flights) |>
   mutate(manu = ifelse(count > 100, manufacturer, "Other"))
 
-nyc_flights2 %>%
-  group_by(manu) %>%
-  summarize(avgyear = mean(year, na.rm = TRUE)) %>%
+nyc_flights2 |>
+  group_by(manu) |>
+  summarize(avgyear = mean(year, na.rm = TRUE)) |>
   arrange(desc(avgyear))
 ```
 

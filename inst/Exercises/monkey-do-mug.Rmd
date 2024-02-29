@@ -32,16 +32,16 @@ saved_file <- system.file("extdata", "1971_fwd_murder_firearms.xlsx", package = 
 
 library(readxl)
 library(readr)
-fl_murders <- read_excel(saved_file, skip = 2) %>%
+fl_murders <- read_excel(saved_file, skip = 2) |>
   na.omit()
 names(fl_murders) <- make.names(names(fl_murders))
-fl_murders <- fl_murders %>%
+fl_murders <- fl_murders |>
   mutate(
     Year = parse_number(Year),
     total_firearm = parse_number(Total.by.Firearm)
   )
-fl_plot <- fl_murders %>%
-  filter(Year >= 1990) %>%
+fl_plot <- fl_murders |>
+  filter(Year >= 1990) |>
   ggplot(aes(x = Year, y = total_firearm)) +
   geom_area(fill = "#b0272e", alpha = 0.9) +
   geom_segment(aes(x = 2005, xend = 2005, y = 350, yend = 521),

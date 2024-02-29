@@ -35,8 +35,8 @@ library(pdxTrees)
 library(leaflet)
 set.seed(3492)
 
-pdxTrees_parks_sample <- get_pdxTrees_parks() %>%
-  sample_n(1000) %>%
+pdxTrees_parks_sample <- get_pdxTrees_parks() |>
+  sample_n(1000) |>
   janitor::clean_names()
 
 pal <- colorFactor(
@@ -44,24 +44,24 @@ pal <- colorFactor(
   domain = as.factor(pdxTrees_parks_sample$condition)
 )
 
-leaflet(pdxTrees_parks_sample) %>%
-  addTiles() %>%
-  addCircleMarkers(data = pdxTrees_parks_sample %>% filter(mature_size == "S"), group = "S", lng = ~longitude, lat = ~latitude, color = ~ pal(condition), radius = 5, popup = ~ paste(
+leaflet(pdxTrees_parks_sample) |>
+  addTiles() |>
+  addCircleMarkers(data = pdxTrees_parks_sample |> filter(mature_size == "S"), group = "S", lng = ~longitude, lat = ~latitude, color = ~ pal(condition), radius = 5, popup = ~ paste(
     "Common Name: ", common_name, "Fun Fact: ",
     species_factoid, condition
-  )) %>%
-  addCircleMarkers(data = pdxTrees_parks_sample %>% filter(mature_size == "M"), group = "M", lng = ~longitude, lat = ~latitude, color = ~ pal(condition), radius = 5, popup = ~ paste(
+  )) |>
+  addCircleMarkers(data = pdxTrees_parks_sample |> filter(mature_size == "M"), group = "M", lng = ~longitude, lat = ~latitude, color = ~ pal(condition), radius = 5, popup = ~ paste(
     "Common Name: ", common_name, "Fun Fact: ",
     species_factoid
-  )) %>%
-  addCircleMarkers(data = pdxTrees_parks_sample %>% filter(mature_size == "L"), group = "L", lng = ~longitude, lat = ~latitude, color = ~ pal(condition), radius = 5, popup = ~ paste(
+  )) |>
+  addCircleMarkers(data = pdxTrees_parks_sample |> filter(mature_size == "L"), group = "L", lng = ~longitude, lat = ~latitude, color = ~ pal(condition), radius = 5, popup = ~ paste(
     "Common Name: ", common_name, "Fun Fact: ",
     species_factoid
-  )) %>%
+  )) |>
   addLayersControl(
     baseGroups = c("S", "M", "L"),
     options = layersControlOptions(collapsed = FALSE)
-  ) %>%
+  ) |>
   addLegend(pal = pal, values = ~condition, opacity = 1)
 ```
   <!--end-answer-->
@@ -79,14 +79,14 @@ pal.eco <- colorBin(
   bins = 5
 )
 
-leaflet(pdxTrees_parks_sample) %>%
-  addTiles() %>%
-  addCircleMarkers(data = pdxTrees_parks_sample %>% filter(native == "Yes"), group = "Native", lng = ~longitude, lat = ~latitude, color = ~ pal.eco(structural_value), radius = 5, popup = ~ paste("Common Name: ", common_name, "Carbon Sequestration in lbs: ", carbon_sequestration_lb)) %>%
-  addCircleMarkers(data = pdxTrees_parks_sample %>% filter(native == "No"), group = "Non-Native", lng = ~longitude, lat = ~latitude, color = ~ pal.eco(structural_value), radius = 5, popup = ~ paste("Common Name: ", common_name, "Carbon Sequestration in lbs: ", carbon_sequestration_lb)) %>%
+leaflet(pdxTrees_parks_sample) |>
+  addTiles() |>
+  addCircleMarkers(data = pdxTrees_parks_sample |> filter(native == "Yes"), group = "Native", lng = ~longitude, lat = ~latitude, color = ~ pal.eco(structural_value), radius = 5, popup = ~ paste("Common Name: ", common_name, "Carbon Sequestration in lbs: ", carbon_sequestration_lb)) |>
+  addCircleMarkers(data = pdxTrees_parks_sample |> filter(native == "No"), group = "Non-Native", lng = ~longitude, lat = ~latitude, color = ~ pal.eco(structural_value), radius = 5, popup = ~ paste("Common Name: ", common_name, "Carbon Sequestration in lbs: ", carbon_sequestration_lb)) |>
   addLayersControl(
     baseGroups = c("Native", "Non-Native"),
     options = layersControlOptions(collapsed = FALSE)
-  ) %>%
+  ) |>
   addLegend(
     pal = pal.eco, values = ~structural_value, opacity = 1,
     title = "Structural Value", labFormat = labelFormat(prefix = "$")
@@ -101,10 +101,10 @@ c. Create an interactive map that helps identify any problematic trees that city
 library(pdxTrees)
 library(leaflet)
 
-leaflet(pdxTrees_parks_sample %>% filter(condition == c("Poor", "Dead"))) %>%
-  addTiles() %>%
-  addMarkers(data = pdxTrees_parks_sample %>% filter(!is.na(nuisance)), group = "Nuisance", lng = ~longitude, lat = ~latitude, popup = ~ paste(park)) %>%
-  addMarkers(data = pdxTrees_parks_sample %>% filter(is.na(nuisance)), group = "Non-Nuisance", lng = ~longitude, lat = ~latitude, popup = ~ paste(park)) %>%
+leaflet(pdxTrees_parks_sample |> filter(condition == c("Poor", "Dead"))) |>
+  addTiles() |>
+  addMarkers(data = pdxTrees_parks_sample |> filter(!is.na(nuisance)), group = "Nuisance", lng = ~longitude, lat = ~latitude, popup = ~ paste(park)) |>
+  addMarkers(data = pdxTrees_parks_sample |> filter(is.na(nuisance)), group = "Non-Nuisance", lng = ~longitude, lat = ~latitude, popup = ~ paste(park)) |>
   addLayersControl(
     baseGroups = c("Nuisance", "Non-Nuisance"),
     options = layersControlOptions(collapsed = FALSE)

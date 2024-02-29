@@ -23,22 +23,22 @@ tmp_dir <- usethis::use_zip(
   "https://www.fueleconomy.gov/feg/epadata/16data.zip", 
   destdir = tempdir(), 
   cleanup = TRUE)
-file <- fs::dir_ls(tmp_dir) %>%
+file <- fs::dir_ls(tmp_dir) |>
   head(1)
 cars <- read_excel(file)
 ```
 
 ```{r, message= FALSE, warning = FALSE }
 library(mdsr)
-cars <- cars %>%
-  janitor::clean_names() %>%
+cars <- cars |>
+  janitor::clean_names() |>
   rename(
     make = mfr_name, model = carline, displacement = eng_displ,
     cylinders = number_cyl, city_mpg = city_fe_guide_conventional_fuel,
     hwy_mpg = hwy_fe_guide_conventional_fuel, gears = number_gears
-  ) %>%
-  select(make, model, displacement, cylinders, gears, city_mpg, hwy_mpg) %>%
-  distinct(model, .keep_all = TRUE) %>%
+  ) |>
+  select(make, model, displacement, cylinders, gears, city_mpg, hwy_mpg) |>
+  distinct(model, .keep_all = TRUE) |>
   filter(make == "Ford Motor Company")
 rownames(cars) <- cars$model
 car_diffs <- dist(cars)
@@ -46,9 +46,9 @@ car_diffs <- dist(cars)
 
 ```{r cardists, fig.height=11, fig.width=6}
 library(ape)
-car_diffs %>%
-  hclust() %>%
-  as.phylo() %>%
+car_diffs |>
+  hclust() |>
+  as.phylo() |>
   plot(cex = 0.8, label.offset = 1)
 ```
 

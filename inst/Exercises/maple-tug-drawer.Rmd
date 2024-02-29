@@ -24,13 +24,13 @@ library(tidyverse)
 library(ggthemes)
 library(babynames)
 library(shiny)
-Beatles <- babynames %>%
+Beatles <- babynames |>
   filter(name %in% c("John", "Paul", "George", "Ringo") & sex == "M")
 
 shinyServer(
   function(input, output) {
     output$plot <- renderPlot({
-      ds <- Beatles %>%
+      ds <- Beatles |>
         filter(
           year >= input$startyear, year <= input$endyear,
           name %in% input$names

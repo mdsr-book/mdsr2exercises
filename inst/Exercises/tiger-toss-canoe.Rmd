@@ -18,15 +18,15 @@ TITLE GOES HERE: Pre-natal care has been shown to be associated with better heal
 ```{r, message = FALSE, warning=FALSE}
 library(rpart)
 library(NHANES)
-NHANES %>%
-  group_by(PregnantNow) %>%
+NHANES |>
+  group_by(PregnantNow) |>
   summarize(N = n())
 
-NHANES_good <- NHANES %>%
+NHANES_good <- NHANES |>
   filter(!is.na(PregnantNow))
 
-NHANES_good %>%
-  select(PregnantNow, Gender) %>%
+NHANES_good |>
+  select(PregnantNow, Gender) |>
   table()
 ```
 

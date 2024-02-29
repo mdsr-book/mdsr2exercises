@@ -22,17 +22,17 @@ library(tidyverse)
 library(babynames)
 count_name <- function(x) {
   if (is.element(x, babynames$name)) {
-    babynames %>%
-      filter(name == x) %>%
-      group_by(year) %>%
-      summarize(total = sum(n)) %>%
+    babynames |>
+      filter(name == x) |>
+      group_by(year) |>
+      summarize(total = sum(n)) |>
       return()
   }
   else {
     stop("Name not found")
   }
 }
-count_name("Ezekiel") %>% 
+count_name("Ezekiel") |> 
   head()
 ```
 

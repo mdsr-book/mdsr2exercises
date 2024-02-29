@@ -50,10 +50,10 @@ b. Use the function and the `Lahman` package to concisely list which seasons whe
 ```{r}
 library(Lahman)
 bouton_years <-
-  filter(Pitching, playerID == "boutoji01") %>%
-  arrange(yearID) %>%
-  select(yearID) %>%
-  unique() %>%
+  filter(Pitching, playerID == "boutoji01") |>
+  arrange(yearID) |>
+  select(yearID) |>
+  unique() |>
   pull(yearID)
 bouton_years
 group_consecutive(bouton_years)

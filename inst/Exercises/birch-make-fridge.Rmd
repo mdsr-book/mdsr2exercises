@@ -18,7 +18,7 @@ for the `Gestation` data set from the `mosaicData` package.
  <!--begin-answer-->
 ```{r eval=TRUE}
 library(mosaicData)
-Gestation %>%
+Gestation |>
   skim(age)
 ```
 
@@ -28,13 +28,13 @@ set.seed(1971)
 
 ```{r eval=TRUE, message=FALSE}
 library(rsample)
-Gestation %>%
-  bootstraps(times = 2000) %>%
+Gestation |>
+  bootstraps(times = 2000) |>
   mutate(
     age = purrr::map(splits, ~pull(as_tibble(.x), age)),
     median_age = map_dbl(age, median, na.rm = TRUE)
-  ) %>%
-  pull(median_age) %>%
+  ) |>
+  pull(median_age) |>
   quantile(c(0.025, 0.975))
 ```
 We are 95% confident that the median age of mothers in the population is 26 or 27.

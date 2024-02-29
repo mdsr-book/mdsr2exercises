@@ -36,7 +36,7 @@ ggplot(data = Marriage, aes(x = age, y = prevcount, color = person)) +
  Position in the $x$-direction is mapped to age, position in the $y$-direction is mapped to the number of previous marriages, color is mapped to the status as bride or groom. Each point represents one person. The smoother line indicates a positive trend between age and number of previous marriages, up to about age 45. That is, not surprisingly, people who marry later in life tend to have had more previous marriages. 
 
 ```{r marriage-2}
-Marriage <- Marriage %>%
+Marriage <- Marriage |>
   mutate(`Grades completed` = factor(hs))
 ggplot(data = Marriage, aes(
   x = age, y = prevcount,

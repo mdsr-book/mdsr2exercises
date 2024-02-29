@@ -20,12 +20,12 @@ You may find this idiom useful to find the maximum length of each variable.
 
 ```{r, message=FALSE, warning=FALSE}
 library(fueleconomy)
-common %>%
-  purrr::map(nchar) %>%
+common |>
+  purrr::map(nchar) |>
   purrr::map_int(max)
 
-vehicles %>%
-  purrr::map(nchar) %>%
+vehicles |>
+  purrr::map(nchar) |>
   purrr::map_int(max)
 ```
 

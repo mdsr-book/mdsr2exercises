@@ -16,7 +16,7 @@ TITLE GOES HERE: The following code chunk throws an error. Why?
 
 ```{r error=TRUE, message=FALSE}
 library(tidyverse)
-mtcars %>%
+mtcars |>
   filter(cylinders == 4)
 ```
 

@@ -16,8 +16,8 @@ TITLE GOES HERE: Consider the following pipeline:
 
 ```{r error=TRUE, message=FALSE}
 library(tidyverse)
-mtcars %>%
-  filter(cyl == 4) %>%
+mtcars |>
+  filter(cyl == 4) |>
   select(mpg, cyl)
 ```
 

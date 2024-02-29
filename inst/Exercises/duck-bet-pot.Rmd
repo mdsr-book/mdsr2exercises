@@ -19,9 +19,9 @@ The summary table that follows shows the results of a regression model for predi
 ```{r message=FALSE}
 library(mdsr)
 library(mosaicData)
-babies <- Gestation %>%
-  rename(bwt = wt, height = ht, weight = wt.1) %>%
-  mutate(parity = parity == 0, smoke = smoke > 0) %>%
+babies <- Gestation |>
+  rename(bwt = wt, height = ht, weight = wt.1) |>
+  mutate(parity = parity == 0, smoke = smoke > 0) |>
   select(id, bwt, gestation, age, height, weight, parity, smoke)
 mod <- lm(bwt ~ gestation + age + height + weight + parity + smoke,
   data = babies

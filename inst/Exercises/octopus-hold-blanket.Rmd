@@ -23,7 +23,7 @@ a. What is the distribution of temperature in July, 2013?  Identify any importan
 ```{r, message = FALSE, warning = FALSE}
 library(nycflights13)
 
-july_temp <- weather %>%
+july_temp <- weather |>
   filter(month == 7)
 ggplot(data = july_temp, aes(x = day, y = temp)) +
   geom_point() +
@@ -81,9 +81,9 @@ While the outlier in precipitation of about 0.35 makes the right side of the plo
 ```{r, message = FALSE, warning = FALSE}
 library(nycflights13)
 
-days_precip <- weather %>%
-  dplyr::select(month, day, precip) %>%
-  filter(precip != 0) %>%
+days_precip <- weather |>
+  dplyr::select(month, day, precip) |>
+  filter(precip != 0) |>
   distinct(month, day)
 nrow(days_precip)
 ```
@@ -91,9 +91,9 @@ nrow(days_precip)
 There was precipitation on 139 days in the NY area in 2013.
 
 ```{r, message = FALSE, warning = FALSE}
-mean_visib_day <- weather %>%
-  mutate(wday = lubridate::wday(time_hour)) %>%
-  group_by(wday) %>%
+mean_visib_day <- weather |>
+  mutate(wday = lubridate::wday(time_hour)) |>
+  group_by(wday) |>
   summarize(mean = mean(visib), sd = sd(visib), n = n())
 mean_visib_day
 
@@ -108,8 +108,8 @@ ggplot(data = mean_visib_day, aes(x = wday, y = mean)) +
 It does not appear that the mean visibility between the days of the week varies all that much.
 
 ```{r, message = FALSE, warning = FALSE}
-mean_visib_month <- weather %>%
-  group_by(month) %>%
+mean_visib_month <- weather |>
+  group_by(month) |>
   summarize(mean = mean(visib))
 ggplot(data = mean_visib_month, aes(x = month, y = mean)) +
   geom_point() +

@@ -31,8 +31,8 @@ poem <- get_poem("gutenberg1.txt014")
 ```{r}
 library(tidytext)
 
-poem_sentiments <- data.frame(poem) %>%
-  unnest_tokens(word, poem) %>%
+poem_sentiments <- data.frame(poem) |>
+  unnest_tokens(word, poem) |>
   inner_join(get_sentiments("afinn"))
 
 sum(poem_sentiments$value) # negative value

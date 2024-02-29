@@ -20,28 +20,28 @@ Would you expect to obtain different results if the location coordinates were *p
 Possibly, but not necessarily. It depends on how grossly the coordinates are distorted from one projection to the next. Here we use a [Cassini projection](https://en.wikipedia.org/wiki/Cassini_projection) to produce a different set of coordinates. The clustering algorithm still basically picks up on the continents in the same way, even though the map looks quite different. 
 
 ```{r message=FALSE}
-BigCities <- world_cities %>%
-  arrange(desc(population)) %>%
-  head(4000) %>%
+BigCities <- world_cities |>
+  arrange(desc(population)) |>
+  head(4000) |>
   select(longitude, latitude)
 ```
 
 ```{r message=FALSE}
 library(sf)
-BigCities_proj <- BigCities %>%
-  st_as_sf(coords = c("longitude", "latitude")) %>%
-  st_set_crs(4326) %>%
+BigCities_proj <- BigCities |>
+  st_as_sf(coords = c("longitude", "latitude")) |>
+  st_set_crs(4326) |>
   st_transform("+proj=cass +lon_0=12.4521272222222 +lat_0=41.9244030555555 +x_0=0 +y_0=0 +ellps=WGS84 +units=m +no_defs")
 ```
 
 ```{r cluster-cities-projected, message=FALSE}
 set.seed(15)
-city_clusts <- BigCities_proj %>%
-  st_coordinates() %>%
-  kmeans(centers = 6) %>%
-  fitted("classes") %>%
+city_clusts <- BigCities_proj |>
+  st_coordinates() |>
+  kmeans(centers = 6) |>
+  fitted("classes") |>
   as.character()
-big_clusters <- BigCities_proj %>%
+big_clusters <- BigCities_proj |>
   mutate(cluster = city_clusts)
 ggplot(data = big_clusters) +
   geom_sf(aes(color = cluster), alpha = 0.5)

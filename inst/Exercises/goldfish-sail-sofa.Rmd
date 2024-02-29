@@ -66,19 +66,19 @@ Sample answer for June 18 2020 query:
 ```{r,message=FALSE, warning = FALSE}
 questions <- content(getresult)
 
-query <- questions %>%
-  purrr::pluck("items") %>%
-  purrr::map(data.frame, stringsAsFactors = FALSE) %>%
-  bind_rows() %>%
+query <- questions |>
+  purrr::pluck("items") |>
+  purrr::map(data.frame, stringsAsFactors = FALSE) |>
+  bind_rows() |>
   as_tibble()
 
-query %>%
+query |>
   select(owner.display_name, is_answered, view_count, answer_count, score, title)
 
-query %>%
+query |>
   count(is_answered)
 
-query %>%
+query |>
   summarize(
     avg_reputation = mean(owner.reputation),
     avg_viewcount = mean(view_count),

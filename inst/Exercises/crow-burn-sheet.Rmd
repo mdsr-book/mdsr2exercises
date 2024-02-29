@@ -25,8 +25,8 @@ TITLE GOES HERE: Here is a random subset of the `babynames` data frame in the `r
 
 ```{r crow-burn-sheet-0, echo = FALSE}
 set.seed(103)
-Random_subset <- babynames %>%
-  filter(n > 22) %>%
+Random_subset <- babynames |>
+  filter(n > 22) |>
   sample_n(10)
 ```
 
@@ -39,8 +39,8 @@ For each of the following tables wrangled from `Random_subset`, figure out what 
 a. Hint: Both rows and variables are missing from the original 
 
 ```{r echo = FALSE}
-Random_subset %>%
-  filter(n > 40, n < 100) %>%
+Random_subset |>
+  filter(n > 40, n < 100) |>
   select(-prop)
 ```
 
@@ -51,7 +51,7 @@ The `prop` column has been dropped, so we know there is a `select(-prop)` comman
 b. Hint: the `nchar()` function is used in the statement.
 
 ```{r echo = FALSE, message=FALSE}
-Random_subset %>% filter(nchar(name) == 6)
+Random_subset |> filter(nchar(name) == 6)
 ```
 
 <!--begin-answer-->
@@ -61,8 +61,8 @@ Random_subset %>% filter(nchar(name) == 6)
 c. Hint: Note the new column, which is constructed from `n` and `prop`.
 
 ```{r echo=FALSE, message=FALSE}
-Random_subset %>%
-  filter(year == 1989) %>%
+Random_subset |>
+  filter(year == 1989) |>
   mutate(total = n / prop)
 ```
 
@@ -73,15 +73,15 @@ First, the surviving rows are both for 1989, suggesting that `filter(year == 198
 d. Hint: All the years are still there, but there are only 8 rows as opposed to the original 10 rows.
 
 ```{r echo = FALSE, message=FALSE}
-Random_subset %>%
-  group_by(year) %>%
+Random_subset |>
+  group_by(year) |>
   summarize(total = sum(n))
 ```
 
 <!--begin-answer-->
 ```{r, message=FALSE}
-Random_subset %>%
-  group_by(year) %>%
+Random_subset |>
+  group_by(year) |>
   summarize(total = sum(n))
 ```
 <!--end-answer-->

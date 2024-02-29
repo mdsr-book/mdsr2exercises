@@ -20,12 +20,12 @@ a. Name every player in baseball history who has accumulated at least 300 home r
 <!--begin-answer-->
 ```{r, message= FALSE, warning = FALSE}
 library(Lahman)
-Batting %>%
-  group_by(playerID) %>%
-  summarize(tHR = sum(HR), tSB = sum(SB)) %>%
-  filter(tHR >= 300 & tSB >= 300) %>%
-  left_join(People, by = c("playerID" = "playerID")) %>%
-  select(nameFirst, nameLast, tHR, tSB) %>%
+Batting |>
+  group_by(playerID) |>
+  summarize(tHR = sum(HR), tSB = sum(SB)) |>
+  filter(tHR >= 300 & tSB >= 300) |>
+  left_join(People, by = c("playerID" = "playerID")) |>
+  select(nameFirst, nameLast, tHR, tSB) |>
   arrange(desc(tHR))
 ```
 <!--end-answer-->
@@ -34,12 +34,12 @@ b. Similarly, name every pitcher in baseball history who has accumulated at leas
 
 <!--begin-answer-->
 ```{r, message = FALSE, warning = FALSE}
-Pitching %>%
-  group_by(playerID) %>%
-  summarize(tW = sum(W), tSO = sum(SO)) %>%
-  filter(tW >= 300 & tSO >= 3000) %>%
-  left_join(People, by = c("playerID" = "playerID")) %>%
-  select(nameFirst, nameLast, tW, tSO) %>%
+Pitching |>
+  group_by(playerID) |>
+  summarize(tW = sum(W), tSO = sum(SO)) |>
+  filter(tW >= 300 & tSO >= 3000) |>
+  left_join(People, by = c("playerID" = "playerID")) |>
+  select(nameFirst, nameLast, tW, tSO) |>
   arrange(desc(tSO))
 ```
 <!--end-answer-->
@@ -48,13 +48,13 @@ c. Identify the name and year of every player who has hit at least 50 home runs 
 
 <!--begin-answer-->
 ```{r, message = FALSE, warning = FALSE}
-Batting %>%
-  group_by(playerID, yearID) %>%
-  summarize(tHR = sum(HR), BA = sum(H) / sum(AB)) %>%
-  filter(tHR >= 50) %>%
-  left_join(People, by = c("playerID" = "playerID")) %>%
-  select(nameFirst, nameLast, yearID, tHR, BA) %>%
-  ungroup() %>%
+Batting |>
+  group_by(playerID, yearID) |>
+  summarize(tHR = sum(HR), BA = sum(H) / sum(AB)) |>
+  filter(tHR >= 50) |>
+  left_join(People, by = c("playerID" = "playerID")) |>
+  select(nameFirst, nameLast, yearID, tHR, BA) |>
+  ungroup() |>
   arrange(BA)
 ```
 Jose Bautista had 54 homeruns in 2010, but had a batting average of only 0.260.

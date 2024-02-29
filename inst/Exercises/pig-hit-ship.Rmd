@@ -26,10 +26,10 @@ prop_cancel <- function(monthnum, airport) {
   if (monthnum < 1 | monthnum > 12) {
     stop("monthnum must be between 1 and 12.\n")
   }
-  res <- nycflights13::flights %>%
-    filter(month == monthnum, dest == airport) %>%
-    mutate(missdelay = is.na(arr_delay)) %>%
-    group_by(day) %>%
+  res <- nycflights13::flights |>
+    filter(month == monthnum, dest == airport) |>
+    mutate(missdelay = is.na(arr_delay)) |>
+    group_by(day) |>
     summarize(count = n(), propmiss = mean(missdelay))
   return(res)
 }

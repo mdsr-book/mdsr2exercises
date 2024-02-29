@@ -19,7 +19,7 @@ TITLE GOES HERE: Use the `HELPrct` data from the `r pkg_macro(mosaicData)` to ca
 ```{r }
 library(mdsr)
 library(mosaicData)
-HELPrct %>%
+HELPrct |>
   summarize(across(where(is.numeric), mean, na.rm = TRUE))
 ```
  <!--end-answer-->

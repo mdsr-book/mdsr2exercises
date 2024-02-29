@@ -18,7 +18,7 @@ if (isNamespaceLoaded("dplyr")) {
 TITLE GOES HERE: The following code chunk throws an error. 
 
 ```{r error=TRUE}
-mtcars %>%
+mtcars |>
   select(mpg, cyl)
 ```
 

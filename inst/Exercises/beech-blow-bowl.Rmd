@@ -26,10 +26,10 @@ library(rvest)
 library(tidyr)
 my_html <-
   read_html("http://en.wikipedia.org/wiki/List_of_highest-grossing_films")
-tables <- my_html %>% html_nodes(css = "table")
+tables <- my_html |> html_nodes(css = "table")
 movies <- html_table(tables[[2]])
 names(movies)[3] <- "Gross2019dollars"
-movies <- movies %>%
+movies <- movies |>
   mutate(
     GrossMil = readr::parse_number(Gross2019dollars) / 1000000,
     Year = readr::parse_number(as.character(Year))

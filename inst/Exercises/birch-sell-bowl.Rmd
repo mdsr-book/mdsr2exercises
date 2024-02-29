@@ -22,8 +22,8 @@ a) Generate a table of the data for subjects (`ID`) 1, 2, and 3 that includes th
 
 ```{r birch-sell-bowl-1}
 library(mosaicData)
-HELPfull %>%
-  select(ID, TIME, DRUGRISK, SEXRISK) %>%
+HELPfull |>
+  select(ID, TIME, DRUGRISK, SEXRISK) |>
   filter(ID <= 3)
 ```
 
@@ -38,9 +38,9 @@ The subject was observed at baseline, six months, and 24 months.
 c) Let's restrict our attention to the data from the baseline (`TIME = 0`) and 6-month data.  Use the `pivot_wider()` function from the `r pkg_macro("dplyr")` package to create a table that looks like the following:
 
 ```{r echo = FALSE}
-HELPfull %>%
-  select(ID, TIME, DRUGRISK, SEXRISK) %>%
-  filter(ID <= 3, TIME < 12) %>%
+HELPfull |>
+  select(ID, TIME, DRUGRISK, SEXRISK) |>
+  filter(ID <= 3, TIME < 12) |>
   pivot_wider(
     id_cols = ID, 
     values_from = c(DRUGRISK, SEXRISK),
@@ -50,9 +50,9 @@ HELPfull %>%
 
 <!--answer-start-->
 ```{r echo = TRUE}
-HELPfull %>%
-  select(ID, TIME, DRUGRISK, SEXRISK) %>%
-  filter(ID <= 3, TIME < 12) %>%
+HELPfull |>
+  select(ID, TIME, DRUGRISK, SEXRISK) |>
+  filter(ID <= 3, TIME < 12) |>
   pivot_wider(
     id_cols = ID, 
     values_from = c(DRUGRISK, SEXRISK),
@@ -68,15 +68,15 @@ d) Repeat this process using all subjects.  What is the Pearson correlation betw
 <!--answer-start-->
 
 ```{r echo = TRUE, message = FALSE}
-HELPwide <- HELPfull %>%
-  filter(TIME < 12) %>%
+HELPwide <- HELPfull |>
+  filter(TIME < 12) |>
   pivot_wider(
     id_cols = ID, 
     values_from = c(DRUGRISK, SEXRISK),
     names_from = TIME
   )
 
-HELPwide %>%
+HELPwide |>
   summarize(
     drug_risk_cor = cor(DRUGRISK_0, DRUGRISK_6, use = "complete.obs"),
     sex_risk_cor = cor(SEXRISK_0, SEXRISK_6, use = "complete.obs")

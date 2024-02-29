@@ -22,7 +22,7 @@ library(fec12)
 
 contributions <- read_all_contributions()
 
-candidate_lkup <- candidates %>%
+candidate_lkup <- candidates |>
   select(
     cand_id,
     name = cand_name, 
@@ -32,22 +32,22 @@ candidate_lkup <- candidates %>%
     office = cand_office,
   )
 
-spent <- contributions %>%
-  filter(transaction_pgi == "G") %>%
-  group_by(cand_id, phase = transaction_pgi) %>%
+spent <- contributions |>
+  filter(transaction_pgi == "G") |>
+  group_by(cand_id, phase = transaction_pgi) |>
   summarize(
     N = n(), 
     total = sum(transaction_amt), 
     avg = mean(transaction_amt)
-  ) %>% 
-  left_join(candidate_lkup, by = c("cand_id")) %>%
+  ) |> 
+  left_join(candidate_lkup, by = c("cand_id")) |>
   arrange(desc(total))
 ```
 
 ```{r giraffe-draw-clock-2, echo = TRUE}
-spent %>%
-  filter(total > 4000000) %>%
-  mutate(spent = total / 1000000) %>%
+spent |>
+  filter(total > 4000000) |>
+  mutate(spent = total / 1000000) |>
 ggplot(aes(x = name, y = spent)) + 
   geom_col() + 
   scale_x_discrete(name = NULL) + 
@@ -60,30 +60,30 @@ ggplot(aes(x = name, y = spent)) +
 ```
 
 ```{r giraffe-draw-clock-3, echo = FALSE}
-spent2 <- contributions %>%
-  filter(transaction_pgi == "G") %>%
+spent2 <- contributions |>
+  filter(transaction_pgi == "G") |>
   mutate(
     spent_against = ifelse(transaction_tp %in% c('24A', '24N'), transaction_amt, 0), 
     spent_for = ifelse(!transaction_tp %in% c('24A', '24N'), transaction_amt, 0)
-  ) %>%
-  group_by(cand_id, phase = transaction_pgi) %>%
+  ) |>
+  group_by(cand_id, phase = transaction_pgi) |>
   summarize(
     N = n(), 
     total = sum(transaction_amt), 
     avg = mean(transaction_amt),
     supporting = sum(spent_for), 
     against = sum(spent_against)
-  ) %>%
-  left_join(candidate_lkup, by = c("cand_id")) %>%
-  mutate(attack_pct = against / total) %>%
+  ) |>
+  left_join(candidate_lkup, by = c("cand_id")) |>
+  mutate(attack_pct = against / total) |>
   arrange(desc(total))
 
 
-spent2 %>%
-  filter(total > 4000000) %>%
-  select(cand_id, name, supporting, against) %>%
-  pivot_longer(-c(cand_id, name), names_to = "type", values_to = "spent") %>%
-  mutate(spent = spent / 1000000) %>%
+spent2 |>
+  filter(total > 4000000) |>
+  select(cand_id, name, supporting, against) |>
+  pivot_longer(-c(cand_id, name), names_to = "type", values_to = "spent") |>
+  mutate(spent = spent / 1000000) |>
 ggplot(aes(x = name, y = spent, fill = type)) + 
   geom_col() + 
   scale_x_discrete(name = NULL) + 

@@ -20,9 +20,9 @@ It looks like it happens in this range as well: there is a big drop between 27 a
 library(mdsr)
 minval <- 25
 maxval <- 30
-justScores <- Violations %>%
-  filter(score >= minval & score <= maxval) %>%
-  select(dba, score) %>%
+justScores <- Violations |>
+  filter(score >= minval & score <= maxval) |>
+  select(dba, score) |>
   unique()
 gradeInflation <- tally(~score, data = justScores)
 gradeInflation

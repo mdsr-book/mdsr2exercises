@@ -30,10 +30,10 @@ library(igraph)
 g <- graph.data.frame(E, directed = TRUE)
 E(g)$weight <- E(g)$N / sum(E(g)$N)
 
-g <- g %>%
+g <- g |>
   set_vertex_attr("pagerank", value = page_rank(g)$vector)
-get.data.frame(g, what = "vertices") %>%
-  arrange(desc(pagerank)) %>%
+get.data.frame(g, what = "vertices") |>
+  arrange(desc(pagerank)) |>
   head()
 ```
 

@@ -32,7 +32,7 @@ b. Use the data you pulled from SQL and build the network as a *weighted* `tidyg
  <!--begin-answer-->
 ```{r message=FALSE}
 library(igraph)
-g <- graph.data.frame(E, directed = TRUE) %>%
+g <- graph.data.frame(E, directed = TRUE) |>
   set_edge_attr("weight", value = E(.)$N / sum(E(.)$N))
 summary(g)
 ```
@@ -44,10 +44,10 @@ c. Compute the PageRank of each airport in your network. What are the top-10 "mo
   
  <!--begin-answer-->
 ```{r }
-g <- g %>%
+g <- g |>
   set_vertex_attr("pagerank", value = page_rank(g)$vector)
-get.data.frame(g, what = "vertices") %>%
-  arrange(desc(pagerank)) %>%
+get.data.frame(g, what = "vertices") |>
+  arrange(desc(pagerank)) |>
   head(10)
 ```
   <!--end-answer-->
@@ -58,19 +58,19 @@ d. Update the vertex attributes of your network with the geographic coordinates 
 ```{r warning=FALSE}
 vIds <- unique(c(E$src, E$dest))
 airports <- tbl(mdsr::dbConnect_scidb("airlines"), "airports")
-V <- airports %>%
-  filter(faa %in% vIds) %>%
+V <- airports |>
+  filter(faa %in% vIds) |>
   collect()
 ```
 
 ```{r }
-Vg <- as_data_frame(g, what = "vertices") %>%
+Vg <- as_data_frame(g, what = "vertices") |>
   mutate(vId = 1:nrow(.))
 V <- full_join(x = V, y = Vg, by = c("faa" = "name"))
 
-g <- g %>%
-  set_vertex_attr("lat", index = V$vId, value = V$lat) %>%
-  set_vertex_attr("lon", index = V$vId, value = V$lon) %>%
+g <- g |>
+  set_vertex_attr("lat", index = V$vId, value = V$lat) |>
+  set_vertex_attr("lon", index = V$vId, value = V$lon) |>
   set_vertex_attr("airport", index = V$vId, value = V$name)
 ```
 

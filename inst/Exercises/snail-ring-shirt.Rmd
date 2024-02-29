@@ -24,16 +24,16 @@ b. What is the accuracy of your decision tree?
 library(tidymodels)
 library(mosaicData)
 form <- formula("homeless ~ age + sex + cesd + substance")
-mod_tree <- decision_tree(mode = "classification") %>%
-   set_engine("rpart") %>%
+mod_tree <- decision_tree(mode = "classification") |>
+   set_engine("rpart") |>
    fit(form, data = HELPrct)
 mod_tree
 ```
 
 ```{r message = FALSE}
-HELPrct <- HELPrct %>%
+HELPrct <- HELPrct |>
    mutate(predicted = 
-             predict(mod_tree, new_data = HELPrct) %>%
+             predict(mod_tree, new_data = HELPrct) |>
              pull(.pred_class)
    )
 mosaic::tally(~ homeless, format = "prop", data = HELPrct)

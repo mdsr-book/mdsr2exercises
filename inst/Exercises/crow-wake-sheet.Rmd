@@ -23,7 +23,7 @@ library(shiny)
 library(shinybusy)
 library(mdsr)
 
-mergedViolations <- Violations %>%
+mergedViolations <- Violations |>
   left_join(Cuisines)
 
 ui <- fluidPage(
@@ -51,11 +51,11 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   datasetboro <- reactive({  # Filter data based on selections
-    data <- mergedViolations %>%
+    data <- mergedViolations |>
       select(
         dba, cuisine_code, cuisine_description, street,
         boro, zipcode, score, violation_code, grade_date
-      ) %>%
+      ) |>
       unique()
     req(input$boro)  # wait until there's a selection
     if (input$boro != "ALL") {
@@ -66,7 +66,7 @@ server <- function(input, output) {
 
   datasetcuisine <- reactive({  # dynamic list of cuisines
     req(input$cuisine)   # wait until list is available
-    data <- datasetboro() %>% unique()
+    data <- datasetboro() |> unique()
     if (input$cuisine != "ALL") {
       data <- data[data$cuisine_description == input$cuisine, ]
     }
@@ -74,15 +74,15 @@ server <- function(input, output) {
   })
 
   output$summary <- DT::renderDataTable(
-    datasetcuisine() %>%
-      select(dba, cuisine_description) %>%
-      unique() %>%
-      group_by(cuisine_description) %>%
-      summarize(restaurants = n(), .groups = "rowwise") %>%
-      arrange(desc(restaurants)) %>%
-      mutate(cuisine = paste0(cuisine_description, " (n=", restaurants, ")", sep = "")) %>%
-      ungroup() %>%
-      select(cuisine) %>%
+    datasetcuisine() |>
+      select(dba, cuisine_description) |>
+      unique() |>
+      group_by(cuisine_description) |>
+      summarize(restaurants = n(), .groups = "rowwise") |>
+      arrange(desc(restaurants)) |>
+      mutate(cuisine = paste0(cuisine_description, " (n=", restaurants, ")", sep = "")) |>
+      ungroup() |>
+      select(cuisine) |>
       DT::datatable()
   )
 

@@ -21,9 +21,9 @@ TITLE GOES HERE: Using the `r pkg_macro(babynames)` package, and the name 'Jessi
 library(tidyverse)
 library(babynames)
 
-jessie <- babynames %>%
-  filter(name == "Jessie", year >= 1930 & year <= 2012) %>%
-  group_by(year) %>%
+jessie <- babynames |>
+  filter(name == "Jessie", year >= 1930 & year <= 2012) |>
+  group_by(year) |>
   mutate(
     births = sum(n),
     percent = n / births

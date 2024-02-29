@@ -21,20 +21,20 @@ TITLE GOES HERE: Use the `r pkg_macro(nycflights13)` package and the `r df_macro
 ```{r panda-take-bulb-1, message=FALSE, warning=FALSE}
 library(nycflights13)
 library(lubridate)
-flights %>%
-  group_by(tailnum) %>%
-  summarize(count = n()) %>%
-  arrange(desc(count)) %>%
+flights |>
+  group_by(tailnum) |>
+  summarize(count = n()) |>
+  arrange(desc(count)) |>
   head()
 ```
 
 Since NA is not a plane, we see that plane N725MQ had the greatest number of flights, with 575 from NYC airports.
 
 ```{r panda-take-bulb-2, message=FALSE, warning=FALSE}
-flights2 <- flights %>%
-  filter(tailnum == "N725MQ") %>%
-  mutate(week = week(time_hour)) %>%
-  group_by(week) %>%
+flights2 <- flights |>
+  filter(tailnum == "N725MQ") |>
+  mutate(week = week(time_hour)) |>
+  group_by(week) |>
   summarize(count = n())
 ggplot(data = flights2, aes(x = week, y = count)) +
   geom_point() +

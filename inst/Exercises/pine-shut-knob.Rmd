@@ -37,13 +37,13 @@ pal <- colorQuantile(palette = "YlGnBu", domain = MA$estimate, n = 5)
 
 MA$geometry <- st_transform(MA$geometry, "+proj=longlat +datum=WGS84")
 
-leaflet(MA) %>%
-  addTiles(data = MA$geometry) %>%
+leaflet(MA) |>
+  addTiles(data = MA$geometry) |>
   addPolygons(
     color = ~ pal(MA$estimate),
     popup = ~ paste("District: ", MA$NAME, "</br>", " Median Income ($): ", MA$estimate),
     opacity = 1, fillOpacity = .5
-  ) %>%
+  ) |>
   addLegend("bottomright",
     pal = pal, values = ~estimate,
     title = "Median Income Quantile (2018)",

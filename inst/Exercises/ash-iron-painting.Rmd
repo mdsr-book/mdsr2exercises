@@ -27,8 +27,8 @@ a. Use the `geocode` function in `r pkg_macro(tidygeocoder)` to obtain spatial c
 library(tidygeocoder)
 set.seed(1619)
 
-addresses <- Violations %>%
-  sample_n(5) %>%
+addresses <- Violations |>
+  sample_n(5) |>
   mutate(address = paste(street, ", NY", zipcode))
 
 geocode(.tbl = addresses, address = address, method = "osm")
@@ -45,16 +45,16 @@ library(ggspatial)
 library(tidygeocoder)
 
 set.seed(23)
-addresses <- Violations %>%
-  sample_n(10) %>%
+addresses <- Violations |>
+  sample_n(10) |>
   mutate(address = paste(street, ", NY", zipcode))
 
 addresses <- cbind(geocode(.tbl = addresses, address = address, method = "osm"))
 
 addresses <- left_join(addresses, ViolationCodes, by = "violation_code")
 
-address_sf <- addresses %>%
-  filter(!is.na(lat)) %>%
+address_sf <- addresses |>
+  filter(!is.na(lat)) |>
   st_as_sf(coords = c("long", "lat"), crs = 4326)
 
 ggplot() +
@@ -72,10 +72,10 @@ c. Using the spatial coordinates you obtained in the previous exercises, create 
 ```{r}
 library(leaflet)
 
-leaflet() %>%
-  addTiles() %>%
-  addCircleMarkers(data = addresses %>% filter(long > -74, lat > 30, critical_flag == "Critical"), lng = ~long, lat = ~lat, popup = ~ paste("Restaurant Name : ", dba, "\n", " Violation: ", violation_description, "\n"), color = "red") %>%
-  addCircleMarkers(data = addresses %>% filter(long > -74, lat > 30, critical_flag == "Not Critical"), lng = ~long, lat = ~lat, popup = ~ paste("Restaurant Name : ", dba, "\n", " Violation: ", violation_description, "\n"), color = "blue")
+leaflet() |>
+  addTiles() |>
+  addCircleMarkers(data = addresses |> filter(long > -74, lat > 30, critical_flag == "Critical"), lng = ~long, lat = ~lat, popup = ~ paste("Restaurant Name : ", dba, "\n", " Violation: ", violation_description, "\n"), color = "red") |>
+  addCircleMarkers(data = addresses |> filter(long > -74, lat > 30, critical_flag == "Not Critical"), lng = ~long, lat = ~lat, popup = ~ paste("Restaurant Name : ", dba, "\n", " Violation: ", violation_description, "\n"), color = "blue")
 ```
 
  <!--end-answer-->

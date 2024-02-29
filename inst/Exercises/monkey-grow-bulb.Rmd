@@ -26,10 +26,10 @@ TITLE GOES HERE: Consider the number of home runs hit (`r mdsr2exercises::var_ma
 <!--begin-answer-->
 ```{r monkey-grow-bulb-1}
 library(Lahman)
-Teams %>%
-  filter(teamID == "CHN") %>%
-  select(yearID, HR, HRA) %>%
-  pivot_longer(-yearID, names_to = "type", values_to = "home_runs") %>%
+Teams |>
+  filter(teamID == "CHN") |>
+  select(yearID, HR, HRA) |>
+  pivot_longer(-yearID, names_to = "type", values_to = "home_runs") |>
   ggplot(aes(x = yearID, y = home_runs, color = type)) +
   geom_point() +
   geom_line()

@@ -19,7 +19,7 @@ TITLE GOES HERE: Calculate and interpret a 95% confidence interval for the mean 
 
 ```{r }
 library(mosaicData)
-Gestation %>%
+Gestation |>
   skim(age)
 confint(lm(age ~ 1, data = Gestation))
 ```

@@ -54,11 +54,11 @@ c. Calculate and interpret the mean absolute error (MAE) for this model and the 
  <!--begin-answer-->
 
 ```{r}
-broom::augment(cesd_mod) %>%
-  mutate(ae = abs(cesd - .fitted)) %>%
+broom::augment(cesd_mod) |>
+  mutate(ae = abs(cesd - .fitted)) |>
   summarize(mae = mean(ae))
-broom::augment(cesd_null) %>%
-  mutate(ae = abs(cesd - .fitted)) %>%
+broom::augment(cesd_null) |>
+  mutate(ae = abs(cesd - .fitted)) |>
   summarize(mae = mean(ae))
 ```
 

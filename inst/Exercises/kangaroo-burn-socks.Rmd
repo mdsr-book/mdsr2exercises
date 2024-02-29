@@ -19,7 +19,7 @@ Run the function once with the arguments `Ezekiel` and `1883` and once with `Eze
 ```{r }
 library(babynames)
 grab_name <- function(x, myyear) {
-  result <- babynames %>%
+  result <- babynames |>
     filter(name == x, year == myyear)
   if (nrow(result) == 0) {
     stop("Name/year combination not found")

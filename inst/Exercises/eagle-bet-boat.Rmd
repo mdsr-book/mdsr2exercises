@@ -28,17 +28,17 @@ XX need to add in way to access articles
 ```{r}
 library(tidytext)
 
-common_words <- articles %>%
-  filter(clickbait == TRUE) %>%
-  select(title) %>%
-  unnest_tokens(text, title) %>%
+common_words <- articles |>
+  filter(clickbait == TRUE) |>
+  select(title) |>
+  unnest_tokens(text, title) |>
   count(text, sort = TRUE)
 
 
-common_bigrams <- articles %>%
-  filter(clickbait == TRUE) %>%
-  select(title) %>%
-  unnest_tokens(text, title, token = "ngrams", n = 2) %>%
+common_bigrams <- articles |>
+  filter(clickbait == TRUE) |>
+  select(title) |>
+  unnest_tokens(text, title, token = "ngrams", n = 2) |>
   count(text, sort = TRUE)
 ```
   <!--end-answer-->
@@ -48,10 +48,10 @@ common_bigrams <- articles %>%
   <!--begin-answer-->
 ```{r}
 library(tidytext)
-digits <- articles %>%
+digits <- articles |>
   filter(str_detect(articles$title, "^[[:digit:]]+"))
 
-digits %>%
+digits |>
   count(clickbait)
 ```
 
@@ -66,14 +66,14 @@ digits %>%
 library(tidytext)
 library(stringr)
 
-num <- articles %>%
+num <- articles |>
   mutate(len = (str_count(title, " ") + 1))
 
-num.click <- num %>%
-  filter(clickbait == TRUE) %>%
+num.click <- num |>
+  filter(clickbait == TRUE) |>
   mean(num.click$len)
 
-num.not <- num %>%
+num.not <- num |>
   filter(clickbait == FALSE)
 
 mean(num.not$len)
@@ -87,13 +87,13 @@ mean(num.not$len)
 ```{r}
 library(tidytext)
 
-click.cap <- articles %>%
-  filter(clickbait == TRUE) %>%
+click.cap <- articles |>
+  filter(clickbait == TRUE) |>
   mutate(ncap = str_count(title, pattern = "[A-Z]+"))
 mean(click.cap$ncap)
 
-not.click.cap <- articles %>%
-  filter(clickbait == FALSE) %>%
+not.click.cap <- articles |>
+  filter(clickbait == FALSE) |>
   mutate(ncap = str_count(title, pattern = "[A-Z]+"))
 
 mean(not.click.cap$ncap)
@@ -105,16 +105,16 @@ mean(not.click.cap$ncap)
 
 ```{r}
 
-click <- articles %>%
-  filter(clickbait == TRUE) %>%
-  select(title) %>%
-  unnest_tokens(text, title) %>%
+click <- articles |>
+  filter(clickbait == TRUE) |>
+  select(title) |>
+  unnest_tokens(text, title) |>
   inner_join(get_sentiments("afinn"), by = c("text" = "word"))
 
-not.click <- articles %>%
-  filter(clickbait == FALSE) %>%
-  select(title) %>%
-  unnest_tokens(text, title) %>%
+not.click <- articles |>
+  filter(clickbait == FALSE) |>
+  select(title) |>
+  unnest_tokens(text, title) |>
   inner_join(get_sentiments("afinn"), by = c("text" = "word"))
 
 # add average values

@@ -25,7 +25,7 @@ library(macleish)
 equinoxes <- tibble(
   Date = as.Date(c("2015-03-21", "2015-06-20", "2015-09-21", "2015-12-20")),
   season = c("Winter ", "Spring ", "Summer ", "Fall "))
-whately_2015 <- whately_2015 %>%
+whately_2015 <- whately_2015 |>
   mutate(Date = as.Date(when))
 weather_plot <- ggplot(data = whately_2015,
   aes(x = Date, y = temperature)) +

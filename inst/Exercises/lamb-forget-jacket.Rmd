@@ -63,7 +63,7 @@ server <- function(input, output) {
           log = function(x) {log(1 + x)},
           sqrt = function(x) {sqrt(x)}
         )
-      HELPrct %>%
+      HELPrct |>
         mutate(
           y = xform_fun(.data[[input$y]])
         )

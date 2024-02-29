@@ -23,18 +23,18 @@ Here is the home run chart.
 library(Lahman)
 
 top_hitters <- function(data) {
-  data %>%
-    group_by(playerID) %>%
-    summarize(tHR = sum(HR), .groups = "drop_last") %>%
-    arrange(desc(tHR)) %>%
-    head(30) %>%
+  data |>
+    group_by(playerID) |>
+    summarize(tHR = sum(HR), .groups = "drop_last") |>
+    arrange(desc(tHR)) |>
+    head(30) |>
     mutate(rank = row_number())
 }
 
-hrs <- Batting %>%
-  group_by(yearID) %>%
-  group_modify(~ top_hitters(.)) %>%
-  ungroup() %>%
+hrs <- Batting |>
+  group_by(yearID) |>
+  group_modify(~ top_hitters(.)) |>
+  ungroup() |>
   mutate(
     cum_max = cummax(tHR),
     new_record = ifelse(tHR == cum_max, TRUE, FALSE)

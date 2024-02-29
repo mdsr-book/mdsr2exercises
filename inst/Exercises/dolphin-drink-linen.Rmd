@@ -31,18 +31,18 @@ babynames_dist <- make_babynames_dist()
 
 <!--begin-answer-->
 ```{r deadest-names-ex, message= FALSE, warning = FALSE}
-babynames_dist %>%
-  filter(year >= 1900) %>%
-  group_by(name, sex) %>%
+babynames_dist |>
+  filter(year >= 1900) |>
+  group_by(name, sex) |>
   summarize(
     N = n(),
     total_est_alive_today = sum(est_alive_today),
     total = sum(n)
-  ) %>%
-  mutate(pct_dead = 1 - (total_est_alive_today / total)) %>%
-  filter(total > 50000) %>%
-  arrange(desc(pct_dead)) %>%
-  head(20) %>%
+  ) |>
+  mutate(pct_dead = 1 - (total_est_alive_today / total)) |>
+  filter(total > 50000) |>
+  arrange(desc(pct_dead)) |>
+  head(20) |>
   ggplot(aes(x = reorder(name, pct_dead), y = pct_dead, fill = sex)) +
   geom_bar(stat = "identity") +
   geom_text(

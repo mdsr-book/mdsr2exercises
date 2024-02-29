@@ -35,11 +35,11 @@ This code generates a new variable called `sex` based on the value of the `femal
 library(mosaic)
 ds <-
   read.csv("http://nhorton.people.amherst.edu/r2/datasets/helpmiss.csv")
-ds %>%
-  mutate(sex = ifelse(female == 1, "F", "M")) %>%
-  filter(!is.na(pcs)) %>%
-  select(age, pcs, sex) %>%
-  group_by(sex) %>%
+ds |>
+  mutate(sex = ifelse(female == 1, "F", "M")) |>
+  filter(!is.na(pcs)) |>
+  select(age, pcs, sex) |>
+  group_by(sex) |>
   summarise(meanage = mean(age), meanpcs = mean(pcs), count = n())
 ```
 

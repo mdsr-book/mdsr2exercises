@@ -27,8 +27,8 @@ We can retrieve the results using `r pkg_macro("dplyr")`:
 
 ```{r flights-via-dplyr}
 flights <- tbl(con, "flights")
-flights %>% 
-  group_by(year) %>%
+flights |> 
+  group_by(year) |>
   summarize(n = n())
 ```
 

@@ -30,11 +30,11 @@ sims <- tibble(
 # Counting number of times the simulation goes over 15 min
   over_15 = samp1 >= 0.25
 )
-sims %>%
+sims |>
   mdsr::skim(actual2)
 
-sims %>%
-  group_by(over_15) %>%
+sims |>
+  group_by(over_15) |>
   count()
 ```
 

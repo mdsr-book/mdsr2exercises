@@ -19,8 +19,8 @@ TITLE GOES HERE: Use the `r pkg_macro(nycflights13)` package and the `r df_macro
 <!--begin-answer-->
 ```{r fish-hit-dress-1, message = FALSE, warning = FALSE}
 library(nycflights13)
-flights2 <- flights %>%
-  group_by(month) %>%
+flights2 <- flights |>
+  group_by(month) |>
   summarize(
     canceled = sum(is.na(arr_delay)),
     total = n(),

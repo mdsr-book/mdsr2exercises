@@ -75,7 +75,7 @@ We see that there is some modest deviation from linearity (particularly in the t
 
 We can add the residuals and fitted values into the dataframe, then generate the scatterplot with superimposed smoother.
 ```{r foobl3}
-HELPrct <- HELPrct %>%
+HELPrct <- HELPrct |>
   mutate(resid = residuals(fm), fitted = fitted(fm))
 ggplot(data = HELPrct, aes(x = mcs, y = resid)) +
   geom_point() +
@@ -107,8 +107,8 @@ The residuals versus leverage plot flags the same three points.
 
 -  We see that four points might merit further scrutiny.
 ```{r }
-HELPrct %>%
-  select(cesd, fitted, resid, mcs, substance, mcs, sex) %>%
+HELPrct |>
+  select(cesd, fitted, resid, mcs, substance, mcs, sex) |>
   slice(c(40, 351, 433, 450))
 ```
 

@@ -25,8 +25,8 @@ b. How many airplanes that flew from New York City are included in the `r df_mac
 library(nycflights13)
 planes2 <- dplyr::select(planes, tailnum, year)
 flights2 <- dplyr::select(flights, tailnum)
-nyc_flights <- left_join(planes2, flights2) %>%
-  arrange(year) %>%
+nyc_flights <- left_join(planes2, flights2) |>
+  arrange(year) |>
   unique()
 head(nyc_flights)
 ```

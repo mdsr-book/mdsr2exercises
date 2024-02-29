@@ -22,7 +22,7 @@ n <- 10000
 sim_meet <- data.frame(
   sally <- rnorm(n, mean = 30, sd = 10),
   joan <- rnorm(n, mean = 30, sd = 10)
-) %>%
+) |>
   mutate(result = ifelse(abs(sally - joan) <= 10,
     "They meet", "They do not"
   ))

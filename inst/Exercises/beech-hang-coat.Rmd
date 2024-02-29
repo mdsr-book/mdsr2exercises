@@ -26,18 +26,18 @@ library(pdxTrees)
 pdxTrees_parks <- pdxTrees::get_pdxTrees_parks() 
 
 # most common facts
-pdxTrees_parks %>%
-  filter(!is.na(Species_Factoid)) %>%
-  count(Species_Factoid, sort = TRUE) %>%
+pdxTrees_parks |>
+  filter(!is.na(Species_Factoid)) |>
+  count(Species_Factoid, sort = TRUE) |>
   head(5)
 
 
 tree_facts <- data.frame(facts = unique(pdxTrees_parks$Species_Factoid))
 
-unnest_tokens(tree_facts, input = facts, output = words) %>%
-  count(words) %>%
-  arrange(desc(n)) %>%
-  anti_join(stop_words, by = c("words" = "word")) %>%
+unnest_tokens(tree_facts, input = facts, output = words) |>
+  count(words) |>
+  arrange(desc(n)) |>
+  anti_join(stop_words, by = c("words" = "word")) |>
   head(10)
 ```
 

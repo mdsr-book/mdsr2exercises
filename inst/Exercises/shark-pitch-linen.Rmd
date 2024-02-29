@@ -24,16 +24,16 @@ library(sf)
 library(ggspatial)
 library(macleish)
 
-boundary <- macleish_layers %>%
+boundary <- macleish_layers |>
   pluck("boundary")
 
-landmarks <- macleish_layers %>%
+landmarks <- macleish_layers |>
   pluck("landmarks")
 
-streams <- macleish_layers %>%
+streams <- macleish_layers |>
   pluck("streams")
 
-trails <- macleish_layers %>%
+trails <- macleish_layers |>
   pluck("trails")
 
 ggplot() +
@@ -50,10 +50,10 @@ b. Use the spatial data in the `macleish` package and `leaflet` to make an infor
   <!--begin-answer-->
 ```{r, message=FALSE, eval = FALSE}
 library(leaflet)
-leaflet() %>%
-  addTiles() %>%
-  addPolygons(data = macleish_layers[["boundary"]], weight = 1) %>%
-  addPolygons(data = macleish_layers[["buildings"]], weight = 1) %>%
+leaflet() |>
+  addTiles() |>
+  addPolygons(data = macleish_layers[["boundary"]], weight = 1) |>
+  addPolygons(data = macleish_layers[["buildings"]], weight = 1) |>
   addMarkers(data = subset(
     macleish_layers[["landmarks"]],
     grepl("Met", Label)

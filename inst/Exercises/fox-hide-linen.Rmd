@@ -52,7 +52,7 @@ ui <- fluidPage(
 server <- function(input, output) {
 
     dataset <- reactive({
-      penguins %>%
+      penguins |>
         filter(species %in% input$species)
     })
 

@@ -27,16 +27,16 @@ Measurements <- tbl(con, "Measurements")
 <!--begin-answer-->
 
 ```{r}
-Measurements %>%
-  group_by(NA) %>%  ## phantom group to avoid SQL translation bug?
+Measurements |>
+  group_by(NA) |>  ## phantom group to avoid SQL translation bug?
   summarize(num_obs = n())
 ```
 
 Alternatively, pulling the results into R and then counting the rows is *far* slower. 
 
 ```{r, eval=FALSE}
-Measurements %>%
-  collect() %>%
+Measurements |>
+  collect() |>
   nrow()
 ```
 

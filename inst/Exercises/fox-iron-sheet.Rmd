@@ -22,12 +22,12 @@ a. Create a factor called `r mdsr2exercises::var_macro(election)` that divides t
 <!--begin-answer-->
 ```{r, message = FALSE, warning = FALSE}
 library(Lahman)
-Teams %>%
+Teams |>
   mutate(election = factor(cut(yearID,
     breaks = seq(from = 1788, to = 2017, by = 4)
-  ))) %>%
-  group_by(election) %>%
-  summarize(N = n(), tHR = sum(HR)) %>%
+  ))) |>
+  group_by(election) |>
+  summarize(N = n(), tHR = sum(HR)) |>
   arrange(desc(tHR))
 ```
 <!--end-answer-->

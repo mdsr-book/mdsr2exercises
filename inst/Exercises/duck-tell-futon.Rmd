@@ -30,7 +30,7 @@ Using `r pkg_macro(ggplot2)`, create a data graphic that displays the average te
 
 <!--begin-answer-->
 ```{r macleish-ex-vizII,message=FALSE}
-whately_2015 <- whately_2015 %>%
+whately_2015 <- whately_2015 |>
   mutate(Date = as.Date(when))
 ggplot(data = whately_2015, aes(x = Date, y = temperature)) +
   geom_line(size = 0.3, color = "darkgray") +

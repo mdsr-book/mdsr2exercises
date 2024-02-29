@@ -26,8 +26,8 @@ library(rpart)
 library(mdsr)
 library(lubridate)
 
-NYSFO <- flights %>%
-  filter(origin == "JFK", dest == "SFO") %>%
+NYSFO <- flights |>
+  filter(origin == "JFK", dest == "SFO") |>
   mutate(
     delay = if_else(arr_delay > 15, TRUE, FALSE),
     day = as.Date(time_hour),
@@ -53,8 +53,8 @@ ntree = 201, mtry = 3
 
 tree_reg
 
-importance(tree_reg) %>%
-  as_tibble(rownames = "variable") %>%
+importance(tree_reg) |>
+  as_tibble(rownames = "variable") |>
   arrange(desc(IncNodePurity))
 ```
 

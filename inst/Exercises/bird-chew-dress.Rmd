@@ -25,12 +25,12 @@ count_na <- function(x) {
   return(sum(is.na(x)))
 }
 
-HELPfull %>%
-  pull(SEXRISK) %>%
+HELPfull |>
+  pull(SEXRISK) |>
   count_na()
 
-HELPfull %>%
-  pull(SEXRISK) %>%
+HELPfull |>
+  pull(SEXRISK) |>
   summary()
 ```
   <!--end-answer-->
@@ -41,7 +41,7 @@ How many of the columns have missing data?
  <!--begin-answer-->
 ```{r, message=FALSE}
 library(Lahman)
-missvars <- Teams %>%
+missvars <- Teams |>
   map_int(count_na)
 
 mosaic::tally(~missvars)

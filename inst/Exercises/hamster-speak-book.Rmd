@@ -21,12 +21,12 @@ TITLE GOES HERE: The `r mdsr2exercises::df_macro(Violations)` data set in the `r
 
 ```{r, message = FALSE, warning = FALSE}
 library(mdsr)
-zips <- Violations %>%
-  select(boro, score, zipcode) %>%
-  na.omit() %>%
-  filter(boro == "MANHATTAN") %>%
-  group_by(zipcode) %>%
-  summarise(count = n(), medianscore = median(score)) %>%
+zips <- Violations |>
+  select(boro, score, zipcode) |>
+  na.omit() |>
+  filter(boro == "MANHATTAN") |>
+  group_by(zipcode) |>
+  summarise(count = n(), medianscore = median(score)) |>
   filter(count >= 50)
 ggplot(data = zips, aes(count, medianscore)) +
   geom_point(alpha = 0.2) +

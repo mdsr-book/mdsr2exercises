@@ -38,11 +38,11 @@ filename <- paste(system.file("extdata", package = "CollegeScorecard"),
 )
 colleges <- readr::read_csv(filename)
 
-df <- colleges %>%
+df <- colleges |>
   select(DEBT_MDN, ADM_RATE, REGION, COSTT4_A, C150_4, 
-         PAR_ED_PCT_1STGEN, FTFTPCTPELL) %>%
-  filter(DEBT_MDN != "PrivacySuppressed") %>%
-  mutate(high_debt = if_else(as.numeric(DEBT_MDN) > 9500, TRUE, FALSE)) %>%
+         PAR_ED_PCT_1STGEN, FTFTPCTPELL) |>
+  filter(DEBT_MDN != "PrivacySuppressed") |>
+  mutate(high_debt = if_else(as.numeric(DEBT_MDN) > 9500, TRUE, FALSE)) |>
   sample_n(2000)
 
 rpart(DEBT_MDN ~ ADM_RATE + REGION + COSTT4_A + C150_4 + 

@@ -79,8 +79,8 @@ We see that both examples yielded incorrect values (and one warning).
 A better approach would be to use `pivot_wider()`.
 ```{r message=FALSE, warning = FALSE}
 library(tidyr)
-ds2 %>%
-  pivot_wider(names_from = group, values_from = vals) %>%
+ds2 |>
+  pivot_wider(names_from = group, values_from = vals) |>
   mutate(diff = T - C)
 ```
 

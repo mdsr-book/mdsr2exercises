@@ -16,18 +16,18 @@ TITLE GOES HERE: Re-fit the $k$--means algorithm on the `BigCities` data with a 
 
 <!--begin-answer-->
 ```{r cluster-plot-8236,message=FALSE}
-BigCities <- world_cities %>%
-  arrange(desc(population)) %>%
-  head(4000) %>%
+BigCities <- world_cities |>
+  arrange(desc(population)) |>
+  head(4000) |>
   select(longitude, latitude)
 
-city_clusts <- BigCities %>%
-  kmeans(centers = 8) %>%
-  fitted("classes") %>%
+city_clusts <- BigCities |>
+  kmeans(centers = 8) |>
+  fitted("classes") |>
   as.character()
-BigCities <- BigCities %>% 
+BigCities <- BigCities |> 
   mutate(cluster = city_clusts)
-BigCities %>% 
+BigCities |> 
   ggplot(aes(x = longitude, y = latitude)) +
   geom_point(aes(color = cluster), alpha = 0.5)
 ```

@@ -30,10 +30,10 @@ airports <- tbl(db, "airports")
 
 ```{r, warning=FALSE}
 grabairline <- function(my_year = 2013, my_carrier = "DL") {
-  flights %>%
-    filter(year == my_year, carrier == my_carrier) %>%
-    left_join(airports, by = c("dest" = "faa")) %>%
-    group_by(dest) %>%
+  flights |>
+    filter(year == my_year, carrier == my_carrier) |>
+    left_join(airports, by = c("dest" = "faa")) |>
+    group_by(dest) |>
     summarize(
       N = n(), lon = max(lon), lat = max(lat),
       # note use of MySQL syntax instead of dplyr
@@ -41,15 +41,15 @@ grabairline <- function(my_year = 2013, my_carrier = "DL") {
         "(", dest, ") ",
         REPLACE(name, " Airport", "")
       ))
-    ) %>%
-    collect() %>%
+    ) |>
+    collect() |>
     drop_na(lon, lat)
 }
 ```
 
 ```{r usair, warning=FALSE}
-usair2010 <- grabairline(my_year = 2010, my_carrier = "US") %>%
-  st_as_sf(coords = c("lon", "lat")) %>%
+usair2010 <- grabairline(my_year = 2010, my_carrier = "US") |>
+  st_as_sf(coords = c("lon", "lat")) |>
   st_set_crs(4326)
 glimpse(usair2010)
 ```
@@ -74,32 +74,32 @@ We will use the tables and the `grabairline()` function from the previous
 problem.
 
 ```{r delta-years, warning=FALSE}
-delta <- c(2017, 2010) %>%
-  set_names() %>%
-  map_dfr(grabairline, .id = "year") %>%
-  arrange(year) %>%
-  group_by(year) %>%
+delta <- c(2017, 2010) |>
+  set_names() |>
+  map_dfr(grabairline, .id = "year") |>
+  arrange(year) |>
+  group_by(year) |>
   mutate(prop = N / sum(N))
 glimpse(delta)
 ```
 
 ```{r}
-delta %>%
-  group_by(year) %>%
+delta |>
+  group_by(year) |>
   skimr::skim(prop)
 ```
 
 ```{r, message= FALSE}
-changes <- delta %>%
-  group_by(dest, lon, lat) %>%
-  summarize(diff = diff(prop)) %>%
-  st_as_sf(coords = c("lon", "lat")) %>%
+changes <- delta |>
+  group_by(dest, lon, lat) |>
+  summarize(diff = diff(prop)) |>
+  st_as_sf(coords = c("lon", "lat")) |>
   st_set_crs(4326)
 
-changes %>%
+changes |>
   arrange(diff)
 
-changes %>%
+changes |>
   arrange(desc(diff))
 ```
 

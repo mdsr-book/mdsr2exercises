@@ -71,7 +71,7 @@ ggplot(data = res, aes(x = p_value)) +
 
 
 ```{r }
-res <- res %>%
+res <- res |>
   mutate(
     # no longer uniform
     p_value2 = map_dbl(sim, genmodel, twostage = TRUE)

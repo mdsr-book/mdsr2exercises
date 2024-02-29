@@ -27,14 +27,14 @@ TITLE GOES HERE: Create a DTM (document term matrix) for the collection of Emily
 library(tm)
 library(DickinsonPoems)
 
-all_poems <- DickinsonPoems::list_poems() %>%
+all_poems <- DickinsonPoems::list_poems() |>
   purrr::map(get_poem)
 poemCorpus <- Corpus(VectorSource(all_poems))
-poemCorpus <- poemCorpus %>%
-  tm_map(stripWhitespace) %>%
-  tm_map(removeNumbers) %>%
-  tm_map(removePunctuation) %>%
-  tm_map(content_transformer(tolower)) %>%
+poemCorpus <- poemCorpus |>
+  tm_map(stripWhitespace) |>
+  tm_map(removeNumbers) |>
+  tm_map(removePunctuation) |>
+  tm_map(content_transformer(tolower)) |>
   tm_map(removeWords, stopwords("english"))
 
 DTM <- DocumentTermMatrix(poemCorpus, control = list(weighting = weightTfIdf))

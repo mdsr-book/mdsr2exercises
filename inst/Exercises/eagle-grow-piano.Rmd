@@ -24,14 +24,14 @@ library(Lahman)
 Teams <- mutate(Teams,
   SLG = (H + X2B + 2 * X3B + 3 * HR) / AB
 )
-Teams %>%
-  select(yearID, teamID, lgID, SLG) %>%
-  arrange(desc(SLG)) %>%
+Teams |>
+  select(yearID, teamID, lgID, SLG) |>
+  arrange(desc(SLG)) |>
   head(5)
-Teams %>%
-  filter(yearID >= 1969) %>%
-  select(yearID, teamID, lgID, SLG) %>%
-  arrange(desc(SLG)) %>%
+Teams |>
+  filter(yearID >= 1969) |>
+  select(yearID, teamID, lgID, SLG) |>
+  arrange(desc(SLG)) |>
   head(5)
 ```
 <!--end-answer-->
