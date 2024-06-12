@@ -15,10 +15,13 @@ mdsr2exercises::setup()
 library(rvest)
 ```
 
-TITLE GOES HERE: Using the approach described in Section 6.4.1.2 of the text, find another table in Wikipedia that can be scraped and visualized.  Be sure to interpret your graphical display.
-
+TITLE GOES HERE: Using the approach described in [Section 6.4.1.2](https://mdsr-book.github.io/mdsr3e/06-dataII.html#sec-htmltab) of the text, find an interesting Wikipedia page with a table, scrape the data from it, and generate a figure that tells an interesting story. Include an interpretation of the figure.
 
 <!--begin-answer-->
+
+Answers will vary.
+Here is one example.
+
 ```{r}
 library(rvest)
 library(ggplot2)
@@ -32,8 +35,8 @@ tables <- url |>
 
 computer_animated <- html_table(tables[[1]]) |>
   mutate(
-    Worldwide_gross = (gsub("\\$", "", `Worldwide gross`)),
-    Worldwide_gross = (gsub(",", "", Worldwide_gross)),
+    Worldwide_gross = gsub("\\$", "", `Worldwide gross`),
+    Worldwide_gross = gsub(",", "", Worldwide_gross),
     Worldwide_gross = as.numeric(Worldwide_gross)
   ) |>
   head(10)
@@ -42,4 +45,31 @@ ggplot(data = computer_animated, aes(x = Title, y = Worldwide_gross)) +
   geom_bar(stat = "identity")
 ```
 
+<!--end-answer-->
+
+<!--begin-answer-->
+
+Here is another example.
+
+```{r,message=FALSE}
+library(rvest)
+library(tidyr)
+my_html <-
+  read_html("http://en.wikipedia.org/wiki/List_of_highest-grossing_films")
+tables <- my_html |> 
+  html_nodes(css = "table")
+movies <- html_table(tables[[2]])
+names(movies)[3] <- "Gross2019dollars"
+movies <- movies |>
+  mutate(
+    GrossMil = readr::parse_number(Gross2019dollars) / 1000000,
+    Year = readr::parse_number(as.character(Year))
+  )
+movies
+ggplot(data = movies, aes(x = Year, y = GrossMil)) +
+  geom_point() +
+  theme(legend.position = "none") +
+  ylab("Gross (in millions of US 2019$)")
+```
+ 
 <!--end-answer-->
