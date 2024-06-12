@@ -15,9 +15,9 @@ mdsr2exercises::setup()
 TITLE GOES HERE: How many rows are available in the `Measurements` table of the Smith College Wideband Auditory Immittance database?
 
 ```{r, message=FALSE}
-library(RMySQL)
+library(RMariaDB)
 con <- dbConnect(
-  MySQL(), host = "scidb.smith.edu",
+  MariaDB(), host = "scidb.smith.edu",
   user = "waiuser", password = "smith_waiDB", 
   dbname = "wai"
 )

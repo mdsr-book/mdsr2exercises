@@ -12,7 +12,7 @@ id: frog-sit-spoon
 mdsr2exercises::setup()
 ```
 
-TITLE GOES HERE: A *Slate* article (http://tinyurl.com/slate-ethics) discussed whether race/ethnicity should be included in a predictive model for how long a homeless family would stay in 
+TITLE GOES HERE: A *Slate* article (<http://tinyurl.com/slate-ethics>) discussed whether race/ethnicity should be included in a predictive model for how long a homeless family would stay in 
 homeless services.  Discuss the ethical considerations involved in whether race/ethnicity should be included as a predictor in the model.
 
 

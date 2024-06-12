@@ -12,15 +12,15 @@ id: hamster-ring-pencil
 mdsr2exercises::setup()
 library(tidyverse)
 library(mdsr)
-library(RMySQL)
+library(RMariaDB)
 ```
 
 TITLE GOES HERE: Wideband acoustic immittance (WAI) is an area of biomedical research that strives to develop WAI measurements as noninvasive auditory diagnostic tools. WAI measurements are reported in many related formats, including absorbance, admittance, impedance, power reflectance, and pressure reflectance. More information can be found about this public facing WAI database at <http://www.science.smith.edu/wai-database/home/about>.
 
 ```{r}
-library(RMySQL)
+library(RMariaDB)
 db <- dbConnect(
-  MySQL(), 
+  MariaDB(), 
   user = "waiuser", 
   password = "smith_waiDB", 
   host = "scidb.smith.edu", 

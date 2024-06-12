@@ -17,7 +17,7 @@ TITLE GOES HERE: Identify what years of data are available in the `flights` tabl
 ```{r, eval=TRUE, message=FALSE}
 library(tidyverse)
 library(mdsr)
-library(RMySQL)
+library(RMariaDB)
 con <- dbConnect_scidb("airlines")
 ```
 
