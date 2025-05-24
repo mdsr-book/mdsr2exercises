@@ -2,7 +2,7 @@
 chapter: "ethics"
 author: "Nicholas Horton"
 difficulty: "Hard"
-date: 2020-07-13 
+date: 2025-05-24 
 version: 0.1
 tags: [simulation, p-values, regression modeling]
 id: elephant-teach-pants
@@ -26,8 +26,7 @@ Carry out a simulation to check your answer.
 
 <!--begin-answer-->
 ```{r elephant-teach-pants-answer1, cache = TRUE}
-## XX Crank this back up to 250 when we're ready to submit
-numsim <- 25
+numsim <- 250
 set.seed(1998)
 genmodel <- function(p = 100, n = 250, alpha = 0.05, twostage = TRUE) {
   X <- matrix(rnorm(p * n), nrow = n)
@@ -53,10 +52,10 @@ genmodel <- function(p = 100, n = 250, alpha = 0.05, twostage = TRUE) {
   return(overallp = broom::glance(overall)$p.value)
 }
 
-res <- tibble(
-  sim = 1:numsim, 
-  # should be uniform
-  p_value = map_dbl(sim, genmodel, twostage = FALSE)
+res <- tibble(   # should be uniform
+  sim = 1:numsim,
+  p_value = sim |> 
+    map_dbl(~ genmodel(twostage = FALSE))
 )
 mosaic::binom.test(~ (p_value < 0.05), data = res)
 ```
@@ -70,11 +69,11 @@ ggplot(data = res, aes(x = p_value)) +
 ```
 
 
-```{r }
+```{r}
 res <- res |>
   mutate(
     # no longer uniform
-    p_value2 = map_dbl(sim, genmodel, twostage = TRUE)
+    p_value2 = sim |> map_dbl(~ genmodel(twostage = TRUE))
   ) 
 mosaic::binom.test(~ (p_value2 < 0.05), data = res)
 ```
